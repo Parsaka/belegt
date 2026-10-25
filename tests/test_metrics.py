@@ -159,6 +159,18 @@ def test_a_header_over_two_lines_with_the_base_year_first():
     }
 
 
+SALZGITTER_P160 = """Salzgitter AG | Geschäftsbericht 2024
+2021 2023 04 2025 2030 2050
+Scope-1-THG-Bruttoemissionen (Tt CO2e) 10.724 0.35 6.900
+Standortbezogene Scope-2-THG-Bruttoemissionen (Tt CO2e) 366 338
+"""
+
+
+def test_a_running_head_is_not_a_header_and_a_garbled_header_is_uncertain():
+    rows = extract_page(Page("salzgitter-2024", 160, SALZGITTER_P160), True, 2024)
+    assert rows and all(m.column_year is None for m in rows)  # no readable 2024 column
+
+
 def test_split_words_and_a_dash_inside_the_label():
     rows = extract_page(Page("heidelberg-materials-2024", 125, HEIDELBERG_P125), True, 2024)
     assert [(m.metric, m.value_t, m.column_year) for m in rows] == [
