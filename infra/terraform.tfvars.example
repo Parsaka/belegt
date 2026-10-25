@@ -1,0 +1,5 @@
+project_id               = "belegt-xxxxxx"
+billing_account_id       = "XXXXXX-XXXXXX-XXXXXX"
+ci_service_account_email = "terraform-ci@belegt-xxxxxx.iam.gserviceaccount.com"
+budget_currency          = "EUR"
+trial_mode               = true
