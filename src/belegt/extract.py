@@ -40,9 +40,15 @@ GLEIF_LATEST = "https://goldencopy.gleif.org/api/v2/golden-copies/publishes/late
 # ESRS, Delegated Regulation (EU) 2023/2772, German Official Journal PDF. EU legal text may be
 # reused with attribution. Two addresses for the same file: EUR-Lex sometimes answers automated
 # requests with a challenge page instead of the PDF.
-ESRS_PDF_URLS = (
-    "https://eur-lex.europa.eu/legal-content/DE/TXT/PDF/?uri=OJ:L_202302772",
-    "https://eur-lex.europa.eu/eli/reg_del/2023/2772/oj/deu/pdf",
+# EUR-Lex answers CI runners with a bot challenge page, so the Publications Office's content
+# negotiation on the ELI comes first (the same Official Journal PDF, served by its repository).
+ESRS_SOURCES: tuple[tuple[str, dict[str, str]], ...] = (
+    (
+        "https://publications.europa.eu/resource/eli/reg_del/2023/2772/oj",
+        {"Accept": "application/pdf", "Accept-Language": "de"},
+    ),
+    ("https://eur-lex.europa.eu/legal-content/DE/TXT/PDF/?uri=OJ:L_202302772", {}),
+    ("https://eur-lex.europa.eu/eli/reg_del/2023/2772/oj/deu/pdf", {}),
 )
 
 # Golden-copy LEI-CDF columns the loader needs. Checked against the file header on every run.
@@ -249,14 +255,23 @@ def is_pdf(head: bytes) -> bool:
 
 
 def extract_esrs(client: Any, out: Path) -> list[Extracted]:
+    """The ESRS legal text for the document assistant. Optional: the warehouse does not need
+    it, so a source that refuses the download is reported and the run goes on without it."""
     path = out / "esrs_de.pdf"
-    for url in ESRS_PDF_URLS:
-        _download(client, url, path)
+    tried = []
+    for url, headers in ESRS_SOURCES:
+        try:
+            _download(client, url, path, headers=headers)
+        except Exception as error:  # one refusing host must not end the monthly run
+            tried.append(f"{url}: {type(error).__name__}")
+            continue
         with path.open("rb") as fh:
             if is_pdf(fh.read(5)):
                 return [_record(out, path.name, url)]
+        tried.append(f"{url}: not a PDF")
     path.unlink(missing_ok=True)
-    raise RuntimeError("EUR-Lex returned no PDF for the ESRS (challenge page?)")
+    print("esrs: skipped, no source returned the PDF (" + "; ".join(tried) + ")")
+    return []
 
 
 def extract_all(out: Path, work: Path) -> list[Extracted]:
