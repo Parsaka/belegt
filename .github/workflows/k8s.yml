@@ -1,0 +1,47 @@
+name: Kubernetes
+
+# Builds the API image and deploys the Helm chart to a throw-away kind cluster, then calls the
+# API through the Service: health, a cited answer, tenant isolation and auth.
+on:
+  pull_request:
+    paths: [Dockerfile, deploy/**, src/belegt/api/**, src/belegt/rag/**, .github/workflows/k8s.yml]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  kind:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/setup-helm@v4
+      - run: helm lint deploy/helm/belegt-api
+      - run: docker build -t belegt-api:ci .
+      - uses: helm/kind-action@v1
+        with:
+          cluster_name: belegt
+      - run: kind load docker-image belegt-api:ci --name belegt
+      - name: Install chart
+        run: |
+          helm install demo deploy/helm/belegt-api --wait --timeout 3m \
+            --set image.tag=ci \
+            --set auth.demoTokens="token-a:tenant_a\,token-b:tenant_b" \
+            --set-file chunks.inline=deploy/kind/demo-chunks.jsonl
+      - name: Smoke test through the Service
+        run: |
+          kubectl port-forward svc/demo-api 8080:80 &
+          for i in $(seq 1 20); do curl -fsS localhost:8080/health && break; sleep 1; done
+          ask() { curl -sS -H "Authorization: Bearer $1" -H 'Content-Type: application/json' \
+                   -d "{\"question\": \"$2\"}" localhost:8080/ask; }
+          a=$(ask token-a "Wie hoch ist das Reduktionsziel von Mandant A?"); echo "$a"
+          echo "$a" | jq -e '.abstained == false and (.citations[0] | startswith("tenant-a-memo:1:"))'
+          b=$(ask token-a "Wie hoch ist das Reduktionsziel von Mandant B?"); echo "$b"
+          echo "$b" | jq -e '(.answer | contains("55")) | not'
+          code=$(curl -s -o /dev/null -w '%{http_code}' -H 'Authorization: Bearer wrong' \
+                 -H 'Content-Type: application/json' -d '{"question":"Scope 1?"}' localhost:8080/ask)
+          test "$code" = 401
+      - if: failure()
+        run: kubectl describe pods && kubectl logs -l app.kubernetes.io/name=belegt-api --tail=100

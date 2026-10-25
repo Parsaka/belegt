@@ -1,0 +1,8 @@
+.git
+.venv
+data
+tests
+infra
+deploy
+**/__pycache__
+*.pdf
