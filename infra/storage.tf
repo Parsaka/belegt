@@ -16,6 +16,17 @@ resource "google_storage_bucket" "raw" {
     }
   }
 
+  # Monthly extracts are kept for a year of lineage, then deleted (EU storage is not free).
+  lifecycle_rule {
+    condition {
+      age            = 365
+      matches_prefix = ["extracts/"]
+    }
+    action {
+      type = "Delete"
+    }
+  }
+
   depends_on = [google_project_service.this]
 }
 

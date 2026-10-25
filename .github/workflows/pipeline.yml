@@ -1,0 +1,147 @@
+name: Pipeline
+
+# Monthly: extract the full German source files, check them with dbt on DuckDB, then load
+# BigQuery and build the same models there. Every run writes a summary (row counts, test results,
+# bytes processed) to the `ops-results` branch, because the development sandbox cannot read
+# Actions logs.
+on:
+  workflow_dispatch:
+  # After Terraform changed the infrastructure on main, e.g. created the pipeline identity.
+  workflow_run:
+    workflows: [Infra]
+    types: [completed]
+    branches: [main]
+  schedule:
+    - cron: "17 5 3 * *" # 05:17 UTC on the 3rd of each month
+  push:
+    branches: [main, "phase1/**"]
+    paths:
+      - src/belegt/extract.py
+      - src/belegt/warehouse.py
+      - src/belegt/loaders/**
+      - dbt/**
+      - .github/workflows/pipeline.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pipeline
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash # with pipefail, so `| tee` does not hide a failing step
+
+jobs:
+  extract:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: sudo apt-get install -y -qq mdbtools
+      - run: pip install -e ".[extract,load,dbt]"
+      - run: mkdir -p summary
+      - run: belegt extract --out data/raw --work /tmp/downloads 2>&1 | tee summary/extract.log
+      # The full data on DuckDB first: a broken model fails here, before any cloud resource runs.
+      - run: |
+          { time belegt load --source data/raw --db data/belegt.duckdb ; } 2>&1 | tee -a summary/extract.log
+      - run: dbt build --project-dir dbt --profiles-dir dbt 2>&1 | tee summary/dbt-duckdb.log
+      - name: Measured numbers from the full data
+        if: always()
+        run: python scripts/run_summary.py duckdb data/belegt.duckdb dbt/target > summary/duckdb.md || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: raw
+          path: data/raw
+          retention-days: 7
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: summary-extract
+          path: summary
+
+  cloud:
+    needs: extract
+    if: github.ref == 'refs/heads/main' && vars.GCP_WIF_PROVIDER != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: pipeline # the pipeline service account trusts only this environment
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e ".[load,cloud]"
+      - uses: actions/download-artifact@v4
+        with:
+          name: raw
+          path: data/raw
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
+          service_account: pipeline@${{ vars.GCP_PROJECT_ID }}.iam.gserviceaccount.com
+      - uses: google-github-actions/setup-gcloud@v2
+      - name: Keep the extract for lineage
+        run: |
+          mkdir -p summary
+          gcloud storage cp --recursive data/raw/* \
+            "gs://${GCP_PROJECT_ID}-raw/extracts/$(date -u +%F)/" 2>&1 | tail -3 | tee summary/cloud.log
+      - run: belegt load --source data/raw --bigquery-project "$GCP_PROJECT_ID" 2>&1 | tee -a summary/cloud.log
+      - run: dbt build --project-dir dbt --profiles-dir dbt --target prod 2>&1 | tee summary/dbt-bigquery.log
+      - run: dbt docs generate --project-dir dbt --profiles-dir dbt --target prod 2>&1 | tail -3
+      - name: Measured numbers from BigQuery
+        if: always()
+        run: python scripts/run_summary.py bigquery "$GCP_PROJECT_ID" dbt/target > summary/bigquery.md || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: summary-cloud
+          path: summary
+
+  # Publishes the summaries (never data rows beyond counts) to the ops-results branch.
+  report:
+    needs: [extract, cloud]
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: summary-*
+          path: /tmp/summary
+      - name: Push to ops-results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git fetch -q origin ops-results:ops-results; then
+            git checkout -q ops-results
+          else
+            git checkout -q --orphan ops-results
+          fi
+          git rm -rq --cached . >/dev/null 2>&1 || true
+          find . -mindepth 1 -maxdepth 1 ! -name .git ! -name runs -exec rm -rf {} +
+          dest="runs/pipeline/$(date -u +%FT%H%M)-${{ github.run_id }}"
+          mkdir -p "$dest"
+          cp -r /tmp/summary/* "$dest"/ 2>/dev/null || true
+          cat > "$dest/RESULT.md" <<EOF
+          run ${{ github.run_id }} on ${{ github.ref_name }} @ ${{ github.sha }}
+          extract: ${{ needs.extract.result }}
+          cloud: ${{ needs.cloud.result }}
+          EOF
+          git add runs
+          git commit -qm "pipeline run ${{ github.run_id }}: extract ${{ needs.extract.result }}, cloud ${{ needs.cloud.result }}"
+          git push -q origin ops-results

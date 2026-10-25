@@ -31,16 +31,38 @@ def sources() -> None:
 
 
 @app.command()
+def extract(
+    out: Annotated[Path, typer.Option(help="Directory for the source files")] = Path("data/raw"),
+    work: Annotated[Path, typer.Option(help="Scratch space for the large downloads")] = Path(
+        "data/downloads"
+    ),
+) -> None:
+    """Download the full German source files (needs network; runs in GitHub Actions)."""
+    from belegt.extract import extract_all
+
+    for f in extract_all(out, work):
+        rows = f"{f.rows} rows, " if f.rows is not None else ""
+        typer.echo(f"{f.file}: {rows}{f.bytes:,} bytes, sha256 {f.sha256[:12]}")
+
+
+@app.command()
 def load(
     source: Annotated[Path, typer.Option(help="Directory with the source files")] = Path(
         "data/raw"
     ),
     db: Annotated[Path, typer.Option(help="DuckDB file")] = Path("data/belegt.duckdb"),
+    bigquery_project: Annotated[
+        str | None, typer.Option(help="Load into BigQuery dataset `raw` of this project instead")
+    ] = None,
 ) -> None:
-    """Parse the source files and replace the raw tables in DuckDB."""
-    from belegt.warehouse import load_directory
+    """Parse the source files and replace the raw tables in DuckDB or BigQuery."""
+    from belegt.warehouse import load_bigquery, load_directory
 
-    for table, n in load_directory(source, db).items():
+    if bigquery_project:
+        counts = load_bigquery(source, bigquery_project)
+    else:
+        counts = load_directory(source, db)
+    for table, n in counts.items():
         typer.echo(f"raw.{table}: {n} rows")
 
 

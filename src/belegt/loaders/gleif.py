@@ -53,6 +53,32 @@ def entity_from_api(record: dict[str, Any]) -> LegalEntity:
     )
 
 
+def _opt(text: str | None) -> str | None:
+    return text.strip() or None if text else None
+
+
+def entity_from_golden_copy(row: dict[str, str]) -> LegalEntity:
+    """The same record from the golden-copy LEI-CDF CSV (as written by `belegt extract`)."""
+    return LegalEntity(
+        lei=row["LEI"],
+        legal_name=row["Entity.LegalName"].strip(),
+        country=_opt(row["Entity.LegalAddress.Country"]),
+        city=_opt(row["Entity.LegalAddress.City"]),
+        registered_as=_opt(row["Entity.RegistrationAuthority.RegistrationAuthorityEntityID"]),
+        registered_at=_opt(row["Entity.RegistrationAuthority.RegistrationAuthorityID"]),
+        legal_form=_opt(row["Entity.LegalForm.EntityLegalFormCode"]),
+        entity_status=row["Entity.EntityStatus"],
+        registration_status=row["Registration.RegistrationStatus"],
+        last_update=row["Registration.LastUpdateDate"],
+    )
+
+
+def read_entities(path: Path) -> Iterator[LegalEntity]:
+    with path.open(newline="", encoding="utf-8") as fh:
+        for row in csv.DictReader(fh):
+            yield entity_from_golden_copy(row)
+
+
 def _date(text: str) -> date | None:
     return date.fromisoformat(text[:10]) if text else None
 
