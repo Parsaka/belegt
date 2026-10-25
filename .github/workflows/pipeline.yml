@@ -125,23 +125,5 @@ jobs:
           path: /tmp/summary
       - name: Push to ops-results
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git fetch -q origin ops-results:ops-results; then
-            git checkout -q ops-results
-          else
-            git checkout -q --orphan ops-results
-          fi
-          git rm -rq --cached . >/dev/null 2>&1 || true
-          find . -mindepth 1 -maxdepth 1 ! -name .git ! -name runs -exec rm -rf {} +
-          dest="runs/pipeline/$(date -u +%FT%H%M)-${{ github.run_id }}"
-          mkdir -p "$dest"
-          cp -r /tmp/summary/* "$dest"/ 2>/dev/null || true
-          cat > "$dest/RESULT.md" <<EOF
-          run ${{ github.run_id }} on ${{ github.ref_name }} @ ${{ github.sha }}
-          extract: ${{ needs.extract.result }}
-          cloud: ${{ needs.cloud.result }}
-          EOF
-          git add runs
-          git commit -qm "pipeline run ${{ github.run_id }}: extract ${{ needs.extract.result }}, cloud ${{ needs.cloud.result }}"
-          git push -q origin ops-results
+          printf 'extract: %s\ncloud: %s\n' "${{ needs.extract.result }}" "${{ needs.cloud.result }}" > /tmp/RESULT.md
+          bash scripts/push_ops_result.sh pipeline /tmp/RESULT.md /tmp/summary/*
