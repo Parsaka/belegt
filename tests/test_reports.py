@@ -19,6 +19,8 @@ class FakeResponse:
     def __init__(self, body: bytes, status: int = 200) -> None:
         self.body = body
         self.status = status
+        self.headers = {"content-type": "text/html" if not body.startswith(b"%PDF") else "pdf"}
+        self.url = "https://final.test/x"
 
     def raise_for_status(self) -> None:
         if self.status >= 400:
@@ -45,7 +47,7 @@ def test_seed_rows_are_complete_and_unique():
     for r in rows:
         assert len(r.lei) == 20 and r.url.startswith("https://")
         assert r.fiscal_year_end in {"12-31", "09-30"}
-        assert r.decimal_comma  # every seeded report is the German edition
+        assert r.language in {"de", "en"}  # decides the decimal separator
 
 
 def test_task_index_comes_from_kubernetes_or_cloud_run():
@@ -56,7 +58,7 @@ def test_task_index_comes_from_kubernetes_or_cloud_run():
 
 def test_download_refuses_html(tmp_path):
     client = FakeClient({"u": b"<!DOCTYPE html><p>Cookie consent</p>"})
-    with pytest.raises(reports.ReportError, match="did not return a PDF"):
+    with pytest.raises(reports.ReportError, match=r"did not return a PDF \(text/html, final"):
         reports.download(client, "u", tmp_path / "x.pdf")
 
 

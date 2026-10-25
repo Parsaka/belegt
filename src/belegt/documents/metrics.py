@@ -12,7 +12,8 @@ unit once in the table header ("in Mio. t CO2e"). The extractor works on that sh
 
 Every figure keeps the line it came from, so a person can check it against the page. The
 selected figure per report and metric is the one from the page with the most scope rows (the
-E1-6 table itself, not a narrative mention); the others stay as candidates.
+E1-6 table itself, not a narrative mention), and never from a page with a single scope row; the
+others stay as candidates.
 """
 
 from __future__ import annotations
@@ -26,6 +27,9 @@ from belegt.documents.model import Page
 from belegt.units import UnitError, parse_number, to_tonnes
 
 METRICS = ("scope1", "scope2_market", "scope2_location", "scope3")
+# A figure is selected only from a page with at least two scope rows: the E1-6 table lists
+# Scope 1, 2 and 3 together, while a lone row is usually a target or an intensity in prose.
+MIN_TABLE_ROWS = 2
 
 _UNIT = re.compile(
     r"(?P<unit>Mio\.?\s*t|Millionen\s+(?:metrische\s+)?Tonnen|million\s+(?:metric\s+)?t(?:onnes|ons)?"
@@ -150,7 +154,7 @@ def extract(pages: Iterable[Page], decimal_comma: bool) -> Iterator[ReportedMetr
     candidates = [m for page in pages for m in extract_page(page, decimal_comma)]
     best: dict[str, ReportedMetric] = {}
     for m in candidates:
-        if m.value_t is None:
+        if m.value_t is None or m.rows_on_page < MIN_TABLE_ROWS:
             continue
         current = best.get(m.metric)
         if current is None or m.rows_on_page > current.rows_on_page:

@@ -3,7 +3,8 @@
     python scripts/probe_reports.py <dir with pdf/*.pdf> > probe.md
 
 Runs only on the CI runner, next to PDFs that never leave it. The output holds page numbers
-and at most 25 short lines (160 characters) per report that mention a scope or the E1-6 table.
+and for at most four likely E1-6 table pages per report, up to 30 lines with figures (120
+characters each).
 """
 
 from __future__ import annotations
@@ -36,9 +37,18 @@ def main(root: Path) -> None:
         print(f"- pages that mention E1-6: {e16[:20]}")
         print(f"- pages with a CO2 unit: {units[:30]}")
         print(f"- lines that mention a scope: {len(hits)}\n")
-        table = [h for h in hits if re.search(r"\d", h[1])]
-        for number, line in table[:25]:
-            print(f"    p.{number}: {line[:160]}")
+        # The likely E1-6 table: pages with a CO2 unit that mention a scope
+        scoped = {n for n, _ in hits}
+        tables = [p for p in pages if p.number in scoped and page_unit(p.text)][:4]
+        for page in tables:
+            print(f"    p.{page.number} (lines with figures):")
+            numeric = [
+                re.sub(r"\s+", " ", line).strip()
+                for line in page.text.splitlines()
+                if re.search(r"\d", line)
+            ]
+            for line in numeric[:30]:
+                print(f"      {line[:120]}")
         print()
 
 

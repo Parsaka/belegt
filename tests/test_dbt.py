@@ -1,5 +1,6 @@
 """Runs the dbt project on the real fixtures, then proves the SCD2 snapshot opens a new version."""
 
+import json
 from pathlib import Path
 
 import pytest
@@ -103,3 +104,50 @@ def test_scope1_consistency_flags_ets_above_the_reported_figure(warehouse):
     assert rows["rwe-2024"][0] == "no_ets_group"  # RWE's installations are not in the fixtures
     assert rows["thyssenkrupp-2024"][0] == "no_reported_figure"
     assert "09-30" in rows["thyssenkrupp-2024"][2]
+
+
+def test_lookml_points_at_real_marts_and_columns(warehouse):
+    """Every LookML table and ${TABLE} column exists in the dbt build; every field reference
+    and joined view resolves. Looker's own validator needs an instance; this runs offline."""
+    import re
+
+    lkml = pytest.importorskip("lkml")
+    looker = ROOT / "looker"
+    views = {}
+    for path in sorted((looker / "views").glob("*.view.lkml")):
+        for view in lkml.load(path.read_text())["views"]:
+            views[view["name"]] = view
+    model = lkml.load((looker / "belegt.model.lkml").read_text())
+
+    for name, view in views.items():
+        table = re.fullmatch(r"`marts\.(\w+)`", view["sql_table_name"].strip()).group(1)
+        columns = {
+            c
+            for (c,) in query(
+                warehouse,
+                "select column_name from information_schema.columns "
+                f"where table_schema = 'marts' and table_name = '{table}'",
+            )
+        }
+        assert columns, f"{name}: marts.{table} is not a dbt model"
+        text = json.dumps(view)
+        for column in re.findall(r"\$\{TABLE\}\.(\w+)", text):
+            assert column in columns, f"{name}: marts.{table} has no column {column}"
+        fields = {f["name"] for kind in ("dimensions", "measures") for f in view.get(kind, [])}
+        fields |= {
+            f"{g['name']}_{t}" for g in view.get("dimension_groups", []) for t in g["timeframes"]
+        }
+        for ref in re.findall(r"\$\{(\w+)\}", text):
+            assert ref == "TABLE" or ref in fields, f"{name}: unknown field {ref}"
+        for ref in re.findall(r"\{\{ (\w+)\._value \}\}", text):
+            assert ref in fields, f"{name}: unknown field {ref} in a link"
+
+    for explore in model["explores"]:
+        aliases = {explore["name"]: explore["name"]}
+        aliases |= {j["name"]: j.get("from", j["name"]) for j in explore.get("joins", [])}
+        assert all(v in views for v in aliases.values()), explore["name"]
+        for join in explore.get("joins", []):
+            for alias, field in re.findall(r"\$\{(\w+)\.(\w+)\}", join["sql_on"]):
+                view = views[aliases[alias]]
+                names = {f["name"] for f in view.get("dimensions", [])}
+                assert field in names, f"{explore['name']}: {alias}.{field}"

@@ -81,7 +81,10 @@ def download(client: Any, url: str, path: Path) -> tuple[int, str]:
         with path.open("wb") as fh:
             for chunk in response.iter_bytes(1 << 20):
                 if size == 0 and not chunk.startswith(b"%PDF-"):
-                    raise ReportError(f"{url} did not return a PDF")
+                    kind = response.headers.get("content-type", "unknown type")
+                    raise ReportError(
+                        f"{url} did not return a PDF ({kind}, final URL {response.url})"
+                    )
                 size += len(chunk)
                 if size > MAX_BYTES:
                     raise ReportError(f"{url} is larger than {MAX_BYTES} bytes")

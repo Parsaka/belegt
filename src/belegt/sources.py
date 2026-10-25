@@ -82,8 +82,8 @@ SOURCES: tuple[Source, ...] = (
         attribution="Source: the company's annual report, page cited per figure and answer",
         verification=Verification.PARTIAL,
         open_question=(
-            "Each link is checked by the Reports workflow (it must return a PDF); the "
-            "thyssenkrupp link is not yet confirmed on the company's own IR page."
+            "Each link is checked by the Reports workflow (it must return a PDF); links "
+            "outside the company's own site are used only where it offers none."
         ),
     ),
 )
