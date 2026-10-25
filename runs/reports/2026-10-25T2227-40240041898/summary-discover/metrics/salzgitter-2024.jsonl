@@ -1,0 +1,4 @@
+{"doc_id": "salzgitter-2024", "metric": "scope1", "value_t": 10724000.0, "page": 160, "unit_raw": "Tt", "quote": "Scope-1-THG-Bruttoemissionen (Tt CO2e) 10.724 0.35 6.900", "rows_on_page": 4, "selected": true, "column_year": 2024}
+{"doc_id": "salzgitter-2024", "metric": "scope2_location", "value_t": 366000.0, "page": 160, "unit_raw": "Tt", "quote": "Standortbezogene Scope-2-THG-Bruttoemissionen (Tt CO2e) 366 338", "rows_on_page": 4, "selected": true, "column_year": 2024}
+{"doc_id": "salzgitter-2024", "metric": "scope2_market", "value_t": 531000.0, "page": 160, "unit_raw": "Tt", "quote": "Marktbezogene Scope-2-THG-Bruttoemissionen (Tt CO2e) 531 79 0", "rows_on_page": 4, "selected": true, "column_year": 2024}
+{"doc_id": "salzgitter-2024", "metric": "scope3", "value_t": 21460000.0, "page": 160, "unit_raw": "Tt", "quote": "Gesamte indirekte (Scope-3)THG-Bruttoemissionen (Tt CO2e) 21.460 7.048 17.600", "rows_on_page": 4, "selected": true, "column_year": 2024}
