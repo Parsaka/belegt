@@ -1,0 +1,36 @@
+[31m╭─[0m[31m────────────────────[0m[31m [0m[1;31mTraceback [0m[1;2;31m(most recent call last)[0m[31m [0m[31m─────────────────────[0m[31m─╮[0m
+[31m│[0m [2m/home/runner/work/belegt/belegt/src/belegt/[0m[1mcli.py[0m:43 in extract              [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m 40 [0m[2;90m│   [0m[33m"""Download the full German source files (needs network; runs in [0m  [31m│[0m
+[31m│[0m       [33mGitHub Actions)."""[0m                                                    [31m│[0m
+[31m│[0m   [2m 41 [0m[2m│   [0m[94mfrom[0m[90m [0m[4;96mbelegt[0m[4;96m.[0m[4;96mextract[0m[90m [0m[94mimport[0m extract_all                             [31m│[0m
+[31m│[0m   [2m 42 [0m[2m│   [0m                                                                   [31m│[0m
+[31m│[0m [31m❱ [0m 43 [2m│   [0m[94mfor[0m f [95min[0m [1;4mextract_all(out, work)[0m:                                   [31m│[0m
+[31m│[0m   [2m 44 [0m[2m│   │   [0mrows = [33mf[0m[33m"[0m[33m{[0mf.rows[33m}[0m[33m rows, [0m[33m"[0m [94mif[0m f.rows [95mis[0m [95mnot[0m [94mNone[0m [94melse[0m [33m"[0m[33m"[0m        [31m│[0m
+[31m│[0m   [2m 45 [0m[2m│   │   [0mtyper.echo([33mf[0m[33m"[0m[33m{[0mf.file[33m}[0m[33m: [0m[33m{[0mrows[33m}[0m[33m{[0mf.bytes[33m:[0m[33m,[0m[33m}[0m[33m bytes, sha256 [0m        [31m│[0m
+[31m│[0m       [33m{[0mf.sha256[:[94m12[0m][33m}[0m[33m"[0m)                                                      [31m│[0m
+[31m│[0m   [2m 46 [0m                                                                       [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/home/runner/work/belegt/belegt/src/belegt/[0m[1mextract.py[0m:274 in extract_all     [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m271 [0m[2m│   │   [0mfound += extract_ets(client, out)                              [31m│[0m
+[31m│[0m   [2m272 [0m[2m│   │   [0mfound += extract_eea(client, out, work)                        [31m│[0m
+[31m│[0m   [2m273 [0m[2m│   │   [0mfound += extract_gleif(client, out, work)                      [31m│[0m
+[31m│[0m [31m❱ [0m274 [2m│   │   [0mfound += [1;4mextract_esrs(client, out)[0m                             [31m│[0m
+[31m│[0m   [2m275 [0m[2m│   [0mmanifest = {                                                       [31m│[0m
+[31m│[0m   [2m276 [0m[2m│   │   [0m[33m"[0m[33mextracted_at[0m[33m"[0m:                                                [31m│[0m
+[31m│[0m       datetime.now(UTC).isoformat(timespec=[33m"[0m[33mseconds[0m[33m"[0m),                       [31m│[0m
+[31m│[0m   [2m277 [0m[2m│   │   [0m[33m"[0m[33mfiles[0m[33m"[0m: [asdict(f) [94mfor[0m f [95min[0m found],                           [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/home/runner/work/belegt/belegt/src/belegt/[0m[1mextract.py[0m:259 in extract_esrs    [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m256 [0m[2m│   │   │   [0m[94mif[0m is_pdf(fh.read([94m5[0m)):                                     [31m│[0m
+[31m│[0m   [2m257 [0m[2m│   │   │   │   [0m[94mreturn[0m [_record(out, path.name, url)]                  [31m│[0m
+[31m│[0m   [2m258 [0m[2m│   [0mpath.unlink(missing_ok=[94mTrue[0m)                                       [31m│[0m
+[31m│[0m [31m❱ [0m259 [2m│   [0m[1;4;94mraise[0m[1;4m [0m[1;4;96mRuntimeError[0m[1;4m([0m[1;4;33m"[0m[1;4;33mEUR-Lex returned no PDF for the ESRS [0m          [31m│[0m
+[31m│[0m       [1;4;33m(challenge page?)[0m[1;4;33m"[0m[1;4m)[0m                                                    [31m│[0m
+[31m│[0m   [2m260 [0m                                                                       [31m│[0m
+[31m│[0m   [2m261 [0m                                                                       [31m│[0m
+[31m│[0m   [2m262 [0m[94mdef[0m[90m [0m[92mextract_all[0m(out: Path, work: Path) -> [96mlist[0m[Extracted]:             [31m│[0m
+[31m╰──────────────────────────────────────────────────────────────────────────────╯[0m
+[1;91mRuntimeError: [0mEUR-Lex returned no PDF for the ESRS [1m([0mchallenge page?[1m)[0m
