@@ -7,7 +7,7 @@ trial is active. The order matters: the cost guards come first.
 
 | File | What |
 |---|---|
-| `cost_guards.tf` | Budget (1.50 EUR) with alerts at 0.50 / 1.00 / 1.20, Pub/Sub topic, billing kill switch |
+| `cost_guards.tf` | Budget (1.00 EUR, net of credits) with alerts at 0.25 / 0.50 / 1.00, Pub/Sub topic, billing kill switch at 0.60 |
 | `bigquery.tf` | Datasets `raw`, `staging`, `marts`, `rag`; **daily query quota** (hard stop) |
 | `storage.tf` | Raw and reports buckets (private), Artifact Registry with a keep-two cleanup policy |
 | `trial.tf` | `trial_mode = true` only: GKE Autopilot, Cloud SQL, Looker trial **with automatic deletion before day 30** |
@@ -18,7 +18,10 @@ trial is active. The order matters: the cost guards come first.
 1. The owner activates the GCP free trial and creates a project.
 2. In Cloud Shell: `PROJECT_ID=... BILLING_ACCOUNT_ID=... bash scripts/bootstrap_gcp.sh`.
    This creates the state bucket, a CI service account and Workload Identity Federation that
-   trusts only this repository. No keys.
+   trusts only this repository. No keys. The script is safe to re-run: it skips what exists and
+   retries the IAM bindings while a new service account propagates (the first real run hit
+   that). Project ids are global, so the first choice may be taken; this project is
+   `belegt-pk-2610`.
 3. Store the printed values as GitHub repository variables. The `Infra` workflow then plans on
    every pull request and applies on `main` (after approval of the `gcp` environment).
 4. **Set by hand (Public Preview, no Terraform support yet):** service spend caps for Cloud Run

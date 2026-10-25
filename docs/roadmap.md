@@ -10,4 +10,4 @@ Phases are done in order. Each ends with something complete that can be shown.
 | 2 | Weeks 5–6 | GKE Autopilot, Helm, parallel PDF parse (Indexed Job), metric extraction with page citations | `fct_reported_metric` filled |
 | 3 | Weeks 7–8 | Multi-tenant RAG on BigQuery VECTOR_SEARCH with row access policies; isolation tests and evals in CI | Eval report |
 | 4 | Weeks 9–10 | LookML on the Looker trial (auto-deleted before day 30); public Looker Studio dashboard | Dashboard link, screenshots |
-| 5 | Weeks 11–12 | Move to steady state: destroy GKE, run on Cloud Run, measure a week of real cost; upgrade before day 90 | Measured cost under 1.50 EUR in the README |
+| 5 | Weeks 11–12 | Move to steady state: destroy GKE, run on Cloud Run, measure a week of real cost; upgrade before day 90 | Measured cost under 1.00 EUR in the README |

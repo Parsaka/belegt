@@ -42,13 +42,13 @@ variable "budget_currency" {
 variable "budget_amount" {
   description = "Hard monthly limit. The project must never cost more than this."
   type        = number
-  default     = 1.5
+  default     = 1.0
 }
 
 variable "kill_switch_fraction" {
-  description = "Fraction of the budget at which billing is detached (0.8 x 1.50 = 1.20)."
+  description = "Fraction of the budget at which billing is detached (0.6 x 1.00 = 0.60)."
   type        = number
-  default     = 0.8
+  default     = 0.6
 
   validation {
     condition     = var.kill_switch_fraction > 0 && var.kill_switch_fraction < 1

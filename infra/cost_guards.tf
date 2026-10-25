@@ -8,8 +8,9 @@
 locals {
   budget_units = floor(var.budget_amount)
   budget_nanos = floor((var.budget_amount - floor(var.budget_amount)) * 1e9)
-  # Alerts at 0.50, 1.00 and 1.20 EUR for the default 1.50 EUR budget.
-  alert_fractions = [0.33, 0.66, var.kill_switch_fraction, 1.0]
+  # Alerts at 0.25 and 0.50 EUR, the kill switch at 0.60 EUR, and 1.00 EUR for the default
+  # budget. The kill switch fires well below the limit because cost data arrives late.
+  alert_fractions = [0.25, 0.5, var.kill_switch_fraction, 1.0]
 }
 
 resource "google_pubsub_topic" "budget" {
@@ -23,8 +24,10 @@ resource "google_billing_budget" "monthly" {
   display_name    = "belegt hard limit"
 
   budget_filter {
-    projects               = ["projects/${data.google_project.this.number}"]
-    credit_types_treatment = "EXCLUDE_ALL_CREDITS"
+    projects = ["projects/${data.google_project.this.number}"]
+    # Net cost, i.e. what is actually charged. During the trial the 300 USD credit covers
+    # usage, so GKE and Looker do not trip the kill switch; afterwards there are no credits.
+    credit_types_treatment = "INCLUDE_ALL_CREDITS"
     calendar_period        = "MONTH"
   }
 

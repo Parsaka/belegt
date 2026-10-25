@@ -37,9 +37,20 @@ gcloud storage buckets update "gs://${PROJECT_ID}-tfstate" --versioning
 echo "CI service account"
 gcloud iam service-accounts describe "$SA" >/dev/null 2>&1 || \
   gcloud iam service-accounts create "$SA_NAME" --display-name="Terraform from GitHub Actions"
+# A new service account takes a few seconds to become visible to IAM; bindings made
+# straight after creation fail with "does not exist" until then.
+retry() {
+  local attempt
+  for attempt in 1 2 3 4 5 6; do
+    "$@" && return 0
+    echo "  not ready yet, retrying in $((attempt * 5))s" >&2
+    sleep $((attempt * 5))
+  done
+  return 1
+}
 for role in roles/editor roles/resourcemanager.projectIamAdmin roles/iam.serviceAccountAdmin \
             roles/serviceusage.serviceUsageAdmin roles/run.admin roles/container.admin; do
-  gcloud projects add-iam-policy-binding "$PROJECT_ID" --member="serviceAccount:$SA" \
+  retry gcloud projects add-iam-policy-binding "$PROJECT_ID" --member="serviceAccount:$SA" \
     --role="$role" --condition=None >/dev/null
 done
 # The budget and the kill switch's binding live on the billing account.

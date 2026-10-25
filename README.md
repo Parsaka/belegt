@@ -15,7 +15,7 @@ A personal portfolio project (Parsa Kamali). Not investment, audit or legal advi
 
 ## Hard budget
 
-At most **1.50 EUR per month**, enforced in Terraform with several layers. See
+At most **1.00 EUR per month**, enforced in Terraform with several layers. See
 [docs/budget.md](docs/budget.md). The build runs inside the Google Cloud free trial. Afterwards
 only free-tier services stay on, and parts that were switched off are documented with
 screenshots and labelled as temporary.
