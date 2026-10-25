@@ -1,0 +1,29 @@
+name: Inspect sources
+
+# Discovery run: downloads the public source files and prints their structure.
+# Runs on GitHub's network because the development sandbox has no access to these hosts.
+on:
+  workflow_dispatch:
+  push:
+    branches: [pre-trial/sources]
+    paths: [scripts/inspect_sources.py, .github/workflows/inspect-sources.yml]
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install httpx openpyxl
+      - run: python scripts/inspect_sources.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: inspect
+          path: inspect/
+          retention-days: 7
