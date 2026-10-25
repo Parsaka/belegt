@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   push:
     branches: [pre-trial/sources]
-    paths: [scripts/inspect_sources.py, scripts/inspect_eea_accdb.sh, .github/workflows/inspect-sources.yml]
+    paths: [scripts/build_fixtures.py, .github/workflows/inspect-sources.yml]
 
 permissions:
   contents: write  # pushes the discovery output to the inspect-results branch
@@ -21,8 +21,12 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install httpx openpyxl && sudo apt-get install -y -qq mdbtools
-      - run: python scripts/inspect_sources.py ur gleif 2>&1 | tee inspect.log
-      - run: bash scripts/inspect_eea_accdb.sh 2>&1 | tee -a inspect.log
+      - name: Download the EEA Access database
+        run: |
+          curl -sS -u "sptXqwkQr5g7Bp5:" -o /tmp/eea.accdb \
+            https://sdi.eea.europa.eu/datashare/public.php/webdav/eea_t_ied-eprtr_p_2007-2024_v16_r00/Industrial_dataset_v_16_2026_02_16.accdb
+      - run: python scripts/inspect_sources.py gleif 2>&1 | tee inspect.log
+      - run: python scripts/build_fixtures.py /tmp/eea.accdb 2>&1 | tee -a inspect.log
       # The development sandbox cannot read Actions logs or artifacts, so the output goes to a
       # throw-away branch. It holds discovery output only, never source PDFs.
       - name: Push output to inspect-results
