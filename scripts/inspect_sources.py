@@ -46,16 +46,37 @@ def union_registry() -> None:
     links += sorted(set(re.findall(r'href="([^"]*/document/download/[^"]+)"', html)))
     for link in links:
         print("link:", urljoin(page, link))
-    for link in links:
+    wanted = ("verified_emissions_2025_en.xlsx", "compliance_2025_code_en.xlsx")
+    for link in dict.fromkeys(links):
         url = urljoin(page, link)
-        if "2025" in url or "2024" in url or len(links) < 6:
-            r = client.get(url)
-            print(f"\nGET {url} -> {r.status_code} {r.headers.get('content-type')} {len(r.content)} bytes")
-            if r.status_code == 200 and r.content[:2] == b"PK":
-                try:
-                    describe_xlsx(Path(url.split("?")[0]).stem[:40], r.content)
-                except Exception as exc:  # discovery script: report and continue
-                    print("  could not parse:", exc)
+        if not url.endswith(wanted):
+            continue
+        r = client.get(url)
+        print(f"\nGET {url} -> {r.status_code} {len(r.content)} bytes")
+        wb = load_workbook(io.BytesIO(r.content), read_only=True, data_only=True)
+        for ws in wb.worksheets:
+            rows = list(ws.iter_rows(values_only=True))
+            hdr_i = next((i for i, row in enumerate(rows) if row and row[0] == "REGISTRY_CODE"), None)
+            if hdr_i is None:
+                continue
+            hdr = rows[hdr_i]
+            print(f"-- sheet {ws.title!r}: header at row {hdr_i}, {len(rows) - hdr_i - 1} data rows")
+            print("   header:", hdr)
+            body = [r_ for r_ in rows[hdr_i + 1 :] if r_ and r_[0]]
+            if "ACCOUNT_TYPE" in hdr:
+                at = hdr.index("ACCOUNT_TYPE")
+                counts: dict[str, int] = {}
+                for r_ in body:
+                    counts[str(r_[at])] = counts.get(str(r_[at]), 0) + 1
+                print("   account types:", counts)
+            de = [r_ for r_ in body if r_[0] == "DE"]
+            print(f"   DE rows: {len(de)}")
+            stationary = [r_ for r_ in de if "INSTALLATION" in str(r_[-1]).upper()] or de
+            sample = [list(hdr)] + [list(r_) for r_ in stationary[:40]]
+            name = url.split("filename=")[-1].removesuffix(".xlsx")
+            (OUT / f"{name}__{ws.title}__de_sample.json").write_text(json.dumps(sample, default=str))
+            for r_ in stationary[:8]:
+                print("   ", r_[:14])
 
 
 def union_registry_site() -> None:
@@ -68,6 +89,29 @@ def union_registry_site() -> None:
 
 def eea() -> None:
     section("EEA Industrial Reporting")
+    r = client.get("https://sdi.eea.europa.eu/webdav/datastore/public/")
+    print("datastore final url:", r.url, r.status_code)
+    m = re.search(r"/s/([A-Za-z0-9]+)", str(r.url)) or re.search(r'sharingToken"\s*value="([^"]+)"', r.text)
+    token = m.group(1) if m else None
+    print("share token:", token)
+    if token:
+        dav = "https://sdi.eea.europa.eu/datashare/public.php/webdav/"
+        for path in ("", "eea_t_ied-eprtr_p_2007-2022_v13_r00/"):
+            pr = client.request("PROPFIND", dav + path, auth=(token, ""), headers={"Depth": "1"})
+            print("PROPFIND", path, pr.status_code)
+            names = re.findall(r"<d:href>([^<]+)</d:href>", pr.text)
+            for n in names[:200]:
+                if "ied" in n.lower() or path:
+                    print("   ", n)
+    q = {"query": {"query_string": {"query": "Industrial Reporting IED E-PRTR tabular"}}, "size": 10,
+         "_source": ["resourceTitleObject", "uuid", "resourceTemporalDateRange", "createDate"]}
+    sr = client.post("https://sdi.eea.europa.eu/catalogue/srv/api/search/records/_search", json=q,
+                     headers={"Accept": "application/json"})
+    print("catalogue search", sr.status_code)
+    for hit in sr.json().get("hits", {}).get("hits", []) if sr.status_code == 200 else []:
+        src = hit.get("_source", {})
+        print("   ", src.get("uuid"), (src.get("resourceTitleObject") or {}).get("default"))
+    return
     base = "https://sdi.eea.europa.eu/webdav/datastore/public/"
     html = client.get(base).text
     dirs = sorted(set(re.findall(r'href="[^"]*?(eea_t_ied-eprtr[^"/]*)/?"', html)))
@@ -118,7 +162,19 @@ def gleif() -> None:
             print(rel, rr.status_code, rr.text[:800])
     gc = client.get("https://goldencopy.gleif.org/api/v2/golden-copies/publishes/latest")
     print("golden copy latest", gc.status_code)
-    print(gc.text[:3000])
+    data = gc.json()["data"]
+    for kind in ("lei2", "rr", "repex"):
+        full = data.get(kind, {}).get("full_file", {}).get("csv", {})
+        print(f"   {kind}: {full.get('record_count')} records, {full.get('size_human_readable')}, {full.get('url')}")
+    rr_url = data["rr"]["full_file"]["csv"]["url"]
+    rr = client.get(rr_url)
+    with zipfile.ZipFile(io.BytesIO(rr.content)) as z:
+        name = z.namelist()[0]
+        with z.open(name) as fh:
+            head = [fh.readline().decode() for _ in range(6)]
+    for line in head:
+        print("   RR:", line.strip()[:600])
+    (OUT / "gleif_rr_head.csv").write_text("".join(head))
 
 
 if __name__ == "__main__":
