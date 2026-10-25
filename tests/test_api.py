@@ -64,3 +64,50 @@ def test_rate_limiter_window_expires():
     assert limiter.allow("t") and not limiter.allow("t")
     now[0] = 11
     assert limiter.allow("t")
+
+
+def test_the_cloud_backend_queries_bigquery_as_the_tokens_tenant(monkeypatch):
+    from fastapi.testclient import TestClient
+
+    from belegt.api import app as app_module
+    from belegt.rag import bigquery as bq
+
+    asked: list[str] = []
+
+    class FakeJob:
+        def result(self):
+            return [
+                {
+                    "chunk_id": "tenant-a-memo:1:0",
+                    "doc_id": "tenant-a-memo",
+                    "tenant_id": "tenant_a",
+                    "page": 1,
+                    "text": "Mandant A senkt Scope 1 bis 2030 um 42 Prozent.",
+                    "heading": None,
+                    "score": 0.9,
+                }
+            ]
+
+    class FakeClient:
+        def __init__(self, tenant: str) -> None:
+            self.tenant = tenant
+
+        def query(self, sql, job_config):
+            asked.append(self.tenant)
+            return FakeJob()
+
+    monkeypatch.setattr(bq, "impersonating_client", lambda project: FakeClient)
+    monkeypatch.setenv("BELEGT_BACKEND", "bigquery")
+    monkeypatch.setenv("BELEGT_PROJECT", "demo-project")
+    monkeypatch.setenv("BELEGT_EMBEDDER", "hashing")
+    monkeypatch.setenv("BELEGT_TOKENS", "tok-a:tenant_a")
+
+    client = TestClient(app_module.app_from_env())
+    r = client.post(
+        "/ask",
+        headers={"Authorization": "Bearer tok-a"},
+        json={"question": "Wie stark senkt Mandant A Scope 1?"},
+    )
+    assert r.status_code == 200, r.text
+    assert asked == ["tenant_a"]  # the query ran as the token's tenant, never another
+    assert r.json()["citations"][0].startswith("tenant-a-memo")

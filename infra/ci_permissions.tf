@@ -1,6 +1,6 @@
 # Permissions the Terraform identity grants itself for resource-level IAM.
 #
-# roles/editor (from bootstrap_gcp.sh) can create buckets, datasets and repositories but not
+# roles/editor (from bootstrap_gcp.sh) can create buckets, datasets, repositories and secrets but not
 # change who may use them (setIamPolicy). These roles add exactly that. The sleep covers IAM
 # propagation, so the first apply that needs them does not fail with a 403.
 
@@ -8,6 +8,7 @@ locals {
   ci_resource_iam_roles = [
     "roles/artifactregistry.admin", # repository IAM
     "roles/bigquery.dataOwner",     # dataset IAM
+    "roles/secretmanager.admin",    # secret IAM (the API's tokens)
     "roles/storage.admin",          # bucket IAM
   ]
 }

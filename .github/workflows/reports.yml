@@ -5,16 +5,18 @@ name: Reports
 # - discover: on the runner, every report in sequence. Publishes the extracted figures with page
 #   and table line, plus where each report mentions the scopes, to tune the extractor. The PDFs
 #   stay on the runner and are gone with it.
-# - gke: the production path during the trial. One Indexed Job task per report on GKE
-#   Autopilot; the PDFs go to the private reports bucket, the figures next to them, and the
-#   Pipeline workflow loads them into BigQuery.
+# - gke (during the trial) or cloud-run (afterwards): the production path, one task per report,
+#   on a GKE Autopilot Indexed Job or the Cloud Run job `reports`. The same image and the same
+#   task-index contract; the PDFs go to the private reports bucket, the figures next to them,
+#   and the Pipeline workflow loads them into BigQuery.
 on:
   workflow_dispatch:
     inputs:
-      gke:
-        description: Also run the Indexed Job on GKE (trial only)
-        type: boolean
-        default: false
+      runtime:
+        description: Also run the production tasks
+        type: choice
+        options: [none, gke, cloud-run]
+        default: none
   push:
     branches: [main, "phase2/**"]
     paths:
@@ -64,7 +66,7 @@ jobs:
           path: summary
 
   gke:
-    if: github.event_name == 'workflow_dispatch' && inputs.gke && vars.TRIAL_MODE == 'true'
+    if: inputs.runtime == 'gke' && vars.TRIAL_MODE == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     environment: pipeline
@@ -130,8 +132,44 @@ jobs:
           name: summary-gke
           path: summary
 
+  cloud-run:
+    if: inputs.runtime == 'cloud-run'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    environment: pipeline
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+      REGION: europe-west1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
+          service_account: pipeline@${{ vars.GCP_PROJECT_ID }}.iam.gserviceaccount.com
+      - uses: google-github-actions/setup-gcloud@v2
+      - name: One task per report (the image is the one Deploy rolled out)
+        run: |
+          mkdir -p summary /tmp/out/metrics
+          { time gcloud run jobs execute reports --region "$REGION" --wait ; } 2>&1 | tail -5 | tee summary/job.txt
+          # Cloud Logging parses each printed JSON line into jsonPayload
+          gcloud logging read "resource.type=cloud_run_job AND resource.labels.job_name=reports AND jsonPayload.doc_id:*" \
+            --freshness=1h --format=json | jq -c '.[].jsonPayload' > /tmp/results.jsonl
+          gcloud storage cp "gs://${GCP_PROJECT_ID}-reports/extracted/metrics/*.jsonl" /tmp/out/metrics/
+      - if: always()
+        run: |
+          pip install -q -e .
+          python scripts/report_summary.py /tmp/out /tmp/results.jsonl > summary/reports.md || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: summary-cloud-run
+          path: summary
+
   report:
-    needs: [discover, gke]
+    needs: [discover, gke, cloud-run]
     if: always()
     runs-on: ubuntu-latest
     permissions:
@@ -144,5 +182,6 @@ jobs:
           path: /tmp/summary
       - name: Push to ops-results
         run: |
-          printf 'discover: %s\ngke: %s\n' "${{ needs.discover.result }}" "${{ needs.gke.result }}" > /tmp/RESULT.md
+          printf 'discover: %s\ngke: %s\ncloud-run: %s\n' "${{ needs.discover.result }}" \
+            "${{ needs.gke.result }}" "${{ needs.cloud-run.result }}" > /tmp/RESULT.md
           bash scripts/push_ops_result.sh reports /tmp/RESULT.md /tmp/summary/*

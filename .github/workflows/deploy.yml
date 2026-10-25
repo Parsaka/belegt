@@ -1,0 +1,112 @@
+name: Deploy
+
+# Rolls out new images to the Cloud Run API and report job that Terraform created, then calls
+# the API like a user would: a cited answer for tenant A, no leak of tenant B's memo, and 401 for
+# a wrong token. Cold and warm latencies are measured and published to ops-results.
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: [Infra]
+    types: [completed]
+    branches: [main]
+  push:
+    branches: [main]
+    paths:
+      - Dockerfile
+      - pyproject.toml
+      - src/belegt/**
+      - .github/workflows/deploy.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  deploy:
+    if: (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success') && vars.GCP_WIF_PROVIDER != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    environment: pipeline
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+      REGION: europe-west1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
+          service_account: pipeline@${{ vars.GCP_PROJECT_ID }}.iam.gserviceaccount.com
+      - uses: google-github-actions/setup-gcloud@v2
+      - run: mkdir -p summary
+      - name: Build and push both images
+        run: |
+          registry="${REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/belegt"
+          gcloud auth configure-docker "${REGION}-docker.pkg.dev" --quiet
+          for target in api-cloud reports; do
+            docker build --target "$target" -t "$registry/belegt-$target:$GITHUB_SHA" .
+            docker push "$registry/belegt-$target:$GITHUB_SHA"
+          done
+          docker image ls --format '{{.Repository}} {{.Size}}' | grep belegt | tee summary/images.txt
+      - name: Roll out
+        run: |
+          registry="${REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/belegt"
+          gcloud run services update api --region "$REGION" \
+            --image "$registry/belegt-api-cloud:$GITHUB_SHA" --quiet 2>&1 | tail -3
+          gcloud run jobs update reports --region "$REGION" \
+            --image "$registry/belegt-reports:$GITHUB_SHA" --quiet 2>&1 | tail -3
+      - name: Smoke test through the public URL
+        run: |
+          url=$(gcloud run services describe api --region "$REGION" --format='value(status.url)')
+          tokens=$(gcloud secrets versions access latest --secret=api-tokens)
+          token_a=$(tr ',' '\n' <<< "$tokens" | grep ':tenant_a$' | cut -d: -f1)
+          echo "::add-mask::$token_a"
+          ask() {
+            curl -sS -o /tmp/answer.json -w '%{http_code} %{time_total}' \
+              -H "Authorization: Bearer $1" -H 'Content-Type: application/json' \
+              -d "{\"question\": \"$2\"}" "$url/ask"
+            echo  # `read` needs the newline
+          }
+          # The first request after a deploy is a cold start: model load and the first query.
+          read -r code cold < <(ask "$token_a" "Wie hoch ist das Reduktionsziel von Mandant A?")
+          cat /tmp/answer.json; echo
+          test "$code" = 200
+          jq -e '.abstained == false and (.citations[0] | startswith("tenant-a-memo:"))' /tmp/answer.json
+          read -r code warm < <(ask "$token_a" "Wie hoch ist das Reduktionsziel von Mandant B?")
+          cat /tmp/answer.json; echo
+          jq -e '(.answer | contains("55")) | not' /tmp/answer.json
+          read -r code _ < <(ask wrong-token "Scope 1?")
+          test "$code" = 401
+          printf '| request | seconds |\n|---|---|\n| first after deploy (cold) | %s |\n| second (warm) | %s |\n' \
+            "$cold" "$warm" | tee summary/latency.md
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: summary-deploy
+          path: summary
+
+  report:
+    needs: deploy
+    if: always() && needs.deploy.result != 'skipped'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: summary-*
+          path: /tmp/summary
+      - name: Push to ops-results
+        run: |
+          printf 'deploy: %s\n' "${{ needs.deploy.result }}" > /tmp/RESULT.md
+          bash scripts/push_ops_result.sh deploy /tmp/RESULT.md /tmp/summary/*

@@ -12,6 +12,7 @@ trial is active. The order matters: the cost guards come first.
 | `storage.tf` | Raw and reports buckets (private), Artifact Registry with a keep-two cleanup policy |
 | `ci_permissions.tf` | Resource-level IAM roles the Terraform identity grants itself (Editor cannot set bucket, dataset or repository IAM) |
 | `pipeline.tf`, `rag.tf`, `reports.tf`, `drill.tf` | Least-privilege identities: the pipeline, one per RAG tenant, the report pods (GKE Workload Identity), the kill-switch drill |
+| `cloud_run.tf` | Steady state: the API (min 0, max 1 instance, generated demo tokens in Secret Manager) and the report job; Terraform owns the configuration, the Deploy workflow rolls out images |
 | `trial.tf` | `trial_mode = true` only: GKE Autopilot; the Looker trial **with two guards that delete it before day 30** |
 | `functions/kill_switch/` | The function that detaches billing; its decision logic is unit-tested |
 
@@ -28,7 +29,11 @@ trial is active. The order matters: the cost guards come first.
    every pull request and applies on `main` (after approval of the `gcp` environment).
 4. **Set by hand (Public Preview, no Terraform support yet):** service spend caps for Cloud Run
    and Gemini / Vertex AI under Billing → Budgets, about 0.30 EUR each.
-5. Test the kill switch with a test budget before relying on it (Google's advice).
+5. Test the kill switch with a test budget before relying on it (Google's advice). The
+   kill-switch drill workflow does this without detaching billing.
+6. Enable the Cloud Billing export to BigQuery (Billing → Billing export → Standard usage cost →
+   project `belegt-pk-2610`, dataset `billing`). It cannot be set up through an API. The Cost
+   workflow reads it.
 
 ## Leaving the trial
 

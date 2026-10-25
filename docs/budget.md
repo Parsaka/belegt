@@ -26,13 +26,16 @@ measured.
 | Service | Free tier per month | Planned use | Expected cost |
 |---|---|---|---|
 | BigQuery | 1 TiB queries, 10 GiB storage | < 2 GiB stored; daily query quota caps a month at about 620 GiB | 0 |
-| Cloud Run jobs + service (europe-west1, Tier 1) | 240k vCPU-s for jobs; 180k vCPU-s and 2M requests for services | monthly jobs; API with min 0, max 1 instance | 0 |
+| Cloud Run jobs + service (europe-west1, Tier 1) | 240k vCPU-s for jobs; 180k vCPU-s and 2M requests for services | report job (7 tasks, on demand); API with min 0, max 1 instance, CPU only during requests | 0 |
 | Cloud Scheduler, Workflows | 3 jobs; 5,000 steps | one monthly run | 0 |
-| Secret Manager, Logging, Pub/Sub | 6 versions; 50 GiB; 10 GiB | minimal | 0 |
+| Secret Manager, Logging, Pub/Sub | 6 versions; 50 GiB; 10 GiB | one secret (API tokens); job and budget logs | 0 |
 | Cloud Storage (EU) | free tier only in US regions | about 1 GB, with lifecycle rules | about 0.03 EUR |
-| Artifact Registry | 0.5 GB | about 1 GB image (embedding model inside); keep the latest only | about 0.05 EUR |
+| Artifact Registry | 0.5 GB | API image about 1.3 GB (torch and the e5 model inside), report image about 0.2 GB; only the latest version of each is kept | about 0.10 EUR |
 | Embeddings | none needed | open-source multilingual model in the container | 0 |
 | Gemini on Vertex AI | the free Gemini API tier may not serve EEA users | demo answers only; extraction runs once during the trial | about 0.05–0.20 EUR, capped |
+
+Measured cost comes from the Cloud Billing export (dataset `billing`, enabled once in the
+console) and is published weekly by `.github/workflows/cost.yml`.
 
 ## Cost guards (built first, in Terraform)
 
