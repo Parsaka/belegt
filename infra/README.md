@@ -48,7 +48,9 @@ only inside a window fixed by a date:
 1. Create an OAuth web client in the console (APIs & Services → Credentials). Store its id as
    the repository variable `LOOKER_OAUTH_CLIENT_ID` and its secret as the repository secret
    `LOOKER_OAUTH_CLIENT_SECRET`.
-2. Set the repository variable `LOOKER_TRIAL_START` to today's UTC date and run Infra.
+2. Set the repository variable `LOOKER_TRIAL_START` to today's UTC date and run Infra. Creating
+   the instance takes up to an hour. Then add `<looker_url>/oauth2callback` (Terraform output
+   `looker_url`) to the OAuth client's authorised redirect URIs, or sign-in fails.
 3. Guard 1: a Cloud Scheduler job deletes the instance 25 days later (`looker_delete_after_hours`).
    Guard 2: every plan after that moment counts the instance as 0, so Terraform deletes it if it
    still exists and can never create a second one. Never move `LOOKER_TRIAL_START` later.

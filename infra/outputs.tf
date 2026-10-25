@@ -18,3 +18,8 @@ output "looker_delete_at" {
   description = "When the Looker trial is deleted automatically (empty when no Looker trial exists)."
   value       = local.looker_delete_at == null ? "" : local.looker_delete_at
 }
+
+output "looker_url" {
+  description = "The Looker trial's URL; add <url>/oauth2callback to the OAuth client's redirect URIs (empty when no Looker trial exists)."
+  value       = length(google_looker_instance.trial) == 0 ? "" : google_looker_instance.trial[0].looker_uri
+}
