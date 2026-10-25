@@ -22,6 +22,16 @@ view: reported_metrics {
   dimension: url { hidden: yes sql: ${TABLE}.url ;; }
   dimension: unit_raw { label: "Unit as printed" sql: ${TABLE}.unit_raw ;; }
   dimension: quote { label: "Table line" sql: ${TABLE}.quote ;; }
+  dimension: figure_source {
+    description: "reviewed (a person checked the page) or extracted."
+    sql: ${TABLE}.figure_source ;;
+  }
+  dimension: column_year {
+    description: "The header year of the figure's column; empty when the table had no reporting-year column."
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.column_year ;;
+  }
 
   measure: value_mt {
     label: "Reported (Mt CO2e)"

@@ -3,7 +3,7 @@
     python scripts/probe_reports.py <dir with pdf/*.pdf> > probe.md
 
 Runs only on the CI runner, next to PDFs that never leave it. The output holds page numbers
-and for at most four likely E1-6 table pages per report, up to 30 lines with figures (120
+and, for at most six likely E1-6 table pages per report, up to 40 lines with figures (120
 characters each).
 """
 
@@ -13,7 +13,7 @@ import re
 import sys
 from pathlib import Path
 
-from belegt.documents.metrics import page_unit
+from belegt.documents.metrics import metric_of, page_unit
 from belegt.documents.pdf import read_pages
 
 _HINT = re.compile(r"\bScope[\s-]*[123]\b|E1-6", re.I)
@@ -37,17 +37,20 @@ def main(root: Path) -> None:
         print(f"- pages that mention E1-6: {e16[:20]}")
         print(f"- pages with a CO2 unit: {units[:30]}")
         print(f"- lines that mention a scope: {len(hits)}\n")
-        # The likely E1-6 table: pages with a CO2 unit that mention a scope
-        scoped = {n for n, _ in hits}
-        tables = [p for p in pages if p.number in scoped and page_unit(p.text)][:4]
-        for page in tables:
+        # Likely tables: pages with at least two scope rows that carry figures, plus E1-6 pages
+        rows: dict[int, int] = {}
+        for n, line in hits:
+            if metric_of(line) and re.search(r"\d[.,]?\d", line[12:]):
+                rows[n] = rows.get(n, 0) + 1
+        likely = sorted({n for n, c in rows.items() if c >= 2} | set(e16[:3]))[:6]
+        for page in (p for p in pages if p.number in likely):
             print(f"    p.{page.number} (lines with figures):")
             numeric = [
                 re.sub(r"\s+", " ", line).strip()
                 for line in page.text.splitlines()
                 if re.search(r"\d", line)
             ]
-            for line in numeric[:30]:
+            for line in numeric[:40]:
                 print(f"      {line[:120]}")
         print()
 

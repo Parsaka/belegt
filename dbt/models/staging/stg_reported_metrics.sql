@@ -6,5 +6,6 @@ select
     unit_raw,
     quote,
     rows_on_page,
-    selected
+    selected,
+    column_year
 from {{ source('raw', 'reported_metrics') }}

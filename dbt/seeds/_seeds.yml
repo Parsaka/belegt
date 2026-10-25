@@ -38,3 +38,22 @@ seeds:
         tests: [unique, not_null]
       - name: lei
         tests: [not_null]
+
+  - name: reported_overrides
+    description: >
+      Human corrections of extracted report figures, after checking the page in the PDF. Like
+      entity_overrides: the extractor stays as it is, the decision is data with a reviewer.
+    config:
+      column_types:
+        doc_id: varchar
+        metric: varchar
+        value_t: double
+        page: integer
+        quote: varchar
+        reviewer: varchar
+        reviewed_at: date
+        note: varchar
+    tests:
+      - unique_combination:
+          arguments:
+            columns: [doc_id, metric]

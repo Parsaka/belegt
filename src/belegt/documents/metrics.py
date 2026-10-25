@@ -1,58 +1,87 @@
 """Greenhouse-gas totals from sustainability statements, each with the page it came from.
 
-Reports put the ESRS E1-6 figures in a table: one row per scope, one column per year, and the
-unit once in the table header ("in Mio. t CO2e"). The extractor works on that shape:
+The ESRS E1-6 figures sit in a table, but every report lays it out differently. The rules
+below come from the real statements in `dbt/seeds/reports.csv` (see the Reports workflow's
+probe output); each one is a case that broke a simpler version:
 
-1. Find the unit on the page. Without a unit on the page, nothing on it is extracted.
-2. Find the lines that start a scope row (Scope 1; Scope 2 market- or location-based;
-   Scope 3 total). Lines that combine scopes ("Scope 1 und 2") are skipped.
-3. Keep rows with at least two figures (reporting year and a comparison year), which drops
-   prose such as "Scope 1 bis 2030 um 25 % senken". Take the first figure: tables list the
-   reporting year first.
+1. **Rows.** A row starts with a scope label (Scope 1; Scope 2 market- or location-based;
+   Scope 3 total) within its first 60 characters. Combined scopes ("Scope 1 und 2") are
+   skipped. A label line without figures takes the next line as its continuation, because
+   PDF text often wraps "million metric / tons CO2e 53.2".
+2. **Units.** The row's own unit ("Tsd. t CO2eq", "Mio t", "Tt CO2e", "million metric tons")
+   wins over the first CO2 unit on the page. A page without any unit yields nothing. Rows of
+   intensities (per tonne, per MWh, per EUR), percentages and shares are not totals.
+3. **Columns.** The last line above the row that lists years is the column header. The figure
+   is taken from the reporting year's column; some reports put the prior year first. Dashes
+   and "n/a" hold their column. Footnote digits between the label and the first figure are
+   dropped. Without a header that has the reporting year, the first figure is taken and
+   `column_year` stays empty, which marks the figure as less certain.
+4. **Choice.** Prose has many words after its figure and is not a row. Per metric, the figure
+   is selected from the page with the most scope rows (at least two: the E1-6 table lists the
+   scopes together), preferring a header with the reporting year; on that page a row that says
+   total, group or gross ("gesamt", "Konzern", "Brutto") wins, then the largest value, since
+   the parts of a breakdown are smaller than their sum.
 
-Every figure keeps the line it came from, so a person can check it against the page. The
-selected figure per report and metric is the one from the page with the most scope rows (the
-E1-6 table itself, not a narrative mention), and never from a page with a single scope row; the
-others stay as candidates.
+Every candidate keeps its table line, so a person can check it against the page; a reviewed
+correction goes to the `reported_overrides` seed, never into this code.
 """
 
 from __future__ import annotations
 
 import re
 from collections.abc import Iterable, Iterator
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from decimal import Decimal
 
 from belegt.documents.model import Page
 from belegt.units import UnitError, parse_number, to_tonnes
 
 METRICS = ("scope1", "scope2_market", "scope2_location", "scope3")
-# A figure is selected only from a page with at least two scope rows: the E1-6 table lists
-# Scope 1, 2 and 3 together, while a lone row is usually a target or an intensity in prose.
 MIN_TABLE_ROWS = 2
 
-_UNIT = re.compile(
-    r"(?P<unit>Mio\.?\s*t|Millionen\s+(?:metrische\s+)?Tonnen|million\s+(?:metric\s+)?t(?:onnes|ons)?"
-    r"|Tsd\.?\s*t|Tausend\s+(?:metrische\s+)?Tonnen|thousand\s+(?:metric\s+)?t(?:onnes|ons)?"
-    r"|kt|t)\s*(?:CO2|CO₂)",
-    re.IGNORECASE,
+_CO2 = r"\s*(?:of\s+)?(?:CO2|CO₂|CO 2)"
+_UNIT_PATTERNS: tuple[tuple[str, str], ...] = (
+    (
+        "mt",
+        r"Mio\.?\s*t\b|Millionen\s+(?:metrische\s+)?Tonnen|million\s+(?:metric\s+)?(?:tonnes|tons|t)\b",
+    ),
+    (
+        "kt",
+        r"Tsd\.?\s*t\b|Tt\b|kt\b|Tausend\s+(?:metrische\s+)?Tonnen|thousand\s+(?:metric\s+)?(?:tonnes|tons|t)\b",
+    ),
+    ("t", r"(?:metric\s+)?(?:tonnes|tons)\b|Tonnen\b|t(?=" + _CO2 + r")"),
 )
-_UNIT_KEY = (
-    (re.compile(r"^(mio|millionen|million)", re.I), "mt"),
-    (re.compile(r"^(tsd|tausend|thousand|kt)", re.I), "kt"),
+_ROW_UNIT = re.compile(
+    "|".join(f"(?P<{key}>(?<![\\w.]){pattern})" for key, pattern in _UNIT_PATTERNS), re.I
 )
-_SCOPE = re.compile(r"\bScope[\s-]*(?P<n>[123])\b(?!\s*(?:\+|und|and|&|/|,)\s*[123]\b)", re.I)
-_MARKET = re.compile(r"marktbasiert|market[\s-]*based", re.I)
-_LOCATION = re.compile(r"standortbasiert|location[\s-]*based", re.I)
+_PAGE_UNIT = re.compile(
+    "|".join(f"(?P<{key}>(?<![\\w.])(?:{pattern}){_CO2})" for key, pattern in _UNIT_PATTERNS),
+    re.I,
+)
+_SCOPE = re.compile(r"\bScope[\s-]*(?P<n>[123])\b(?!\s*(?:\+|und|and|&|/|,)\s*-?[123]\b)", re.I)
+_MARKET = re.compile(r"markt\s*basiert|marktbezogen|market[\s-]*based", re.I)
+_LOCATION = re.compile(
+    r"standort\s*basiert|standortbezogen|location[\s-]*based|site[\s-]*based", re.I
+)
 _TOTAL = re.compile(r"gesamt|insgesamt|total", re.I)
-# 12.345,6 or 12,3 (German); the comma/point roles are fixed per document language
-_NUMBER_DE = re.compile(
-    r"(?<![\w.,])\d{1,3}(?:\.\d{3})+(?:,\d+)?(?![\w.,])|(?<![\w.,])\d+(?:,\d+)?(?![\w.,])"
+_GROUP_TOTAL = re.compile(r"gesamt|insgesamt|total|konzern|group|brutto|gross", re.I)
+_INTENSITY = (
+    r"(?:/|\bper\b|\bje\b|\bpro\b)\s*(?:t\b|tonne|MWh|kWh|€|EUR|Mio|million|net)|\bk?g\s*CO"
 )
-_NUMBER_EN = re.compile(
-    r"(?<![\w.,])\d{1,3}(?:,\d{3})+(?:\.\d+)?(?![\w.,])|(?<![\w.,])\d+(?:\.\d+)?(?![\w.,])"
+_NOT_A_TOTAL = re.compile(
+    r"%|prozent|anteil|\bshare\b|percentage|spezifisch|specific|intensit|biogen|biomass|"
+    + _INTENSITY,
+    re.I,
 )
+_INTENSITY_AFTER = re.compile(_INTENSITY, re.I)  # "1,85 1,90 kg CO2 / t" after the figures
+# 12.345,6 or 12,3 (German); 12,345.6 or 12.3 (English); dashes and n/a hold a column
+_NUMBER = {
+    True: r"\d{1,3}(?:\.\d{3})+(?:,\d+)?|\d+(?:,\d+)?",
+    False: r"\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?",
+}
+_PLACEHOLDER = "[\u2013\u2014-]" + r"(?=\s|$)|n\s*/\s*a\b|n\.\s*a\.|<\s*\d+"
 _YEAR = re.compile(r"^(?:19|20)\d{2}$")
+_WORD = re.compile(r"[A-Za-zÄÖÜäöüß]{2,}")
 
 
 @dataclass(frozen=True)
@@ -65,23 +94,46 @@ class ReportedMetric:
     quote: str  # the table line, at most 200 characters
     rows_on_page: int  # scope rows found on the same page; the E1-6 table has the most
     selected: bool = False
+    column_year: int | None = None  # the header year of the figure's column, if found
+
+
+@dataclass(frozen=True)
+class _Token:
+    text: str
+    start: int
+    is_number: bool
+
+
+_TOKEN = {
+    comma: re.compile(rf"(?<![\w.,/])(?:(?P<n>{number})|(?P<p>{_PLACEHOLDER}))(?![\w.,])")
+    for comma, number in _NUMBER.items()
+}
+
+
+def _tokens(text: str, decimal_comma: bool) -> list[_Token]:
+    """Numbers and column placeholders; a percentage is neither (it is a change or a share)."""
+    return [
+        _Token(m.group(0), m.start(), m.group("n") is not None)
+        for m in _TOKEN[decimal_comma].finditer(text)
+        if not re.match(r"\s*%", text[m.end() :])
+    ]
+
+
+def _unit_key(match: re.Match[str]) -> str:
+    return next(key for key in ("mt", "kt", "t") if match.group(key))
 
 
 def page_unit(text: str) -> tuple[str, str] | None:
     """(canonical unit, as written) for the first CO2 unit on the page."""
-    match = _UNIT.search(text)
+    match = _PAGE_UNIT.search(text)
     if match is None:
         return None
-    raw = match.group("unit")
-    for pattern, key in _UNIT_KEY:
-        if pattern.match(raw.strip()):
-            return key, raw
-    return "t", raw
+    return _unit_key(match), re.sub(_CO2 + r".*$", "", match.group(0), flags=re.I).strip()
 
 
 def metric_of(line: str) -> str | None:
     match = _SCOPE.search(line)
-    if match is None or match.start() > 40:  # the label starts the row, not the middle of prose
+    if match is None or match.start() > 60:  # the label starts the row, not the middle of prose
         return None
     n = match.group("n")
     if n == "1":
@@ -95,41 +147,109 @@ def metric_of(line: str) -> str | None:
     return "scope3" if _TOTAL.search(line) else None
 
 
-def figures(line: str, decimal_comma: bool) -> list[str]:
-    """Numbers after the scope label, without years and single-digit footnote markers."""
+def _values(line: str, decimal_comma: bool) -> list[_Token]:
+    """The row's column values after its label: years and leading footnote digits removed."""
     label = _SCOPE.search(line)
-    rest = line[label.end() :] if label else line
-    pattern = _NUMBER_DE if decimal_comma else _NUMBER_EN
-    return [
-        m.group(0)
-        for m in pattern.finditer(rest)
-        if not _YEAR.match(m.group(0)) and not re.fullmatch(r"\d", m.group(0))
-    ]
+    offset = label.end() if label else 0
+    found = [t for t in _tokens(line[offset:], decimal_comma) if not _YEAR.match(t.text)]
+    while found and found[0].is_number and re.fullmatch(r"\d", found[0].text):
+        if len(found) > 1 or not _ROW_UNIT.search(line[offset:]):
+            found = found[1:]  # a footnote marker such as "Scope 1 (direkt)1 15,6"
+        else:
+            break
+    return found
+
+
+def figures(line: str, decimal_comma: bool) -> list[str]:
+    return [t.text for t in _values(line, decimal_comma) if t.is_number]
 
 
 def first_figure(line: str, decimal_comma: bool) -> str | None:
-    """The reporting-year figure of a table row: tables list it first."""
     found = figures(line, decimal_comma)
     return found[0] if found else None
 
 
-def extract_page(page: Page, decimal_comma: bool) -> list[ReportedMetric]:
-    unit = page_unit(page.text)
-    if unit is None:
+def _years(line: str) -> list[int] | None:
+    """The column years of a header line ("Einheit 2024 2023", "Scope 1 ... Unit 2024")."""
+    years = [int(y) for y in re.findall(r"(?<!\d)(?:19|20)\d{2}(?!\d)", line)]
+    if not years:
+        return None
+    others = [t for t in _tokens(line, False) if t.is_number and not _YEAR.match(t.text)]
+    has_unit_column = re.search(r"\b(?:Einheit|Unit)\b", line, re.I) is not None
+    short = len(_WORD.findall(line)) <= 6 and not _SCOPE.search(line)
+    return years if len(others) <= 1 and (short or has_unit_column) else None
+
+
+def _continues(line: str, decimal_comma: bool) -> bool:
+    """A wrapped row's second half: at most a few words (the unit) before its figures."""
+    values = [t for t in _tokens(line, decimal_comma) if t.is_number and not _YEAR.match(t.text)]
+    if not values or _SCOPE.search(line):
+        return False
+    return len(_WORD.findall(line[: values[0].start])) <= 3
+
+
+def _is_prose(line: str, values: list[_Token]) -> bool:
+    first = next((t for t in values if t.is_number), None)
+    if first is None:
+        return True
+    tail = line[line.find(first.text) :]
+    tail = _ROW_UNIT.sub(" ", tail)
+    return len(_WORD.findall(re.sub(_CO2, " ", tail, flags=re.I))) > 3
+
+
+def _rows(text: str, decimal_comma: bool) -> Iterator[tuple[str, list[int] | None]]:
+    """(row line, header years above it), joining a label line with its continuation."""
+    lines = [re.sub(r"\s+", " ", line).strip() for line in text.splitlines()]
+    header: list[int] | None = None
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        years = _years(line)
+        if years is not None:
+            header = years
+        if metric_of(line) is not None:
+            nxt = lines[i + 1] if i + 1 < len(lines) else ""
+            if not figures(line, decimal_comma) and _continues(nxt, decimal_comma):
+                line = f"{line} {nxt}"
+                i += 1
+            yield line, header
+        i += 1
+
+
+def extract_page(
+    page: Page, decimal_comma: bool, report_year: int | None = None
+) -> list[ReportedMetric]:
+    fallback = page_unit(page.text)
+    if fallback is None and not _ROW_UNIT.search(page.text):
         return []
-    key, raw_unit = unit
-    rows: list[tuple[str, str, str]] = []
-    for line in page.text.splitlines():
-        line = re.sub(r"\s+", " ", line).strip()
+    rows: list[tuple[str, str, str, str, str, int | None]] = []
+    for line, header in _rows(page.text, decimal_comma):
         metric = metric_of(line)
-        if metric is None:
+        label = _SCOPE.search(line)
+        if metric is None or label is None:
             continue
-        found = figures(line, decimal_comma)
-        if len(found) < 2:  # a table row has the reporting year and at least one comparison
+        values = _values(line, decimal_comma)
+        if not values or _is_prose(line, values):
             continue
-        rows.append((metric, found[0], line[:200]))
+        head = line[: label.end() + values[0].start]
+        if _NOT_A_TOTAL.search(head) or _INTENSITY_AFTER.search(line[len(head) :]):
+            continue
+        row_unit = _ROW_UNIT.search(line, label.end())
+        if row_unit:
+            key, raw_unit = _unit_key(row_unit), row_unit.group(0)
+        elif fallback:
+            key, raw_unit = fallback
+        else:
+            continue
+        column = header.index(report_year) if header and report_year in header else None
+        if column is not None and column < len(values):
+            token, year = values[column], report_year
+        else:
+            token, year = values[0], None
+        if token.is_number:
+            rows.append((metric, token.text, key, raw_unit, line[:200], year))
     out = []
-    for metric, figure, quote in rows:
+    for metric, figure, key, raw_unit, quote, year in rows:
         try:
             value: Decimal | None = to_tonnes(parse_number(figure, decimal_comma), key)
         except UnitError:
@@ -143,22 +263,33 @@ def extract_page(page: Page, decimal_comma: bool) -> list[ReportedMetric]:
                 raw_unit,
                 quote,
                 len(rows),
+                column_year=year,
             )
         )
     return out
 
 
-def extract(pages: Iterable[Page], decimal_comma: bool) -> Iterator[ReportedMetric]:
-    """All candidates, with exactly one `selected` per metric: the first one on the page with the
-    most scope rows."""
-    candidates = [m for page in pages for m in extract_page(page, decimal_comma)]
+def extract(
+    pages: Iterable[Page], decimal_comma: bool, report_year: int | None = None
+) -> Iterator[ReportedMetric]:
+    """All candidates, with at most one `selected` per metric (see the module docstring)."""
+    candidates = [m for page in pages for m in extract_page(page, decimal_comma, report_year)]
+
+    def rank(m: ReportedMetric) -> tuple[bool, int, bool, float]:
+        return (
+            m.column_year is not None,
+            m.rows_on_page,
+            bool(_GROUP_TOTAL.search(m.quote[:80])),
+            m.value_t or 0.0,
+        )
+
     best: dict[str, ReportedMetric] = {}
     for m in candidates:
         if m.value_t is None or m.rows_on_page < MIN_TABLE_ROWS:
             continue
         current = best.get(m.metric)
-        if current is None or m.rows_on_page > current.rows_on_page:
+        if current is None or rank(m) > rank(current):
             best[m.metric] = m
     chosen = {id(m) for m in best.values()}
     for m in candidates:
-        yield ReportedMetric(**{**m.__dict__, "selected": id(m) in chosen})
+        yield replace(m, selected=id(m) in chosen)
