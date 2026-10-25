@@ -33,6 +33,8 @@ resource "google_bigquery_dataset_iam_member" "pipeline" {
   dataset_id = google_bigquery_dataset.this[each.key].dataset_id
   role       = "roles/bigquery.dataEditor"
   member     = "serviceAccount:${google_service_account.pipeline.email}"
+
+  depends_on = [time_sleep.ci_resource_iam]
 }
 
 # The extracts are written to the raw bucket under extracts/<date>/ for lineage.
@@ -40,6 +42,8 @@ resource "google_storage_bucket_iam_member" "pipeline_raw" {
   bucket = google_storage_bucket.raw.name
   role   = "roles/storage.objectAdmin"
   member = "serviceAccount:${google_service_account.pipeline.email}"
+
+  depends_on = [time_sleep.ci_resource_iam]
 }
 
 output "pipeline_service_account" {
