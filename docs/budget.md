@@ -8,6 +8,9 @@ The budget counts net cost, i.e. what is actually charged after credits.
 1. **Build inside the Google Cloud free trial** (300 USD, 90 days). The trial does not charge
    automatically when it ends: the billing account closes unless it is upgraded manually.
    GKE, Cloud SQL, Dagster and the Looker trial run only in this window.
+   Report extraction runs there as a GKE Autopilot Indexed Job (`.github/workflows/reports.yml`):
+   Autopilot bills the pods' requests (0.5 vCPU, 2 GiB each) for the minutes they run, and the
+   GKE free tier credit covers the fee of one Autopilot cluster. Paid from trial credits.
 2. **After the trial, only free-tier services stay on.** Parts that were switched off are
    documented with screenshots and labelled as temporary.
 3. The GCP trial is **not** activated until the local pre-trial phase is done, so the 90 days

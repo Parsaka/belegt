@@ -15,6 +15,8 @@ resource "google_artifact_registry_repository_iam_member" "pipeline_push" {
   repository = google_artifact_registry_repository.images.name
   role       = "roles/artifactregistry.writer"
   member     = "serviceAccount:${google_service_account.pipeline.email}"
+
+  depends_on = [time_sleep.ci_resource_iam]
 }
 
 # The pipeline loads the extracted figures (extracted/metrics/*.jsonl) into BigQuery.
@@ -22,6 +24,8 @@ resource "google_storage_bucket_iam_member" "pipeline_reports_read" {
   bucket = google_storage_bucket.reports.name
   role   = "roles/storage.objectViewer"
   member = "serviceAccount:${google_service_account.pipeline.email}"
+
+  depends_on = [time_sleep.ci_resource_iam]
 }
 
 # --- trial only: GKE --------------------------------------------------------------
@@ -42,7 +46,8 @@ resource "google_storage_bucket_iam_member" "reports_tasks" {
   role   = "roles/storage.objectUser" # read and write objects, no bucket settings or IAM
   member = local.reports_ksa
 
-  depends_on = [google_container_cluster.trial] # the identity pool exists with the cluster
+  # the identity pool exists once the cluster does
+  depends_on = [google_container_cluster.trial, time_sleep.ci_resource_iam]
 }
 
 # Autopilot nodes run as the Compute Engine default service account and pull the image.
@@ -54,5 +59,5 @@ resource "google_artifact_registry_repository_iam_member" "nodes_pull" {
   role       = "roles/artifactregistry.reader"
   member     = "serviceAccount:${data.google_project.this.number}-compute@developer.gserviceaccount.com"
 
-  depends_on = [google_container_cluster.trial]
+  depends_on = [google_container_cluster.trial, time_sleep.ci_resource_iam]
 }
