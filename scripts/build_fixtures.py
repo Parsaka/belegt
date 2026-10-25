@@ -20,6 +20,9 @@ from urllib.parse import urljoin
 import httpx
 from openpyxl import Workbook, load_workbook
 
+sys.path.insert(0, str(Path(__file__).parents[1] / "src"))
+from belegt.resolution import normalise_lei, normalise_register
+
 UA = {"User-Agent": "belegt-portfolio/0.1 (+https://github.com/Parsaka/belegt)"}
 OUT = Path("inspect/fixtures")
 OUT.mkdir(parents=True, exist_ok=True)
@@ -174,12 +177,12 @@ def main() -> None:
         ws.append(list(o))
     wb.save(OUT / "ets_operators_de.xlsx")
     print(f"operators fixture: {len(fx_ops)} rows")
-    leis = sorted({str(o[op_col["LEI"]]).strip() for o in fx_ops if o[op_col["LEI"]]})
+    leis = sorted({lei for o in fx_ops if (lei := normalise_lei(o[op_col["LEI"]]))})
     regs = sorted(
         {
-            str(o[op_col["Company Registration Nr of Account Holder"]]).strip()
+            reg
             for o in fx_ops
-            if not o[op_col["LEI"]] and o[op_col["Company Registration Nr of Account Holder"]]
+            if (reg := normalise_register(o[op_col["Company Registration Nr of Account Holder"]]))
         }
     )
     names = {f["parentCompanyName"] for f in fx_fac if f.get("parentCompanyName")}
@@ -242,16 +245,21 @@ def gleif(parent_names: list[str], leis: list[str], regs: list[str]) -> None:
     print(
         f"   GLEIF records by operator LEI: {sum(len(v) for v in candidates.values())} of {len(leis)}"
     )
-    for reg in regs[:60]:
-        r = client.get(
-            f"{GLEIF}/lei-records",
-            params={
-                "filter[entity.registeredAs]": reg,
-                "filter[entity.legalAddress.country]": "DE",
-                "page[size]": 5,
-            },
-        )
-        candidates[f"reg:{reg}"] = r.json().get("data", []) if r.status_code == 200 else []
+    for reg in regs[:80]:
+        found: list[dict[str, object]] = []
+        # GLEIF stores the number as registered, e.g. "HRB 6000" or "HRB 19220 P"
+        variants = {reg, re.sub(r"(\d)([A-Z])$", r"\1 \2", reg)}
+        for variant in variants:
+            r = client.get(
+                f"{GLEIF}/lei-records",
+                params={
+                    "filter[entity.registeredAs]": variant,
+                    "filter[entity.legalAddress.country]": "DE",
+                    "page[size]": 10,
+                },
+            )
+            found += r.json().get("data", []) if r.status_code == 200 else []
+        candidates[f"reg:{reg}"] = found
         print(
             f"   GLEIF by register number {reg!r}: {[c['attributes']['entity']['legalName']['name'] for c in candidates[f'reg:{reg}']]}"
         )

@@ -11,7 +11,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "pytest-cov>=5", "ruff>=0.5", "mypy>=1.10"]
+dev = ["pytest>=8", "pytest-cov>=5", "ruff>=0.5", "mypy>=1.10", "belegt[load]"]
+load = ["openpyxl>=3.1", "duckdb>=1.1"]
+dbt = ["dbt-duckdb>=1.9"]
 
 [project.scripts]
 belegt = "belegt.cli:app"
@@ -34,6 +36,7 @@ ignore = ["RUF012"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*.py" = ["E501"]
+"scripts/*.py" = ["E501"]  # one-off discovery scripts that print wide rows
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

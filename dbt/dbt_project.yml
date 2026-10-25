@@ -1,0 +1,26 @@
+name: belegt
+version: "0.1.0"
+config-version: 2
+profile: belegt
+
+model-paths: [models]
+snapshot-paths: [snapshots]
+seed-paths: [seeds]
+test-paths: [tests]
+macro-paths: [macros]
+
+models:
+  belegt:
+    staging:
+      +materialized: view
+      +schema: staging
+    intermediate:
+      +materialized: view
+      +schema: staging
+    marts:
+      +materialized: table
+      +schema: marts
+
+seeds:
+  belegt:
+    +schema: staging

@@ -1,0 +1,17 @@
+# Local and CI: DuckDB file written by `belegt load`. Cloud: BigQuery with the workload identity
+# of the GitHub Actions run (no key files). Pick with --target.
+belegt:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "{{ env_var('BELEGT_DUCKDB', '../data/belegt.duckdb') }}"
+      threads: 4
+    prod:
+      type: bigquery
+      method: oauth
+      project: "{{ env_var('GCP_PROJECT_ID', 'unset') }}"
+      dataset: marts
+      location: EU
+      threads: 4
+      maximum_bytes_billed: 1073741824  # 1 GiB per query, a second guard next to the daily quota
