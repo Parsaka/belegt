@@ -7,7 +7,8 @@ The budget counts net cost, i.e. what is actually charged after credits.
 
 1. **Build inside the Google Cloud free trial** (300 USD, 90 days). The trial does not charge
    automatically when it ends: the billing account closes unless it is upgraded manually.
-   GKE, Cloud SQL, Dagster and the Looker trial run only in this window.
+   GKE and the Looker trial run only in this window. (Cloud SQL and Dagster were planned and
+   dropped: GitHub Actions orchestrates, and the vectors live in BigQuery.)
    Report extraction runs there as a GKE Autopilot Indexed Job (`.github/workflows/reports.yml`):
    Autopilot bills the pods' requests (0.5 vCPU, 2 GiB each) for the minutes they run, and the
    GKE free tier credit covers the fee of one Autopilot cluster. Paid from trial credits.
@@ -47,7 +48,8 @@ measured.
 ## Known traps
 
 - **Looker trial:** after 30 days it converts automatically to a paid Standard instance.
-  A scheduled job deletes it before day 30.
-- **Cloud SQL:** even when stopped, 10 GB of storage costs about 1.70 USD per month, which is
+  A scheduled job deletes it on day 25, and Terraform refuses to keep or recreate it after that
+  date (`infra/README.md`, Looker trial).
+- **Cloud SQL (not used):** even when stopped, 10 GB of storage costs about 1.70 USD per month, which is
   above the limit. Vectors move to BigQuery before the trial ends.
 - **Load balancer:** about 18 USD per month per forwarding rule; only during the trial.

@@ -65,7 +65,7 @@ variable "bq_daily_query_mib" {
 # --- trial-only resources ----------------------------------------------------
 
 variable "trial_mode" {
-  description = "True only during the 90-day free trial: creates GKE, Cloud SQL and the Looker trial."
+  description = "True only during the 90-day free trial: creates GKE and allows the Looker trial."
   type        = bool
   default     = false
 }
@@ -83,8 +83,19 @@ variable "looker_oauth_client_secret" {
   sensitive   = true
 }
 
+variable "looker_trial_start" {
+  description = "UTC date (YYYY-MM-DD) the Looker trial instance is first created. Empty: no Looker. Never move it later: the window would reopen."
+  type        = string
+  default     = ""
+
+  validation {
+    condition     = var.looker_trial_start == "" || can(regex("^\\d{4}-\\d{2}-\\d{2}$", var.looker_trial_start))
+    error_message = "Use YYYY-MM-DD."
+  }
+}
+
 variable "looker_delete_after_hours" {
-  description = "The Looker trial converts to a paid instance after 30 days. Delete it after 25."
+  description = "The Looker trial converts to a paid instance after 30 days. Delete it 25 days after looker_trial_start."
   type        = number
   default     = 600
 

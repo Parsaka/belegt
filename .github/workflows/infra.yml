@@ -45,6 +45,9 @@ jobs:
       TF_VAR_billing_account_id: ${{ vars.GCP_BILLING_ACCOUNT_ID }}
       TF_VAR_ci_service_account_email: ${{ vars.GCP_CI_SERVICE_ACCOUNT }}
       TF_VAR_trial_mode: ${{ vars.TRIAL_MODE || 'false' }}
+      TF_VAR_looker_trial_start: ${{ vars.LOOKER_TRIAL_START }}
+      TF_VAR_looker_oauth_client_id: ${{ vars.LOOKER_OAUTH_CLIENT_ID }}
+      TF_VAR_looker_oauth_client_secret: ${{ secrets.LOOKER_OAUTH_CLIENT_SECRET }}
     steps:
       - uses: actions/checkout@v4
       - uses: google-github-actions/auth@v2
@@ -79,6 +82,9 @@ jobs:
       TF_VAR_billing_account_id: ${{ vars.GCP_BILLING_ACCOUNT_ID }}
       TF_VAR_ci_service_account_email: ${{ vars.GCP_CI_SERVICE_ACCOUNT }}
       TF_VAR_trial_mode: ${{ vars.TRIAL_MODE || 'false' }}
+      TF_VAR_looker_trial_start: ${{ vars.LOOKER_TRIAL_START }}
+      TF_VAR_looker_oauth_client_id: ${{ vars.LOOKER_OAUTH_CLIENT_ID }}
+      TF_VAR_looker_oauth_client_secret: ${{ secrets.LOOKER_OAUTH_CLIENT_SECRET }}
     steps:
       - uses: actions/checkout@v4
       - uses: google-github-actions/auth@v2
