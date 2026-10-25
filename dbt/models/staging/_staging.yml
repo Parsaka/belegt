@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: stg_eea__installations
+    columns:
+      - name: ets_identifier
+        tests: [unique, not_null]
+  - name: stg_gleif__entities
+    columns:
+      - name: lei
+        tests: [unique, not_null]
+  - name: stg_entity_matches
+    columns:
+      - name: source_name
+        tests: [unique, not_null]
+      - name: decision
+        tests:
+          - accepted_values:
+              arguments:
+                values: [accepted, review, unmatched, rejected]
+  - name: stg_ets__operators
+    columns:
+      - name: ets_identifier
+        tests: [unique, not_null]

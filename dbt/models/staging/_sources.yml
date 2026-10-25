@@ -1,0 +1,22 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: raw
+    description: Rows parsed by `belegt load`; one table per source file, replaced on every load.
+    tables:
+      - name: ets_emissions
+        description: EU ETS Union Registry, verified emissions per installation and year (long format).
+      - name: eea_ets_links
+        description: EEA Industrial Reporting, ETS identifier per installation and reporting year.
+      - name: eea_installations
+      - name: eea_facilities
+        description: Facilities with the free-text parent company name reported to the EEA.
+      - name: gleif_entities
+        description: GLEIF Level 1 legal entities.
+      - name: gleif_relationships
+        description: GLEIF Level 2 accounting-consolidation relationships with validity periods.
+      - name: entity_matches
+        description: Scored matches from EEA parent names to LEIs (belegt.resolution).
+      - name: ets_operators
+        description: Commission list of installation operators (account holder, register number, LEI).

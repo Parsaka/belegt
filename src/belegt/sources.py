@@ -35,8 +35,16 @@ SOURCES: tuple[Source, ...] = (
         url="https://climate.ec.europa.eu/areas-action/carbon-markets/eu-emissions-trading-system-eu-ets/union-registry_en",
         licence="Commission reuse policy (Decision 2011/833/EU), reuse with attribution",
         attribution="Source: European Commission, Union Registry",
-        verification=Verification.PARTIAL,
-        open_question="Confirm the yearly xlsx files are at installation level.",
+        verification=Verification.VERIFIED,
+    ),
+    Source(
+        id="eu_ets_operators",
+        name="EU ETS installation operators (account holder, register number, LEI)",
+        publisher="European Commission, DG CLIMA (Union Registry)",
+        url="https://climate.ec.europa.eu/areas-action/carbon-markets/eu-emissions-trading-system-eu-ets/union-registry_en",
+        licence="Commission reuse policy (Decision 2011/833/EU), reuse with attribution",
+        attribution="Source: European Commission, Union Registry",
+        verification=Verification.VERIFIED,
     ),
     Source(
         id="eea_industrial_reporting",

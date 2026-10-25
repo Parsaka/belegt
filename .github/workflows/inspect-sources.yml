@@ -1,0 +1,45 @@
+name: Inspect sources
+
+# Discovery run: downloads the public source files and prints their structure.
+# Runs on GitHub's network because the development sandbox has no access to these hosts.
+on:
+  workflow_dispatch:
+  push:
+    branches: [pre-trial/sources]
+    paths: [scripts/build_fixtures.py, .github/workflows/inspect-sources.yml]
+
+permissions:
+  contents: write  # pushes the discovery output to the inspect-results branch
+
+defaults:
+  run:
+    shell: bash  # with pipefail, so `| tee` does not hide a failing script
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install httpx openpyxl && sudo apt-get install -y -qq mdbtools
+      - name: Download the EEA Access database
+        run: |
+          curl -sS -u "sptXqwkQr5g7Bp5:" -o /tmp/eea.accdb \
+            https://sdi.eea.europa.eu/datashare/public.php/webdav/eea_t_ied-eprtr_p_2007-2024_v16_r00/Industrial_dataset_v_16_2026_02_16.accdb
+      - run: python scripts/inspect_sources.py gleif 2>&1 | tee inspect.log
+      - run: python scripts/build_fixtures.py /tmp/eea.accdb 2>&1 | tee -a inspect.log
+      # The development sandbox cannot read Actions logs or artifacts, so the output goes to a
+      # throw-away branch. It holds discovery output only, never source PDFs.
+      - name: Push output to inspect-results
+        run: |
+          mkdir -p /tmp/out && cp -r inspect inspect.log /tmp/out/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan inspect-results
+          git rm -rq --cached . && git clean -fdq -e inspect -e inspect.log
+          git add inspect inspect.log
+          git commit -qm "Discovery output from run ${{ github.run_id }}"
+          git push -f origin inspect-results

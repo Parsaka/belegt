@@ -31,6 +31,20 @@ def sources() -> None:
 
 
 @app.command()
+def load(
+    source: Annotated[Path, typer.Option(help="Directory with the source files")] = Path(
+        "data/raw"
+    ),
+    db: Annotated[Path, typer.Option(help="DuckDB file")] = Path("data/belegt.duckdb"),
+) -> None:
+    """Parse the source files and replace the raw tables in DuckDB."""
+    from belegt.warehouse import load_directory
+
+    for table, n in load_directory(source, db).items():
+        typer.echo(f"raw.{table}: {n} rows")
+
+
+@app.command()
 def index(
     pdf: Path,
     doc_id: Annotated[str, typer.Option(help="Stable id, e.g. basf-2024")],

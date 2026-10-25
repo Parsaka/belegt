@@ -21,6 +21,10 @@ infra/tfplan
 *.duckdb.wal
 # sustainability reports are copyrighted: never commit PDFs
 *.pdf
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+dbt/.user.yml
 
 # terraform build output
 infra/.build/

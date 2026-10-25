@@ -1,0 +1,62 @@
+version: 2
+
+models:
+  - name: dim_installation
+    description: One row per EU ETS installation in the registry extract.
+    columns:
+      - name: ets_identifier
+        tests: [unique, not_null]
+      - name: match_decision
+        tests:
+          - accepted_values:
+              arguments:
+                values: [accepted, review, unmatched, rejected]
+              config: {where: "match_decision is not null"}
+
+  - name: dim_legal_entity
+    description: SCD2 history of GLEIF legal entities.
+    columns:
+      - name: legal_entity_key
+        tests: [unique, not_null]
+    tests:
+      - one_current_version_per_lei
+
+  - name: bridge_ownership
+    description: Time-bounded consolidation edges plus a self edge per entity.
+    columns:
+      - name: relationship_kind
+        tests:
+          - accepted_values:
+              arguments:
+                values: [direct, ultimate, self]
+    tests:
+      - no_overlapping_periods
+
+  - name: fct_verified_emissions
+    description: Verified emissions in tonnes CO2e, one row per installation and year.
+    tests:
+      - unique_combination:
+          arguments:
+            columns: [ets_identifier, reporting_year]
+    columns:
+      - name: ets_identifier
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_installation')
+                field: ets_identifier
+      - name: verified_t
+        tests:
+          - non_negative
+
+  - name: mart_group_emissions
+    description: Verified emissions per ultimate parent and year.
+    tests:
+      - unique_combination:
+          arguments:
+            columns: [group_lei, reporting_year]
+      - group_total_matches_attributed_facts
+
+  - name: review_entity_matches
+    description: Matches waiting for a human decision.
