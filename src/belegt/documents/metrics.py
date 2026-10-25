@@ -6,21 +6,27 @@ probe output); each one is a case that broke a simpler version:
 
 1. **Rows.** A row starts with a scope label (Scope 1; Scope 2 market- or location-based;
    Scope 3 total) within its first 60 characters. Combined scopes ("Scope 1 und 2") are
-   skipped. A label line without figures takes the next line as its continuation, because
-   PDF text often wraps "million metric / tons CO2e 53.2".
+   skipped, and so are the all-scope totals that name their Scope 2 method ("Gesamtemissionen
+   auf Basis der marktbezogenen Scope-2-Methode"). A label line without figures takes the next
+   line as its continuation, because PDF text often wraps "million metric / tons CO2e 53.2".
+   Keywords are matched with spaces removed, since PDF text splits words ("mark tbasierter").
 2. **Units.** The row's own unit ("Tsd. t CO2eq", "Mio t", "Tt CO2e", "million metric tons")
    wins over the first CO2 unit on the page. A page without any unit yields nothing. Rows of
    intensities (per tonne, per MWh, per EUR), percentages and shares are not totals.
-3. **Columns.** The last line above the row that lists years is the column header. The figure
-   is taken from the reporting year's column; some reports put the prior year first. Dashes
-   and "n/a" hold their column. Footnote digits between the label and the first figure are
-   dropped. Without a header that has the reporting year, the first figure is taken and
-   `column_year` stays empty, which marks the figure as less certain.
-4. **Choice.** Prose has many words after its figure and is not a row. Per metric, the figure
-   is selected from the page with the most scope rows (at least two: the E1-6 table lists the
-   scopes together), preferring a header with the reporting year; on that page a row that says
-   total, group or gross ("gesamt", "Konzern", "Brutto") wins, then the largest value, since
-   the parts of a breakdown are smaller than their sum.
+3. **Columns.** The last line above the row that lists years is the column header; two such
+   lines in a row are one header ("Base year (2022)" / "2024 2025 2030"), and a footnote digit
+   glued to a year ("20303") is dropped. The figure is taken from the reporting year's column;
+   some reports put the prior year or the base year first. Dashes and "n/a" hold their column,
+   but only after the label's last word: a dash inside the label is not a column. Footnote
+   digits between the label and the first figure are dropped. Without a header that has the
+   reporting year, the first figure is taken and `column_year` stays empty, which marks the
+   figure as less certain.
+4. **Choice.** Prose has many words after its figure, or a prior-year figure in brackets
+   ("0,24 (i. V.: 0,25)"), and is not a row. Per metric, the figure is selected from the page
+   with the most scope rows (at least two: the E1-6 table lists the scopes together),
+   preferring a header with the reporting year; on that page a row that says total, group or
+   gross ("gesamt", "Konzern", "Brutto") wins, then the largest value, since the parts of a
+   breakdown are smaller than their sum.
 
 Every candidate keeps its table line, so a person can check it against the page; a reviewed
 correction goes to the `reported_overrides` seed, never into this code.
@@ -59,11 +65,15 @@ _PAGE_UNIT = re.compile(
     re.I,
 )
 _SCOPE = re.compile(r"\bScope[\s-]*(?P<n>[123])\b(?!\s*(?:\+|und|and|&|/|,)\s*-?[123]\b)", re.I)
-_MARKET = re.compile(r"markt\s*basiert|marktbezogen|market[\s-]*based", re.I)
-_LOCATION = re.compile(
-    r"standort\s*basiert|standortbezogen|location[\s-]*based|site[\s-]*based", re.I
-)
+# Matched against the line without spaces: PDF text splits words ("mark tbasierter", "T otal")
+_MARKET = re.compile(r"marktbasiert|marktbezogen|market-?based", re.I)
+_LOCATION = re.compile(r"orts?basiert|standortbezogen|location-?based|site-?based", re.I)
 _TOTAL = re.compile(r"gesamt|insgesamt|total", re.I)
+# All scopes together, labelled by their Scope 2 method ("Gesamtemissionen auf Basis der
+# standortbezogenen Scope-2-Methode"): not a Scope 2 figure
+_ALL_SCOPES = re.compile(r"gesamtemissionen|totalghgemissions|totalemissions", re.I)
+# A figure in running text gives the prior year in brackets: "0,24 (i. V.: 0,25)"
+_PRIOR_YEAR = re.compile(r"\(\s*(?:i\.\s*V\.|Vorjahr|prior year|previous year)", re.I)
 _GROUP_TOTAL = re.compile(r"gesamt|insgesamt|total|konzern|group|brutto|gross", re.I)
 _INTENSITY = (
     r"(?:/|\bper\b|\bje\b|\bpro\b)\s*(?:t\b|tonne|MWh|kWh|€|EUR|Mio|million|net)|\bk?g\s*CO"
@@ -131,32 +141,49 @@ def page_unit(text: str) -> tuple[str, str] | None:
     return _unit_key(match), re.sub(_CO2 + r".*$", "", match.group(0), flags=re.I).strip()
 
 
-def metric_of(line: str) -> str | None:
+def _label(line: str) -> re.Match[str] | None:
+    """The scope label that starts a row, not one in the middle of prose."""
     match = _SCOPE.search(line)
-    if match is None or match.start() > 60:  # the label starts the row, not the middle of prose
+    return match if match is not None and match.start() <= 60 else None
+
+
+def metric_of(line: str) -> str | None:
+    match = _label(line)
+    if match is None:
+        return None
+    compact = re.sub(r"\s+", "", line)
+    if _ALL_SCOPES.search(re.sub(r"\s+", "", line[: match.start()])):
         return None
     n = match.group("n")
     if n == "1":
         return "scope1"
     if n == "2":
-        if _MARKET.search(line):
+        if _MARKET.search(compact):
             return "scope2_market"
-        if _LOCATION.search(line):
+        if _LOCATION.search(compact):
             return "scope2_location"
         return None
-    return "scope3" if _TOTAL.search(line) else None
+    return "scope3" if _TOTAL.search(compact) else None
 
 
 def _values(line: str, decimal_comma: bool) -> list[_Token]:
     """The row's column values after its label: years and leading footnote digits removed."""
     label = _SCOPE.search(line)
     offset = label.end() if label else 0
-    found = [t for t in _tokens(line[offset:], decimal_comma) if not _YEAR.match(t.text)]
+    rest = line[offset:]
+    found = [t for t in _tokens(rest, decimal_comma) if not _YEAR.match(t.text)]
     while found and found[0].is_number and re.fullmatch(r"\d", found[0].text):
-        if len(found) > 1 or not _ROW_UNIT.search(line[offset:]):
+        if len(found) > 1 or not _ROW_UNIT.search(rest):
             found = found[1:]  # a footnote marker such as "Scope 1 (direkt)1 15,6"
         else:
             break
+    first = next((t for t in found if t.is_number), None)
+    if first is not None:
+        # A dash inside the label ("(Scope 2) - marktbasierter Ansatz - 4,5") is not a column:
+        # the columns start after the label's last word
+        words = list(_WORD.finditer(rest, 0, first.start))
+        if words:
+            found = [t for t in found if t.start >= words[-1].end()]
     return found
 
 
@@ -171,6 +198,7 @@ def first_figure(line: str, decimal_comma: bool) -> str | None:
 
 def _years(line: str) -> list[int] | None:
     """The column years of a header line ("Einheit 2024 2023", "Scope 1 ... Unit 2024")."""
+    line = re.sub(r"(?<![\d.,])((?:19|20)\d{2})\d(?![\d.,])", r"\1", line)  # footnote: "20303"
     years = [int(y) for y in re.findall(r"(?<!\d)(?:19|20)\d{2}(?!\d)", line)]
     if not years:
         return None
@@ -194,6 +222,8 @@ def _is_prose(line: str, values: list[_Token]) -> bool:
         return True
     tail = line[line.find(first.text) :]
     tail = _ROW_UNIT.sub(" ", tail)
+    if _PRIOR_YEAR.search(tail):
+        return True
     return len(_WORD.findall(re.sub(_CO2, " ", tail, flags=re.I))) > 3
 
 
@@ -201,13 +231,16 @@ def _rows(text: str, decimal_comma: bool) -> Iterator[tuple[str, list[int] | Non
     """(row line, header years above it), joining a label line with its continuation."""
     lines = [re.sub(r"\s+", " ", line).strip() for line in text.splitlines()]
     header: list[int] | None = None
+    header_line = -2
     i = 0
     while i < len(lines):
         line = lines[i]
         years = _years(line)
         if years is not None:
-            header = years
-        if metric_of(line) is not None:
+            # A header split over lines ("Base year (2022)" / "2024 2025 2030") is one header
+            header = header + years if header and header_line == i - 1 else years
+            header_line = i
+        if _label(line) is not None:
             nxt = lines[i + 1] if i + 1 < len(lines) else ""
             if not figures(line, decimal_comma) and _continues(nxt, decimal_comma):
                 line = f"{line} {nxt}"
@@ -225,7 +258,7 @@ def extract_page(
     rows: list[tuple[str, str, str, str, str, int | None]] = []
     for line, header in _rows(page.text, decimal_comma):
         metric = metric_of(line)
-        label = _SCOPE.search(line)
+        label = _label(line)
         if metric is None or label is None:
             continue
         values = _values(line, decimal_comma)

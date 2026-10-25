@@ -73,6 +73,38 @@ Scope-1-Emissionen aus Wärmeerzeugung Tsd. t CO2eq 669 676 -7 -1,0 %
 Scope-1-Emissionen EnBW-Konzern 4 Tsd. t CO2eq 8.862 10.923 -2.061 -18,9 %
 Standortbezogene Scope-2-THG-Bruttoemissionen Tsd. t CO2eq 1.247 1.438 -191 -13,3 %
 Marktbezogene Scope-2-THG-Bruttoemissionen Tsd. t CO2eq 691 789 -98 -12,4 %
+Gesamtemissionen auf Basis der standortbezogenen Scope-2-Methode Tsd. t CO2eq 40.465 46.348 -5.883 -12,7 %
+Gesamtemissionen auf Basis der marktbezogenen Scope-2-Methode Tsd. t CO2eq 39.909 45.699 -5.790 -12,7 %
+"""
+
+RWE_P124 = """Scope 1, 2 and 3 emissions1 Retrospective Milestones and targets years
+metric tons CO2e Base year
+(2022)2
+2024 2025 20303 20403 Annual %
+Scope 1 GHG emissions
+Gross Scope 1 GHG emissions 85,736,423 53,242,042 n. a. n. a. n. a. n. a.
+Percentage of Scope 1 GHG emissions from regulated emission trading schemes 97.2 97.1 n. a. n. a. n. a. n. a.
+Scope 2 GHG emissions
+Gross location-based Scope2 GHG emissions 195,727 392,956 n. a. n. a. n. a. n. a.
+Gross market-based Scope2 GHG emissions 195,727 392,956 n. a. n. a. n. a. n. a.
+Significant Scope 3 GHG emissions
+T otal gross indirect (Scope 3) GHG emissions 22,151,605 21,766,996 n. a. 12,848,724 2,215,297 5.3%
+"""
+
+HEIDELBERG_P125 = """2020 2023 2024 Einheit
+Scope-1-Treibhausgasemissionen
+Absolute Brutto-CO2-Emissionen (Scope 1) – 61,2 61,1 Mio t
+olute Netto-CO2-Emissionen (Scope 1) – 57,1 56,9 Mio t
+Scope-2-Treibhausgasemissionen
+Absolute CO2-Emissionen aus externer Erzeugung von Strom
+und Wärme (Scope 2) – mark
+tbasierter Ansatz – 4,5 4,2 Mio t
+"""
+
+HEIDELBERG_P126_PROSE = """absoluten Emissionen für Scope 1 mit 0,49 (i. V.: 0,50)
+Mio t CO2 auf dem Vorjahresniveau und in Einklang
+marktbasierten Scope-2-Emissionen ergibt sich ein
+leichter Rückgang auf 0,24 (i. V.: 0,25) Mio t CO2.
 """
 
 RWE_P125 = """Scope 1 emissions attributable to the consolidated accounting group (the parent and
@@ -110,6 +142,35 @@ def test_the_group_total_row_wins_in_its_unit():
     assert market.value_t == 691_000
     # biomass CO2 and the share from emission trading are not Scope 1 totals
     assert all(m.value_t != 495_000 and m.value_t != 94_000 for m in rows)
+    # all scopes together, labelled by their Scope 2 method, are not Scope 2
+    assert all(m.value_t not in (40_465_000, 39_909_000) for m in rows)
+    location = next(m for m in rows if m.metric == "scope2_location" and m.selected)
+    assert location.value_t == 1_247_000
+
+
+def test_a_header_over_two_lines_with_the_base_year_first():
+    rows = list(extract([Page("rwe-2024", 124, RWE_P124)], False, report_year=2024))
+    selected = {m.metric: (m.value_t, m.column_year) for m in rows if m.selected}
+    assert selected == {
+        "scope1": (53_242_042, 2024),
+        "scope2_location": (392_956, 2024),
+        "scope2_market": (392_956, 2024),
+        "scope3": (21_766_996, 2024),
+    }
+
+
+def test_split_words_and_a_dash_inside_the_label():
+    rows = extract_page(Page("heidelberg-materials-2024", 125, HEIDELBERG_P125), True, 2024)
+    assert [(m.metric, m.value_t, m.column_year) for m in rows] == [
+        ("scope1", 61_100_000, 2024),
+        ("scope1", 56_900_000, 2024),
+        ("scope2_market", 4_200_000, 2024),
+    ]
+
+
+def test_prose_with_the_prior_year_in_brackets():
+    page = Page("heidelberg-materials-2024", 126, HEIDELBERG_P126_PROSE)
+    assert extract_page(page, True, 2024) == []
 
 
 def test_a_wrapped_row_and_prose_with_a_figure():
