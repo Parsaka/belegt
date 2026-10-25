@@ -1,0 +1,49 @@
+[project]
+name = "belegt"
+version = "0.1.0"
+description = "ESG data platform: EU ETS emissions, GLEIF ownership and sustainability statements with cited answers"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [{name = "Parsa Kamali"}]
+dependencies = [
+    "typer>=0.12",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-cov>=5", "ruff>=0.5", "mypy>=1.10"]
+
+[project.scripts]
+belegt = "belegt.cli:app"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "N", "W", "SIM", "RUF"]
+ignore = ["RUF012"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*.py" = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --strict-markers"
+markers = ["live: hits the network (skipped in CI)"]
+
+[tool.mypy]
+python_version = "3.11"
+packages = ["belegt"]
+mypy_path = "src"
+ignore_missing_imports = true
+warn_unused_ignores = true
+strict = true
