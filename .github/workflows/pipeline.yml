@@ -142,7 +142,7 @@ jobs:
   # E5 embeddings, one row access policy per tenant, then the eval cases as each tenant.
   rag:
     needs: [extract, cloud]
-    if: needs.cloud.result == 'success'
+    if: needs.cloud.result == 'success' && needs.cloud.outputs.ready == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     environment: pipeline
