@@ -18,7 +18,10 @@ trial is active. The order matters: the cost guards come first.
 1. The owner activates the GCP free trial and creates a project.
 2. In Cloud Shell: `PROJECT_ID=... BILLING_ACCOUNT_ID=... bash scripts/bootstrap_gcp.sh`.
    This creates the state bucket, a CI service account and Workload Identity Federation that
-   trusts only this repository. No keys.
+   trusts only this repository. No keys. The script is safe to re-run: it skips what exists and
+   retries the IAM bindings while a new service account propagates (the first real run hit
+   that). Project ids are global, so the first choice may be taken; this project is
+   `belegt-pk-2610`.
 3. Store the printed values as GitHub repository variables. The `Infra` workflow then plans on
    every pull request and applies on `main` (after approval of the `gcp` environment).
 4. **Set by hand (Public Preview, no Terraform support yet):** service spend caps for Cloud Run
