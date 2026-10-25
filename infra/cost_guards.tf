@@ -18,6 +18,23 @@ resource "google_pubsub_topic" "budget" {
   depends_on = [google_project_service.this]
 }
 
+# Linking a budget to a Pub/Sub topic needs pubsub.topics.setIamPolicy, because the Budget API
+# grants its own publisher on the topic. roles/editor does not carry it, so the first apply
+# failed with "403 The caller does not have permission". The CI account can only grant this at
+# project level (it is a project IAM admin, not a topic admin).
+resource "google_project_iam_member" "ci_pubsub_admin" {
+  project = var.project_id
+  role    = "roles/pubsub.admin"
+  member  = "serviceAccount:${var.ci_service_account_email}"
+}
+
+# IAM changes take up to a minute to reach the Budget API.
+resource "time_sleep" "ci_pubsub_admin" {
+  create_duration = "90s"
+
+  depends_on = [google_project_iam_member.ci_pubsub_admin]
+}
+
 resource "google_billing_budget" "monthly" {
   billing_account = var.billing_account_id
   display_name    = "belegt hard limit"
@@ -50,6 +67,8 @@ resource "google_billing_budget" "monthly" {
     disable_default_iam_recipients  = false
     enable_project_level_recipients = true
   }
+
+  depends_on = [time_sleep.ci_pubsub_admin]
 }
 
 # --- kill switch: budget notification -> function -> detach billing ------------
