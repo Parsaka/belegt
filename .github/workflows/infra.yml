@@ -6,6 +6,8 @@ on:
   push:
     branches: [main]
     paths: [infra/**, .github/workflows/infra.yml]
+  # After a repository variable changed (TRIAL_MODE, LOOKER_TRIAL_START): apply main again
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -68,7 +70,7 @@ jobs:
 
   apply:
     needs: validate
-    if: github.event_name == 'push' && vars.GCP_WIF_PROVIDER != ''
+    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main' && vars.GCP_WIF_PROVIDER != ''
     runs-on: ubuntu-latest
     environment: gcp # require the owner's approval in the repository settings
     permissions:
