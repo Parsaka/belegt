@@ -1,0 +1,11 @@
+  # google_bigquery_dataset.this["snapshots"] will be created
+  # google_bigquery_dataset_iam_member.pipeline["marts"] will be created
+  # google_bigquery_dataset_iam_member.pipeline["raw"] will be created
+  # google_bigquery_dataset_iam_member.pipeline["snapshots"] will be created
+  # google_bigquery_dataset_iam_member.pipeline["staging"] will be created
+  # google_project_iam_member.pipeline_jobs will be created
+  # google_service_account.pipeline will be created
+  # google_service_account_iam_member.pipeline_wif will be created
+  # google_storage_bucket.raw will be updated in-place
+  # google_storage_bucket_iam_member.pipeline_raw will be created
+Plan: 9 to add, 1 to change, 0 to destroy.
