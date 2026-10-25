@@ -91,3 +91,22 @@ def test_gleif_entity_from_api_record():
     basf = next(gleif.entity_from_api(r) for r in records if r["id"] == "529900PM64WH8AF1E917")
     assert basf.legal_name == "BASF SE"
     assert basf.registered_as == "HRB 6000"
+
+
+def test_verified_emissions_found_behind_explanatory_sheets(tmp_path):
+    """The published workbook puts notes before the data sheet; the fixture has only the data."""
+    from openpyxl import Workbook, load_workbook
+
+    from belegt.loaders.ets import read_verified_emissions
+
+    source = load_workbook(FIX / "ets_verified_emissions_de.xlsx", read_only=True)
+    wb = Workbook()
+    wb.active.title = "Notes"
+    wb.active.append(["Verified emissions, explanatory notes"])
+    data = wb.create_sheet("data")
+    for row in source.worksheets[0].iter_rows(values_only=True):
+        data.append(list(row))
+    wb.save(tmp_path / "full.xlsx")
+    assert list(read_verified_emissions(tmp_path / "full.xlsx")) == list(
+        read_verified_emissions(FIX / "ets_verified_emissions_de.xlsx")
+    )
