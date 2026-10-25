@@ -2,7 +2,7 @@
 # owns the business definitions (what "attributed", "match rate" and "consistent" mean).
 connection: "belegt"
 
-include: "/views/*.view.lkml"
+include: "/looker/views/*.view.lkml"  # Looker resolves "/" at the repository root
 
 # The marts change once a month. No SQL trigger: a trigger query every few minutes would spend
 # BigQuery quota for nothing.

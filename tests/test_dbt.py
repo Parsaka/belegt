@@ -118,6 +118,9 @@ def test_lookml_points_at_real_marts_and_columns(warehouse):
         for view in lkml.load(path.read_text())["views"]:
             views[view["name"]] = view
     model = lkml.load((looker / "belegt.model.lkml").read_text())
+    # Looker's project is the whole repository, so "/" in an include is the repository root
+    for include in model["includes"]:
+        assert sorted(ROOT.glob(include.lstrip("/"))), f"include {include} matches no file"
 
     for name, view in views.items():
         table = re.fullmatch(r"`marts\.(\w+)`", view["sql_table_name"].strip()).group(1)
