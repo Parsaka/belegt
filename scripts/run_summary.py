@@ -24,6 +24,11 @@ QUERIES = {
         union all select 'mart_group_emissions', count(*) from {m}.mart_group_emissions
         union all select 'review_entity_matches', count(*) from {m}.review_entity_matches
     """,
+    "Accounts by kind": """
+        select installation_kind, count(*) as accounts,
+               sum(case when match_decision = 'accepted' then 1 else 0 end) as accepted
+        from {m}.dim_installation group by 1 order by 2 desc
+    """,
     "Installations by match decision and path": """
         select coalesce(match_decision, 'no candidate') as decision, match_path,
                count(*) as installations
@@ -49,6 +54,7 @@ QUERIES = {
 
 HEADERS = {
     "Rows per mart": ["model", "rows"],
+    "Accounts by kind": ["kind", "accounts", "matched to a company"],
     "Installations by match decision and path": ["decision", "path", "installations"],
     "Verified tonnes attributed to a company, by year (last five)": [
         "year",

@@ -6,6 +6,7 @@ select
     installation_name,
     permit_id,
     activity_code,
+    account_type,
     year as reporting_year,
     verified_t,
     allocation_t,

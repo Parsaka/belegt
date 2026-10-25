@@ -6,6 +6,11 @@ models:
     columns:
       - name: ets_identifier
         tests: [unique, not_null]
+      - name: installation_kind
+        tests:
+          - accepted_values:
+              arguments:
+                values: [stationary installation, aircraft operator, maritime operator]
       - name: match_decision
         tests:
           - accepted_values:

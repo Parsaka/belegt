@@ -16,6 +16,13 @@ select
     l.account_holder,
     l.permit_id,
     l.activity_code,
+    l.account_type,
+    -- The registry file also holds aircraft and maritime operator accounts; they are not sites.
+    case
+        when upper(l.account_type) like '%AIRCRAFT%' then 'aircraft operator'
+        when upper(l.account_type) like '%MARITIME%' then 'maritime operator'
+        else 'stationary installation'
+    end as installation_kind,
     e.installation_inspire_id,
     e.facility_name,
     o.account_holder as operator_name,

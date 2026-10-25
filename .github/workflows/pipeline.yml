@@ -48,6 +48,10 @@ jobs:
       - run: pip install -e ".[extract,load,dbt]"
       - run: mkdir -p summary
       - run: belegt extract --out data/raw --work /tmp/downloads 2>&1 | tee summary/extract.log
+      - name: Trimmed golden-copy sample for tests/fixtures (CC0)
+        run: |
+          mkdir -p summary/fixtures
+          python scripts/sample_golden_copy.py data/raw/gleif_entities.csv summary/fixtures/golden_copy_entities.csv
       # The full data on DuckDB first: a broken model fails here, before any cloud resource runs.
       - run: |
           { time belegt load --source data/raw --db data/belegt.duckdb ; } 2>&1 | tee -a summary/extract.log
