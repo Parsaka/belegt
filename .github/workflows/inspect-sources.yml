@@ -11,6 +11,10 @@ on:
 permissions:
   contents: write  # pushes the discovery output to the inspect-results branch
 
+defaults:
+  run:
+    shell: bash  # with pipefail, so `| tee` does not hide a failing script
+
 jobs:
   inspect:
     runs-on: ubuntu-latest

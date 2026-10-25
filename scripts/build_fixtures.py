@@ -34,9 +34,13 @@ def ets_rows() -> tuple[list[tuple[object, ...]], int, list[tuple[object, ...]]]
     links = re.findall(r'href="([^"]+)"', html)
     url = next(urljoin(UR_PAGE, x) for x in links if x.endswith("verified_emissions_2025_en.xlsx"))
     wb = load_workbook(io.BytesIO(client.get(url).content), read_only=True, data_only=True)
-    rows = list(wb.worksheets[0].iter_rows(values_only=True))
-    hdr_i = next(i for i, r in enumerate(rows) if r and r[0] == "REGISTRY_CODE")
-    return rows[:hdr_i], hdr_i, rows[hdr_i:]
+    for ws in wb.worksheets:  # the data sheet is not the first one
+        rows = list(ws.iter_rows(values_only=True))
+        hdr_i = next((i for i, r in enumerate(rows) if r and r[0] == "REGISTRY_CODE"), None)
+        if hdr_i is not None:
+            print(f"ETS sheet {ws.title!r} of {wb.sheetnames}")
+            return rows[:hdr_i], hdr_i, rows[hdr_i:]
+    raise SystemExit("no sheet with a REGISTRY_CODE header")
 
 
 def ets_key(installation_id: object) -> str:
@@ -120,6 +124,50 @@ def main() -> None:
     print(f"fixtures: {len(fx_ets)} ETS ids, {len(fx_inst)} installations, {len(fx_fac)} facilities")
     for f in fx_fac:
         print("   ", f["Facility_INSPIRE_ID"], "|", f["nameOfFeature"], "|", f["parentCompanyName"], "|", f["city"])
+    gleif(sorted({f["parentCompanyName"] for f in fx_fac if f.get("parentCompanyName")}))
+
+
+GLEIF = "https://api.gleif.org/api/v1"
+
+
+def gleif(parent_names: list[str]) -> None:
+    """Candidate LEI records for each EEA parent name, and the real RR rows under three groups."""
+    candidates: dict[str, list[dict[str, object]]] = {}
+    for name in parent_names:
+        r = client.get(f"{GLEIF}/lei-records", params={"filter[fulltext]": name, "page[size]": 5})
+        candidates[name] = r.json().get("data", []) if r.status_code == 200 else []
+        print(f"   GLEIF candidates for {name!r}: {[c['attributes']['entity']['legalName']['name'] for c in candidates[name]]}")
+    (OUT / "gleif_candidates.json").write_text(json.dumps(candidates, ensure_ascii=False))
+
+    groups = {}
+    for name in ("BASF SE", "Heidelberg Materials AG", "RWE Aktiengesellschaft"):
+        r = client.get(f"{GLEIF}/lei-records", params={"filter[entity.legalName]": name, "page[size]": 1})
+        if data := r.json().get("data"):
+            groups[data[0]["id"]] = name
+    print("   groups:", groups)
+
+    gc = client.get("https://goldencopy.gleif.org/api/v2/golden-copies/publishes/latest").json()["data"]
+    import zipfile
+
+    rr_rows: list[dict[str, str]] = []
+    with zipfile.ZipFile(io.BytesIO(client.get(gc["rr"]["full_file"]["csv"]["url"]).content)) as z:
+        with z.open(z.namelist()[0]) as fh:
+            reader = csv.DictReader(io.TextIOWrapper(fh, "utf-8"))
+            for row in reader:
+                if row["Relationship.EndNode.NodeID"] in groups or row["Relationship.StartNode.NodeID"] in groups:
+                    rr_rows.append(row)
+    keep = [c for c in reader.fieldnames or [] if not re.search(r"Period\.[2-5]|Qualifiers|Quantifiers", c)]
+    rr_rows = [{k: r[k] for k in keep} for r in rr_rows]
+    print(f"   RR rows touching the groups: {len(rr_rows)}; types {Counter(r['Relationship.RelationshipType'] for r in rr_rows)}")
+    write_csv("gleif_rr_groups.csv", rr_rows[:150])
+
+    leis = sorted({r["Relationship.StartNode.NodeID"] for r in rr_rows[:150]} | set(groups))
+    records: list[dict[str, object]] = []
+    for i in range(0, len(leis), 100):
+        r = client.get(f"{GLEIF}/lei-records", params={"filter[lei]": ",".join(leis[i : i + 100]), "page[size]": 100})
+        records += r.json().get("data", [])
+    (OUT / "gleif_entities_groups.json").write_text(json.dumps(records, ensure_ascii=False))
+    print(f"   GLEIF entity records saved: {len(records)}")
 
 
 if __name__ == "__main__":
