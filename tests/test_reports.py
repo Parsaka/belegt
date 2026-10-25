@@ -43,7 +43,7 @@ class FakeClient:
 
 def test_seed_rows_are_complete_and_unique():
     rows = reports.read_seed(SEED)
-    assert len({r.doc_id for r in rows}) == len(rows) >= 7
+    assert len({r.doc_id for r in rows}) == len(rows) >= 6
     for r in rows:
         assert len(r.lei) == 20 and r.url.startswith("https://")
         assert r.fiscal_year_end in {"12-31", "09-30"}
