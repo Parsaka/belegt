@@ -17,10 +17,11 @@ spec.loader.exec_module(kill_switch)
 @pytest.mark.parametrize(
     ("cost", "budget", "fraction", "expected"),
     [
-        (0.00, 1.50, 0.8, False),
-        (1.19, 1.50, 0.8, False),
-        (1.20, 1.50, 0.8, True),
-        (2.00, 1.50, 0.8, True),
+        (0.00, 1.00, 0.6, False),
+        (0.59, 1.00, 0.6, False),
+        (0.60, 1.00, 0.6, True),
+        (2.00, 1.00, 0.6, True),
+        (1.20, 1.50, 0.8, True),  # float trap: 1.5 * 0.8 != 1.2
         (5.00, 0.00, 0.8, False),  # a zero budget must never detach billing by accident
     ],
 )

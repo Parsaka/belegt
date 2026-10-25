@@ -8,8 +8,9 @@
 locals {
   budget_units = floor(var.budget_amount)
   budget_nanos = floor((var.budget_amount - floor(var.budget_amount)) * 1e9)
-  # Alerts at 0.50, 1.00 and 1.20 EUR for the default 1.50 EUR budget.
-  alert_fractions = [0.33, 0.66, var.kill_switch_fraction, 1.0]
+  # Alerts at 0.25 and 0.50 EUR, the kill switch at 0.60 EUR, and 1.00 EUR for the default
+  # budget. The kill switch fires well below the limit because cost data arrives late.
+  alert_fractions = [0.25, 0.5, var.kill_switch_fraction, 1.0]
 }
 
 resource "google_pubsub_topic" "budget" {
@@ -18,13 +19,32 @@ resource "google_pubsub_topic" "budget" {
   depends_on = [google_project_service.this]
 }
 
+# Linking a budget to a Pub/Sub topic needs pubsub.topics.setIamPolicy, because the Budget API
+# grants its own publisher on the topic. roles/editor does not carry it, so the first apply
+# failed with "403 The caller does not have permission". The CI account can only grant this at
+# project level (it is a project IAM admin, not a topic admin).
+resource "google_project_iam_member" "ci_pubsub_admin" {
+  project = var.project_id
+  role    = "roles/pubsub.admin"
+  member  = "serviceAccount:${var.ci_service_account_email}"
+}
+
+# IAM changes take up to a minute to reach the Budget API.
+resource "time_sleep" "ci_pubsub_admin" {
+  create_duration = "90s"
+
+  depends_on = [google_project_iam_member.ci_pubsub_admin]
+}
+
 resource "google_billing_budget" "monthly" {
   billing_account = var.billing_account_id
   display_name    = "belegt hard limit"
 
   budget_filter {
-    projects               = ["projects/${data.google_project.this.number}"]
-    credit_types_treatment = "EXCLUDE_ALL_CREDITS"
+    projects = ["projects/${data.google_project.this.number}"]
+    # Net cost, i.e. what is actually charged. During the trial the 300 USD credit covers
+    # usage, so GKE and Looker do not trip the kill switch; afterwards there are no credits.
+    credit_types_treatment = "INCLUDE_ALL_CREDITS"
     calendar_period        = "MONTH"
   }
 
@@ -50,6 +70,8 @@ resource "google_billing_budget" "monthly" {
     disable_default_iam_recipients  = false
     enable_project_level_recipients = true
   }
+
+  depends_on = [time_sleep.ci_pubsub_admin]
 }
 
 # --- kill switch: budget notification -> function -> detach billing ------------

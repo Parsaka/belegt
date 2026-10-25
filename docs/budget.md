@@ -1,6 +1,7 @@
 # Budget
 
-**Hard limit: 1.50 EUR per month, never exceeded.**
+**Hard limit: 1.00 EUR per month, never exceeded.** (Lowered from 1.50 EUR on 2026-10-25.)
+The budget counts net cost, i.e. what is actually charged after credits.
 
 ## Strategy
 
@@ -35,8 +36,8 @@ measured.
 2. BigQuery custom daily query quota, a hard stop.
 3. Service spend caps for Cloud Run and Gemini/Vertex (Public Preview since July 2026).
 4. Public API protection: rate limit, `max-instances=1`, demo token.
-5. Budget alerts at 0.50, 1.00 and 1.20 EUR.
-6. Billing kill switch at 1.20 EUR (budget → Pub/Sub → function that detaches billing,
+5. Budget alerts at 0.25, 0.50 and 1.00 EUR.
+6. Billing kill switch at 0.60 EUR (budget → Pub/Sub → function that detaches billing,
    following [Google's pattern](https://docs.cloud.google.com/billing/docs/how-to/disable-billing-with-notifications)).
    Google warns that cost data arrives late, so this is the last line, not the main one.
 

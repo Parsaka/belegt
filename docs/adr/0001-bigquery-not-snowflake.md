@@ -11,7 +11,7 @@ Use BigQuery only. Do not add Snowflake to show the name.
 
 ## Reasons
 - One tool per job. Two warehouses in one project would only duplicate models.
-- BigQuery's free tier (1 TiB queries, 10 GiB storage per month) fits the 1.50 EUR budget;
+- BigQuery's free tier (1 TiB queries, 10 GiB storage per month) fits the 1.00 EUR budget;
   Snowflake offers only a 30-day trial.
 - BigQuery's on-demand pricing includes VECTOR_SEARCH and row-level security, so it can also
   serve the RAG store, which removes a database.
