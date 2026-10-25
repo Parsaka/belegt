@@ -149,9 +149,13 @@ jobs:
       - name: Chunk the corpus
         run: |
           mkdir -p summary/fixtures
-          belegt index data/raw/esrs_de.pdf --doc-id esrs-2023-2772 --tenant shared --out data/chunks.jsonl
+          if [ -f data/raw/esrs_de.pdf ]; then
+            belegt index data/raw/esrs_de.pdf --doc-id esrs-2023-2772 --tenant shared --out data/chunks.jsonl
+            python scripts/sample_esrs.py data/raw/esrs_de.pdf summary/fixtures/esrs_pages.jsonl
+          else
+            echo "ESRS PDF not extracted this run: tenant memos only" | tee summary/rag-corpus.txt
+          fi
           grep '"tenant_id": "tenant_' deploy/kind/demo-chunks.jsonl >> data/chunks.jsonl
-          python scripts/sample_esrs.py data/raw/esrs_de.pdf summary/fixtures/esrs_pages.jsonl
       - name: Offline evaluation with the same embeddings
         run: belegt rag-eval --embedder e5 --out summary/rag-eval-memory.md
       - uses: google-github-actions/auth@v2
