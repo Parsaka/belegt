@@ -113,8 +113,8 @@ def eea() -> None:
         print("latest:", latest)
         for h in ls(latest):
             print("   ", h)
-        csv_dir = next(h for h in ls(latest) if "csv" in h.lower() and h.endswith("/"))
-        for h in ls(csv_dir):
+        csv_entry = next(h for h in ls(latest) if "csv" in h.lower() and h != latest)
+        for h in ls(csv_entry) if csv_entry.endswith("/") else [csv_entry]:
             print("    csv:", h)
             if h.endswith("/"):
                 continue
