@@ -24,7 +24,7 @@ UA = {"User-Agent": "belegt-portfolio/0.1 (+https://github.com/Parsaka/belegt)"}
 OUT = Path("inspect/fixtures")
 OUT.mkdir(parents=True, exist_ok=True)
 client = httpx.Client(headers=UA, timeout=300, follow_redirects=True)
-GROUPS = re.compile(r"BASF|Heidelberg|RWE", re.I)
+GROUPS = re.compile(r"BASF|Heidelberg Materials|HeidelbergCement|RWE", re.I)
 UR_PAGE = "https://climate.ec.europa.eu/areas-action/carbon-markets/eu-emissions-trading-system-eu-ets/union-registry_en"
 ACCDB = sys.argv[1] if len(sys.argv) > 1 else "/tmp/eea.accdb"
 
@@ -70,8 +70,14 @@ def main() -> None:
     de = [r for r in table[1:] if r and r[0] == "DE" and str(r[col["ACCOUNT_TYPE"]]).upper().startswith("OPERATOR HOLDING")]
     if not de:  # account type labels differ between releases
         de = [r for r in table[1:] if r and r[0] == "DE" and not r[col["IMO_NUMBER"]]]
-    picked = [r for r in de if GROUPS.search(f"{r[col['IDENTIFIER_IN_REG']]} {r[col['INSTALLATION_NAME']]}")][:24]
-    picked += [r for r in de if r not in picked][:: max(1, len(de) // 8)][:8]
+    ets_ids = export("3f2_ETSIdentifiers")
+    eea_de = {r["ETSIdentifier"] for r in ets_ids if r["ETSIdentifier"].startswith("DE")}
+    # all installations the EEA links (Brandenburg only, see link_stats), a few known group
+    # sites by name, and an even spread of the rest
+    picked = [r for r in de if ets_key(r[col["INSTALLATION_IDENTIFIER"]]) in eea_de]
+    picked += [r for r in de if r not in picked and GROUPS.search(f"{r[col['IDENTIFIER_IN_REG']]} {r[col['INSTALLATION_NAME']]}")][:12]
+    rest = [r for r in de if r not in picked]
+    picked += rest[:: max(1, len(rest) // 10)][:10]
     print(f"ETS: header at row {hdr_i}, {len(de)} German stationary rows, {len(picked)} picked")
 
     wb = Workbook()
@@ -81,7 +87,6 @@ def main() -> None:
         ws.append(list(r))
     wb.save(OUT / "ets_verified_emissions_de.xlsx")
 
-    ets_ids = export("3f2_ETSIdentifiers")
     inst = {r["Installation_INSPIRE_ID"]: r for r in export("3_ProductionInstallation")}
     fac = {r["Facility_INSPIRE_ID"]: r for r in export("2_ProductionFacility")}
     de_ets = [r for r in ets_ids if r["ETSIdentifier"].startswith("DE")]
@@ -125,6 +130,48 @@ def main() -> None:
     for f in fx_fac:
         print("   ", f["Facility_INSPIRE_ID"], "|", f["nameOfFeature"], "|", f["parentCompanyName"], "|", f["city"])
     gleif(sorted({f["parentCompanyName"] for f in fx_fac if f.get("parentCompanyName")}))
+    operator_sources()
+
+
+def operator_sources() -> None:
+    """The registry extract names accounts, not operators. Look for a published operator list."""
+    pages = [
+        UR_PAGE,
+        "https://www.dehst.de/DE/Themen/EU-ETS-1/EU-ETS-1-Informationen/Unionsregister/unionsregister_node.html",
+        "https://www.dehst.de/DE/Themen/EU-ETS-1/EU-ETS-1-Informationen/Emissionsberichterstattung/emissionsberichterstattung_node.html",
+        "https://www.dehst.de/DE/Service/Publikationen/publikationen_node.html",
+        "https://union-registry-data.ec.europa.eu/report/welcome",
+    ]
+    for page in pages:
+        try:
+            r = client.get(page)
+        except httpx.HTTPError as exc:
+            print("operator page", page, exc)
+            continue
+        links = sorted(set(re.findall(r'href="([^"]+)"', r.text)))
+        files = [urljoin(page, x) for x in links if re.search(r"\.(xlsx?|csv|zip)|blob=publicationFile|download", x, re.I)]
+        print(f"operator page {page} -> {r.status_code}, {len(files)} file links")
+        for f in files[:60]:
+            print("    ", f)
+        for f in files:
+            if not re.search(r"anlagenliste|operator|account|betreiber|vet", f, re.I):
+                continue
+            try:
+                fr = client.get(f)
+            except httpx.HTTPError:
+                continue
+            print("  GET", f, fr.status_code, fr.headers.get("content-type"), len(fr.content))
+            if fr.content[:2] == b"PK" and "spreadsheet" in (fr.headers.get("content-type") or "") or f.endswith(".xlsx"):
+                try:
+                    wb = load_workbook(io.BytesIO(fr.content), read_only=True, data_only=True)
+                except Exception as exc:  # noqa: BLE001 - discovery only
+                    print("    not a workbook:", exc)
+                    continue
+                for ws in wb.worksheets:
+                    for i, row in enumerate(ws.iter_rows(values_only=True)):
+                        if i > 8:
+                            break
+                        print(f"    {ws.title}[{i}]:", row[:16])
 
 
 GLEIF = "https://api.gleif.org/api/v1"
