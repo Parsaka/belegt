@@ -15,6 +15,8 @@ resource "google_bigquery_dataset_iam_member" "rag_tenant_read" {
   dataset_id = google_bigquery_dataset.this["rag"].dataset_id
   role       = "roles/bigquery.dataViewer"
   member     = "serviceAccount:${each.value.email}"
+
+  depends_on = [time_sleep.ci_resource_iam]
 }
 
 resource "google_project_iam_member" "rag_tenant_jobs" {
@@ -31,6 +33,8 @@ resource "google_bigquery_dataset_iam_member" "pipeline_rag_owner" {
   dataset_id = google_bigquery_dataset.this["rag"].dataset_id
   role       = "roles/bigquery.dataOwner"
   member     = "serviceAccount:${google_service_account.pipeline.email}"
+
+  depends_on = [time_sleep.ci_resource_iam]
 }
 
 resource "google_service_account_iam_member" "pipeline_acts_as_tenant" {
