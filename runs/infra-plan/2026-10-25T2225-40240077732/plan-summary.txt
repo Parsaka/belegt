@@ -1,0 +1,26 @@
+  # google_artifact_registry_repository_iam_member.pipeline_push will be created
+  # google_bigquery_dataset.this["snapshots"] will be created
+  # google_bigquery_dataset_iam_member.pipeline["marts"] will be created
+  # google_bigquery_dataset_iam_member.pipeline["raw"] will be created
+  # google_bigquery_dataset_iam_member.pipeline["snapshots"] will be created
+  # google_bigquery_dataset_iam_member.pipeline["staging"] will be created
+  # google_bigquery_dataset_iam_member.pipeline_rag_owner will be created
+  # google_bigquery_dataset_iam_member.rag_tenant_read["tenant_a"] will be created
+  # google_bigquery_dataset_iam_member.rag_tenant_read["tenant_b"] will be created
+  # google_project_iam_member.ci_resource_iam["roles/artifactregistry.admin"] will be created
+  # google_project_iam_member.ci_resource_iam["roles/bigquery.dataOwner"] will be created
+  # google_project_iam_member.ci_resource_iam["roles/storage.admin"] will be created
+  # google_project_iam_member.pipeline_jobs will be created
+  # google_project_iam_member.rag_tenant_jobs["tenant_a"] will be created
+  # google_project_iam_member.rag_tenant_jobs["tenant_b"] will be created
+  # google_service_account.pipeline will be created
+  # google_service_account.rag_tenant["tenant_a"] will be created
+  # google_service_account.rag_tenant["tenant_b"] will be created
+  # google_service_account_iam_member.pipeline_acts_as_tenant["tenant_a"] will be created
+  # google_service_account_iam_member.pipeline_acts_as_tenant["tenant_b"] will be created
+  # google_service_account_iam_member.pipeline_wif will be created
+  # google_storage_bucket.raw will be updated in-place
+  # google_storage_bucket_iam_member.pipeline_raw will be created
+  # google_storage_bucket_iam_member.pipeline_reports_read will be created
+  # time_sleep.ci_resource_iam will be created
+Plan: 24 to add, 1 to change, 0 to destroy.
