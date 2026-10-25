@@ -1,0 +1,7 @@
+{"doc_id": "basf-2024", "error": "https://www.more-ir.de/download/companies/BASF/Annual%20Reports/DE000BASF111-JA-2024-EQ-D-00.pdf did not return a PDF"}
+{"doc_id": "rwe-2024", "error": "https://www.more-ir.de/download/companies/RWE/Annual%20Reports/DE0007037129-JA-2024-EQ-D-00.pdf did not return a PDF"}
+{"doc_id": "heidelberg-materials-2024", "bytes": 8110795, "sha256": "21a39ce7ffa725025faf91789df567af8d6f9ef30d2720cda6212308b00476f3", "pages": 346, "candidates": 1, "selected": {"scope1": 490000.0}}
+{"doc_id": "enbw-2024", "error": "cryptography>=3.1 is required for AES algorithm"}
+{"doc_id": "uniper-2024", "error": "Client error '404 Not Found' for url 'https://irpages2.eqs.com/download/companies/uniperag/Annual%20Reports/DE000UNSE026-JA-2024-EQ-D-00.pdf'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404"}
+{"doc_id": "salzgitter-2024", "bytes": 3598793, "sha256": "82d20be0a94baac05e7837e85c478e08513e7773a11ee5a35937b3bd0c84b026", "pages": 156, "candidates": 0, "selected": {}}
+{"doc_id": "thyssenkrupp-2024", "error": "cryptography>=3.1 is required for AES algorithm"}
