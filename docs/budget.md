@@ -40,6 +40,8 @@ measured.
 6. Billing kill switch at 0.60 EUR (budget → Pub/Sub → function that detaches billing,
    following [Google's pattern](https://docs.cloud.google.com/billing/docs/how-to/disable-billing-with-notifications)).
    Google warns that cost data arrives late, so this is the last line, not the main one.
+   It is drilled after every Terraform apply (topic → function → decision → detach
+   permission), stopping just before the detach.
 
 ## Known traps
 

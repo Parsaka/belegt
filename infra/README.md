@@ -12,6 +12,7 @@ trial is active. The order matters: the cost guards come first.
 | `storage.tf` | Raw and reports buckets (private), Artifact Registry with a keep-two cleanup policy |
 | `trial.tf` | `trial_mode = true` only: GKE Autopilot, Cloud SQL, Looker trial **with automatic deletion before day 30** |
 | `functions/kill_switch/` | The function that detaches billing; its decision logic is unit-tested |
+| `drill.tf` | Identity for the kill-switch drill: publish to the budget topic, read logs |
 
 ## First run
 
@@ -26,7 +27,10 @@ trial is active. The order matters: the cost guards come first.
    every pull request and applies on `main` (after approval of the `gcp` environment).
 4. **Set by hand (Public Preview, no Terraform support yet):** service spend caps for Cloud Run
    and Gemini / Vertex AI under Billing → Budgets, about 0.30 EUR each.
-5. Test the kill switch with a test budget before relying on it (Google's advice).
+5. The kill switch is drilled after every apply on main (workflow `Kill-switch drill`): a
+   marked message goes to the budget topic, and the function runs the decision, reads billing
+   and checks its permission to detach, then stops. The verdict lands on the `ops-results`
+   branch. A real detach is tested once by hand, with the owner, because it stops the project.
 
 ## Leaving the trial
 
