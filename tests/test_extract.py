@@ -104,3 +104,10 @@ def test_write_csv_round_trips(tmp_path):
     assert write_csv(tmp_path / "x.csv", rr) == 3
     with (tmp_path / "x.csv").open(newline="", encoding="utf-8") as fh:
         assert list(csv.DictReader(fh)) == rr
+
+
+def test_only_real_pdfs_count_as_the_esrs_download():
+    from belegt.extract import is_pdf
+
+    assert is_pdf(b"%PDF-1.7")
+    assert not is_pdf(b"<!DOCTYPE html>")

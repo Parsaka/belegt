@@ -21,6 +21,9 @@ _QUESTION_WORDS = frozenset(
     ["hoch", "viel", "viele", "welche", "welcher", "welches", "wann", "warum", "betrug", "betrugen"]
 )
 MIN_COVERAGE = 0.75  # share of the question's words the quoted sentence must contain
+# Single-letter and single-digit tokens name things ("Mandant B", "Scope 1"). A sentence about
+# Mandant A must never answer a question about Mandant B, however many other words match.
+_IDENTIFIER = re.compile(r"\b[A-Z0-9]\b")
 
 
 def _words(text: str) -> set[str]:
@@ -35,10 +38,14 @@ class ExtractiveModel:
         wanted = _words(question.group("q")) - _QUESTION_WORDS
         if not wanted:
             return ABSTAIN_DE
+        identifiers = {w.lower() for w in _IDENTIFIER.findall(question.group("q"))}
         best: tuple[int, str, str] | None = None
         for match in _SOURCE.finditer(prompt):
             for sentence in re.split(r"(?<=[.!?])\s+(?=[A-ZÄÖÜ])", match.group("text").strip()):
-                overlap = len(wanted & _words(sentence))
+                words = _words(sentence)
+                if not identifiers <= words:
+                    continue
+                overlap = len(wanted & words)
                 if overlap and (best is None or overlap > best[0]):
                     best = (overlap, sentence.rstrip(".!? "), match.group("id"))
         if best is None or best[0] / len(wanted) < MIN_COVERAGE:

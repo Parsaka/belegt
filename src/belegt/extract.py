@@ -37,6 +37,13 @@ EEA_SHARE = "https://sdi.eea.europa.eu/datashare/public.php/webdav/"
 EEA_SHARE_TOKEN = "sptXqwkQr5g7Bp5"  # the public share id, not a secret
 EEA_ACCDB = "eea_t_ied-eprtr_p_2007-2024_v16_r00/Industrial_dataset_v_16_2026_02_16.accdb"
 GLEIF_LATEST = "https://goldencopy.gleif.org/api/v2/golden-copies/publishes/latest"
+# ESRS, Delegated Regulation (EU) 2023/2772, German Official Journal PDF. EU legal text may be
+# reused with attribution. Two addresses for the same file: EUR-Lex sometimes answers automated
+# requests with a challenge page instead of the PDF.
+ESRS_PDF_URLS = (
+    "https://eur-lex.europa.eu/legal-content/DE/TXT/PDF/?uri=OJ:L_202302772",
+    "https://eur-lex.europa.eu/eli/reg_del/2023/2772/oj/deu/pdf",
+)
 
 # Golden-copy LEI-CDF columns the loader needs. Checked against the file header on every run.
 LEI_COLUMNS = (
@@ -237,6 +244,21 @@ def extract_gleif(client: Any, out: Path, work: Path) -> list[Extracted]:
     ]
 
 
+def is_pdf(head: bytes) -> bool:
+    return head.startswith(b"%PDF-")
+
+
+def extract_esrs(client: Any, out: Path) -> list[Extracted]:
+    path = out / "esrs_de.pdf"
+    for url in ESRS_PDF_URLS:
+        _download(client, url, path)
+        with path.open("rb") as fh:
+            if is_pdf(fh.read(5)):
+                return [_record(out, path.name, url)]
+    path.unlink(missing_ok=True)
+    raise RuntimeError("EUR-Lex returned no PDF for the ESRS (challenge page?)")
+
+
 def extract_all(out: Path, work: Path) -> list[Extracted]:
     import httpx
 
@@ -249,6 +271,7 @@ def extract_all(out: Path, work: Path) -> list[Extracted]:
         found += extract_ets(client, out)
         found += extract_eea(client, out, work)
         found += extract_gleif(client, out, work)
+        found += extract_esrs(client, out)
     manifest = {
         "extracted_at": datetime.now(UTC).isoformat(timespec="seconds"),
         "files": [asdict(f) for f in found],

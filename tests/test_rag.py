@@ -119,3 +119,10 @@ def test_bigquery_sql_filters_tenant_before_search():
 def test_question_about_another_subject_abstains_instead_of_answering_nearby():
     result = answerer().ask("Wie hoch ist das Reduktionsziel von Mandant B?", "tenant_a")
     assert result.abstained
+
+
+def test_identifier_mismatch_abstains_even_when_the_other_words_match():
+    """Found by the eval set: "bis 2030" lifted coverage to 0.75, and tenant A's own target was
+    quoted as the answer to a question about Mandant B."""
+    result = answerer().ask("Wie hoch ist das Reduktionsziel von Mandant B bis 2030?", "tenant_a")
+    assert result.abstained

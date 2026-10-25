@@ -14,11 +14,13 @@ on:
   schedule:
     - cron: "17 5 3 * *" # 05:17 UTC on the 3rd of each month
   push:
-    branches: [main, "phase1/**"]
+    branches: [main, "phase*/**"]
     paths:
       - src/belegt/extract.py
       - src/belegt/warehouse.py
       - src/belegt/loaders/**
+      - src/belegt/rag/**
+      - evals/**
       - dbt/**
       - .github/workflows/pipeline.yml
 
@@ -115,9 +117,59 @@ jobs:
           name: summary-cloud
           path: summary
 
+  # The document assistant on BigQuery: ESRS as the shared corpus plus the synthetic tenant memos,
+  # E5 embeddings, one row access policy per tenant, then the eval cases as each tenant.
+  rag:
+    needs: [extract, cloud]
+    if: needs.cloud.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: pipeline
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - run: pip install -e ".[docs,api,bigquery,embed]"
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-multilingual-e5-small
+      - uses: actions/download-artifact@v4
+        with:
+          name: raw
+          path: data/raw
+      - name: Chunk the corpus
+        run: |
+          mkdir -p summary/fixtures
+          belegt index data/raw/esrs_de.pdf --doc-id esrs-2023-2772 --tenant shared --out data/chunks.jsonl
+          grep '"tenant_id": "tenant_' deploy/kind/demo-chunks.jsonl >> data/chunks.jsonl
+          python scripts/sample_esrs.py data/raw/esrs_de.pdf summary/fixtures/esrs_pages.jsonl
+      - name: Offline evaluation with the same embeddings
+        run: belegt rag-eval --embedder e5 --out summary/rag-eval-memory.md
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
+          service_account: pipeline@${{ vars.GCP_PROJECT_ID }}.iam.gserviceaccount.com
+      - run: belegt rag-load --project "$GCP_PROJECT_ID" --embedder e5 2>&1 | tee summary/rag-load.log
+      - name: Evaluation on BigQuery, each question as the tenant's own identity
+        run: belegt rag-eval --backend bigquery --project "$GCP_PROJECT_ID" --embedder e5 --out summary/rag-eval-bigquery.md
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: summary-rag
+          path: summary
+
   # Publishes the summaries (never data rows beyond counts) to the ops-results branch.
   report:
-    needs: [extract, cloud]
+    needs: [extract, cloud, rag]
     if: always()
     runs-on: ubuntu-latest
     permissions:
@@ -130,5 +182,5 @@ jobs:
           path: /tmp/summary
       - name: Push to ops-results
         run: |
-          printf 'extract: %s\ncloud: %s\n' "${{ needs.extract.result }}" "${{ needs.cloud.result }}" > /tmp/RESULT.md
+          printf 'extract: %s\ncloud: %s\nrag: %s\n' "${{ needs.extract.result }}" "${{ needs.cloud.result }}" "${{ needs.rag.result }}" > /tmp/RESULT.md
           bash scripts/push_ops_result.sh pipeline /tmp/RESULT.md /tmp/summary/*

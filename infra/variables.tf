@@ -93,3 +93,14 @@ variable "looker_delete_after_hours" {
     error_message = "Delete the Looker trial at most 27 days after creation (it becomes paid on day 30)."
   }
 }
+
+variable "rag_tenants" {
+  description = "Tenants of the document assistant. Each gets an identity and a row access policy."
+  type        = list(string)
+  default     = ["tenant_a", "tenant_b"]
+
+  validation {
+    condition     = alltrue([for t in var.rag_tenants : can(regex("^[a-z][a-z0-9_]{1,20}$", t)) && t != "shared"])
+    error_message = "Tenant ids: a-z, 0-9 and _, 2 to 21 characters, and not 'shared'."
+  }
+}
