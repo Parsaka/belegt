@@ -82,6 +82,8 @@ jobs:
       id-token: write
     env:
       GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+    outputs:
+      ready: ${{ steps.identity.outputs.ready }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -98,16 +100,35 @@ jobs:
           workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
           service_account: pipeline@${{ vars.GCP_PROJECT_ID }}.iam.gserviceaccount.com
       - uses: google-github-actions/setup-gcloud@v2
-      - name: Keep the extract for lineage
+      # The pipeline account comes from the Infra apply on main. A phase branch pushed before its
+      # apply has nothing to load into yet: that is a skip, not a failure. On main it fails.
+      - name: The pipeline identity exists
+        id: identity
         run: |
           mkdir -p summary
+          if gcloud auth print-access-token > /dev/null 2>&1; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          elif [ "$GITHUB_REF" = refs/heads/main ]; then
+            echo "::error::cannot act as the pipeline service account"
+            exit 1
+          else
+            echo "pipeline identity not applied yet: skipped until the Infra apply on main" \
+              | tee summary/cloud.log
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Keep the extract for lineage
+        if: steps.identity.outputs.ready == 'true'
+        run: |
           gcloud storage cp --recursive data/raw/* \
             "gs://${GCP_PROJECT_ID}-raw/extracts/$(date -u +%F)/" 2>&1 | tail -3 | tee summary/cloud.log
-      - run: belegt load --source data/raw --bigquery-project "$GCP_PROJECT_ID" 2>&1 | tee -a summary/cloud.log
-      - run: dbt build --project-dir dbt --profiles-dir dbt --target prod 2>&1 | tee summary/dbt-bigquery.log
-      - run: dbt docs generate --project-dir dbt --profiles-dir dbt --target prod 2>&1 | tail -3
+      - if: steps.identity.outputs.ready == 'true'
+        run: belegt load --source data/raw --bigquery-project "$GCP_PROJECT_ID" 2>&1 | tee -a summary/cloud.log
+      - if: steps.identity.outputs.ready == 'true'
+        run: dbt build --project-dir dbt --profiles-dir dbt --target prod 2>&1 | tee summary/dbt-bigquery.log
+      - if: steps.identity.outputs.ready == 'true'
+        run: dbt docs generate --project-dir dbt --profiles-dir dbt --target prod 2>&1 | tail -3
       - name: Measured numbers from BigQuery
-        if: always()
+        if: always() && steps.identity.outputs.ready == 'true'
         run: python scripts/run_summary.py bigquery "$GCP_PROJECT_ID" dbt/target > summary/bigquery.md || true
       - uses: actions/upload-artifact@v4
         if: always()
