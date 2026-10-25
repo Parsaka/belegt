@@ -111,3 +111,41 @@ def test_only_real_pdfs_count_as_the_esrs_download():
 
     assert is_pdf(b"%PDF-1.7")
     assert not is_pdf(b"<!DOCTYPE html>")
+
+
+def test_esrs_falls_back_through_its_sources_and_is_optional(tmp_path):
+    from contextlib import contextmanager
+
+    from belegt import extract
+
+    class Response:
+        def __init__(self, body):
+            self.body = body
+
+        def raise_for_status(self):
+            if self.body is None:
+                raise RuntimeError("403")
+
+        def iter_bytes(self, size):
+            yield self.body
+
+    class Client:
+        def __init__(self, bodies):
+            self.bodies = bodies
+            self.headers = []
+
+        @contextmanager
+        def stream(self, method, url, **kwargs):
+            self.headers.append(kwargs.get("headers", {}))
+            yield Response(self.bodies[len(self.headers) - 1])
+
+    found = extract.extract_esrs(Client([None, b"<html>challenge</html>", b"%PDF-1.7 x"]), tmp_path)
+    assert [f.file for f in found] == ["esrs_de.pdf"]
+    assert (tmp_path / "esrs_de.pdf").read_bytes().startswith(b"%PDF")
+
+    empty = tmp_path / "none"
+    empty.mkdir()
+    client = Client([None, b"<html>", b"<html>"])
+    assert extract.extract_esrs(client, empty) == []  # the run goes on without the ESRS
+    assert not (empty / "esrs_de.pdf").exists()
+    assert client.headers[0]["Accept"] == "application/pdf"  # content negotiation on the ELI
