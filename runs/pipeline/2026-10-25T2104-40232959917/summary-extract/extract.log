@@ -1,0 +1,76 @@
+ets_verified_emissions_de.xlsx: 8,228,376 bytes, sha256 8f4e628d9d8d
+ets_operators_de.xlsx: 1,790,735 bytes, sha256 fb28c0603e74
+eea_ets_identifiers.csv: 573 rows, 57,667 bytes, sha256 edbb079f657d
+eea_installations.csv: 146 rows, 47,460 bytes, sha256 e5f874a7f7d8
+eea_facilities.csv: 43 rows, 20,960 bytes, sha256 d4a7be63b59f
+gleif_entities.csv: 310087 rows, 40,358,977 bytes, sha256 9bf9675b67de
+gleif_rr.csv: 33902 rows, 13,623,644 bytes, sha256 8b9438fd2a05
+[31m╭─[0m[31m────────────────────[0m[31m [0m[1;31mTraceback [0m[1;2;31m(most recent call last)[0m[31m [0m[31m─────────────────────[0m[31m─╮[0m
+[31m│[0m [2m/home/runner/work/belegt/belegt/src/belegt/loaders/[0m[1mets.py[0m:55 in read_rows    [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m 52 [0m                                                                       [31m│[0m
+[31m│[0m   [2m 53 [0m                                                                       [31m│[0m
+[31m│[0m   [2m 54 [0m[94mdef[0m[90m [0m[92mread_rows[0m(rows: [96mlist[0m[[96mtuple[0m[[96mobject[0m, ...]], registry: [96mstr[0m | [94mNone[0m =   [31m│[0m
+[31m│[0m       [33m"[0m[33mDE[0m[33m"[0m) -> Iterator[EtsEmission]:                                        [31m│[0m
+[31m│[0m [31m❱ [0m 55 [2m│   [0mheader_at = [1;4;96mnext[0m[1;4m(i [0m[1;4;94mfor[0m[1;4m i, row [0m[1;4;95min[0m[1;4m [0m[1;4;96menumerate[0m[1;4m(rows) [0m[1;4;94mif[0m[1;4m row [0m[1;4;95mand[0m[1;4m row[[0m[1;4;94m0[0m[1;4m][0m [31m│[0m
+[31m│[0m       [1;4m== [0m[1;4;33m"[0m[1;4;33mREGISTRY_CODE[0m[1;4;33m"[0m[1;4m)[0m                                                    [31m│[0m
+[31m│[0m   [2m 56 [0m[2m│   [0mheader = [[96mstr[0m(h) [94mfor[0m h [95min[0m rows[header_at]]                         [31m│[0m
+[31m│[0m   [2m 57 [0m[2m│   [0mcol = {name: i [94mfor[0m i, name [95min[0m [96menumerate[0m(header)}                   [31m│[0m
+[31m│[0m   [2m 58 [0m[2m│   [0myears: [96mdict[0m[[96mint[0m, [96mdict[0m[[96mstr[0m, [96mint[0m]] = {}                              [31m│[0m
+[31m╰──────────────────────────────────────────────────────────────────────────────╯[0m
+[1;91mStopIteration[0m
+
+[3mThe above exception was the direct cause of the following exception:[0m
+
+[31m╭─[0m[31m────────────────────[0m[31m [0m[1;31mTraceback [0m[1;2;31m(most recent call last)[0m[31m [0m[31m─────────────────────[0m[31m─╮[0m
+[31m│[0m [2m/home/runner/work/belegt/belegt/src/belegt/[0m[1mcli.py[0m:64 in load                 [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m61 [0m[2m│   [0m[94mif[0m bigquery_project:                                                [31m│[0m
+[31m│[0m   [2m62 [0m[2m│   │   [0mcounts = load_bigquery(source, bigquery_project)                [31m│[0m
+[31m│[0m   [2m63 [0m[2m│   [0m[94melse[0m:                                                               [31m│[0m
+[31m│[0m [31m❱ [0m64 [2m│   │   [0mcounts = [1;4mload_directory(source, db)[0m                             [31m│[0m
+[31m│[0m   [2m65 [0m[2m│   [0m[94mfor[0m table, n [95min[0m counts.items():                                     [31m│[0m
+[31m│[0m   [2m66 [0m[2m│   │   [0mtyper.echo([33mf[0m[33m"[0m[33mraw.[0m[33m{[0mtable[33m}[0m[33m: [0m[33m{[0mn[33m}[0m[33m rows[0m[33m"[0m)                            [31m│[0m
+[31m│[0m   [2m67 [0m                                                                        [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/home/runner/work/belegt/belegt/src/belegt/[0m[1mwarehouse.py[0m:113 in               [31m│[0m
+[31m│[0m load_directory                                                               [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m110 [0m[2m│   [0mcon = duckdb.connect([96mstr[0m(db_path))                                 [31m│[0m
+[31m│[0m   [2m111 [0m[2m│   [0mcon.execute([33m"[0m[33mCREATE SCHEMA IF NOT EXISTS raw[0m[33m"[0m)                     [31m│[0m
+[31m│[0m   [2m112 [0m[2m│   [0mcounts = [1;4m{[0m                                                         [31m│[0m
+[31m│[0m [31m❱ [0m113 [2m│   │   [0m[1;4mname: write_table(con, name, [0m[1;4;96mcls[0m[1;4m, rows)[0m                        [31m│[0m
+[31m│[0m   [2m114 [0m[2m│   │   [0m[1;4;94mfor[0m[1;4m name, ([0m[1;4;96mcls[0m[1;4m, rows) [0m[1;4;95min[0m[1;4m parse_directory(source).items()[0m       [31m│[0m
+[31m│[0m   [2m115 [0m[2m│   [0m[1;4m}[0m                                                                  [31m│[0m
+[31m│[0m   [2m116 [0m[2m│   [0mcon.close()                                                        [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/home/runner/work/belegt/belegt/src/belegt/[0m[1mwarehouse.py[0m:35 in write_table    [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m 32 [0m[2m│   [0mhints = typing.get_type_hints([96mcls[0m)                                 [31m│[0m
+[31m│[0m   [2m 33 [0m[2m│   [0mcolumns = [33m"[0m[33m, [0m[33m"[0m.join([33mf[0m[33m"[0m[33m{[0mf.name[33m}[0m[33m [0m[33m{[0m_sql_type(hints[f.name])[33m}[0m[33m"[0m [94mfor[0m f   [31m│[0m
+[31m│[0m       [95min[0m fields)                                                             [31m│[0m
+[31m│[0m   [2m 34 [0m[2m│   [0mcon.execute([33mf[0m[33m"[0m[33mCREATE OR REPLACE TABLE raw.[0m[33m{[0mname[33m}[0m[33m ([0m[33m{[0mcolumns[33m}[0m[33m)[0m[33m"[0m)     [31m│[0m
+[31m│[0m [31m❱ [0m 35 [2m│   [0mdata = [1;4m[[0m[1;4;96mtuple[0m[1;4m([0m[1;4;96mgetattr[0m[1;4m(r, f.name) [0m[1;4;94mfor[0m[1;4m f [0m[1;4;95min[0m[1;4m fields) [0m[1;4;94mfor[0m[1;4m r [0m[1;4;95min[0m[1;4m rows][0m   [31m│[0m
+[31m│[0m   [2m 36 [0m[2m│   [0m[94mif[0m data:                                                           [31m│[0m
+[31m│[0m   [2m 37 [0m[2m│   │   [0mmarks = [33m"[0m[33m, [0m[33m"[0m.join([33m"[0m[33m?[0m[33m"[0m [94mfor[0m _ [95min[0m fields)                         [31m│[0m
+[31m│[0m   [2m 38 [0m[2m│   │   [0mcon.executemany([33mf[0m[33m"[0m[33mINSERT INTO raw.[0m[33m{[0mname[33m}[0m[33m VALUES ([0m[33m{[0mmarks[33m}[0m[33m)[0m[33m"[0m,    [31m│[0m
+[31m│[0m       data)                                                                  [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/home/runner/work/belegt/belegt/src/belegt/loaders/[0m[1mets.py[0m:96 in              [31m│[0m
+[31m│[0m read_verified_emissions                                                      [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m 93 [0m[2m│   [0m[94mfrom[0m[90m [0m[4;96mopenpyxl[0m[90m [0m[94mimport[0m load_workbook                                 [31m│[0m
+[31m│[0m   [2m 94 [0m[2m│   [0m                                                                   [31m│[0m
+[31m│[0m   [2m 95 [0m[2m│   [0mwb = load_workbook(path, read_only=[94mTrue[0m, data_only=[94mTrue[0m)           [31m│[0m
+[31m│[0m [31m❱ [0m 96 [2m│   [0m[1;4;94myield from[0m[1;4m [0m                                                        [31m│[0m
+[31m│[0m       [1;4mread_rows([0m[1;4;96mlist[0m[1;4m(wb.worksheets[[0m[1;4;94m0[0m[1;4m].iter_rows(values_only=[0m[1;4;94mTrue[0m[1;4m)), [0m         [31m│[0m
+[31m│[0m       [1;4mregistry)[0m                                                              [31m│[0m
+[31m│[0m   [2m 97 [0m                                                                       [31m│[0m
+[31m│[0m   [2m 98 [0m                                                                       [31m│[0m
+[31m│[0m   [2m 99 [0m[1;95m@dataclass[0m(frozen=[94mTrue[0m)                                                [31m│[0m
+[31m╰──────────────────────────────────────────────────────────────────────────────╯[0m
+[1;91mRuntimeError: [0mgenerator raised StopIteration
+
+real	0m26.063s
+user	0m25.737s
+sys	0m0.224s
