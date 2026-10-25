@@ -6,9 +6,10 @@ name: Pipeline
 # Actions logs.
 on:
   workflow_dispatch:
-  # After Terraform changed the infrastructure on main, e.g. created the pipeline identity.
+  # After the Reports workflow, which itself follows every Infra apply on main: the
+  # infrastructure is current and the figures of the latest report run are in the bucket.
   workflow_run:
-    workflows: [Infra]
+    workflows: [Reports]
     types: [completed]
     branches: [main]
   schedule:
@@ -37,7 +38,8 @@ defaults:
 
 jobs:
   extract:
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    # A report that failed to download does not stop the load; the summary names it
+    if: github.event_name != 'workflow_run' || contains(fromJSON('["success", "failure"]'), github.event.workflow_run.conclusion)
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
