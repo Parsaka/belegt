@@ -7,7 +7,7 @@ trial is active. The order matters: the cost guards come first.
 
 | File | What |
 |---|---|
-| `cost_guards.tf` | Budget (1.50 EUR) with alerts at 0.50 / 1.00 / 1.20, Pub/Sub topic, billing kill switch |
+| `cost_guards.tf` | Budget (1.00 EUR, net of credits) with alerts at 0.25 / 0.50 / 1.00, Pub/Sub topic, billing kill switch at 0.60 |
 | `bigquery.tf` | Datasets `raw`, `staging`, `marts`, `rag`; **daily query quota** (hard stop) |
 | `storage.tf` | Raw and reports buckets (private), Artifact Registry with a keep-two cleanup policy |
 | `trial.tf` | `trial_mode = true` only: GKE Autopilot, Cloud SQL, Looker trial **with automatic deletion before day 30** |

@@ -3,7 +3,7 @@
 Status: accepted (2026-10-25)
 
 ## Context
-The budget is 1.50 EUR per month. Some technologies the project demonstrates (GKE, Looker,
+The budget is 1.00 EUR per month (lowered from 1.50 EUR). Some technologies the project demonstrates (GKE, Looker,
 Cloud SQL, Dagster) cost far more than that when they run continuously: about 80 USD per month
 together, based on list prices for europe-west1. Paid Looker is sold only through sales on
 annual terms.

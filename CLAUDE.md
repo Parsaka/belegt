@@ -11,11 +11,11 @@ tested with kind in CI. Infra with Terraform, CI/CD with GitHub Actions (Workloa
 Federation, no keys).
 
 ## Hard constraints
-- **Budget: at most 1.50 EUR/month, never exceeded.** The build runs inside the GCP 300 USD /
+- **Budget: at most 1.00 EUR/month, never exceeded.** The build runs inside the GCP 300 USD /
   90-day free trial. After the trial, only free-tier services may stay on. Every resource must be
   listed in `docs/budget.md` with its free-tier limit and expected cost; ask before adding
   anything that is not there. Cost guards (daily BigQuery query quota, service spend caps,
-  budget alerts, billing kill switch at 1.20 EUR) are part of the Terraform and are built first.
+  budget alerts, billing kill switch at 0.60 EUR) are part of the Terraform and are built first.
 - No always-on paid resources after the trial: no VMs, Cloud SQL, load balancers or GKE clusters.
   Cloud Run uses `min-instances=0`, `max-instances=1`.
 - **Looker trial auto-converts to a paid Standard instance after 30 days.** It must be deleted
