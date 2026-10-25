@@ -15,7 +15,9 @@ probe output); each one is a case that broke a simpler version:
    intensities (per tonne, per MWh, per EUR), percentages and shares are not totals.
 3. **Columns.** The last line above the row that lists years is the column header; two such
    lines in a row are one header ("Base year (2022)" / "2024 2025 2030"), and a footnote digit
-   glued to a year ("20303") is dropped. The figure is taken from the reporting year's column;
+   glued to a year ("20303") is dropped. A line with one year is a header only if the year is
+   bracketed or the line names the unit column, so a running head ("Geschäftsbericht 2024") is
+   not. The figure is taken from the reporting year's column;
    some reports put the prior year or the base year first. Dashes and "n/a" hold their column,
    but only after the label's last word: a dash inside the label is not a column. Footnote
    digits between the label and the first figure are dropped. Without a header that has the
@@ -205,7 +207,12 @@ def _years(line: str) -> list[int] | None:
     others = [t for t in _tokens(line, False) if t.is_number and not _YEAR.match(t.text)]
     has_unit_column = re.search(r"\b(?:Einheit|Unit)\b", line, re.I) is not None
     short = len(_WORD.findall(line)) <= 6 and not _SCOPE.search(line)
-    return years if len(others) <= 1 and (short or has_unit_column) else None
+    # One year alone is a running head ("Geschäftsbericht 2024") unless it is bracketed, as a
+    # base year column is ("(2022)"), or the line names the unit column
+    single = len(years) == 1 and not has_unit_column and not re.search(r"\(\s*\d{4}\s*\)", line)
+    if single or len(others) > 1:
+        return None
+    return years if short or has_unit_column else None
 
 
 def _continues(line: str, decimal_comma: bool) -> bool:
@@ -238,7 +245,8 @@ def _rows(text: str, decimal_comma: bool) -> Iterator[tuple[str, list[int] | Non
         years = _years(line)
         if years is not None:
             # A header split over lines ("Base year (2022)" / "2024 2025 2030") is one header
-            header = header + years if header and header_line == i - 1 else years
+            follows = header and header_line == i - 1 and max(header) < years[0]
+            header = header + years if header and follows else years
             header_line = i
         if _label(line) is not None:
             nxt = lines[i + 1] if i + 1 < len(lines) else ""

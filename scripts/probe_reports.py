@@ -42,7 +42,9 @@ def main(root: Path) -> None:
         for n, line in hits:
             if metric_of(line) and re.search(r"\d[.,]?\d", line[12:]):
                 rows[n] = rows.get(n, 0) + 1
-        likely = sorted({n for n, c in rows.items() if c >= 2} | set(e16[:3]))[:6]
+        # the pages with the most scope rows first: the E1-6 table is one of them
+        dense = sorted((n for n, c in rows.items() if c >= 2), key=lambda n: -rows[n])[:4]
+        likely = sorted(set(dense) | set(e16[:2]))[:6]
         for page in (p for p in pages if p.number in likely):
             print(f"    p.{page.number} (lines with figures):")
             numeric = [
