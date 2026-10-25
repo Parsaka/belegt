@@ -77,3 +77,29 @@ def test_snapshot_opens_a_new_version_on_change(warehouse):
     assert len(versions) == 2
     assert versions[-1] == ("Teststadt", True)
     assert versions[0][1] is False
+
+
+def test_scope1_consistency_flags_ets_above_the_reported_figure(warehouse):
+    # Synthetic extracted figures for the test only; real ones come from `belegt reports`.
+    con = duckdb.connect(str(warehouse))
+    con.execute(
+        """insert into raw.reported_metrics values
+        ('basf-2024', 'scope1', 1000000.0, 3, 'Mio. t', 'Scope 1 1,0 1,1', 3, true),
+        ('basf-2024', 'scope1', 2.0, 9, 't', 'Scope 1 2 3', 1, false),
+        ('rwe-2024', 'scope1', 60000000.0, 5, 'Mio. t', 'Scope 1 60,0 70,0', 3, true),
+        ('thyssenkrupp-2024', 'scope3', 5.0, 4, 'Mio. t', 'Scope 3 gesamt 5 6', 3, true)"""
+    )
+    con.close()
+    dbt("build", "--select", "stg_reported_metrics+")
+    rows = dict(
+        (r[0], r[1:])
+        for r in query(
+            warehouse,
+            "select doc_id, status, reported_page, caveat from marts.mart_scope1_consistency",
+        )
+    )
+    # the fixture holds 1.52 Mt verified for BASF's German installations in 2024
+    assert rows["basf-2024"] == ("ets_exceeds_reported", 3, None)
+    assert rows["rwe-2024"][0] == "no_ets_group"  # RWE's installations are not in the fixtures
+    assert rows["thyssenkrupp-2024"][0] == "no_reported_figure"
+    assert "09-30" in rows["thyssenkrupp-2024"][2]

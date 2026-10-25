@@ -1,0 +1,34 @@
+image:
+  repository: belegt-reports
+  tag: dev
+  pullPolicy: IfNotPresent
+
+# A new id per run: a Job's pod template cannot change, so every run is a new Job.
+runId: "manual"
+
+# The report list (dbt/seeds/reports.csv), passed with --set-file. One task per row.
+seed: ""
+
+# Where the figures go (metrics/<doc_id>.jsonl) and, privately, the PDFs (pdf/<doc_id>.pdf).
+# A gs:// prefix in the cloud; a path on the pod's scratch volume on kind.
+out: /tmp/out
+pdfOut: ""
+
+parallelism: 3
+backoffLimitPerIndex: 2 # a host that is down fails its own task, not the others
+activeDeadlineSeconds: 3600
+ttlSecondsAfterFinished: 86400
+
+# GKE Workload Identity: IAM grants the bucket to this Kubernetes service account directly.
+serviceAccount:
+  name: reports
+
+# Egress for downloads (443), the GKE metadata server (80, 988) and DNS. Add ports for tests.
+networkPolicy:
+  enabled: true
+  extraEgressPorts: []
+
+# GKE Autopilot bills requests (minutes per run). pypdf needs CPU and memory for 400-page reports.
+resources:
+  requests: {cpu: 500m, memory: 2Gi, ephemeral-storage: 1Gi}
+  limits: {cpu: 500m, memory: 2Gi, ephemeral-storage: 1Gi}

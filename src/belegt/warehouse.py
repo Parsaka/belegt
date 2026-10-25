@@ -15,10 +15,12 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
+from belegt.documents.metrics import ReportedMetric
+from belegt.documents.reports import read_metrics
 from belegt.loaders import eea, ets, gleif
 from belegt.resolution import CandidateIndex, Match, resolve, resolve_operator
 
-_SQL_TYPES = {str: "VARCHAR", int: "BIGINT", float: "DOUBLE", date: "DATE"}
+_SQL_TYPES = {str: "VARCHAR", int: "BIGINT", float: "DOUBLE", bool: "BOOLEAN", date: "DATE"}
 
 
 def _sql_type(annotation: Any) -> str:
@@ -83,6 +85,11 @@ def parse_directory(source: Path) -> dict[str, Table]:
             gleif.Relationship,
             gleif.read_relationships(source / "gleif_rr.csv"),
         ),
+        # Written by `belegt reports`; an empty table until the first report run.
+        "reported_metrics": (
+            ReportedMetric,
+            read_metrics(sorted((source / "reports" / "metrics").glob("*.jsonl"))),
+        ),
     }
     # One decision per name: operators from the registry first, EEA parent names add the rest.
     index = CandidateIndex(entities)
@@ -117,7 +124,13 @@ def load_directory(source: Path, db_path: Path) -> dict[str, int]:
     return counts
 
 
-_BQ_TYPES = {"VARCHAR": "STRING", "BIGINT": "INT64", "DOUBLE": "FLOAT64", "DATE": "DATE"}
+_BQ_TYPES = {
+    "VARCHAR": "STRING",
+    "BIGINT": "INT64",
+    "DOUBLE": "FLOAT64",
+    "BOOLEAN": "BOOL",
+    "DATE": "DATE",
+}
 
 
 def bigquery_schema(cls: type[Any]) -> list[dict[str, str]]:

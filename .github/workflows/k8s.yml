@@ -1,10 +1,19 @@
 name: Kubernetes
 
-# Builds the API image and deploys the Helm chart to a throw-away kind cluster, then calls the
-# API through the Service: health, a cited answer, tenant isolation and auth.
+# Throw-away kind clusters, one per chart:
+# - api: deploys the API and calls it through the Service (health, a cited answer, tenant
+#   isolation, auth);
+# - reports: runs the report Indexed Job against made-up statements served in the cluster.
 on:
   pull_request:
-    paths: [Dockerfile, deploy/**, src/belegt/api/**, src/belegt/rag/**, .github/workflows/k8s.yml]
+    paths:
+      - Dockerfile
+      - deploy/**
+      - src/belegt/api/**
+      - src/belegt/rag/**
+      - src/belegt/documents/**
+      - src/belegt/cli.py
+      - .github/workflows/k8s.yml
   push:
     branches: [main]
 
@@ -12,7 +21,7 @@ permissions:
   contents: read
 
 jobs:
-  kind:
+  api:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -45,3 +54,28 @@ jobs:
           test "$code" = 401
       - if: failure()
         run: kubectl describe pods && kubectl logs -l app.kubernetes.io/name=belegt-api --tail=100
+
+  reports:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e .
+      - uses: azure/setup-helm@v4
+      - name: Lint and render the chart (fails without a report list)
+        run: |
+          helm lint deploy/helm/belegt-reports --set-file seed=dbt/seeds/reports.csv
+          helm template t deploy/helm/belegt-reports --set-file seed=dbt/seeds/reports.csv \
+            | grep -q "completions: $(($(wc -l < dbt/seeds/reports.csv) - 1))"
+          ! helm template t deploy/helm/belegt-reports 2>/dev/null
+      - run: docker build --target reports -t belegt-reports:ci .
+      - uses: helm/kind-action@v1
+        with:
+          cluster_name: reports
+      - run: kind load docker-image belegt-reports:ci --name reports
+      - run: bash deploy/kind/reports_smoke.sh
+      - if: failure()
+        run: kubectl get jobs,pods -o wide && kubectl describe jobs && kubectl logs -l app.kubernetes.io/name=belegt-reports --tail=50 --prefix

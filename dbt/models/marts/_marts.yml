@@ -65,3 +65,31 @@ models:
 
   - name: review_entity_matches
     description: Matches waiting for a human decision.
+
+  - name: fct_reported_metric
+    description: Selected Scope 1-3 figure per report, with page and table line for the citation.
+    tests:
+      - unique_combination:
+          arguments:
+            columns: [doc_id, metric]
+    columns:
+      - name: metric
+        tests:
+          - accepted_values:
+              arguments:
+                values: [scope1, scope2_market, scope2_location, scope3]
+      - name: page
+        tests: [not_null]
+      - name: value_t
+        tests: [non_negative]
+
+  - name: mart_scope1_consistency
+    description: Reported Scope 1 against verified ETS emissions of the same group and year.
+    columns:
+      - name: doc_id
+        tests: [unique, not_null]
+      - name: status
+        tests:
+          - accepted_values:
+              arguments:
+                values: [consistent, ets_exceeds_reported, no_reported_figure, no_ets_group]

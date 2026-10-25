@@ -186,3 +186,51 @@ def rag_eval(
     typer.echo(text)
     if any(o.leaked for o in outcomes):
         raise typer.Exit(1)
+
+
+@app.command()
+def reports(
+    seed: Annotated[Path, typer.Option(help="The report list")] = Path("dbt/seeds/reports.csv"),
+    index: Annotated[
+        int | None,
+        typer.Option(help="Process this row only; default: the job's task index, else every row"),
+    ] = None,
+    out: Annotated[
+        str, typer.Option(help="Directory or gs:// prefix for metrics/<doc_id>.jsonl")
+    ] = "data/raw/reports",
+    pdf_out: Annotated[
+        str | None, typer.Option(help="Private directory or gs:// prefix for the PDFs themselves")
+    ] = None,
+    work: Annotated[Path, typer.Option(help="Scratch space for the download")] = Path(
+        "data/downloads/reports"
+    ),
+) -> None:
+    """Download sustainability statements and extract Scope 1-3 totals with page citations.
+
+    Prints one JSON line per report. In a job (one report per task) a failure exits non-zero so
+    the scheduler retries that task; over every row, failures are reported and the rest go on.
+    """
+    import httpx
+
+    from belegt.documents.reports import process, read_seed, sink_for, task_index
+    from belegt.extract import USER_AGENT
+
+    rows = read_seed(seed)
+    position = index if index is not None else task_index()
+    todo = [rows[position]] if position is not None else rows
+    sink = sink_for(out)
+    pdf_sink = sink_for(pdf_out) if pdf_out else None
+    failed = 0
+    with httpx.Client(
+        headers={"User-Agent": USER_AGENT}, timeout=300, follow_redirects=True
+    ) as client:
+        for report in todo:
+            try:
+                result = process(report, client, work, sink, pdf_sink)
+            except Exception as error:  # one bad host must not hide the other reports
+                failed += 1
+                typer.echo(json.dumps({"doc_id": report.doc_id, "error": str(error)[:300]}))
+                continue
+            typer.echo(json.dumps(asdict(result)))
+    if failed and (position is not None or failed == len(todo)):
+        raise typer.Exit(1)
