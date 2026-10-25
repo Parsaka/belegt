@@ -67,7 +67,11 @@ def main() -> None:
     preamble, hdr_i, table = ets_rows()
     hdr = table[0]
     col = {name: i for i, name in enumerate(hdr)}
-    de = [r for r in table[1:] if r and r[0] == "DE" and str(r[col["ACCOUNT_TYPE"]]).upper().startswith("OPERATOR HOLDING")]
+    de = [
+        r
+        for r in table[1:]
+        if r and r[0] == "DE" and str(r[col["ACCOUNT_TYPE"]]).upper().startswith("OPERATOR HOLDING")
+    ]
     if not de:  # account type labels differ between releases
         de = [r for r in table[1:] if r and r[0] == "DE" and not r[col["IMO_NUMBER"]]]
     ets_ids = export("3f2_ETSIdentifiers")
@@ -75,7 +79,16 @@ def main() -> None:
     # all installations the EEA links (Brandenburg only, see link_stats), a few known group
     # sites by name, and an even spread of the rest
     picked = [r for r in de if ets_key(r[col["INSTALLATION_IDENTIFIER"]]) in eea_de]
-    picked += [r for r in de if r not in picked and GROUPS.search(f"{r[col['IDENTIFIER_IN_REG']]} {r[col['INSTALLATION_NAME']]}")][:12]
+    op_header, op_rows = operators_table()
+    op_col = {name: k for k, name in enumerate(op_header)}
+    group_ids = {
+        str(o[op_col["Installation ID"]])
+        for o in op_rows
+        if GROUPS.search(str(o[op_col["Account Holder Name"]]))
+    }
+    picked += [
+        r for r in de if r not in picked and str(r[col["INSTALLATION_IDENTIFIER"]]) in group_ids
+    ][:15]
     rest = [r for r in de if r not in picked]
     picked += rest[:: max(1, len(rest) // 10)][:10]
     print(f"ETS: header at row {hdr_i}, {len(de)} German stationary rows, {len(picked)} picked")
@@ -94,13 +107,21 @@ def main() -> None:
     # link statistics over all German ETS installations (latest EEA year per id)
     latest: dict[str, dict[str, str]] = {}
     for r in de_ets:
-        if r["ETSIdentifier"] not in latest or r["reportingYear"] > latest[r["ETSIdentifier"]]["reportingYear"]:
+        if (
+            r["ETSIdentifier"] not in latest
+            or r["reportingYear"] > latest[r["ETSIdentifier"]]["reportingYear"]
+        ):
             latest[r["ETSIdentifier"]] = r
     ur_ids = {ets_key(r[col["INSTALLATION_IDENTIFIER"]]) for r in de}
     linked = [latest[i] for i in ur_ids if i in latest]
     with_parent = [
-        r for r in linked
-        if (f := fac.get(inst.get(r["Installation_INSPIRE_ID"], {}).get("Parent_Facility_INSPIRE_ID", "")))
+        r
+        for r in linked
+        if (
+            f := fac.get(
+                inst.get(r["Installation_INSPIRE_ID"], {}).get("Parent_Facility_INSPIRE_ID", "")
+            )
+        )
         and f.get("parentCompanyName")
     ]
     parents = Counter(
@@ -121,97 +142,163 @@ def main() -> None:
 
     want = {ets_key(r[col["INSTALLATION_IDENTIFIER"]]) for r in picked}
     fx_ets = [r for r in de_ets if r["ETSIdentifier"] in want]
-    fx_inst = [inst[i] for i in dict.fromkeys(r["Installation_INSPIRE_ID"] for r in fx_ets) if i in inst]
-    fx_fac = [fac[f] for f in dict.fromkeys(r["Parent_Facility_INSPIRE_ID"] for r in fx_inst) if f in fac]
+    fx_inst = [
+        inst[i] for i in dict.fromkeys(r["Installation_INSPIRE_ID"] for r in fx_ets) if i in inst
+    ]
+    fx_fac = [
+        fac[f] for f in dict.fromkeys(r["Parent_Facility_INSPIRE_ID"] for r in fx_inst) if f in fac
+    ]
     write_csv("eea_ets_identifiers.csv", fx_ets)
     write_csv("eea_installations.csv", fx_inst)
     write_csv("eea_facilities.csv", fx_fac)
-    print(f"fixtures: {len(fx_ets)} ETS ids, {len(fx_inst)} installations, {len(fx_fac)} facilities")
+    print(
+        f"fixtures: {len(fx_ets)} ETS ids, {len(fx_inst)} installations, {len(fx_fac)} facilities"
+    )
     for f in fx_fac:
-        print("   ", f["Facility_INSPIRE_ID"], "|", f["nameOfFeature"], "|", f["parentCompanyName"], "|", f["city"])
-    gleif(sorted({f["parentCompanyName"] for f in fx_fac if f.get("parentCompanyName")}))
-    operator_sources()
+        print(
+            "   ",
+            f["Facility_INSPIRE_ID"],
+            "|",
+            f["nameOfFeature"],
+            "|",
+            f["parentCompanyName"],
+            "|",
+            f["city"],
+        )
+    picked_ids = {str(r[col["INSTALLATION_IDENTIFIER"]]) for r in picked}
+    fx_ops = [o for o in op_rows if str(o[op_col["Installation ID"]]) in picked_ids]
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "data"
+    for o in [op_header, *fx_ops]:
+        ws.append(list(o))
+    wb.save(OUT / "ets_operators_de.xlsx")
+    print(f"operators fixture: {len(fx_ops)} rows")
+    leis = sorted({str(o[op_col["LEI"]]).strip() for o in fx_ops if o[op_col["LEI"]]})
+    regs = sorted(
+        {
+            str(o[op_col["Company Registration Nr of Account Holder"]]).strip()
+            for o in fx_ops
+            if not o[op_col["LEI"]] and o[op_col["Company Registration Nr of Account Holder"]]
+        }
+    )
+    names = {f["parentCompanyName"] for f in fx_fac if f.get("parentCompanyName")}
+    names |= {str(o[op_col["Account Holder Name"]]) for o in fx_ops if not o[op_col["LEI"]]}
+    gleif(sorted(names), leis, regs)
 
 
-def operator_sources() -> None:
-    """The registry extract names accounts, not operators. Look for a published operator list."""
-    pages = [
-        UR_PAGE,
-        "https://www.dehst.de/DE/Themen/EU-ETS-1/EU-ETS-1-Informationen/Unionsregister/unionsregister_node.html",
-        "https://www.dehst.de/DE/Themen/EU-ETS-1/EU-ETS-1-Informationen/Emissionsberichterstattung/emissionsberichterstattung_node.html",
-        "https://www.dehst.de/DE/Service/Publikationen/publikationen_node.html",
-        "https://union-registry-data.ec.europa.eu/report/welcome",
-    ]
-    for page in pages:
-        try:
-            r = client.get(page)
-        except httpx.HTTPError as exc:
-            print("operator page", page, exc)
-            continue
-        links = sorted(set(re.findall(r'href="([^"]+)"', r.text)))
-        files = [urljoin(page, x) for x in links if re.search(r"\.(xlsx?|csv|zip)|blob=publicationFile|download", x, re.I)]
-        print(f"operator page {page} -> {r.status_code}, {len(files)} file links")
-        for f in files[:60]:
-            print("    ", f)
-        for f in files:
-            if not re.search(r"anlagenliste|operator|account|betreiber|vet", f, re.I):
-                continue
-            try:
-                fr = client.get(f)
-            except httpx.HTTPError:
-                continue
-            print("  GET", f, fr.status_code, fr.headers.get("content-type"), len(fr.content))
-            if fr.content[:2] == b"PK" and "spreadsheet" in (fr.headers.get("content-type") or "") or f.endswith(".xlsx"):
-                try:
-                    wb = load_workbook(io.BytesIO(fr.content), read_only=True, data_only=True)
-                except Exception as exc:  # noqa: BLE001 - discovery only
-                    print("    not a workbook:", exc)
-                    continue
-                for ws in wb.worksheets:
-                    for i, row in enumerate(ws.iter_rows(values_only=True)):
-                        if i > 8:
-                            break
-                        print(f"    {ws.title}[{i}]:", row[:16])
+OPERATORS_FILE = "policy_ets_registry_operators_ets_en.xlsx"
+
+
+def operators_table() -> tuple[tuple[object, ...], list[tuple[object, ...]]]:
+    """The Commission's list of installation operators: account holder, register number, LEI."""
+    html = client.get(UR_PAGE).text
+    url = next(
+        urljoin(UR_PAGE, x)
+        for x in re.findall(r'href="([^"]+)"', html)
+        if x.endswith(OPERATORS_FILE)
+    )
+    wb = load_workbook(io.BytesIO(client.get(url).content), read_only=True, data_only=True)
+    print("operators workbook:", url, wb.sheetnames)
+    rows = list(wb.worksheets[0].iter_rows(values_only=True))
+    header = rows[0]
+    print("operators header:", header)
+    col = {name: k for k, name in enumerate(header)}
+    de = [r for r in rows[1:] if r and r[col["MS Registry"]] == "DE"]
+    with_lei = [r for r in de if r[col["LEI"]]]
+    with_reg = [r for r in de if r[col["Company Registration Nr of Account Holder"]]]
+    regs = Counter(
+        re.sub(r"\s*\d.*", "", str(r[col["Company Registration Nr of Account Holder"]]))
+        for r in with_reg
+    )
+    stats = {
+        "operators_rows_total": len(rows) - 1,
+        "operators_de": len(de),
+        "operators_de_with_lei": len(with_lei),
+        "operators_de_with_registration_nr": len(with_reg),
+        "operators_de_registration_prefixes": regs.most_common(10),
+        "operators_de_distinct_holders": len({r[col["Account Holder Name"]] for r in de}),
+    }
+    print(json.dumps(stats, indent=1, ensure_ascii=False))
+    (OUT / "operator_stats.json").write_text(json.dumps(stats, indent=1, ensure_ascii=False))
+    for r in de[:5]:
+        print("   ", r)
+    return header, de
 
 
 GLEIF = "https://api.gleif.org/api/v1"
 
 
-def gleif(parent_names: list[str]) -> None:
-    """Candidate LEI records for each EEA parent name, and the real RR rows under three groups."""
+def gleif(parent_names: list[str], leis: list[str], regs: list[str]) -> None:
+    """LEI records for the operators (by LEI, by register number, by name) and the real RR rows
+    under three groups."""
     candidates: dict[str, list[dict[str, object]]] = {}
+    for i in range(0, len(leis), 100):
+        r = client.get(
+            f"{GLEIF}/lei-records",
+            params={"filter[lei]": ",".join(leis[i : i + 100]), "page[size]": 100},
+        )
+        candidates[f"lei:{i}"] = r.json().get("data", [])
+    print(
+        f"   GLEIF records by operator LEI: {sum(len(v) for v in candidates.values())} of {len(leis)}"
+    )
+    for reg in regs[:60]:
+        r = client.get(
+            f"{GLEIF}/lei-records",
+            params={
+                "filter[entity.registeredAs]": reg,
+                "filter[entity.legalAddress.country]": "DE",
+                "page[size]": 5,
+            },
+        )
+        candidates[f"reg:{reg}"] = r.json().get("data", []) if r.status_code == 200 else []
+        print(
+            f"   GLEIF by register number {reg!r}: {[c['attributes']['entity']['legalName']['name'] for c in candidates[f'reg:{reg}']]}"
+        )
     for name in parent_names:
         r = client.get(f"{GLEIF}/lei-records", params={"filter[fulltext]": name, "page[size]": 5})
         candidates[name] = r.json().get("data", []) if r.status_code == 200 else []
-        print(f"   GLEIF candidates for {name!r}: {[c['attributes']['entity']['legalName']['name'] for c in candidates[name]]}")
+        print(
+            f"   GLEIF candidates for {name!r}: {[c['attributes']['entity']['legalName']['name'] for c in candidates[name]]}"
+        )
     (OUT / "gleif_candidates.json").write_text(json.dumps(candidates, ensure_ascii=False))
 
     groups = {}
     for name in ("BASF SE", "Heidelberg Materials AG", "RWE Aktiengesellschaft"):
-        r = client.get(f"{GLEIF}/lei-records", params={"filter[entity.legalName]": name, "page[size]": 1})
+        r = client.get(
+            f"{GLEIF}/lei-records", params={"filter[entity.legalName]": name, "page[size]": 1}
+        )
         if data := r.json().get("data"):
             groups[data[0]["id"]] = name
     print("   groups:", groups)
 
-    gc = client.get("https://goldencopy.gleif.org/api/v2/golden-copies/publishes/latest").json()["data"]
+    gc = client.get("https://goldencopy.gleif.org/api/v2/golden-copies/publishes/latest").json()[
+        "data"
+    ]
     import zipfile
 
     rr_rows: list[dict[str, str]] = []
-    with zipfile.ZipFile(io.BytesIO(client.get(gc["rr"]["full_file"]["csv"]["url"]).content)) as z:
-        with z.open(z.namelist()[0]) as fh:
-            reader = csv.DictReader(io.TextIOWrapper(fh, "utf-8"))
-            for row in reader:
-                if row["Relationship.EndNode.NodeID"] in groups or row["Relationship.StartNode.NodeID"] in groups:
-                    rr_rows.append(row)
-    keep = [c for c in reader.fieldnames or [] if not re.search(r"Period\.[2-5]|Qualifiers|Quantifiers", c)]
+    blob = io.BytesIO(client.get(gc["rr"]["full_file"]["csv"]["url"]).content)
+    with zipfile.ZipFile(blob) as z, z.open(z.namelist()[0]) as fh:
+        reader = csv.DictReader(io.TextIOWrapper(fh, "utf-8"))
+        for row in reader:
+            ends = (row["Relationship.EndNode.NodeID"], row["Relationship.StartNode.NodeID"])
+            if any(lei in groups for lei in ends):
+                rr_rows.append(row)
+    keep = [c for c in reader.fieldnames or [] if not re.search(r"Qualifiers|Quantifiers", c)]
     rr_rows = [{k: r[k] for k in keep} for r in rr_rows]
-    print(f"   RR rows touching the groups: {len(rr_rows)}; types {Counter(r['Relationship.RelationshipType'] for r in rr_rows)}")
-    write_csv("gleif_rr_groups.csv", rr_rows[:150])
+    print(
+        f"   RR rows touching the groups: {len(rr_rows)}; types {Counter(r['Relationship.RelationshipType'] for r in rr_rows)}"
+    )
+    write_csv("gleif_rr_groups.csv", rr_rows)
 
-    leis = sorted({r["Relationship.StartNode.NodeID"] for r in rr_rows[:150]} | set(groups))
+    leis = sorted({r["Relationship.StartNode.NodeID"] for r in rr_rows} | set(groups))
     records: list[dict[str, object]] = []
     for i in range(0, len(leis), 100):
-        r = client.get(f"{GLEIF}/lei-records", params={"filter[lei]": ",".join(leis[i : i + 100]), "page[size]": 100})
+        r = client.get(
+            f"{GLEIF}/lei-records",
+            params={"filter[lei]": ",".join(leis[i : i + 100]), "page[size]": 100},
+        )
         records += r.json().get("data", [])
     (OUT / "gleif_entities_groups.json").write_text(json.dumps(records, ensure_ascii=False))
     print(f"   GLEIF entity records saved: {len(records)}")
