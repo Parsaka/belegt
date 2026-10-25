@@ -1,0 +1,23 @@
+image:
+  repository: belegt-api
+  tag: dev
+  pullPolicy: IfNotPresent
+
+replicas: 1
+
+# Bearer tokens map to tenants. Never put real tokens here: point existingSecret at a Secret
+# with a key BELEGT_TOKENS ("token:tenant,..."), created by the deploy pipeline.
+auth:
+  existingSecret: ""
+  demoTokens: ""  # only for local kind tests
+
+# Chunks to serve (JSON lines, output of `belegt index`). In the cloud they come from BigQuery.
+chunks:
+  inline: ""
+
+resources:
+  requests: {cpu: 50m, memory: 128Mi}
+  limits: {cpu: 500m, memory: 256Mi}
+
+service:
+  port: 80
