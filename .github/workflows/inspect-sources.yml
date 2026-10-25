@@ -9,7 +9,7 @@ on:
     paths: [scripts/inspect_sources.py, .github/workflows/inspect-sources.yml]
 
 permissions:
-  contents: read
+  contents: write  # pushes the discovery output to the inspect-results branch
 
 jobs:
   inspect:
@@ -21,9 +21,16 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install httpx openpyxl
-      - run: python scripts/inspect_sources.py
-      - uses: actions/upload-artifact@v4
-        with:
-          name: inspect
-          path: inspect/
-          retention-days: 7
+      - run: python scripts/inspect_sources.py 2>&1 | tee inspect.log
+      # The development sandbox cannot read Actions logs or artifacts, so the output goes to a
+      # throw-away branch. It holds discovery output only, never source PDFs.
+      - name: Push output to inspect-results
+        run: |
+          mkdir -p /tmp/out && cp -r inspect inspect.log /tmp/out/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan inspect-results
+          git rm -rq --cached . && git clean -fdq -e inspect -e inspect.log
+          git add inspect inspect.log
+          git commit -qm "Discovery output from run ${{ github.run_id }}"
+          git push -f origin inspect-results
