@@ -71,7 +71,7 @@ def union_registry() -> None:
                 print("   account types:", counts)
             de = [r_ for r_ in body if r_[0] == "DE"]
             print(f"   DE rows: {len(de)}")
-            stationary = [r_ for r_ in de if "INSTALLATION" in str(r_[-1]).upper()] or de
+            stationary = [r_ for r_ in de if str(r_[-1]).upper() == "OPERATOR HOLDING ACCOUNT"] or de
             sample = [list(hdr)] + [list(r_) for r_ in stationary[:40]]
             name = url.split("filename=")[-1].removesuffix(".xlsx")
             (OUT / f"{name}__{ws.title}__de_sample.json").write_text(json.dumps(sample, default=str))
@@ -96,13 +96,48 @@ def eea() -> None:
     print("share token:", token)
     if token:
         dav = "https://sdi.eea.europa.eu/datashare/public.php/webdav/"
-        for path in ("", "eea_t_ied-eprtr_p_2007-2022_v13_r00/"):
+
+        def ls(path: str) -> list[str]:
             pr = client.request("PROPFIND", dav + path, auth=(token, ""), headers={"Depth": "1"})
-            print("PROPFIND", path, pr.status_code)
-            names = re.findall(r"<d:href>([^<]+)</d:href>", pr.text)
-            for n in names[:200]:
-                if "ied" in n.lower() or path:
-                    print("   ", n)
+            hrefs = re.findall(r"<d:href>([^<]+)</d:href>", pr.text)
+            return [h.split("/public.php/webdav/", 1)[1] for h in hrefs]
+
+        root = [h for h in ls("") if "eprtr" in h.lower()]
+        print("eprtr folders:", root)
+
+        def ver(h: str) -> int:
+            m = re.search(r"_v(\d+)_", h)
+            return int(m.group(1)) if m else -1
+
+        latest = max(root, key=ver)
+        print("latest:", latest)
+        for h in ls(latest):
+            print("   ", h)
+        csv_dir = next(h for h in ls(latest) if "csv" in h.lower() and h.endswith("/"))
+        for h in ls(csv_dir):
+            print("    csv:", h)
+            if h.endswith("/"):
+                continue
+            r2 = client.get(dav + h, auth=(token, ""))
+            print("      GET", r2.status_code, len(r2.content))
+            blobs: list[tuple[str, bytes]] = []
+            if r2.content[:2] == b"PK":
+                with zipfile.ZipFile(io.BytesIO(r2.content)) as z:
+                    for info in z.infolist():
+                        with z.open(info) as fh:
+                            blobs.append((info.filename, fh.read()))
+            else:
+                blobs.append((h.rsplit("/", 1)[-1], r2.content))
+            for fname, blob in blobs:
+                text = blob.decode("utf-8-sig", "replace")
+                lines = text.splitlines()
+                print(f"      {fname}: {len(lines)} lines")
+                for line in lines[:4]:
+                    print("         ", line[:700])
+                de = [ln for ln in lines[1:] if re.search(r'(^|[;,"])DE([;,"]|$)', ln)][:40]
+                print(f"         DE-looking rows (first 40 kept): {len(de)}")
+                safe = re.sub(r"[^A-Za-z0-9_.-]", "_", Path(fname).name)
+                (OUT / f"eea__{safe}").write_text("\n".join([lines[0], *de]))
     q = {"query": {"query_string": {"query": "Industrial Reporting IED E-PRTR tabular"}}, "size": 10,
          "_source": ["resourceTitleObject", "uuid", "resourceTemporalDateRange", "createDate"]}
     sr = client.post("https://sdi.eea.europa.eu/catalogue/srv/api/search/records/_search", json=q,
@@ -175,6 +210,18 @@ def gleif() -> None:
     for line in head:
         print("   RR:", line.strip()[:600])
     (OUT / "gleif_rr_head.csv").write_text("".join(head))
+    # Small real fixtures: a few German groups and their direct children
+    for name in ("BASF SE", "Heidelberg Materials AG", "RWE Aktiengesellschaft"):
+        r = client.get("https://api.gleif.org/api/v1/lei-records", params={"filter[entity.legalName]": name, "page[size]": 1})
+        rec = r.json().get("data", [])
+        if not rec:
+            print("   no LEI for", name)
+            continue
+        lei = rec[0]["id"]
+        kids = client.get(f"https://api.gleif.org/api/v1/lei-records/{lei}/direct-children", params={"page[size]": 20}).json()
+        print(f"   {name}: {lei}, direct children total {kids.get('meta', {}).get('pagination', {}).get('total')}")
+        safe = re.sub(r"[^A-Za-z0-9]", "_", name)
+        (OUT / f"gleif__{safe}.json").write_text(json.dumps({"parent": rec[0], "children": kids.get("data", [])}))
 
 
 if __name__ == "__main__":
