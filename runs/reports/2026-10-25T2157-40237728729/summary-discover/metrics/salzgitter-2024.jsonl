@@ -1,0 +1,3 @@
+{"doc_id": "salzgitter-2024", "metric": "scope1", "value_t": 10724.0, "page": 160, "unit_raw": "t", "quote": "Scope-1-THG-Bruttoemissionen (Tt CO2e) 10.724 0.35 6.900", "rows_on_page": 3, "selected": true}
+{"doc_id": "salzgitter-2024", "metric": "scope1", "value_t": 99.0, "page": 160, "unit_raw": "t", "quote": "Prozentsatz der Scope-1-Treibhausgasemissionen aus regulierten Emissionshandelssystemen (in %) 99 00", "rows_on_page": 3, "selected": false}
+{"doc_id": "salzgitter-2024", "metric": "scope3", "value_t": 21460.0, "page": 160, "unit_raw": "t", "quote": "Gesamte indirekte (Scope-3)THG-Bruttoemissionen (Tt CO2e) 21.460 7.048 17.600", "rows_on_page": 3, "selected": true}
