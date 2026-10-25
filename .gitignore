@@ -21,3 +21,7 @@ infra/tfplan
 *.duckdb.wal
 # sustainability reports are copyrighted: never commit PDFs
 *.pdf
+
+# terraform build output
+infra/.build/
+.terraform.lock.hcl
