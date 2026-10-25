@@ -16,7 +16,7 @@ from pathlib import Path
 from typing import Any
 
 from belegt.loaders import eea, ets, gleif
-from belegt.resolution import Match, resolve
+from belegt.resolution import CandidateIndex, Match, resolve, resolve_operator
 
 _SQL_TYPES = {str: "VARCHAR", int: "BIGINT", float: "DOUBLE", date: "DATE"}
 
@@ -57,11 +57,15 @@ def load_directory(source: Path, db_path: Path) -> dict[str, int]:
     con = duckdb.connect(str(db_path))
     con.execute("CREATE SCHEMA IF NOT EXISTS raw")
     facilities = list(eea.read_facilities(source / "eea_facilities.csv"))
+    operators = list(ets.read_operators(source / "ets_operators_de.xlsx"))
     entities = _entities(sorted(source.glob("gleif_entities*.json")))
     counts = {
         "ets_emissions": write_table(
             con, "ets_emissions", ets.EtsEmission,
             ets.read_verified_emissions(source / "ets_verified_emissions_de.xlsx"),
+        ),
+        "ets_operators": write_table(
+            con, "ets_operators", ets.Operator, operators,
         ),
         "eea_ets_links": write_table(
             con, "eea_ets_links", eea.EtsLink,
@@ -78,11 +82,20 @@ def load_directory(source: Path, db_path: Path) -> dict[str, int]:
             gleif.read_relationships(source / "gleif_rr.csv"),
         ),
     }  # fmt: skip
-    by_name: dict[str, str | None] = {}
+    # One decision per name: operators from the registry first, EEA parent names add the rest.
+    index = CandidateIndex(entities)
+    by_lei = {e.lei: e for e in entities}
+    matches: dict[str, Match] = {}
+    for op in operators:
+        if op.account_holder not in matches:
+            pool = index.candidates(op.account_holder, op.register_nr)
+            matches[op.account_holder] = resolve_operator(
+                op.account_holder, op.lei, op.register_nr, op.city, pool, by_lei
+            )
     for f in facilities:
-        if f.parent_company_name:
-            by_name.setdefault(f.parent_company_name, f.city)
-    matches = [resolve(name, city, entities) for name, city in sorted(by_name.items())]
-    counts["entity_matches"] = write_table(con, "entity_matches", Match, matches)
+        name = f.parent_company_name
+        if name and name not in matches:
+            matches[name] = resolve(name, f.city, index.candidates(name))
+    counts["entity_matches"] = write_table(con, "entity_matches", Match, matches.values())
     con.close()
     return counts

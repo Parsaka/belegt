@@ -18,3 +18,5 @@ sources:
         description: GLEIF Level 2 accounting-consolidation relationships with validity periods.
       - name: entity_matches
         description: Scored matches from EEA parent names to LEIs (belegt.resolution).
+      - name: ets_operators
+        description: Commission list of installation operators (account holder, register number, LEI).

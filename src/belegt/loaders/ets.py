@@ -94,3 +94,44 @@ def read_verified_emissions(path: Path, registry: str | None = "DE") -> Iterator
 
     wb = load_workbook(path, read_only=True, data_only=True)
     yield from read_rows(list(wb.worksheets[0].iter_rows(values_only=True)), registry)
+
+
+@dataclass(frozen=True)
+class Operator:
+    """One row of the Commission's operator list: who holds the account of an installation."""
+
+    registry_code: str
+    installation_id: str
+    account_holder: str
+    register_nr: str | None  # free text, e.g. "HRB 6000 Amtsgericht Ludwigshafen"
+    lei: str | None  # as reported, possibly with dashes
+    installation_name: str
+    activity_type: str | None
+    permit_id: str | None
+    permit_status: str | None
+    city: str | None
+    postcode: str | None
+
+
+def read_operators(path: Path, registry: str | None = "DE") -> Iterator[Operator]:
+    from openpyxl import load_workbook
+
+    wb = load_workbook(path, read_only=True, data_only=True)
+    rows = list(wb.worksheets[0].iter_rows(values_only=True))
+    col = {str(name).strip(): i for i, name in enumerate(rows[0])}
+    for row in rows[1:]:
+        if not row or (registry and row[col["MS Registry"]] != registry):
+            continue
+        yield Operator(
+            registry_code=str(row[col["MS Registry"]]),
+            installation_id=str(row[col["Installation ID"]]).strip(),
+            account_holder=str(row[col["Account Holder Name"]]).strip(),
+            register_nr=_text(row[col["Company Registration Nr of Account Holder"]]),
+            lei=_text(row[col["LEI"]]),
+            installation_name=str(row[col["Installation Name"]]).strip(),
+            activity_type=_text(row[col["Activity Type"]]),
+            permit_id=_text(row[col["Permit ID"]]),
+            permit_status=_text(row[col["Permit Expiry/Revocation Date"]]),
+            city=_text(row[col["Contact City"]]),
+            postcode=_text(row[col["Contact PCode"]]),
+        )

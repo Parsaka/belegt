@@ -1,0 +1,49 @@
+{
+ "operators_rows_total": 16394,
+ "operators_de": 2874,
+ "operators_de_with_lei": 76,
+ "operators_de_with_registration_nr": 2865,
+ "operators_de_registration_prefixes": [
+  [
+   "HRB",
+   2135
+  ],
+  [
+   "HRA",
+   466
+  ],
+  [
+   "",
+   89
+  ],
+  [
+   "n.a. Körperschaft des öffentl. Rechts",
+   27
+  ],
+  [
+   "Körperschaft des öffentl. Rechts",
+   9
+  ],
+  [
+   "VR",
+   8
+  ],
+  [
+   "Amtsgericht Düsseldorf HRB",
+   8
+  ],
+  [
+   "Amtsgericht Essen, HRB",
+   6
+  ],
+  [
+   "Amtsgericht Kleve HRB",
+   4
+  ],
+  [
+   "HRB-",
+   4
+  ]
+ ],
+ "operators_de_distinct_holders": 1527
+}

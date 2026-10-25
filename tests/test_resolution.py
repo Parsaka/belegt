@@ -61,7 +61,16 @@ def test_registry_lei_with_dashes_is_normalised():
     assert normalise_lei("not a lei") is None
 
 
-@pytest.mark.parametrize(("raw", "expected"), [("HRB 6000", "HRB 6000"), ("hrb6000", "HRB 6000"), ("Amtsgericht Essen HRB 14525", "HRB 14525"), ("FN 87132 k", "FN 87132K"), ("", None)])
+@pytest.mark.parametrize(
+    ("raw", "expected"),
+    [
+        ("HRB 6000", "HRB 6000"),
+        ("hrb6000", "HRB 6000"),
+        ("Amtsgericht Essen HRB 14525", "HRB 14525"),
+        ("FN 87132 k", "FN 87132K"),
+        ("", None),
+    ],
+)
 def test_normalise_register(raw, expected):
     from belegt.resolution import normalise_register
 
@@ -71,14 +80,44 @@ def test_normalise_register(raw, expected):
 def test_operator_resolution_prefers_registry_lei():
     from belegt.resolution import resolve_operator
 
-    basf = LegalEntity("529900PM64WH8AF1E917", "BASF SE", "DE", "Ludwigshafen am Rhein", "HRB 6000", None, None, "ACTIVE", "ISSUED", "x")
-    m = resolve_operator("BASF Aktiengesellschaft (alt)", "5299-00PM64WH8AF1-E917", None, None, [basf])
+    basf = LegalEntity(
+        "529900PM64WH8AF1E917",
+        "BASF SE",
+        "DE",
+        "Ludwigshafen am Rhein",
+        "HRB 6000",
+        None,
+        None,
+        "ACTIVE",
+        "ISSUED",
+        "x",
+    )
+    m = resolve_operator(
+        "BASF Aktiengesellschaft (alt)", "5299-00PM64WH8AF1-E917", None, None, [basf]
+    )
     assert m.decision == "accepted" and m.lei == basf.lei and "LEI" in m.evidence
 
 
 def test_operator_resolution_by_register_number_needs_a_plausible_name():
     from belegt.resolution import resolve_operator
 
-    basf = LegalEntity("529900PM64WH8AF1E917", "BASF SE", "DE", None, "HRB 6000", None, None, "ACTIVE", "ISSUED", "x")
+    basf = LegalEntity(
+        "529900PM64WH8AF1E917",
+        "BASF SE",
+        "DE",
+        None,
+        "HRB 6000",
+        None,
+        None,
+        "ACTIVE",
+        "ISSUED",
+        "x",
+    )
     assert resolve_operator("BASF SE", None, "HRB 6000", None, [basf]).decision == "accepted"
-    assert resolve_operator("Stadtwerke Beispiel GmbH", None, "HRB 6000", None, [basf]).decision == "review"
+    renamed = resolve_operator("BASF Chemie Beispiel GmbH", None, "HRB 6000", None, [basf])
+    assert renamed.decision == "review"
+    # same number at another court, unrelated name: not evidence at all
+    assert (
+        resolve_operator("Stadtwerke Beispiel GmbH", None, "HRB 6000", None, [basf]).decision
+        == "unmatched"
+    )

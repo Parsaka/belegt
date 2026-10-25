@@ -1,11 +1,12 @@
-# Local and CI: DuckDB file written by `belegt load`. Cloud: BigQuery with the workload identity
-# of the GitHub Actions run (no key files). Pick with --target.
+# Local and CI: the DuckDB file written by `belegt load`; run dbt from the repo root.
+# Cloud: BigQuery with the workload identity of the GitHub Actions run (no key files).
+# Pick with --target.
 belegt:
   target: dev
   outputs:
     dev:
       type: duckdb
-      path: "{{ env_var('BELEGT_DUCKDB', '../data/belegt.duckdb') }}"
+      path: "{{ env_var('BELEGT_DUCKDB', 'data/belegt.duckdb') }}"
       threads: 4
     prod:
       type: bigquery

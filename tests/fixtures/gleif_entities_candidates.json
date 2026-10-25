@@ -1,1 +1,5608 @@
-{"Klinkerwerk Muhr GmbH & Co KG ": []}
+{
+"lei:0": [
+{
+"type": "lei-records",
+"id": "529900N1BGOL8BE46P65",
+"attributes": {
+"lei": "529900N1BGOL8BE46P65",
+"entity": {
+"legalName": {
+"name": "Franken Guss GmbH & Co. KG",
+"language": "de"
+},
+"legalAddress": {
+"city": "Kitzingen",
+"country": "DE",
+"postalCode": "97318"
+},
+"registeredAt": {
+"id": "RA000370",
+"other": null
+},
+"registeredAs": "HRA 6275",
+"legalForm": {
+"id": "8Z6G",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-01-30T16:42:57Z"
+}
+}
+}
+],
+"reg:HRA 1190": [
+{
+"type": "lei-records",
+"id": "52990045NJAPYTG5U448",
+"attributes": {
+"lei": "52990045NJAPYTG5U448",
+"entity": {
+"legalName": {
+"name": "SWISS KRONO TEX GmbH & Co. KG",
+"language": "de"
+},
+"legalAddress": {
+"city": "Heiligengrabe",
+"country": "DE",
+"postalCode": "16909"
+},
+"registeredAt": {
+"id": "RA000308",
+"other": null
+},
+"registeredAs": "HRA 1190",
+"legalForm": {
+"id": "8Z6G",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-08-07T13:01:48Z"
+}
+}
+}
+],
+"reg:HRA 307": [
+{
+"type": "lei-records",
+"id": "5299007WESOJQ3GGO857",
+"attributes": {
+"lei": "5299007WESOJQ3GGO857",
+"entity": {
+"legalName": {
+"name": "TGA Heinemann GmbH & Co. KG",
+"language": "de"
+},
+"legalAddress": {
+"city": "Strausberg",
+"country": "DE",
+"postalCode": "15344"
+},
+"registeredAt": {
+"id": "RA000241",
+"other": null
+},
+"registeredAs": "HRA 307 FF",
+"legalForm": {
+"id": "8Z6G",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-02-21T12:21:57Z"
+}
+}
+}
+],
+"reg:HRA 6275": [
+{
+"type": "lei-records",
+"id": "984500C70CBA69707680",
+"attributes": {
+"lei": "984500C70CBA69707680",
+"entity": {
+"legalName": {
+"name": "HQT Genstar XI GmbH & Co. geschlossene Investment KG",
+"language": "de"
+},
+"legalAddress": {
+"city": "Bad Homburg v. d. Höhe",
+"country": "DE",
+"postalCode": "61352"
+},
+"registeredAt": {
+"id": "RA000209",
+"other": null
+},
+"registeredAs": "HRA 6275",
+"legalForm": {
+"id": "8Z6G",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-02-24T17:23:53Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900N1BGOL8BE46P65",
+"attributes": {
+"lei": "529900N1BGOL8BE46P65",
+"entity": {
+"legalName": {
+"name": "Franken Guss GmbH & Co. KG",
+"language": "de"
+},
+"legalAddress": {
+"city": "Kitzingen",
+"country": "DE",
+"postalCode": "97318"
+},
+"registeredAt": {
+"id": "RA000370",
+"other": null
+},
+"registeredAs": "HRA 6275",
+"legalForm": {
+"id": "8Z6G",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-01-30T16:42:57Z"
+}
+}
+}
+],
+"reg:HRA 7236": [
+{
+"type": "lei-records",
+"id": "5299008U3UG0OLYQSN10",
+"attributes": {
+"lei": "5299008U3UG0OLYQSN10",
+"entity": {
+"legalName": {
+"name": "Michael Peter Müller e.K.",
+"language": "de"
+},
+"legalAddress": {
+"city": "Herborn",
+"country": "DE",
+"postalCode": "35745"
+},
+"registeredAt": {
+"id": "RA000364",
+"other": null
+},
+"registeredAs": "HRA 7236",
+"legalForm": {
+"id": "OL20",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-03-12T12:09:35Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900KQXH0E586MS571",
+"attributes": {
+"lei": "529900KQXH0E586MS571",
+"entity": {
+"legalName": {
+"name": "Deutsche Edelstahlwerke Siegen/Hagen GmbH & Co. KG",
+"language": "de"
+},
+"legalAddress": {
+"city": "Siegen",
+"country": "DE",
+"postalCode": "57078"
+},
+"registeredAt": {
+"id": "RA000219",
+"other": null
+},
+"registeredAs": "HRA 7236",
+"legalForm": {
+"id": "8Z6G",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-11-11T13:00:36Z"
+}
+}
+}
+],
+"reg:HRB 0687": [],
+"reg:HRB 10018": [
+{
+"type": "lei-records",
+"id": "9845000DB46F5C0DDC79",
+"attributes": {
+"lei": "9845000DB46F5C0DDC79",
+"entity": {
+"legalName": {
+"name": "Shuangma Industry Engineering & Consulting UG (haftungsbeschränkt)",
+"language": "de"
+},
+"legalAddress": {
+"city": "Landshut",
+"country": "DE",
+"postalCode": "84030"
+},
+"registeredAt": {
+"id": "RA000285",
+"other": null
+},
+"registeredAs": "HRB 10018",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "LAPSED",
+"lastUpdateDate": "2026-07-09T10:01:35Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "8755009S1Q5OU1OI5671",
+"attributes": {
+"lei": "8755009S1Q5OU1OI5671",
+"entity": {
+"legalName": {
+"name": "Absmeier CES GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Ruhstorf",
+"country": "DE",
+"postalCode": "94099"
+},
+"registeredAt": {
+"id": "RA000319",
+"other": null
+},
+"registeredAs": "HRB 10018",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-05-06T11:38:10Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "391200501M6ILPRWZW03",
+"attributes": {
+"lei": "391200501M6ILPRWZW03",
+"entity": {
+"legalName": {
+"name": "EUROKAI GmbH & Co. KGaA",
+"language": "de"
+},
+"legalAddress": {
+"city": "Hamburg",
+"country": "DE",
+"postalCode": "21129"
+},
+"registeredAt": {
+"id": "RA000259",
+"other": null
+},
+"registeredAs": "HRB 10018",
+"legalForm": {
+"id": "T0YJ",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-03-30T10:35:46Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900WWXYN48AOXBA25",
+"attributes": {
+"lei": "529900WWXYN48AOXBA25",
+"entity": {
+"legalName": {
+"name": "PCK Raffinerie GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Schwedt /Oder",
+"country": "DE",
+"postalCode": "16303"
+},
+"registeredAt": {
+"id": "RA000308",
+"other": null
+},
+"registeredAs": "HRB 10018",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-08-26T08:09:20Z"
+}
+}
+}
+],
+"reg:HRB 10110": [
+{
+"type": "lei-records",
+"id": "9845003AEAAACB45C785",
+"attributes": {
+"lei": "9845003AEAAACB45C785",
+"entity": {
+"legalName": {
+"name": "Delphisoft Deutschland GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Neunkirchen a. Brand",
+"country": "DE",
+"postalCode": "91077"
+},
+"registeredAt": {
+"id": "RA000215",
+"other": null
+},
+"registeredAs": "HRB 10110",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-01-24T12:41:58Z"
+}
+}
+}
+],
+"reg:HRB 1037": [
+{
+"type": "lei-records",
+"id": "5299004K0KFMPSE15J03",
+"attributes": {
+"lei": "5299004K0KFMPSE15J03",
+"entity": {
+"legalName": {
+"name": "Stadtwerke Cottbus GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Cottbus",
+"country": "DE",
+"postalCode": "03046"
+},
+"registeredAt": {
+"id": "RA000227",
+"other": null
+},
+"registeredAs": "HRB 1037",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-08-21T22:08:29Z"
+}
+}
+}
+],
+"reg:HRB 1059": [
+{
+"type": "lei-records",
+"id": "391200DPBYDNSA4V1T44",
+"attributes": {
+"lei": "391200DPBYDNSA4V1T44",
+"entity": {
+"legalName": {
+"name": "HEAG Holding AG - Beteiligungsmanagement der Wissenschaftsstadt Darmstadt (HEAG)",
+"language": "de"
+},
+"legalAddress": {
+"city": "Darmstadt",
+"country": "DE",
+"postalCode": "64283"
+},
+"registeredAt": {
+"id": "RA000228",
+"other": null
+},
+"registeredAs": "HRB 1059",
+"legalForm": {
+"id": "6QQB",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-04-17T08:04:02Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "98450045C1RE3F71A414",
+"attributes": {
+"lei": "98450045C1RE3F71A414",
+"entity": {
+"legalName": {
+"name": "Stadtwerke Strausberg GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Strausberg",
+"country": "DE",
+"postalCode": "15344"
+},
+"registeredAt": {
+"id": "RA000241",
+"other": null
+},
+"registeredAs": "HRB 1059",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-08-07T12:32:14Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900C98DH9NG0DCN65",
+"attributes": {
+"lei": "529900C98DH9NG0DCN65",
+"entity": {
+"legalName": {
+"name": "Enno Roggemann GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Coesfeld",
+"country": "DE",
+"postalCode": "48653"
+},
+"registeredAt": {
+"id": "RA000226",
+"other": null
+},
+"registeredAs": "HRB 1059",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-11-09T12:35:01Z"
+}
+}
+}
+],
+"reg:HRB 10892": [
+{
+"type": "lei-records",
+"id": "5299000XW5RRGKWAET88",
+"attributes": {
+"lei": "5299000XW5RRGKWAET88",
+"entity": {
+"legalName": {
+"name": "SILICON-ITS GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Bochum",
+"country": "DE",
+"postalCode": "44795"
+},
+"registeredAt": {
+"id": "RA000219",
+"other": null
+},
+"registeredAs": "HRB 10892",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "INACTIVE"
+},
+"registration": {
+"status": "RETIRED",
+"lastUpdateDate": "2025-08-18T10:00:20Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "5299000KFBHEXBMT6C37",
+"attributes": {
+"lei": "5299000KFBHEXBMT6C37",
+"entity": {
+"legalName": {
+"name": "LEIPA Georg Leinfelder GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Schwedt /Oder",
+"country": "DE",
+"postalCode": "16303"
+},
+"registeredAt": {
+"id": "RA000308",
+"other": null
+},
+"registeredAs": "HRB 10892",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-07-17T09:54:08Z"
+}
+}
+}
+],
+"reg:HRB 111240": [
+{
+"type": "lei-records",
+"id": "5299002N3Z9K7182RX21",
+"attributes": {
+"lei": "5299002N3Z9K7182RX21",
+"entity": {
+"legalName": {
+"name": "Fels-Werke GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Goslar",
+"country": "DE",
+"postalCode": "38640"
+},
+"registeredAt": {
+"id": "RA000221",
+"other": null
+},
+"registeredAs": "HRB 111240",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-11-13T11:57:22Z"
+}
+}
+}
+],
+"reg:HRB 11741": [
+{
+"type": "lei-records",
+"id": "391200IXUQR9UBSR5Y11",
+"attributes": {
+"lei": "391200IXUQR9UBSR5Y11",
+"entity": {
+"legalName": {
+"name": "T B Tas Bauunternehmen GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Eisenberg (Pfalz)",
+"country": "DE",
+"postalCode": "67304"
+},
+"registeredAt": {
+"id": "RA000274",
+"other": null
+},
+"registeredAs": "HRB 11741",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-09-17T14:37:19Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900WF3TGJ1OCVW345",
+"attributes": {
+"lei": "529900WF3TGJ1OCVW345",
+"entity": {
+"legalName": {
+"name": "WIGGEN Holding GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Rheda-Wiedenbrück",
+"country": "DE",
+"postalCode": "33378"
+},
+"registeredAt": {
+"id": "RA000257",
+"other": null
+},
+"registeredAs": "HRB 11741",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-07-18T04:07:43Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "984500E8083DCD240777",
+"attributes": {
+"lei": "984500E8083DCD240777",
+"entity": {
+"legalName": {
+"name": "Succeed Unternehmensberatung GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Kevelaer",
+"country": "DE",
+"postalCode": "47623"
+},
+"registeredAt": {
+"id": "RA000278",
+"other": null
+},
+"registeredAs": "HRB 11741",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "LAPSED",
+"lastUpdateDate": "2026-02-21T15:57:48Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "3912001MSH2RNCIE7G47",
+"attributes": {
+"lei": "3912001MSH2RNCIE7G47",
+"entity": {
+"legalName": {
+"name": "Kleemann Management GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Hünxe",
+"country": "DE",
+"postalCode": "46569"
+},
+"registeredAt": {
+"id": "RA000232",
+"other": null
+},
+"registeredAs": "HRB 11741",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-01-06T07:35:58Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900FE5423LDCWOW09",
+"attributes": {
+"lei": "529900FE5423LDCWOW09",
+"entity": {
+"legalName": {
+"name": "Propapier PM2 GmbH",
+"language": "de-DE"
+},
+"legalAddress": {
+"city": "Eisenhüttenstadt",
+"country": "DE",
+"postalCode": "15890"
+},
+"registeredAt": {
+"id": "RA000241",
+"other": null
+},
+"registeredAs": "HRB 11741",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "LAPSED",
+"lastUpdateDate": "2021-07-15T05:09:24Z"
+}
+}
+}
+],
+"reg:HRB 126674": [
+{
+"type": "lei-records",
+"id": "529900Q5S6SNQRHVC072",
+"attributes": {
+"lei": "529900Q5S6SNQRHVC072",
+"entity": {
+"legalName": {
+"name": "SWM Services GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "München",
+"country": "DE",
+"postalCode": "80992"
+},
+"registeredAt": {
+"id": "RA000304",
+"other": null
+},
+"registeredAs": "HRB 126674",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-05-29T15:33:55Z"
+}
+}
+}
+],
+"reg:HRB 1352": [
+{
+"type": "lei-records",
+"id": "89450024IH1SHCZ24866",
+"attributes": {
+"lei": "89450024IH1SHCZ24866",
+"entity": {
+"legalName": {
+"name": "Lindermeir Bau GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Aindling",
+"country": "DE",
+"postalCode": "86447"
+},
+"registeredAt": {
+"id": "RA000206",
+"other": null
+},
+"registeredAs": "HRB 1352",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-10-15T09:20:26Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "3912007B3DQKK4ILCJ10",
+"attributes": {
+"lei": "3912007B3DQKK4ILCJ10",
+"entity": {
+"legalName": {
+"name": "Zimmermann GmbH Tankschutz - Behälterbau",
+"language": "de"
+},
+"legalAddress": {
+"city": "Mannheim",
+"country": "DE",
+"postalCode": "68219"
+},
+"registeredAt": {
+"id": "RA000296",
+"other": null
+},
+"registeredAs": "HRB 1352",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-05-02T10:03:51Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900S190A33O78HQ19",
+"attributes": {
+"lei": "529900S190A33O78HQ19",
+"entity": {
+"legalName": {
+"name": "Energie und Wasser Potsdam GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Potsdam",
+"country": "DE",
+"postalCode": "14480"
+},
+"registeredAt": {
+"id": "RA000322",
+"other": null
+},
+"registeredAs": "HRB 1352",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-01-10T16:02:15Z"
+}
+}
+}
+],
+"reg:HRB 13752": [
+{
+"type": "lei-records",
+"id": "391200A82WNUDSG6J017",
+"attributes": {
+"lei": "391200A82WNUDSG6J017",
+"entity": {
+"legalName": {
+"name": "Butz Consult GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Krefeld",
+"country": "DE",
+"postalCode": "47800"
+},
+"registeredAt": {
+"id": "RA000283",
+"other": null
+},
+"registeredAs": "HRB 13752",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-01-05T13:11:46Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "391200HSJBK7SY0YBW02",
+"attributes": {
+"lei": "391200HSJBK7SY0YBW02",
+"entity": {
+"legalName": {
+"name": "GASCADE Gastransport GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Kassel",
+"country": "DE",
+"postalCode": "34119"
+},
+"registeredAt": {
+"id": "RA000275",
+"other": null
+},
+"registeredAs": "HRB 13752",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-06-26T10:08:32Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900239Q6JQ0PPW845",
+"attributes": {
+"lei": "529900239Q6JQ0PPW845",
+"entity": {
+"legalName": {
+"name": "Medtron Aktiengesellschaft",
+"language": "de"
+},
+"legalAddress": {
+"city": "Saarbrücken",
+"country": "DE",
+"postalCode": "66128"
+},
+"registeredAt": {
+"id": "RA000331",
+"other": null
+},
+"registeredAs": "HRB 13752",
+"legalForm": {
+"id": "6QQB",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-08-02T12:09:27Z"
+}
+}
+}
+],
+"reg:HRB 1619": [
+{
+"type": "lei-records",
+"id": "529900OOAOESOWTP0M54",
+"attributes": {
+"lei": "529900OOAOESOWTP0M54",
+"entity": {
+"legalName": {
+"name": "GKWG - Kreis-Wohnbau-Gesellschaft mit beschränkter Haftung Lindau (Bodensee)",
+"language": "de"
+},
+"legalAddress": {
+"city": "Lindau",
+"country": "DE",
+"postalCode": "88131"
+},
+"registeredAt": {
+"id": "RA000276",
+"other": null
+},
+"registeredAs": "HRB 1619",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-03-24T23:07:04Z"
+}
+}
+}
+],
+"reg:HRB 16523": [
+{
+"type": "lei-records",
+"id": "529900VBCG7SLM25LX82",
+"attributes": {
+"lei": "529900VBCG7SLM25LX82",
+"entity": {
+"legalName": {
+"name": "envia THERM GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Bitterfeld-Wolfen",
+"country": "DE",
+"postalCode": "06749"
+},
+"registeredAt": {
+"id": "RA000348",
+"other": null
+},
+"registeredAs": "HRB 16523",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-11-21T13:33:42Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900AJAMNM8KK0W461",
+"attributes": {
+"lei": "529900AJAMNM8KK0W461",
+"entity": {
+"legalName": {
+"name": "Mister Measurement GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Bargteheide",
+"country": "DE",
+"postalCode": "22941"
+},
+"registeredAt": {
+"id": "RA000290",
+"other": null
+},
+"registeredAs": "HRB 16523 HL",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-03-11T10:03:22Z"
+}
+}
+}
+],
+"reg:HRB 19220P": [],
+"reg:HRB 203579": [
+{
+"type": "lei-records",
+"id": "549300TSACRUAOERKB02",
+"attributes": {
+"lei": "549300TSACRUAOERKB02",
+"entity": {
+"legalName": {
+"name": "SONAE ARAUCO BEESKOW GMBH",
+"language": "en"
+},
+"legalAddress": {
+"city": "MEPPEN",
+"country": "DE",
+"postalCode": "49716"
+},
+"registeredAt": {
+"id": "RA000315",
+"other": null
+},
+"registeredAs": "HRB 203579",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-03-13T14:55:50Z"
+}
+}
+}
+],
+"reg:HRB 2299": [
+{
+"type": "lei-records",
+"id": "894500JWFTN1B4V82528",
+"attributes": {
+"lei": "894500JWFTN1B4V82528",
+"entity": {
+"legalName": {
+"name": "BRILLEN BECKER Haus der Optik GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Koblenz",
+"country": "DE",
+"postalCode": "56068"
+},
+"registeredAt": {
+"id": "RA000279",
+"other": null
+},
+"registeredAs": "HRB 2299",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-06-08T10:51:44Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "9845003CE5ACFE8UCD53",
+"attributes": {
+"lei": "9845003CE5ACFE8UCD53",
+"entity": {
+"legalName": {
+"name": "Brandolini + Seitz Ingenieurgesellschaft mbH für Wasserbau und Brückenbau.",
+"language": "de"
+},
+"legalAddress": {
+"city": "Ulm",
+"country": "DE",
+"postalCode": "89081"
+},
+"registeredAt": {
+"id": "RA000355",
+"other": null
+},
+"registeredAs": "HRB 2299",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-07-27T08:09:31Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "391200UD8TBWWKRRK815",
+"attributes": {
+"lei": "391200UD8TBWWKRRK815",
+"entity": {
+"legalName": {
+"name": "Autohaus Helmut Wrage GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Henstedt-Ulzburg",
+"country": "DE",
+"postalCode": "24558"
+},
+"registeredAt": {
+"id": "RA000277",
+"other": null
+},
+"registeredAs": "HRB 2299",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-12-11T13:19:41Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900WK79LDMDFTKH31",
+"attributes": {
+"lei": "529900WK79LDMDFTKH31",
+"entity": {
+"legalName": {
+"name": "Stadtwerke Frankfurt (Oder) GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Frankfurt (Oder)",
+"country": "DE",
+"postalCode": "15230"
+},
+"registeredAt": {
+"id": "RA000241",
+"other": null
+},
+"registeredAs": "HRB 2299",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-03-27T14:03:16Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "5299003JZ8PNQBJM0T48",
+"attributes": {
+"lei": "5299003JZ8PNQBJM0T48",
+"entity": {
+"legalName": {
+"name": "Happy - Rain Würflingsdobler GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Simbach am Inn",
+"country": "DE",
+"postalCode": "84359"
+},
+"registeredAt": {
+"id": "RA000285",
+"other": null
+},
+"registeredAs": "HRB 2299",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-01-08T09:01:33Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "967600J1H21Q4QZHEY16",
+"attributes": {
+"lei": "967600J1H21Q4QZHEY16",
+"entity": {
+"legalName": {
+"name": "Stadtwerke Frankfurt (Oder) GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Frankfurt (Oder)",
+"country": "DE",
+"postalCode": "15230"
+},
+"registeredAt": {
+"id": "RA000241",
+"other": null
+},
+"registeredAs": "HRB 2299 FF",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "NULL"
+},
+"registration": {
+"status": "DUPLICATE",
+"lastUpdateDate": "2022-03-07T16:25:31Z"
+}
+}
+}
+],
+"reg:HRB 23241": [
+{
+"type": "lei-records",
+"id": "529900CI8HDF9U9WCE88",
+"attributes": {
+"lei": "529900CI8HDF9U9WCE88",
+"entity": {
+"legalName": {
+"name": "Hamburger Rieger GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Trostberg",
+"country": "DE",
+"postalCode": "83308"
+},
+"registeredAt": {
+"id": "RA000354",
+"other": null
+},
+"registeredAs": "HRB 23241",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-02-10T14:42:15Z"
+}
+}
+}
+],
+"reg:HRB 240": [
+{
+"type": "lei-records",
+"id": "391200MYL2SYMD1A0H17",
+"attributes": {
+"lei": "391200MYL2SYMD1A0H17",
+"entity": {
+"legalName": {
+"name": "Heiblmühle GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Perlesreut",
+"country": "DE",
+"postalCode": "94157"
+},
+"registeredAt": {
+"id": "RA000319",
+"other": null
+},
+"registeredAs": "HRB 240",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-09-16T16:03:15Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900ROCQ8QWC8Q7D77",
+"attributes": {
+"lei": "529900ROCQ8QWC8Q7D77",
+"entity": {
+"legalName": {
+"name": "MSK - Verpackungs-Systeme GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Kleve",
+"country": "DE",
+"postalCode": "47533"
+},
+"registeredAt": {
+"id": "RA000278",
+"other": null
+},
+"registeredAs": "HRB 240",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-08-04T14:54:47Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900E03BV70LZUXG74",
+"attributes": {
+"lei": "529900E03BV70LZUXG74",
+"entity": {
+"legalName": {
+"name": "HUK-COBURG-Rechtsschutzversicherung AG",
+"language": "de"
+},
+"legalAddress": {
+"city": "Coburg",
+"country": "DE",
+"postalCode": "96450"
+},
+"registeredAt": {
+"id": "RA000225",
+"other": null
+},
+"registeredAs": "HRB 240",
+"legalForm": {
+"id": "6QQB",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-08-14T06:31:55Z"
+}
+}
+}
+],
+"reg:HRB 30704": [
+{
+"type": "lei-records",
+"id": "5299007KKASEXKIASH65",
+"attributes": {
+"lei": "5299007KKASEXKIASH65",
+"entity": {
+"legalName": {
+"name": "Erhardt + Leimer Beteiligungsgesellschaft mbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Stadtbergen",
+"country": "DE",
+"postalCode": "86391"
+},
+"registeredAt": {
+"id": "RA000206",
+"other": null
+},
+"registeredAs": "HRB 30704",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-09-29T11:04:17Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "5493004V0GEGPEN6VY92",
+"attributes": {
+"lei": "5493004V0GEGPEN6VY92",
+"entity": {
+"legalName": {
+"name": "ARDAGH GLASS GMBH",
+"language": "de"
+},
+"legalAddress": {
+"city": "NIENBURG",
+"country": "DE",
+"postalCode": "31582"
+},
+"registeredAt": {
+"id": "RA000358",
+"other": null
+},
+"registeredAs": "HRB 30704",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "LAPSED",
+"lastUpdateDate": "2023-07-31T17:11:36Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "391200AKUZICH0T7OY68",
+"attributes": {
+"lei": "391200AKUZICH0T7OY68",
+"entity": {
+"legalName": {
+"name": "Two Elephants Investment GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Neumarkt in der Oberpfalz",
+"country": "DE",
+"postalCode": "92318"
+},
+"registeredAt": {
+"id": "RA000311",
+"other": null
+},
+"registeredAs": "HRB 30704",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-11-17T08:37:14Z"
+}
+}
+}
+],
+"reg:HRB 34857": [
+{
+"type": "lei-records",
+"id": "391200EZ25R53MFWVF66",
+"attributes": {
+"lei": "391200EZ25R53MFWVF66",
+"entity": {
+"legalName": {
+"name": "Lelonek VKR UG (haftungsbeschränkt)",
+"language": "de"
+},
+"legalAddress": {
+"city": "Mülheim an der Ruhr",
+"country": "DE",
+"postalCode": "45475"
+},
+"registeredAt": {
+"id": "RA000232",
+"other": null
+},
+"registeredAs": "HRB 34857",
+"legalForm": {
+"id": "63KS",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-07-27T08:55:12Z"
+}
+}
+}
+],
+"reg:HRB 3883": [
+{
+"type": "lei-records",
+"id": "39120020WN8F4NUA6X09",
+"attributes": {
+"lei": "39120020WN8F4NUA6X09",
+"entity": {
+"legalName": {
+"name": "Rosenberg GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Olsberg",
+"country": "DE",
+"postalCode": "59939"
+},
+"registeredAt": {
+"id": "RA000203",
+"other": null
+},
+"registeredAs": "HRB 3883",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-11-25T16:07:01Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "9845001E0FA767BD9052",
+"attributes": {
+"lei": "9845001E0FA767BD9052",
+"entity": {
+"legalName": {
+"name": "ISZ Insektenschutzzentrum GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Aurach",
+"country": "DE",
+"postalCode": "91589"
+},
+"registeredAt": {
+"id": "RA000201",
+"other": null
+},
+"registeredAs": "HRB 3883",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "LAPSED",
+"lastUpdateDate": "2026-07-29T10:06:19Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900266I8V0YBFOG45",
+"attributes": {
+"lei": "529900266I8V0YBFOG45",
+"entity": {
+"legalName": {
+"name": "Schwandorfer Rohstoff- und Recycling-GmbH",
+"language": "de-DE"
+},
+"legalAddress": {
+"city": "Schwandorf",
+"country": "DE",
+"postalCode": "92421"
+},
+"registeredAt": {
+"id": "RA000200",
+"other": null
+},
+"registeredAs": "HRB 3883",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "LAPSED",
+"lastUpdateDate": "2021-07-13T06:53:08Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "391200WI4ISBRYPQ5H52",
+"attributes": {
+"lei": "391200WI4ISBRYPQ5H52",
+"entity": {
+"legalName": {
+"name": "PeCon GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Erbach",
+"country": "DE",
+"postalCode": "89155"
+},
+"registeredAt": {
+"id": "RA000355",
+"other": null
+},
+"registeredAs": "HRB 3883",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-09-25T13:23:45Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "5493000QGQ5PKNMYNM41",
+"attributes": {
+"lei": "5493000QGQ5PKNMYNM41",
+"entity": {
+"legalName": {
+"name": "ArcelorMittal Eisenhüttenstadt GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Eisenhüttenstadt",
+"country": "DE",
+"postalCode": "15890"
+},
+"registeredAt": {
+"id": "RA000241",
+"other": null
+},
+"registeredAs": "HRB 3883",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-04-08T13:14:24Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900G4H7L0GILFY531",
+"attributes": {
+"lei": "529900G4H7L0GILFY531",
+"entity": {
+"legalName": {
+"name": "EnviroChemie GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Roßdorf",
+"country": "DE",
+"postalCode": "64380"
+},
+"registeredAt": {
+"id": "RA000228",
+"other": null
+},
+"registeredAs": "HRB 3883",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-07-31T11:05:44Z"
+}
+}
+}
+],
+"reg:HRB 42": [
+{
+"type": "lei-records",
+"id": "391200S2FRS85JB9S208",
+"attributes": {
+"lei": "391200S2FRS85JB9S208",
+"entity": {
+"legalName": {
+"name": "Gebäudereinigung Brandenburg GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Brandenburg an der Havel",
+"country": "DE",
+"postalCode": "14772"
+},
+"registeredAt": {
+"id": "RA000322",
+"other": null
+},
+"registeredAs": "HRB 42",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-02-27T11:30:34Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "9676007WAOUDEC1LTI85",
+"attributes": {
+"lei": "9676007WAOUDEC1LTI85",
+"entity": {
+"legalName": {
+"name": "Vereinigung der Vinzentinerinnen GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Köln",
+"country": "DE",
+"postalCode": "50733"
+},
+"registeredAt": {
+"id": "RA000197",
+"other": null
+},
+"registeredAs": "HRB 42",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "LAPSED",
+"lastUpdateDate": "2023-12-10T23:11:33Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900VC4DUE5H8MQE49",
+"attributes": {
+"lei": "529900VC4DUE5H8MQE49",
+"entity": {
+"legalName": {
+"name": "DLB - Anlageservice Aktiengesellschaft",
+"language": "de"
+},
+"legalAddress": {
+"city": "Prem",
+"country": "DE",
+"postalCode": "86984"
+},
+"registeredAt": {
+"id": "RA000206",
+"other": null
+},
+"registeredAs": "HRB 42",
+"legalForm": {
+"id": "6QQB",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-07-16T08:05:57Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900S8QNB101D40S72",
+"attributes": {
+"lei": "529900S8QNB101D40S72",
+"entity": {
+"legalName": {
+"name": "Südzucker AG",
+"language": "de"
+},
+"legalAddress": {
+"city": "Mannheim",
+"country": "DE",
+"postalCode": "68165"
+},
+"registeredAt": {
+"id": "RA000296",
+"other": null
+},
+"registeredAs": "HRB 42",
+"legalForm": {
+"id": "6QQB",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-07-15T12:05:26Z"
+}
+}
+}
+],
+"reg:HRB 42343": [
+{
+"type": "lei-records",
+"id": "894500DW3JYDKMOS5L46",
+"attributes": {
+"lei": "894500DW3JYDKMOS5L46",
+"entity": {
+"legalName": {
+"name": "MayRiesen GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Erftstadt",
+"country": "DE",
+"postalCode": "50374"
+},
+"registeredAt": {
+"id": "RA000372",
+"other": null
+},
+"registeredAs": "HRB 42343",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-04-09T13:39:05Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "391200XUVRLDUT76HT80",
+"attributes": {
+"lei": "391200XUVRLDUT76HT80",
+"entity": {
+"legalName": {
+"name": "ITC Information Technology Consulting GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Kriftel",
+"country": "DE",
+"postalCode": "65830"
+},
+"registeredAt": {
+"id": "RA000242",
+"other": null
+},
+"registeredAs": "HRB 42343",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "INACTIVE"
+},
+"registration": {
+"status": "RETIRED",
+"lastUpdateDate": "2024-12-10T16:43:02Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900D46YSXM0XR8W06",
+"attributes": {
+"lei": "529900D46YSXM0XR8W06",
+"entity": {
+"legalName": {
+"name": "BASF Personal Care and Nutrition GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Monheim am Rhein",
+"country": "DE",
+"postalCode": "40789"
+},
+"registeredAt": {
+"id": "RA000234",
+"other": null
+},
+"registeredAs": "HRB 42343",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-09-24T14:49:49Z"
+}
+}
+}
+],
+"reg:HRB 4239": [
+{
+"type": "lei-records",
+"id": "549300WM4PRZ484XC020",
+"attributes": {
+"lei": "549300WM4PRZ484XC020",
+"entity": {
+"legalName": {
+"name": "NOVELIS KOBLENZ GMBH",
+"language": "de"
+},
+"legalAddress": {
+"city": "KOBLENZ",
+"country": "DE",
+"postalCode": "56070"
+},
+"registeredAt": {
+"id": "RA000279",
+"other": null
+},
+"registeredAs": "HRB 4239",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-04-17T09:55:36Z"
+}
+}
+}
+],
+"reg:HRB 45129": [
+{
+"type": "lei-records",
+"id": "529900X3HUDZH093CK50",
+"attributes": {
+"lei": "529900X3HUDZH093CK50",
+"entity": {
+"legalName": {
+"name": "DW Beteiligungsgesellschaft mbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Obertshausen",
+"country": "DE",
+"postalCode": "63179"
+},
+"registeredAt": {
+"id": "RA000313",
+"other": null
+},
+"registeredAs": "HRB 45129",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-07-10T09:03:58Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "549300MOUB4MJ2FP6B06",
+"attributes": {
+"lei": "549300MOUB4MJ2FP6B06",
+"entity": {
+"legalName": {
+"name": "Basell Polyolefine GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Wesseling",
+"country": "DE",
+"postalCode": "50389"
+},
+"registeredAt": {
+"id": "RA000280",
+"other": null
+},
+"registeredAs": "HRB 45129",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-02-12T08:28:20Z"
+}
+}
+}
+],
+"reg:HRB 469": [
+{
+"type": "lei-records",
+"id": "5299008QQY4NM8XNN471",
+"attributes": {
+"lei": "5299008QQY4NM8XNN471",
+"entity": {
+"legalName": {
+"name": "Taleco-Handels-GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Michelau",
+"country": "DE",
+"postalCode": "96247"
+},
+"registeredAt": {
+"id": "RA000225",
+"other": null
+},
+"registeredAs": "HRB 469",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-07-27T22:10:13Z"
+}
+}
+}
+],
+"reg:HRB 4706": [
+{
+"type": "lei-records",
+"id": "529900NF2FUWTVB8G423",
+"attributes": {
+"lei": "529900NF2FUWTVB8G423",
+"entity": {
+"legalName": {
+"name": "ZTR Rossmanek GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Balve",
+"country": "DE",
+"postalCode": "58802"
+},
+"registeredAt": {
+"id": "RA000203",
+"other": null
+},
+"registeredAs": "HRB 4706",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-10-20T06:15:01Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900TVH9OFJYC6L973",
+"attributes": {
+"lei": "529900TVH9OFJYC6L973",
+"entity": {
+"legalName": {
+"name": "EFAFLEX Tor- und Sicherheitssysteme Verwaltungs-GmbH",
+"language": "de-DE"
+},
+"legalAddress": {
+"city": "Bruckberg",
+"country": "DE",
+"postalCode": "84079"
+},
+"registeredAt": {
+"id": "RA000285",
+"other": null
+},
+"registeredAs": "HRB 4706",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "LAPSED",
+"lastUpdateDate": "2021-07-19T05:07:28Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "984500682B8FEXCFDF97",
+"attributes": {
+"lei": "984500682B8FEXCFDF97",
+"entity": {
+"legalName": {
+"name": "Vulkan Energiewirtschaft Oderbrücke GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Eisenhüttenstadt",
+"country": "DE",
+"postalCode": "15890"
+},
+"registeredAt": {
+"id": "RA000241",
+"other": null
+},
+"registeredAs": "HRB 4706 FF",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-03-17T14:24:23Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900PHMCPWEE14RZ02",
+"attributes": {
+"lei": "529900PHMCPWEE14RZ02",
+"entity": {
+"legalName": {
+"name": "DEICO Gesellschaft mit beschränkter Haftung Import, Export, Großhandel",
+"language": "de"
+},
+"legalAddress": {
+"city": "Bremen",
+"country": "DE",
+"postalCode": "28357"
+},
+"registeredAt": {
+"id": "RA000222",
+"other": null
+},
+"registeredAs": "HRB 4706 HB",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-05-12T12:59:26Z"
+}
+}
+}
+],
+"reg:HRB 51947": [
+{
+"type": "lei-records",
+"id": "529900KWAHI9GTLI4N76",
+"attributes": {
+"lei": "529900KWAHI9GTLI4N76",
+"entity": {
+"legalName": {
+"name": "Wienerberger GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Hannover",
+"country": "DE",
+"postalCode": "30659"
+},
+"registeredAt": {
+"id": "RA000262",
+"other": null
+},
+"registeredAs": "HRB 51947",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-11-03T07:04:09Z"
+}
+}
+}
+],
+"reg:HRB 5490": [
+{
+"type": "lei-records",
+"id": "529900HXV26O3KUJAU85",
+"attributes": {
+"lei": "529900HXV26O3KUJAU85",
+"entity": {
+"legalName": {
+"name": "Semmler Immobilien Management GmbH",
+"language": "de-DE"
+},
+"legalAddress": {
+"city": "Kösching",
+"country": "DE",
+"postalCode": "85092"
+},
+"registeredAt": {
+"id": "RA000271",
+"other": null
+},
+"registeredAs": "HRB 5490",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "LAPSED",
+"lastUpdateDate": "2023-04-27T23:30:03Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "391200EOCWW0DY3EQF29",
+"attributes": {
+"lei": "391200EOCWW0DY3EQF29",
+"entity": {
+"legalName": {
+"name": "Stern Grundstücks-Entwicklungs GmbH I",
+"language": "de"
+},
+"legalAddress": {
+"city": "Bad Fallingbostel",
+"country": "DE",
+"postalCode": "29683"
+},
+"registeredAt": {
+"id": "RA000358",
+"other": null
+},
+"registeredAs": "HRB 5490",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-02-08T23:02:15Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "9676004GNHSFVFF65A78",
+"attributes": {
+"lei": "9676004GNHSFVFF65A78",
+"entity": {
+"legalName": {
+"name": "BAZ Steuerberatungsgesellschaft mbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Würzburg",
+"country": "DE",
+"postalCode": "97082"
+},
+"registeredAt": {
+"id": "RA000370",
+"other": null
+},
+"registeredAs": "HRB 5490",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-10-14T17:58:08Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900CNLFIJYOM1BX46",
+"attributes": {
+"lei": "529900CNLFIJYOM1BX46",
+"entity": {
+"legalName": {
+"name": "BMI Deutschland GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Oberursel",
+"country": "DE",
+"postalCode": "61440"
+},
+"registeredAt": {
+"id": "RA000209",
+"other": null
+},
+"registeredAs": "HRB 5490",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-09-22T13:11:55Z"
+}
+}
+}
+],
+"reg:HRB 57104": [
+{
+"type": "lei-records",
+"id": "549300OF2TQS9YVLID31",
+"attributes": {
+"lei": "549300OF2TQS9YVLID31",
+"entity": {
+"legalName": {
+"name": "UNIPER KRAFTWERKE GMBH",
+"language": "en"
+},
+"legalAddress": {
+"city": "DUSSELDORF",
+"country": "DE",
+"postalCode": "40221"
+},
+"registeredAt": {
+"id": "RA000234",
+"other": null
+},
+"registeredAs": "HRB 57104",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-05-09T08:46:01Z"
+}
+}
+}
+],
+"reg:HRB 58646": [
+{
+"type": "lei-records",
+"id": "549300M94XSN8QD1LK23",
+"attributes": {
+"lei": "549300M94XSN8QD1LK23",
+"entity": {
+"legalName": {
+"name": "SOLVAY CHEMICALS GMBH",
+"language": "en"
+},
+"legalAddress": {
+"city": "HANNOVER",
+"country": "DE",
+"postalCode": "30173"
+},
+"registeredAt": {
+"id": "RA000262",
+"other": null
+},
+"registeredAs": "HRB 58646",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "INACTIVE"
+},
+"registration": {
+"status": "RETIRED",
+"lastUpdateDate": "2024-12-16T17:06:10Z"
+}
+}
+}
+],
+"reg:HRB 6000": [
+{
+"type": "lei-records",
+"id": "39120002CSQB6AR71005",
+"attributes": {
+"lei": "39120002CSQB6AR71005",
+"entity": {
+"legalName": {
+"name": "Druckluft-Anlagen Heckhoff GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Wuppertal",
+"country": "DE",
+"postalCode": "42279"
+},
+"registeredAt": {
+"id": "RA000369",
+"other": null
+},
+"registeredAs": "HRB 6000",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-05-31T08:38:02Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "894500AB85885E422987",
+"attributes": {
+"lei": "894500AB85885E422987",
+"entity": {
+"legalName": {
+"name": "DELTA Vermögensmanagement GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Krefeld",
+"country": "DE",
+"postalCode": "47807"
+},
+"registeredAt": {
+"id": "RA000283",
+"other": null
+},
+"registeredAs": "HRB 6000",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-11-03T12:49:00Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900PH44RTXQFSQ427",
+"attributes": {
+"lei": "529900PH44RTXQFSQ427",
+"entity": {
+"legalName": {
+"name": "UHM Umschlaghafen Magdeburg GmbH",
+"language": "de-DE"
+},
+"legalAddress": {
+"city": "Burg",
+"country": "DE",
+"postalCode": "39288"
+},
+"registeredAt": {
+"id": "RA000348",
+"other": null
+},
+"registeredAs": "HRB 6000",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "LAPSED",
+"lastUpdateDate": "2021-07-19T05:07:28Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900PM64WH8AF1E917",
+"attributes": {
+"lei": "529900PM64WH8AF1E917",
+"entity": {
+"legalName": {
+"name": "BASF SE",
+"language": "de"
+},
+"legalAddress": {
+"city": "Ludwigshafen am Rhein",
+"country": "DE",
+"postalCode": "67056"
+},
+"registeredAt": {
+"id": "RA000291",
+"other": null
+},
+"registeredAs": "HRB 6000",
+"legalForm": {
+"id": "SGST",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-01-05T15:53:12Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "5299008PFGXR9OLMA166",
+"attributes": {
+"lei": "5299008PFGXR9OLMA166",
+"entity": {
+"legalName": {
+"name": "Lagento GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Schwalmstadt",
+"country": "DE",
+"postalCode": "34613"
+},
+"registeredAt": {
+"id": "RA000297",
+"other": null
+},
+"registeredAs": "HRB 6000",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-10-11T15:10:39Z"
+}
+}
+}
+],
+"reg:HRB 613": [
+{
+"type": "lei-records",
+"id": "8945008GED1L7AA7IH03",
+"attributes": {
+"lei": "8945008GED1L7AA7IH03",
+"entity": {
+"legalName": {
+"name": "Leonhard Feuerer Busreisen GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Schmidmühlen",
+"country": "DE",
+"postalCode": "92287"
+},
+"registeredAt": {
+"id": "RA000372",
+"other": null
+},
+"registeredAs": "HRB 613",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-04-21T17:54:09Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "391200XDL4S1DHQAAY35",
+"attributes": {
+"lei": "391200XDL4S1DHQAAY35",
+"entity": {
+"legalName": {
+"name": "Evangelisches Siedlungswerk in Bayern GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Nürnberg",
+"country": "DE",
+"postalCode": "90403"
+},
+"registeredAt": {
+"id": "RA000311",
+"other": null
+},
+"registeredAs": "HRB 613",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-06-18T11:07:37Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900Y5D3Q2Q3MF7E07",
+"attributes": {
+"lei": "529900Y5D3Q2Q3MF7E07",
+"entity": {
+"legalName": {
+"name": "Stadtwerke Greifswald Gesellschaft mit beschränkter Haftung",
+"language": "de"
+},
+"legalAddress": {
+"city": "Greifswald",
+"country": "DE",
+"postalCode": "17489"
+},
+"registeredAt": {
+"id": "RA000349",
+"other": null
+},
+"registeredAs": "HRB 613",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-01-02T15:03:49Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900U3KO3K6TIKUQ22",
+"attributes": {
+"lei": "529900U3KO3K6TIKUQ22",
+"entity": {
+"legalName": {
+"name": "Severin Touristik GmbH",
+"language": "de-DE"
+},
+"legalAddress": {
+"city": "Sundern",
+"country": "DE",
+"postalCode": "59846"
+},
+"registeredAt": {
+"id": "RA000203",
+"other": null
+},
+"registeredAs": "HRB 613",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "LAPSED",
+"lastUpdateDate": "2021-07-19T05:07:28Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900HZKPU9RDAO8058",
+"attributes": {
+"lei": "529900HZKPU9RDAO8058",
+"entity": {
+"legalName": {
+"name": "AIR LIQUIDE Deutschland GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Düsseldorf",
+"country": "DE",
+"postalCode": "40476"
+},
+"registeredAt": {
+"id": "RA000234",
+"other": null
+},
+"registeredAs": "HRB 613",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-09-23T12:49:39Z"
+}
+}
+}
+],
+"reg:HRB 6236": [
+{
+"type": "lei-records",
+"id": "391200N8R5BJFIVPVR52",
+"attributes": {
+"lei": "391200N8R5BJFIVPVR52",
+"entity": {
+"legalName": {
+"name": "ReSys Aktiengesellschaft",
+"language": "de"
+},
+"legalAddress": {
+"city": "Umkirch",
+"country": "DE",
+"postalCode": "79224"
+},
+"registeredAt": {
+"id": "RA000243",
+"other": null
+},
+"registeredAs": "HRB 6236",
+"legalForm": {
+"id": "6QQB",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-03-26T10:14:12Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "98450089B636ED2A4523",
+"attributes": {
+"lei": "98450089B636ED2A4523",
+"entity": {
+"legalName": {
+"name": "SWARCO SCHÖNBORN GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Schönborn",
+"country": "DE",
+"postalCode": "03253"
+},
+"registeredAt": {
+"id": "RA000227",
+"other": null
+},
+"registeredAs": "HRB 6236",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-02-18T10:53:32Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900XQORLC2SJ2HQ74",
+"attributes": {
+"lei": "529900XQORLC2SJ2HQ74",
+"entity": {
+"legalName": {
+"name": "Ondal Medical Systems GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Hünfeld",
+"country": "DE",
+"postalCode": "36088"
+},
+"registeredAt": {
+"id": "RA000246",
+"other": null
+},
+"registeredAs": "HRB 6236",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-03-12T07:01:15Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "9845004E3F9B3EBA3704",
+"attributes": {
+"lei": "9845004E3F9B3EBA3704",
+"entity": {
+"legalName": {
+"name": "Rief Schornsteintechnik GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Barsbüttel",
+"country": "DE",
+"postalCode": "22885"
+},
+"registeredAt": {
+"id": "RA000290",
+"other": null
+},
+"registeredAs": "HRB 6236 HL",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-10-18T05:30:17Z"
+}
+}
+}
+],
+"reg:HRB 6253": [
+{
+"type": "lei-records",
+"id": "529900XZWKPBR17YG131",
+"attributes": {
+"lei": "529900XZWKPBR17YG131",
+"entity": {
+"legalName": {
+"name": "GL Immobilien GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Gronau",
+"country": "DE",
+"postalCode": "48599"
+},
+"registeredAt": {
+"id": "RA000226",
+"other": null
+},
+"registeredAs": "HRB 6253",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "LAPSED",
+"lastUpdateDate": "2026-05-15T23:30:10Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "391200EZKA8R02UFAX14",
+"attributes": {
+"lei": "391200EZKA8R02UFAX14",
+"entity": {
+"legalName": {
+"name": "porcelaingres GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Vetschau /Spreewald",
+"country": "DE",
+"postalCode": "03226"
+},
+"registeredAt": {
+"id": "RA000227",
+"other": null
+},
+"registeredAs": "HRB 6253",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-11-10T09:31:13Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "9845009XJE0M7I4EE514",
+"attributes": {
+"lei": "9845009XJE0M7I4EE514",
+"entity": {
+"legalName": {
+"name": "Steuerberatungsgesellschaft WAGRIA GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Lübeck",
+"country": "DE",
+"postalCode": "23558"
+},
+"registeredAt": {
+"id": "RA000290",
+"other": null
+},
+"registeredAs": "HRB 6253 HL",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "LAPSED",
+"lastUpdateDate": "2026-04-25T14:02:55Z"
+}
+}
+}
+],
+"reg:HRB 6290P": [],
+"reg:HRB 762884": [
+{
+"type": "lei-records",
+"id": "529900HWPVQ42PJZBV22",
+"attributes": {
+"lei": "529900HWPVQ42PJZBV22",
+"entity": {
+"legalName": {
+"name": "Daimler Truck AG",
+"language": "de"
+},
+"legalAddress": {
+"city": "Leinfelden-Echterdingen",
+"country": "DE",
+"postalCode": "70771"
+},
+"registeredAt": {
+"id": "RA000351",
+"other": null
+},
+"registeredAs": "HRB 762884",
+"legalForm": {
+"id": "6QQB",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-08-19T06:17:03Z"
+}
+}
+}
+],
+"reg:HRB 7908": [
+{
+"type": "lei-records",
+"id": "391200COKMEGSUHUPQ66",
+"attributes": {
+"lei": "391200COKMEGSUHUPQ66",
+"entity": {
+"legalName": {
+"name": "nuova moda-Moden Handelsgesellschaft mbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Bocholt",
+"country": "DE",
+"postalCode": "46399"
+},
+"registeredAt": {
+"id": "RA000226",
+"other": null
+},
+"registeredAs": "HRB 7908",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-05-04T13:14:50Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900YG7JU88AKMRM29",
+"attributes": {
+"lei": "529900YG7JU88AKMRM29",
+"entity": {
+"legalName": {
+"name": "GMB Glasmanufaktur Brandenburg GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Tschernitz",
+"country": "DE",
+"postalCode": "03130"
+},
+"registeredAt": {
+"id": "RA000227",
+"other": null
+},
+"registeredAs": "HRB 7908",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "LAPSED",
+"lastUpdateDate": "2026-02-09T00:30:04Z"
+}
+}
+}
+],
+"reg:HRB 8327": [
+{
+"type": "lei-records",
+"id": "391200IR46AN3JFXL538",
+"attributes": {
+"lei": "391200IR46AN3JFXL538",
+"entity": {
+"legalName": {
+"name": "Alles für's Auto Kai Erik Arndt GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Duisburg",
+"country": "DE",
+"postalCode": "47167"
+},
+"registeredAt": {
+"id": "RA000232",
+"other": null
+},
+"registeredAs": "HRB 8327",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-05-21T12:05:10Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "391200AHHWMFQOVPBZ32",
+"attributes": {
+"lei": "391200AHHWMFQOVPBZ32",
+"entity": {
+"legalName": {
+"name": "Lausitz Energie Kraftwerke AG",
+"language": "de"
+},
+"legalAddress": {
+"city": "Cottbus",
+"country": "DE",
+"postalCode": "03050"
+},
+"registeredAt": {
+"id": "RA000227",
+"other": null
+},
+"registeredAs": "HRB 8327",
+"legalForm": {
+"id": "6QQB",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-06-16T14:04:29Z"
+}
+}
+}
+],
+"reg:HRB 96152": [
+{
+"type": "lei-records",
+"id": "549300RRUOPDAPZVRC48",
+"attributes": {
+"lei": "549300RRUOPDAPZVRC48",
+"entity": {
+"legalName": {
+"name": "ADM MAINZ GMBH",
+"language": "de"
+},
+"legalAddress": {
+"city": "HAMBURG",
+"country": "DE",
+"postalCode": "21107"
+},
+"registeredAt": {
+"id": "RA000259",
+"other": null
+},
+"registeredAs": "HRB 96152",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "INACTIVE"
+},
+"registration": {
+"status": "RETIRED",
+"lastUpdateDate": "2024-09-20T12:15:51Z"
+}
+}
+}
+],
+"ADM Mainz GmbH": [
+{
+"type": "lei-records",
+"id": "549300RRUOPDAPZVRC48",
+"attributes": {
+"lei": "549300RRUOPDAPZVRC48",
+"entity": {
+"legalName": {
+"name": "ADM MAINZ GMBH",
+"language": "de"
+},
+"legalAddress": {
+"city": "HAMBURG",
+"country": "DE",
+"postalCode": "21107"
+},
+"registeredAt": {
+"id": "RA000259",
+"other": null
+},
+"registeredAs": "HRB 96152",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "INACTIVE"
+},
+"registration": {
+"status": "RETIRED",
+"lastUpdateDate": "2024-09-20T12:15:51Z"
+}
+}
+}
+],
+"AIR LIQUIDE Deutschland GmbH": [
+{
+"type": "lei-records",
+"id": "529900HZKPU9RDAO8058",
+"attributes": {
+"lei": "529900HZKPU9RDAO8058",
+"entity": {
+"legalName": {
+"name": "AIR LIQUIDE Deutschland GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Düsseldorf",
+"country": "DE",
+"postalCode": "40476"
+},
+"registeredAt": {
+"id": "RA000234",
+"other": null
+},
+"registeredAs": "HRB 613",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-09-23T12:49:39Z"
+}
+}
+}
+],
+"ArcelorMittal Eisenhüttenstadt GmbH": [
+{
+"type": "lei-records",
+"id": "5493000QGQ5PKNMYNM41",
+"attributes": {
+"lei": "5493000QGQ5PKNMYNM41",
+"entity": {
+"legalName": {
+"name": "ArcelorMittal Eisenhüttenstadt GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Eisenhüttenstadt",
+"country": "DE",
+"postalCode": "15890"
+},
+"registeredAt": {
+"id": "RA000241",
+"other": null
+},
+"registeredAs": "HRB 3883",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-04-08T13:14:24Z"
+}
+}
+}
+],
+"ArcelorMittal Eisenhüttenstadt GmbH ": [
+{
+"type": "lei-records",
+"id": "5493000QGQ5PKNMYNM41",
+"attributes": {
+"lei": "5493000QGQ5PKNMYNM41",
+"entity": {
+"legalName": {
+"name": "ArcelorMittal Eisenhüttenstadt GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Eisenhüttenstadt",
+"country": "DE",
+"postalCode": "15890"
+},
+"registeredAt": {
+"id": "RA000241",
+"other": null
+},
+"registeredAs": "HRB 3883",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-04-08T13:14:24Z"
+}
+}
+}
+],
+"Ardagh Glass GmbH": [
+{
+"type": "lei-records",
+"id": "5493004V0GEGPEN6VY92",
+"attributes": {
+"lei": "5493004V0GEGPEN6VY92",
+"entity": {
+"legalName": {
+"name": "ARDAGH GLASS GMBH",
+"language": "de"
+},
+"legalAddress": {
+"city": "NIENBURG",
+"country": "DE",
+"postalCode": "31582"
+},
+"registeredAt": {
+"id": "RA000358",
+"other": null
+},
+"registeredAs": "HRB 30704",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "LAPSED",
+"lastUpdateDate": "2023-07-31T17:11:36Z"
+}
+}
+}
+],
+"Ardagh Glass GmbH ": [
+{
+"type": "lei-records",
+"id": "5493004V0GEGPEN6VY92",
+"attributes": {
+"lei": "5493004V0GEGPEN6VY92",
+"entity": {
+"legalName": {
+"name": "ARDAGH GLASS GMBH",
+"language": "de"
+},
+"legalAddress": {
+"city": "NIENBURG",
+"country": "DE",
+"postalCode": "31582"
+},
+"registeredAt": {
+"id": "RA000358",
+"other": null
+},
+"registeredAs": "HRB 30704",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "LAPSED",
+"lastUpdateDate": "2023-07-31T17:11:36Z"
+}
+}
+}
+],
+"B.E.S. Brandenburger Elektrostahlwerke GmbH": [
+{
+"type": "lei-records",
+"id": "391200HMYHERNKKE0C82",
+"attributes": {
+"lei": "391200HMYHERNKKE0C82",
+"entity": {
+"legalName": {
+"name": "B.E.S. Brandenburger Elektrostahlwerke GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Brandenburg an der Havel",
+"country": "DE",
+"postalCode": "14770"
+},
+"registeredAt": {
+"id": "RA000322",
+"other": null
+},
+"registeredAs": "HRB 4239P",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-02-22T10:35:50Z"
+}
+}
+}
+],
+"BASF Personal Care and Nutrition GmbH": [
+{
+"type": "lei-records",
+"id": "529900D46YSXM0XR8W06",
+"attributes": {
+"lei": "529900D46YSXM0XR8W06",
+"entity": {
+"legalName": {
+"name": "BASF Personal Care and Nutrition GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Monheim am Rhein",
+"country": "DE",
+"postalCode": "40789"
+},
+"registeredAt": {
+"id": "RA000234",
+"other": null
+},
+"registeredAs": "HRB 42343",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-09-24T14:49:49Z"
+}
+}
+}
+],
+"BASF SE": [
+{
+"type": "lei-records",
+"id": "529900L116VQZ3YHWI22",
+"attributes": {
+"lei": "529900L116VQZ3YHWI22",
+"entity": {
+"legalName": {
+"name": "BASF Polyurethanes Nordic AB",
+"language": "sv"
+},
+"legalAddress": {
+"city": "Angered",
+"country": "SE",
+"postalCode": "42467"
+},
+"registeredAt": {
+"id": "RA000544",
+"other": null
+},
+"registeredAs": "556589-9886",
+"legalForm": {
+"id": "XJHM",
+"other": null
+},
+"status": "INACTIVE"
+},
+"registration": {
+"status": "RETIRED",
+"lastUpdateDate": "2025-09-19T13:33:34Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900KQENHKUYFM1735",
+"attributes": {
+"lei": "529900KQENHKUYFM1735",
+"entity": {
+"legalName": {
+"name": "BASF Metals Sweden AB",
+"language": "sv-SE"
+},
+"legalAddress": {
+"city": "HOFORS",
+"country": "SE",
+"postalCode": "813 35"
+},
+"registeredAt": {
+"id": "RA000544",
+"other": null
+},
+"registeredAs": "559441-2792",
+"legalForm": {
+"id": "XJHM",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "LAPSED",
+"lastUpdateDate": "2025-06-13T23:30:04Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900IX7V0TBTP63L70",
+"attributes": {
+"lei": "529900IX7V0TBTP63L70",
+"entity": {
+"legalName": {
+"name": "BASF AB",
+"language": "sv"
+},
+"legalAddress": {
+"city": "Göteborg",
+"country": "SE",
+"postalCode": "402 33"
+},
+"registeredAt": {
+"id": "RA000544",
+"other": null
+},
+"registeredAs": "556058-1158",
+"legalForm": {
+"id": "XJHM",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-03-17T09:20:40Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900WJDTV0Z4OWPE04",
+"attributes": {
+"lei": "529900WJDTV0Z4OWPE04",
+"entity": {
+"legalName": {
+"name": "BASF Coatings Services Aktiebolag",
+"language": "sv"
+},
+"legalAddress": {
+"city": "Göteborg",
+"country": "SE",
+"postalCode": "402 33"
+},
+"registeredAt": {
+"id": "RA000544",
+"other": null
+},
+"registeredAs": "556236-4272",
+"legalForm": {
+"id": "XJHM",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-01-19T10:17:49Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "254900VLDCAWW91F7363",
+"attributes": {
+"lei": "254900VLDCAWW91F7363",
+"entity": {
+"legalName": {
+"name": "BASF AGRICULTURAL SOLUTIONS CANADA INC.",
+"language": "en"
+},
+"legalAddress": {
+"city": "CALGARY",
+"country": "CA",
+"postalCode": "T2C 5P9"
+},
+"registeredAt": {
+"id": "RA000073",
+"other": null
+},
+"registeredAs": "2026375325",
+"legalForm": {
+"id": "8ZH8",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-04-27T16:37:41Z"
+}
+}
+}
+],
+"BASF Schwarzheide GmbH": [
+{
+"type": "lei-records",
+"id": "391200U0AZTTUXZQSA87",
+"attributes": {
+"lei": "391200U0AZTTUXZQSA87",
+"entity": {
+"legalName": {
+"name": "Dehmel-Stiftung",
+"language": "de"
+},
+"legalAddress": {
+"city": "Schwarzheide",
+"country": "DE",
+"postalCode": "01987"
+},
+"registeredAt": {
+"id": "RA000733",
+"other": null
+},
+"registeredAs": null,
+"legalForm": {
+"id": "V2YH",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-10-30T07:35:33Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900HBT8M7KYANL805",
+"attributes": {
+"lei": "529900HBT8M7KYANL805",
+"entity": {
+"legalName": {
+"name": "BASF Agricultural Solutions Schwarzheide GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Schwarzheide",
+"country": "DE",
+"postalCode": "01987"
+},
+"registeredAt": {
+"id": "RA000227",
+"other": null
+},
+"registeredAs": "HRB 18996",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-04-28T14:10:53Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900D4TFWP0BYBEO33",
+"attributes": {
+"lei": "529900D4TFWP0BYBEO33",
+"entity": {
+"legalName": {
+"name": "BASF InfraService & Solutions Lausitz GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Schwarzheide",
+"country": "DE",
+"postalCode": "01987"
+},
+"registeredAt": {
+"id": "RA000227",
+"other": null
+},
+"registeredAs": "HRB 3116",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-09-24T11:44:50Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900MKBV0OZDCJ4713",
+"attributes": {
+"lei": "529900MKBV0OZDCJ4713",
+"entity": {
+"legalName": {
+"name": "BASF Battery Materials and Recycling Schwarzheide GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Schwarzheide",
+"country": "DE",
+"postalCode": "01987"
+},
+"registeredAt": {
+"id": "RA000227",
+"other": null
+},
+"registeredAs": "HRB 17513 CB",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-01-23T08:52:39Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "5299003AKLV4OR9EAR83",
+"attributes": {
+"lei": "5299003AKLV4OR9EAR83",
+"entity": {
+"legalName": {
+"name": "BASF Schwarzheide GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Schwarzheide",
+"country": "DE",
+"postalCode": "01987"
+},
+"registeredAt": {
+"id": "RA000227",
+"other": null
+},
+"registeredAs": "HRB 687",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-12-02T13:53:53Z"
+}
+}
+}
+],
+"BMI Deutschland GmbH": [
+{
+"type": "lei-records",
+"id": "529900CNLFIJYOM1BX46",
+"attributes": {
+"lei": "529900CNLFIJYOM1BX46",
+"entity": {
+"legalName": {
+"name": "BMI Deutschland GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Oberursel",
+"country": "DE",
+"postalCode": "61440"
+},
+"registeredAt": {
+"id": "RA000209",
+"other": null
+},
+"registeredAs": "HRB 5490",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-09-22T13:11:55Z"
+}
+}
+}
+],
+"BMI Steildach GmbH ": [],
+"Basell Polyolefine GmbH": [
+{
+"type": "lei-records",
+"id": "529900DMBDKEXXLEY805",
+"attributes": {
+"lei": "529900DMBDKEXXLEY805",
+"entity": {
+"legalName": {
+"name": "LUCOBIT Aktiengesellschaft",
+"language": "de"
+},
+"legalAddress": {
+"city": "Wesseling",
+"country": "DE",
+"postalCode": "50389"
+},
+"registeredAt": {
+"id": "RA000280",
+"other": null
+},
+"registeredAs": "HRB 44797",
+"legalForm": {
+"id": "6QQB",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-12-04T11:01:30Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "549300MOUB4MJ2FP6B06",
+"attributes": {
+"lei": "549300MOUB4MJ2FP6B06",
+"entity": {
+"legalName": {
+"name": "Basell Polyolefine GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Wesseling",
+"country": "DE",
+"postalCode": "50389"
+},
+"registeredAt": {
+"id": "RA000280",
+"other": null
+},
+"registeredAs": "HRB 45129",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-02-12T08:28:20Z"
+}
+}
+}
+],
+"CEMEX Zement GmbH": [],
+"CEMEX Zement GmbH ": [],
+"DHW Deutsche Hydrierwerke GmbH Rodleben": [],
+"Daimler Truck AG": [
+{
+"type": "lei-records",
+"id": "529900PW78JIYOUBSR24",
+"attributes": {
+"lei": "529900PW78JIYOUBSR24",
+"entity": {
+"legalName": {
+"name": "Daimler Truck Holding AG",
+"language": "de"
+},
+"legalAddress": {
+"city": "Leinfelden-Echterdingen",
+"country": "DE",
+"postalCode": "70771"
+},
+"registeredAt": {
+"id": "RA000351",
+"other": null
+},
+"registeredAs": "HRB 778600",
+"legalForm": {
+"id": "6QQB",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-06-27T10:02:57Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900HWPVQ42PJZBV22",
+"attributes": {
+"lei": "529900HWPVQ42PJZBV22",
+"entity": {
+"legalName": {
+"name": "Daimler Truck AG",
+"language": "de"
+},
+"legalAddress": {
+"city": "Leinfelden-Echterdingen",
+"country": "DE",
+"postalCode": "70771"
+},
+"registeredAt": {
+"id": "RA000351",
+"other": null
+},
+"registeredAs": "HRB 762884",
+"legalForm": {
+"id": "6QQB",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-08-19T06:17:03Z"
+}
+}
+}
+],
+"Deutsche Edelstahlwerke Specialty Steel GmbH & Co.": [
+{
+"type": "lei-records",
+"id": "529900KQXH0E586MS571",
+"attributes": {
+"lei": "529900KQXH0E586MS571",
+"entity": {
+"legalName": {
+"name": "Deutsche Edelstahlwerke Siegen/Hagen GmbH & Co. KG",
+"language": "de"
+},
+"legalAddress": {
+"city": "Siegen",
+"country": "DE",
+"postalCode": "57078"
+},
+"registeredAt": {
+"id": "RA000219",
+"other": null
+},
+"registeredAs": "HRA 7236",
+"legalForm": {
+"id": "8Z6G",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-11-11T13:00:36Z"
+}
+}
+}
+],
+"EWP Energie und Wasser Potsdam GmbH  ": [],
+"Energie und Wasser Potsdam GmbH": [
+{
+"type": "lei-records",
+"id": "529900S190A33O78HQ19",
+"attributes": {
+"lei": "529900S190A33O78HQ19",
+"entity": {
+"legalName": {
+"name": "Energie und Wasser Potsdam GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Potsdam",
+"country": "DE",
+"postalCode": "14480"
+},
+"registeredAt": {
+"id": "RA000322",
+"other": null
+},
+"registeredAs": "HRB 1352",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-01-10T16:02:15Z"
+}
+}
+}
+],
+"FELS-WERKE GmbH": [
+{
+"type": "lei-records",
+"id": "5299002N3Z9K7182RX21",
+"attributes": {
+"lei": "5299002N3Z9K7182RX21",
+"entity": {
+"legalName": {
+"name": "Fels-Werke GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Goslar",
+"country": "DE",
+"postalCode": "38640"
+},
+"registeredAt": {
+"id": "RA000221",
+"other": null
+},
+"registeredAs": "HRB 111240",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-11-13T11:57:22Z"
+}
+}
+}
+],
+"Fels-Werke GmbH": [
+{
+"type": "lei-records",
+"id": "5299002N3Z9K7182RX21",
+"attributes": {
+"lei": "5299002N3Z9K7182RX21",
+"entity": {
+"legalName": {
+"name": "Fels-Werke GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Goslar",
+"country": "DE",
+"postalCode": "38640"
+},
+"registeredAt": {
+"id": "RA000221",
+"other": null
+},
+"registeredAs": "HRB 111240",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-11-13T11:57:22Z"
+}
+}
+}
+],
+"Fiberboard GmbH": [
+{
+"type": "lei-records",
+"id": "5299008VTYB8N00WSJ52",
+"attributes": {
+"lei": "5299008VTYB8N00WSJ52",
+"entity": {
+"legalName": {
+"name": "Fiberboard GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Baruth / Mark",
+"country": "DE",
+"postalCode": "15837"
+},
+"registeredAt": {
+"id": "RA000322",
+"other": null
+},
+"registeredAs": "HRB 19220",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-08-12T11:14:33Z"
+}
+}
+}
+],
+"Fiberboard GmbH ": [
+{
+"type": "lei-records",
+"id": "5299008VTYB8N00WSJ52",
+"attributes": {
+"lei": "5299008VTYB8N00WSJ52",
+"entity": {
+"legalName": {
+"name": "Fiberboard GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Baruth / Mark",
+"country": "DE",
+"postalCode": "15837"
+},
+"registeredAt": {
+"id": "RA000322",
+"other": null
+},
+"registeredAs": "HRB 19220",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-08-12T11:14:33Z"
+}
+}
+}
+],
+"GASCADE Gastransport GmbH": [
+{
+"type": "lei-records",
+"id": "391200HSJBK7SY0YBW02",
+"attributes": {
+"lei": "391200HSJBK7SY0YBW02",
+"entity": {
+"legalName": {
+"name": "GASCADE Gastransport GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Kassel",
+"country": "DE",
+"postalCode": "34119"
+},
+"registeredAt": {
+"id": "RA000275",
+"other": null
+},
+"registeredAs": "HRB 13752",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-06-26T10:08:32Z"
+}
+}
+}
+],
+"GASCADE Gastransport GmbH ": [
+{
+"type": "lei-records",
+"id": "391200HSJBK7SY0YBW02",
+"attributes": {
+"lei": "391200HSJBK7SY0YBW02",
+"entity": {
+"legalName": {
+"name": "GASCADE Gastransport GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Kassel",
+"country": "DE",
+"postalCode": "34119"
+},
+"registeredAt": {
+"id": "RA000275",
+"other": null
+},
+"registeredAs": "HRB 13752",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-06-26T10:08:32Z"
+}
+}
+}
+],
+"GMB Glasmanufaktur Brandenburg GmbH": [
+{
+"type": "lei-records",
+"id": "529900YG7JU88AKMRM29",
+"attributes": {
+"lei": "529900YG7JU88AKMRM29",
+"entity": {
+"legalName": {
+"name": "GMB Glasmanufaktur Brandenburg GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Tschernitz",
+"country": "DE",
+"postalCode": "03130"
+},
+"registeredAt": {
+"id": "RA000227",
+"other": null
+},
+"registeredAs": "HRB 7908",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "LAPSED",
+"lastUpdateDate": "2026-02-09T00:30:04Z"
+}
+}
+}
+],
+"H.E.S. Hennigsdorfer Elektrostahlwerke GmbH": [
+{
+"type": "lei-records",
+"id": "391200LD6UVTMFZML116",
+"attributes": {
+"lei": "391200LD6UVTMFZML116",
+"entity": {
+"legalName": {
+"name": "H.E.S. Hennigsdorfer Elektrostahlwerke GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Hennigsdorf",
+"country": "DE",
+"postalCode": "16761"
+},
+"registeredAt": {
+"id": "RA000308",
+"other": null
+},
+"registeredAs": "HRB 1619NP",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-02-22T10:38:01Z"
+}
+}
+}
+],
+"H.E.S. Hennigsdorfer Elektrostahlwerke GmbH ": [
+{
+"type": "lei-records",
+"id": "391200LD6UVTMFZML116",
+"attributes": {
+"lei": "391200LD6UVTMFZML116",
+"entity": {
+"legalName": {
+"name": "H.E.S. Hennigsdorfer Elektrostahlwerke GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Hennigsdorf",
+"country": "DE",
+"postalCode": "16761"
+},
+"registeredAt": {
+"id": "RA000308",
+"other": null
+},
+"registeredAs": "HRB 1619NP",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-02-22T10:38:01Z"
+}
+}
+}
+],
+"Hamburger Rieger GmbH": [
+{
+"type": "lei-records",
+"id": "529900CI8HDF9U9WCE88",
+"attributes": {
+"lei": "529900CI8HDF9U9WCE88",
+"entity": {
+"legalName": {
+"name": "Hamburger Rieger GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Trostberg",
+"country": "DE",
+"postalCode": "83308"
+},
+"registeredAt": {
+"id": "RA000354",
+"other": null
+},
+"registeredAs": "HRB 23241",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-02-10T14:42:15Z"
+}
+}
+}
+],
+"Klinkerwerk Muhr GmbH & Co KG ": [],
+"Klinkerwerk Muhr GmbH & Co. KG": [],
+"LEAG Lausitz Energie Kraftwerke AG": [],
+"LEIPA Georg Leinfelder GmbH": [
+{
+"type": "lei-records",
+"id": "5299000KFBHEXBMT6C37",
+"attributes": {
+"lei": "5299000KFBHEXBMT6C37",
+"entity": {
+"legalName": {
+"name": "LEIPA Georg Leinfelder GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Schwedt /Oder",
+"country": "DE",
+"postalCode": "16303"
+},
+"registeredAt": {
+"id": "RA000308",
+"other": null
+},
+"registeredAs": "HRB 10892",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-07-17T09:54:08Z"
+}
+}
+}
+],
+"LEIPA Georg Leinfelder Werk Schwedt Nord": [],
+"LEIPA Georg Leinfelder Werk Schwedt Süd": [],
+"Lausitz Energie Kraftwerke AG": [
+{
+"type": "lei-records",
+"id": "391200AHHWMFQOVPBZ32",
+"attributes": {
+"lei": "391200AHHWMFQOVPBZ32",
+"entity": {
+"legalName": {
+"name": "Lausitz Energie Kraftwerke AG",
+"language": "de"
+},
+"legalAddress": {
+"city": "Cottbus",
+"country": "DE",
+"postalCode": "03050"
+},
+"registeredAt": {
+"id": "RA000227",
+"other": null
+},
+"registeredAs": "HRB 8327",
+"legalForm": {
+"id": "6QQB",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-06-16T14:04:29Z"
+}
+}
+}
+],
+"PCK Raffinerie GmbH": [
+{
+"type": "lei-records",
+"id": "529900WWXYN48AOXBA25",
+"attributes": {
+"lei": "529900WWXYN48AOXBA25",
+"entity": {
+"legalName": {
+"name": "PCK Raffinerie GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Schwedt /Oder",
+"country": "DE",
+"postalCode": "16303"
+},
+"registeredAt": {
+"id": "RA000308",
+"other": null
+},
+"registeredAs": "HRB 10018",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-08-26T08:09:20Z"
+}
+}
+}
+],
+"Pfleiderer Baruth GmbH": [],
+"Pfleiderer Baruth GmbH ": [],
+"Porcelaingres GmbH": [
+{
+"type": "lei-records",
+"id": "391200EZKA8R02UFAX14",
+"attributes": {
+"lei": "391200EZKA8R02UFAX14",
+"entity": {
+"legalName": {
+"name": "porcelaingres GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Vetschau /Spreewald",
+"country": "DE",
+"postalCode": "03226"
+},
+"registeredAt": {
+"id": "RA000227",
+"other": null
+},
+"registeredAs": "HRB 6253",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-11-10T09:31:13Z"
+}
+}
+}
+],
+"Progroup Paper PM2 GmbH": [],
+"Progroup Paper PM2 GmbH ": [],
+"SWARCO SCHÖNBORN GmbH": [
+{
+"type": "lei-records",
+"id": "98450089B636ED2A4523",
+"attributes": {
+"lei": "98450089B636ED2A4523",
+"entity": {
+"legalName": {
+"name": "SWARCO SCHÖNBORN GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Schönborn",
+"country": "DE",
+"postalCode": "03253"
+},
+"registeredAt": {
+"id": "RA000227",
+"other": null
+},
+"registeredAs": "HRB 6236",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-02-18T10:53:32Z"
+}
+}
+}
+],
+"SWISS KRONO TEX GmbH & Co. KG": [
+{
+"type": "lei-records",
+"id": "52990045NJAPYTG5U448",
+"attributes": {
+"lei": "52990045NJAPYTG5U448",
+"entity": {
+"legalName": {
+"name": "SWISS KRONO TEX GmbH & Co. KG",
+"language": "de"
+},
+"legalAddress": {
+"city": "Heiligengrabe",
+"country": "DE",
+"postalCode": "16909"
+},
+"registeredAt": {
+"id": "RA000308",
+"other": null
+},
+"registeredAs": "HRA 1190",
+"legalForm": {
+"id": "8Z6G",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-08-07T13:01:48Z"
+}
+}
+}
+],
+"SWISS KRONO TEX GmbH & co.KG": [],
+"SWM Services GmbH": [
+{
+"type": "lei-records",
+"id": "529900Q5S6SNQRHVC072",
+"attributes": {
+"lei": "529900Q5S6SNQRHVC072",
+"entity": {
+"legalName": {
+"name": "SWM Services GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "München",
+"country": "DE",
+"postalCode": "80992"
+},
+"registeredAt": {
+"id": "RA000304",
+"other": null
+},
+"registeredAs": "HRB 126674",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-05-29T15:33:55Z"
+}
+}
+}
+],
+"Solvay Chemicals GmbH": [
+{
+"type": "lei-records",
+"id": "549300M94XSN8QD1LK23",
+"attributes": {
+"lei": "549300M94XSN8QD1LK23",
+"entity": {
+"legalName": {
+"name": "SOLVAY CHEMICALS GMBH",
+"language": "en"
+},
+"legalAddress": {
+"city": "HANNOVER",
+"country": "DE",
+"postalCode": "30173"
+},
+"registeredAt": {
+"id": "RA000262",
+"other": null
+},
+"registeredAs": "HRB 58646",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "INACTIVE"
+},
+"registration": {
+"status": "RETIRED",
+"lastUpdateDate": "2024-12-16T17:06:10Z"
+}
+}
+}
+],
+"Sonae Arauco Beeskow GmbH": [
+{
+"type": "lei-records",
+"id": "549300TSACRUAOERKB02",
+"attributes": {
+"lei": "549300TSACRUAOERKB02",
+"entity": {
+"legalName": {
+"name": "SONAE ARAUCO BEESKOW GMBH",
+"language": "en"
+},
+"legalAddress": {
+"city": "MEPPEN",
+"country": "DE",
+"postalCode": "49716"
+},
+"registeredAt": {
+"id": "RA000315",
+"other": null
+},
+"registeredAs": "HRB 203579",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-03-13T14:55:50Z"
+}
+}
+}
+],
+"StWB Stadtwerke Brandenburg an der Havel GmbH & Co. KG": [
+{
+"type": "lei-records",
+"id": "529900W5V07ZBGMSVW92",
+"attributes": {
+"lei": "529900W5V07ZBGMSVW92",
+"entity": {
+"legalName": {
+"name": "StWB Stadtwerke Brandenburg an der Havel GmbH & Co. KG",
+"language": "de"
+},
+"legalAddress": {
+"city": "Brandenburg an der Havel",
+"country": "DE",
+"postalCode": "14776"
+},
+"registeredAt": {
+"id": "RA000322",
+"other": null
+},
+"registeredAs": "HRA 6290",
+"legalForm": {
+"id": "8Z6G",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-11-11T11:03:16Z"
+}
+}
+}
+],
+"Stadtwerke Cottbus GmbH": [
+{
+"type": "lei-records",
+"id": "5299004K0KFMPSE15J03",
+"attributes": {
+"lei": "5299004K0KFMPSE15J03",
+"entity": {
+"legalName": {
+"name": "Stadtwerke Cottbus GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Cottbus",
+"country": "DE",
+"postalCode": "03046"
+},
+"registeredAt": {
+"id": "RA000227",
+"other": null
+},
+"registeredAs": "HRB 1037",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-08-21T22:08:29Z"
+}
+}
+}
+],
+"Stadtwerke Frankfurt (Oder) GmbH": [
+{
+"type": "lei-records",
+"id": "967600J1H21Q4QZHEY16",
+"attributes": {
+"lei": "967600J1H21Q4QZHEY16",
+"entity": {
+"legalName": {
+"name": "Stadtwerke Frankfurt (Oder) GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Frankfurt (Oder)",
+"country": "DE",
+"postalCode": "15230"
+},
+"registeredAt": {
+"id": "RA000241",
+"other": null
+},
+"registeredAs": "HRB 2299 FF",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "NULL"
+},
+"registration": {
+"status": "DUPLICATE",
+"lastUpdateDate": "2022-03-07T16:25:31Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900WK79LDMDFTKH31",
+"attributes": {
+"lei": "529900WK79LDMDFTKH31",
+"entity": {
+"legalName": {
+"name": "Stadtwerke Frankfurt (Oder) GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Frankfurt (Oder)",
+"country": "DE",
+"postalCode": "15230"
+},
+"registeredAt": {
+"id": "RA000241",
+"other": null
+},
+"registeredAs": "HRB 2299",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-03-27T14:03:16Z"
+}
+}
+}
+],
+"Stadtwerke Frankfurt (Oder) GmbH ": [
+{
+"type": "lei-records",
+"id": "967600J1H21Q4QZHEY16",
+"attributes": {
+"lei": "967600J1H21Q4QZHEY16",
+"entity": {
+"legalName": {
+"name": "Stadtwerke Frankfurt (Oder) GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Frankfurt (Oder)",
+"country": "DE",
+"postalCode": "15230"
+},
+"registeredAt": {
+"id": "RA000241",
+"other": null
+},
+"registeredAs": "HRB 2299 FF",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "NULL"
+},
+"registration": {
+"status": "DUPLICATE",
+"lastUpdateDate": "2022-03-07T16:25:31Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900WK79LDMDFTKH31",
+"attributes": {
+"lei": "529900WK79LDMDFTKH31",
+"entity": {
+"legalName": {
+"name": "Stadtwerke Frankfurt (Oder) GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Frankfurt (Oder)",
+"country": "DE",
+"postalCode": "15230"
+},
+"registeredAt": {
+"id": "RA000241",
+"other": null
+},
+"registeredAs": "HRB 2299",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-03-27T14:03:16Z"
+}
+}
+}
+],
+"Stadtwerke Strausberg GmbH": [
+{
+"type": "lei-records",
+"id": "98450045C1RE3F71A414",
+"attributes": {
+"lei": "98450045C1RE3F71A414",
+"entity": {
+"legalName": {
+"name": "Stadtwerke Strausberg GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Strausberg",
+"country": "DE",
+"postalCode": "15344"
+},
+"registeredAt": {
+"id": "RA000241",
+"other": null
+},
+"registeredAs": "HRB 1059",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-08-07T12:32:14Z"
+}
+}
+}
+],
+"Südzucker AG": [
+{
+"type": "lei-records",
+"id": "529900S8QNB101D40S72",
+"attributes": {
+"lei": "529900S8QNB101D40S72",
+"entity": {
+"legalName": {
+"name": "Südzucker AG",
+"language": "de"
+},
+"legalAddress": {
+"city": "Mannheim",
+"country": "DE",
+"postalCode": "68165"
+},
+"registeredAt": {
+"id": "RA000296",
+"other": null
+},
+"registeredAs": "HRB 42",
+"legalForm": {
+"id": "6QQB",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-07-15T12:05:26Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "5299004JK2ROXX00UZ08",
+"attributes": {
+"lei": "5299004JK2ROXX00UZ08",
+"entity": {
+"legalName": {
+"name": "sudzucker AG",
+"language": "nl"
+},
+"legalAddress": {
+"city": "Tienen",
+"country": "BE",
+"postalCode": "3300"
+},
+"registeredAt": {
+"id": "RA000025",
+"other": null
+},
+"registeredAs": "0895.330.289",
+"legalForm": {
+"id": "6QQB",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-08-11T09:22:00Z"
+}
+}
+}
+],
+"Südzucker AG, Werk Brottewitz": [
+{
+"type": "lei-records",
+"id": "529900S8QNB101D40S72",
+"attributes": {
+"lei": "529900S8QNB101D40S72",
+"entity": {
+"legalName": {
+"name": "Südzucker AG",
+"language": "de"
+},
+"legalAddress": {
+"city": "Mannheim",
+"country": "DE",
+"postalCode": "68165"
+},
+"registeredAt": {
+"id": "RA000296",
+"other": null
+},
+"registeredAs": "HRB 42",
+"legalForm": {
+"id": "6QQB",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-07-15T12:05:26Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "5299004JK2ROXX00UZ08",
+"attributes": {
+"lei": "5299004JK2ROXX00UZ08",
+"entity": {
+"legalName": {
+"name": "sudzucker AG",
+"language": "nl"
+},
+"legalAddress": {
+"city": "Tienen",
+"country": "BE",
+"postalCode": "3300"
+},
+"registeredAt": {
+"id": "RA000025",
+"other": null
+},
+"registeredAs": "0895.330.289",
+"legalForm": {
+"id": "6QQB",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-08-11T09:22:00Z"
+}
+}
+}
+],
+"Uniper Kraftwerke GmbH": [
+{
+"type": "lei-records",
+"id": "549300O42UJJ3O60SO68",
+"attributes": {
+"lei": "549300O42UJJ3O60SO68",
+"entity": {
+"legalName": {
+"name": "UNIPER HOLDING GMBH",
+"language": "en"
+},
+"legalAddress": {
+"city": "DUSSELDORF",
+"country": "DE",
+"postalCode": "40221"
+},
+"registeredAt": {
+"id": "RA000234",
+"other": null
+},
+"registeredAs": "HRB 74963",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-05-09T08:44:28Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "549300OF2TQS9YVLID31",
+"attributes": {
+"lei": "549300OF2TQS9YVLID31",
+"entity": {
+"legalName": {
+"name": "UNIPER KRAFTWERKE GMBH",
+"language": "en"
+},
+"legalAddress": {
+"city": "DUSSELDORF",
+"country": "DE",
+"postalCode": "40221"
+},
+"registeredAt": {
+"id": "RA000234",
+"other": null
+},
+"registeredAs": "HRB 57104",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-05-09T08:46:01Z"
+}
+}
+}
+],
+"Universität Münster": [
+{
+"type": "lei-records",
+"id": "967600Z7N3VHX4V35H23",
+"attributes": {
+"lei": "967600Z7N3VHX4V35H23",
+"entity": {
+"legalName": {
+"name": "Universität Münster",
+"language": "de"
+},
+"legalAddress": {
+"city": "Münster",
+"country": "DE",
+"postalCode": "48149"
+},
+"registeredAt": {
+"id": "RA999999",
+"other": null
+},
+"registeredAs": null,
+"legalForm": {
+"id": "SQKS",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "LAPSED",
+"lastUpdateDate": "2026-09-18T16:15:31Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "391200URZPWHUKNF2W15",
+"attributes": {
+"lei": "391200URZPWHUKNF2W15",
+"entity": {
+"legalName": {
+"name": "Schleiermachersche Stiftung",
+"language": "de"
+},
+"legalAddress": {
+"city": "Halle",
+"country": "DE",
+"postalCode": "06110"
+},
+"registeredAt": {
+"id": "RA000727",
+"other": null
+},
+"registeredAs": null,
+"legalForm": {
+"id": "V2YH",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-08-14T08:22:59Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "391200QKZZGLVT3TID28",
+"attributes": {
+"lei": "391200QKZZGLVT3TID28",
+"entity": {
+"legalName": {
+"name": "Stiftung zur Förderung des wissenschaftlichen Nachwuchses der Rechtswissenschaftlichen Fakultät der Universität Münster",
+"language": "de"
+},
+"legalAddress": {
+"city": "Münster",
+"country": "DE",
+"postalCode": "48149"
+},
+"registeredAt": {
+"id": "RA999999",
+"other": null
+},
+"registeredAs": null,
+"legalForm": {
+"id": "V2YH",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-11-10T09:46:11Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "391200EBGLFAWLR7K150",
+"attributes": {
+"lei": "391200EBGLFAWLR7K150",
+"entity": {
+"legalName": {
+"name": "Förderergesellschaft des Finance Centers der Universität Münster e.V.",
+"language": "de"
+},
+"legalAddress": {
+"city": "Münster",
+"country": "DE",
+"postalCode": "48143"
+},
+"registeredAt": {
+"id": "RA000305",
+"other": null
+},
+"registeredAs": "VR 1124",
+"legalForm": {
+"id": "QZ3L",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-07-01T06:10:20Z"
+}
+}
+}
+],
+"VEO Vulkan-Energiewirtschaft - Oderbrücke GmbH ": [],
+"Vulkan Energiewirtschaft Oderbrücke GmbH": [
+{
+"type": "lei-records",
+"id": "984500682B8FEXCFDF97",
+"attributes": {
+"lei": "984500682B8FEXCFDF97",
+"entity": {
+"legalName": {
+"name": "Vulkan Energiewirtschaft Oderbrücke GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Eisenhüttenstadt",
+"country": "DE",
+"postalCode": "15890"
+},
+"registeredAt": {
+"id": "RA000241",
+"other": null
+},
+"registeredAs": "HRB 4706 FF",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-03-17T14:24:23Z"
+}
+}
+}
+],
+"Wienerberger GmbH": [
+{
+"type": "lei-records",
+"id": "529900LTBZABEGV8SX24",
+"attributes": {
+"lei": "529900LTBZABEGV8SX24",
+"entity": {
+"legalName": {
+"name": "Wienerberger Österreich GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Wien",
+"country": "AT",
+"postalCode": "1100"
+},
+"registeredAt": {
+"id": "RA000017",
+"other": null
+},
+"registeredAs": "94684t",
+"legalForm": {
+"id": "AXSB",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-05-20T08:58:45Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "5299009ALN015V638R37",
+"attributes": {
+"lei": "5299009ALN015V638R37",
+"entity": {
+"legalName": {
+"name": "Wienerberger Infra GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Frechen",
+"country": "DE",
+"postalCode": "50226"
+},
+"registeredAt": {
+"id": "RA000280",
+"other": null
+},
+"registeredAs": "HRB 33119",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-10-30T14:16:39Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900BPK849P5K5X502",
+"attributes": {
+"lei": "529900BPK849P5K5X502",
+"entity": {
+"legalName": {
+"name": "Wienerberger Deutschland Grundstücksverwaltungs GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Wertingen",
+"country": "DE",
+"postalCode": "86637"
+},
+"registeredAt": {
+"id": "RA000206",
+"other": null
+},
+"registeredAs": "HRB 32687",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-12-29T11:12:33Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "529900YPE905VPBOYY44",
+"attributes": {
+"lei": "529900YPE905VPBOYY44",
+"entity": {
+"legalName": {
+"name": "Wienerberger Industriebeteiligungsverwaltung GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Wien",
+"country": "AT",
+"postalCode": "1100"
+},
+"registeredAt": {
+"id": "RA000017",
+"other": null
+},
+"registeredAs": "249670m",
+"legalForm": {
+"id": "AXSB",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2026-05-20T09:07:00Z"
+}
+}
+},
+{
+"type": "lei-records",
+"id": "52990060XW6IG8IIOB89",
+"attributes": {
+"lei": "52990060XW6IG8IIOB89",
+"entity": {
+"legalName": {
+"name": "Wienerberger ZZ Holding GmbH",
+"language": null
+},
+"legalAddress": {
+"city": "Wien",
+"country": "AT",
+"postalCode": "1100"
+},
+"registeredAt": {
+"id": "RA000017",
+"other": null
+},
+"registeredAs": "FN 254943t",
+"legalForm": {
+"id": "AXSB",
+"other": null
+},
+"status": "INACTIVE"
+},
+"registration": {
+"status": "RETIRED",
+"lastUpdateDate": "2022-03-29T12:24:51Z"
+}
+}
+}
+],
+"e.distherm Energielösungen GmbH": [],
+"envia THERM GmbH": [
+{
+"type": "lei-records",
+"id": "529900VBCG7SLM25LX82",
+"attributes": {
+"lei": "529900VBCG7SLM25LX82",
+"entity": {
+"legalName": {
+"name": "envia THERM GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Bitterfeld-Wolfen",
+"country": "DE",
+"postalCode": "06749"
+},
+"registeredAt": {
+"id": "RA000348",
+"other": null
+},
+"registeredAs": "HRB 16523",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-11-21T13:33:42Z"
+}
+}
+}
+],
+"envia THERM GmbH ": [
+{
+"type": "lei-records",
+"id": "529900VBCG7SLM25LX82",
+"attributes": {
+"lei": "529900VBCG7SLM25LX82",
+"entity": {
+"legalName": {
+"name": "envia THERM GmbH",
+"language": "de"
+},
+"legalAddress": {
+"city": "Bitterfeld-Wolfen",
+"country": "DE",
+"postalCode": "06749"
+},
+"registeredAt": {
+"id": "RA000348",
+"other": null
+},
+"registeredAs": "HRB 16523",
+"legalForm": {
+"id": "2HBR",
+"other": null
+},
+"status": "ACTIVE"
+},
+"registration": {
+"status": "ISSUED",
+"lastUpdateDate": "2025-11-21T13:33:42Z"
+}
+}
+}
+]
+}

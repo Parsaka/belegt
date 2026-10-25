@@ -1,0 +1,119 @@
+{
+ "ets_de_stationary_installations": 2195,
+ "eea_de_ets_identifiers": 51,
+ "ets_installations_found_in_eea": 49,
+ "with_parent_company_name": 49,
+ "distinct_parent_company_names": 35,
+ "eea_reporting_years": [
+  "2017",
+  "2018",
+  "2019",
+  "2020",
+  "2021",
+  "2022",
+  "2023",
+  "2024"
+ ],
+ "top_parents": [
+  [
+   "ArcelorMittal Eisenhüttenstadt GmbH ",
+   4
+  ],
+  [
+   "LEAG Lausitz Energie Kraftwerke AG",
+   3
+  ],
+  [
+   "Stadtwerke Frankfurt (Oder) GmbH ",
+   2
+  ],
+  [
+   "B.E.S. Brandenburger Elektrostahlwerke GmbH",
+   2
+  ],
+  [
+   "H.E.S. Hennigsdorfer Elektrostahlwerke GmbH ",
+   2
+  ],
+  [
+   "Hamburger Rieger GmbH",
+   2
+  ],
+  [
+   "BASF Schwarzheide GmbH",
+   2
+  ],
+  [
+   "Ardagh Glass GmbH ",
+   2
+  ],
+  [
+   "GASCADE Gastransport GmbH ",
+   2
+  ],
+  [
+   "LEIPA Georg Leinfelder Werk Schwedt Nord",
+   2
+  ],
+  [
+   "Wienerberger GmbH",
+   2
+  ],
+  [
+   "SWARCO SCHÖNBORN GmbH",
+   1
+  ],
+  [
+   "Porcelaingres GmbH",
+   1
+  ],
+  [
+   "VEO Vulkan-Energiewirtschaft - Oderbrücke GmbH ",
+   1
+  ],
+  [
+   "Fiberboard GmbH ",
+   1
+  ],
+  [
+   "Stadtwerke Strausberg GmbH",
+   1
+  ],
+  [
+   "Pfleiderer Baruth GmbH ",
+   1
+  ],
+  [
+   "FELS-WERKE GmbH",
+   1
+  ],
+  [
+   "Lausitz Energie Kraftwerke AG",
+   1
+  ],
+  [
+   "GMB Glasmanufaktur Brandenburg GmbH",
+   1
+  ],
+  [
+   "CEMEX Zement GmbH ",
+   1
+  ],
+  [
+   "SWISS KRONO TEX GmbH & co.KG",
+   1
+  ],
+  [
+   "Sonae Arauco Beeskow GmbH",
+   1
+  ],
+  [
+   "Progroup Paper PM2 GmbH ",
+   1
+  ],
+  [
+   "LEIPA Georg Leinfelder Werk Schwedt Süd",
+   1
+  ]
+ ]
+}

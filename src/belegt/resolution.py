@@ -21,6 +21,7 @@ LEGAL_FORMS = {
 }  # fmt: skip
 ACCEPT = 0.95
 REVIEW = 0.6
+REGISTER_REVIEW = 0.2  # name overlap needed before a shared register number means anything
 
 
 def normalise(name: str) -> str:
@@ -94,22 +95,56 @@ def resolve_operator(
     register_nr: str | None,
     city: str | None,
     entities: list[LegalEntity],
+    by_lei: dict[str, LegalEntity] | None = None,
 ) -> Match:
     """Strongest evidence first: the LEI the operator gave the registry, then the register number
     (only together with a plausible name, since numbers repeat across courts), then the name."""
-    by_lei = {e.lei: e for e in entities}
+    by_lei = by_lei if by_lei is not None else {e.lei: e for e in entities}
     lei = normalise_lei(registry_lei)
     if lei and lei in by_lei:
         e = by_lei[lei]
         return Match(name, lei, e.legal_name, 1.0, "accepted", "LEI reported in the Union Registry")
     reg = normalise_register(register_nr)
     if reg:
-        same = [e for e in entities if normalise_register(e.registered_as) == reg]
-        for e in sorted(same, key=lambda e: -score(name, e.legal_name)):
+        same = sorted(
+            (e for e in entities if normalise_register(e.registered_as) == reg),
+            key=lambda e: -score(name, e.legal_name),
+        )
+        if same:
+            e = same[0]
             s = score(name, e.legal_name)
             if s >= 0.5:
                 return Match(name, e.lei, e.legal_name, 1.0, "accepted",
                              f"register number {reg} and name similarity {s:.2f}")  # fmt: skip
-            return Match(name, e.lei, e.legal_name, round(s, 3), "review",
-                         f"register number {reg}, names differ ({s:.2f})")  # fmt: skip
+            if s >= REGISTER_REVIEW:  # e.g. a renamed company
+                return Match(name, e.lei, e.legal_name, round(s, 3), "review",
+                             f"register number {reg}, names differ ({s:.2f})")  # fmt: skip
+            # same number, unrelated name: another court's register, so ignore it
     return resolve(name, city, entities)
+
+
+class CandidateIndex:
+    """Blocking: only entities that share a name token or the register number are compared.
+
+    Without it every name would be scored against all 3.4 million GLEIF records.
+    """
+
+    def __init__(self, entities: Iterable[LegalEntity]) -> None:
+        self.entities = list(entities)
+        self._by_token: dict[str, list[LegalEntity]] = {}
+        self._by_register: dict[str, list[LegalEntity]] = {}
+        for e in self.entities:
+            for token in set(normalise(e.legal_name).split()):
+                self._by_token.setdefault(token, []).append(e)
+            if reg := normalise_register(e.registered_as):
+                self._by_register.setdefault(reg, []).append(e)
+
+    def candidates(self, name: str, register_nr: object = None) -> list[LegalEntity]:
+        found: dict[str, LegalEntity] = {}
+        for token in set(normalise(name).split()):
+            for e in self._by_token.get(token, []):
+                found[e.lei] = e
+        if reg := normalise_register(register_nr):
+            for e in self._by_register.get(reg, []):
+                found[e.lei] = e
+        return list(found.values())

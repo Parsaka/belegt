@@ -18,3 +18,7 @@ models:
           - accepted_values:
               arguments:
                 values: [accepted, review, unmatched, rejected]
+  - name: stg_ets__operators
+    columns:
+      - name: ets_identifier
+        tests: [unique, not_null]
