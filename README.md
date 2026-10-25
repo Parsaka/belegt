@@ -10,7 +10,10 @@ it declines to answer when the documents do not contain the answer.
 
 A personal portfolio project (Parsa Kamali). Not investment, audit or legal advice.
 
-**Status: pre-trial phase (local, zero cost).** Nothing runs in the cloud yet. See
+**Status: phase 1 (cloud).** The cost guards run on Google Cloud (budget with alerts, billing
+kill switch, BigQuery daily quota). The full German data loads and passes every dbt test:
+2,195 stationary ETS installations, 77.3 % of them matched to a GLEIF company, and 91.7 % of
+all 2025 verified tonnage attributed to a company ([measured](docs/measurements/full-data.md)). See
 [docs/roadmap.md](docs/roadmap.md).
 
 ## Hard budget

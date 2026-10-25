@@ -17,7 +17,9 @@ FIXTURE = Path(__file__).parents[1] / "tests" / "fixtures" / "gleif_entities_gro
 
 
 def main(source: str, out: str, limit: int = 25) -> None:
-    wanted = {r["attributes"]["lei"] for r in json.loads(FIXTURE.read_text())[:limit]}
+    records = json.loads(FIXTURE.read_text())
+    german = [r for r in records if r["attributes"]["entity"]["legalAddress"]["country"] == "DE"]
+    wanted = {r["attributes"]["lei"] for r in german[:limit]}
     with open(source, newline="", encoding="utf-8") as fh:
         reader = csv.DictReader(fh)
         rows = [r for r in reader if r["LEI"] in wanted]

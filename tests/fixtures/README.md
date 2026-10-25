@@ -10,3 +10,4 @@ Nothing here is invented; the only change is fewer rows and, for GLEIF, fewer JS
 | `eea_*.csv` | EEA Industrial Reporting v16 Access database (`mdb-export`) | the ETS-id, installation and facility rows of those installations |
 | `gleif_entities_*.json` | GLEIF API (CC0) | records found by operator LEI, register number and name, plus the group members |
 | `gleif_rr.csv` | GLEIF golden copy RR file of 2026-10-25 (CC0) | every relationship touching BASF SE, Heidelberg Materials AG or RWE AG |
+| `golden_copy_entities.csv` | GLEIF golden copy LEI-CDF file of 2026-10-25 (CC0), as written by `belegt extract` (`scripts/sample_golden_copy.py`) | German entities that are also in `gleif_entities_groups.json`, to prove both formats load the same |
