@@ -1,0 +1,23 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+.env
+data/
+*.log
+.coverage
+htmlcov/
+.terraform/
+*.tfstate*
+backend.hcl
+terraform.tfvars
+infra/tfplan
+*.duckdb
+*.duckdb.wal
+# sustainability reports are copyrighted: never commit PDFs
+*.pdf
