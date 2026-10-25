@@ -1,0 +1,49 @@
+# Budget
+
+**Hard limit: 1.50 EUR per month, never exceeded.**
+
+## Strategy
+
+1. **Build inside the Google Cloud free trial** (300 USD, 90 days). The trial does not charge
+   automatically when it ends: the billing account closes unless it is upgraded manually.
+   GKE, Cloud SQL, Dagster and the Looker trial run only in this window.
+2. **After the trial, only free-tier services stay on.** Parts that were switched off are
+   documented with screenshots and labelled as temporary.
+3. The GCP trial is **not** activated until the local pre-trial phase is done, so the 90 days
+   are spent on cloud work only.
+
+## Steady state after the trial
+
+Free-tier limits come from the [Google Cloud Free Program](https://docs.cloud.google.com/free/docs/free-cloud-features)
+(checked 2026-10-25). The costs below are estimates until measured; README numbers will be
+measured.
+
+| Service | Free tier per month | Planned use | Expected cost |
+|---|---|---|---|
+| BigQuery | 1 TiB queries, 10 GiB storage | < 2 GiB stored; daily query quota caps a month at about 620 GiB | 0 |
+| Cloud Run jobs + service (europe-west1, Tier 1) | 240k vCPU-s for jobs; 180k vCPU-s and 2M requests for services | monthly jobs; API with min 0, max 1 instance | 0 |
+| Cloud Scheduler, Workflows | 3 jobs; 5,000 steps | one monthly run | 0 |
+| Secret Manager, Logging, Pub/Sub | 6 versions; 50 GiB; 10 GiB | minimal | 0 |
+| Cloud Storage (EU) | free tier only in US regions | about 1 GB, with lifecycle rules | about 0.03 EUR |
+| Artifact Registry | 0.5 GB | about 1 GB image (embedding model inside); keep the latest only | about 0.05 EUR |
+| Embeddings | none needed | open-source multilingual model in the container | 0 |
+| Gemini on Vertex AI | the free Gemini API tier may not serve EEA users | demo answers only; extraction runs once during the trial | about 0.05–0.20 EUR, capped |
+
+## Cost guards (built first, in Terraform)
+
+1. No always-on paid resources after the trial: no VMs, Cloud SQL, load balancers or clusters.
+2. BigQuery custom daily query quota, a hard stop.
+3. Service spend caps for Cloud Run and Gemini/Vertex (Public Preview since July 2026).
+4. Public API protection: rate limit, `max-instances=1`, demo token.
+5. Budget alerts at 0.50, 1.00 and 1.20 EUR.
+6. Billing kill switch at 1.20 EUR (budget → Pub/Sub → function that detaches billing,
+   following [Google's pattern](https://docs.cloud.google.com/billing/docs/how-to/disable-billing-with-notifications)).
+   Google warns that cost data arrives late, so this is the last line, not the main one.
+
+## Known traps
+
+- **Looker trial:** after 30 days it converts automatically to a paid Standard instance.
+  A scheduled job deletes it before day 30.
+- **Cloud SQL:** even when stopped, 10 GB of storage costs about 1.70 USD per month, which is
+  above the limit. Vectors move to BigQuery before the trial ends.
+- **Load balancer:** about 18 USD per month per forwarding rule; only during the trial.
