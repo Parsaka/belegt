@@ -1,0 +1,2 @@
+LEI,Entity.LegalName,Entity.LegalAddress.City,Entity.LegalAddress.Country,Entity.RegistrationAuthority.RegistrationAuthorityID,Entity.RegistrationAuthority.RegistrationAuthorityEntityID,Entity.LegalForm.EntityLegalFormCode,Entity.EntityStatus,Registration.RegistrationStatus,Registration.LastUpdateDate
+529900035HWJ5H01TS20,RWE Wind Onshore & PV Deutschland GmbH,Hannover,DE,RA000262,HRB 52317,2HBR,ACTIVE,ISSUED,2026-10-19T15:42:10+02:00
