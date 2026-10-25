@@ -13,6 +13,12 @@ view: scope1_consistency {
       {% else %}{{ value }}{% endif %} ;;
   }
   dimension: caveat { sql: ${TABLE}.caveat ;; }
+  dimension: figure_source { sql: ${TABLE}.figure_source ;; }
+  dimension: needs_review {
+    description: "Extracted without a reporting-year column header: check the page before relying on it."
+    type: yesno
+    sql: ${TABLE}.needs_review ;;
+  }
   dimension: reported_page { type: number sql: ${TABLE}.reported_page ;; }
   dimension: reported_quote {
     description: "The table line the figure was taken from (at most 200 characters)."

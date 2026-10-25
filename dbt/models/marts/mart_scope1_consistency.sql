@@ -15,6 +15,8 @@ select
     s.value_t as reported_scope1_t,
     s.page as reported_page,
     s.quote as reported_quote,
+    s.figure_source,
+    s.column_year is null and s.figure_source = 'extracted' as needs_review,
     g.verified_t as ets_verified_t,
     g.installations as ets_installations,
     case when s.value_t > 0 then g.verified_t / s.value_t end as ets_share_of_reported,

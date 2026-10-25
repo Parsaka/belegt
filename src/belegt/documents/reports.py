@@ -152,7 +152,7 @@ def process(
     pdf = work / f"{report.doc_id}.pdf"
     size, sha256 = download(client, report.url, pdf)
     pages = list(read_pages(pdf, report.doc_id))
-    found = list(metrics.extract(pages, report.decimal_comma))
+    found = list(metrics.extract(pages, report.decimal_comma, report.report_year))
     out.put(f"metrics/{report.doc_id}.jsonl", metrics_jsonl(found), "application/x-ndjson")
     if pdf_out is not None:
         pdf_out.put(f"pdf/{report.doc_id}.pdf", pdf, "application/pdf")

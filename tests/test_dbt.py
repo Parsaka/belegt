@@ -85,10 +85,10 @@ def test_scope1_consistency_flags_ets_above_the_reported_figure(warehouse):
     con = duckdb.connect(str(warehouse))
     con.execute(
         """insert into raw.reported_metrics values
-        ('basf-2024', 'scope1', 1000000.0, 3, 'Mio. t', 'Scope 1 1,0 1,1', 3, true),
-        ('basf-2024', 'scope1', 2.0, 9, 't', 'Scope 1 2 3', 1, false),
-        ('rwe-2024', 'scope1', 60000000.0, 5, 'Mio. t', 'Scope 1 60,0 70,0', 3, true),
-        ('thyssenkrupp-2024', 'scope3', 5.0, 4, 'Mio. t', 'Scope 3 gesamt 5 6', 3, true)"""
+        ('basf-2024', 'scope1', 1000000.0, 3, 'Mio. t', 'Scope 1 1,0 1,1', 3, true, 2024),
+        ('basf-2024', 'scope1', 2.0, 9, 't', 'Scope 1 2 3', 1, false, null),
+        ('rwe-2024', 'scope1', 60000000.0, 5, 'Mio. t', 'Scope 1 60,0 70,0', 3, true, 2024),
+        ('thyssenkrupp-2024', 'scope3', 5.0, 4, 'Mio. t', 'Scope 3 gesamt 5 6', 3, true, null)"""
     )
     con.close()
     dbt("build", "--select", "stg_reported_metrics+")

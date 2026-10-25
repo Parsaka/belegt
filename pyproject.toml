@@ -43,6 +43,7 @@ ignore = ["RUF012"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*.py" = ["E501"]
+"tests/test_metrics.py" = ["E501", "RUF001"]  # real table lines keep their en dashes
 "scripts/*.py" = ["E501"]  # one-off discovery scripts that print wide rows
 
 [tool.pytest.ini_options]
