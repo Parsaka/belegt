@@ -1,0 +1,54 @@
+  # google_artifact_registry_repository.images will be updated in-place
+  # google_artifact_registry_repository_iam_member.pipeline_push will be created
+  # google_bigquery_dataset.this["billing"] will be created
+  # google_bigquery_dataset.this["snapshots"] will be created
+  # google_bigquery_dataset_iam_member.pipeline["marts"] will be created
+  # google_bigquery_dataset_iam_member.pipeline["raw"] will be created
+  # google_bigquery_dataset_iam_member.pipeline["snapshots"] will be created
+  # google_bigquery_dataset_iam_member.pipeline["staging"] will be created
+  # google_bigquery_dataset_iam_member.pipeline_billing_read will be created
+  # google_bigquery_dataset_iam_member.pipeline_rag_owner will be created
+  # google_bigquery_dataset_iam_member.rag_tenant_read["tenant_a"] will be created
+  # google_bigquery_dataset_iam_member.rag_tenant_read["tenant_b"] will be created
+  # google_cloud_run_v2_job.reports will be created
+  # google_cloud_run_v2_service.api will be created
+  # google_cloud_run_v2_service_iam_member.api_public will be created
+  # google_cloudfunctions2_function.kill_switch will be updated in-place
+  # google_project_iam_member.ci_resource_iam["roles/artifactregistry.admin"] will be created
+  # google_project_iam_member.ci_resource_iam["roles/bigquery.dataOwner"] will be created
+  # google_project_iam_member.ci_resource_iam["roles/secretmanager.admin"] will be created
+  # google_project_iam_member.ci_resource_iam["roles/storage.admin"] will be created
+  # google_project_iam_member.drill_logs will be created
+  # google_project_iam_member.pipeline_jobs will be created
+  # google_project_iam_member.pipeline_logs will be created
+  # google_project_iam_member.pipeline_run_deploy will be created
+  # google_project_iam_member.rag_tenant_jobs["tenant_a"] will be created
+  # google_project_iam_member.rag_tenant_jobs["tenant_b"] will be created
+  # google_pubsub_topic_iam_member.drill_publish will be created
+  # google_secret_manager_secret.api_tokens will be created
+  # google_secret_manager_secret_iam_member.api_reads_tokens will be created
+  # google_secret_manager_secret_iam_member.pipeline_reads_tokens will be created
+  # google_secret_manager_secret_version.api_tokens will be created
+  # google_service_account.api will be created
+  # google_service_account.drill will be created
+  # google_service_account.pipeline will be created
+  # google_service_account.rag_tenant["tenant_a"] will be created
+  # google_service_account.rag_tenant["tenant_b"] will be created
+  # google_service_account.reports_job will be created
+  # google_service_account_iam_member.api_acts_as_tenant["tenant_a"] will be created
+  # google_service_account_iam_member.api_acts_as_tenant["tenant_b"] will be created
+  # google_service_account_iam_member.drill_wif will be created
+  # google_service_account_iam_member.pipeline_acts_as_runtime["api"] will be created
+  # google_service_account_iam_member.pipeline_acts_as_runtime["reports"] will be created
+  # google_service_account_iam_member.pipeline_acts_as_tenant["tenant_a"] will be created
+  # google_service_account_iam_member.pipeline_acts_as_tenant["tenant_b"] will be created
+  # google_service_account_iam_member.pipeline_wif will be created
+  # google_storage_bucket.raw will be updated in-place
+  # google_storage_bucket_iam_member.pipeline_raw will be created
+  # google_storage_bucket_iam_member.pipeline_reports_read will be created
+  # google_storage_bucket_iam_member.reports_job will be created
+  # google_storage_bucket_object.kill_switch must be replaced
+  # random_password.api_token["tenant_a"] will be created
+  # random_password.api_token["tenant_b"] will be created
+  # time_sleep.ci_resource_iam will be created
+Plan: 50 to add, 3 to change, 1 to destroy.
