@@ -114,3 +114,8 @@ def test_bigquery_sql_filters_tenant_before_search():
     inner = sql.split("VECTOR_SEARCH(")[1]
     assert "WHERE tenant_id IN (@tenant, 'shared')" in inner.split("'embedding'")[0]
     assert "top_k => 6" in sql
+
+
+def test_question_about_another_subject_abstains_instead_of_answering_nearby():
+    result = answerer().ask("Wie hoch ist das Reduktionsziel von Mandant B?", "tenant_a")
+    assert result.abstained
