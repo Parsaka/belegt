@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   push:
     branches: [pre-trial/sources]
-    paths: [scripts/inspect_sources.py, .github/workflows/inspect-sources.yml]
+    paths: [scripts/inspect_sources.py, scripts/inspect_eea_accdb.sh, .github/workflows/inspect-sources.yml]
 
 permissions:
   contents: write  # pushes the discovery output to the inspect-results branch
@@ -20,8 +20,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install httpx openpyxl
-      - run: python scripts/inspect_sources.py 2>&1 | tee inspect.log
+      - run: pip install httpx openpyxl && sudo apt-get install -y -qq mdbtools
+      - run: python scripts/inspect_sources.py ur gleif 2>&1 | tee inspect.log
+      - run: bash scripts/inspect_eea_accdb.sh 2>&1 | tee -a inspect.log
       # The development sandbox cannot read Actions logs or artifacts, so the output goes to a
       # throw-away branch. It holds discovery output only, never source PDFs.
       - name: Push output to inspect-results
