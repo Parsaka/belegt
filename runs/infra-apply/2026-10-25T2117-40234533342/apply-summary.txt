@@ -1,0 +1,4 @@
+google_project_iam_member.ci_pubsub_admin: Creation complete after 8s [id=belegt-pk-2610/roles/pubsub.admin/serviceAccount:terraform-ci@belegt-pk-2610.iam.gserviceaccount.com]
+time_sleep.ci_pubsub_admin: Creation complete after 1m30s [id=2026-10-25T21:17:44Z]
+google_billing_budget.monthly: Creation complete after 2s [id=billingAccounts/01EE28-7E8EC0-B6DD2F/budgets/adfc8b18-ce80-4a42-a082-0d913d949f89]
+Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
