@@ -45,7 +45,8 @@ Stationary installations matched to a company: 1,697 of 2,195, the same as the D
 Scope figures selected by the extractor, with the page they came from, are in the run's
 `summary-gke/reports.md`. Five of six reports gave Scope 1 and Scope 2 figures. thyssenkrupp's
 2023/2024 report has no emissions table (it predates the company's first CSRD statement), so the
-seed now points at the 2024/2025 annual report.
+seed now points at the 2024/2025 annual report. Its E1-6 table uses fiscal-year columns
+("2024 / 2025") and "Mt CO2e", which the extractor now reads.
 
 ## What the drill found
 
