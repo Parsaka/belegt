@@ -1,0 +1,21 @@
+esrs: skipped, no source returned the PDF (https://publications.europa.eu/resource/eli/reg_del/2023/2772/oj: HTTPStatusError; https://eur-lex.europa.eu/legal-content/DE/TXT/PDF/?uri=OJ:L_202302772: not a PDF; https://eur-lex.europa.eu/eli/reg_del/2023/2772/oj/deu/pdf: not a PDF)
+ets_verified_emissions_de.xlsx: 8,228,376 bytes, sha256 8f4e628d9d8d
+ets_operators_de.xlsx: 1,790,735 bytes, sha256 fb28c0603e74
+eea_ets_identifiers.csv: 573 rows, 57,667 bytes, sha256 edbb079f657d
+eea_installations.csv: 146 rows, 47,460 bytes, sha256 e5f874a7f7d8
+eea_facilities.csv: 43 rows, 20,960 bytes, sha256 d4a7be63b59f
+gleif_entities.csv: 310168 rows, 40,369,502 bytes, sha256 58684d8c6bc0
+gleif_rr.csv: 33896 rows, 13,621,228 bytes, sha256 38d84535992f
+raw.ets_emissions: 43272 rows
+raw.ets_operators: 2874 rows
+raw.eea_ets_links: 573 rows
+raw.eea_installations: 146 rows
+raw.eea_facilities: 43 rows
+raw.gleif_entities: 310168 rows
+raw.gleif_relationships: 33896 rows
+raw.reported_metrics: 0 rows
+raw.entity_matches: 1538 rows
+
+real	6m44.489s
+user	5m38.806s
+sys	0m49.200s
