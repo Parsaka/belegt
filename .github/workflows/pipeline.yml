@@ -110,9 +110,23 @@ jobs:
         id: identity
         run: |
           mkdir -p summary
-          if gcloud auth print-access-token > /dev/null 2>&1; then
+          if gcloud auth print-access-token > /dev/null 2> /tmp/identity.err; then
             echo "ready=true" >> "$GITHUB_OUTPUT"
-          elif [ "$GITHUB_REF" = refs/heads/main ]; then
+            exit 0
+          fi
+          # Why Google refused, and what GitHub claims about this job (claims only, never a token)
+          python3 - <<'PY' | tee summary/identity.log
+          import base64, json, os, urllib.request
+          req = urllib.request.Request(
+              os.environ["ACTIONS_ID_TOKEN_REQUEST_URL"] + "&audience=diagnostic",
+              headers={"Authorization": "bearer " + os.environ["ACTIONS_ID_TOKEN_REQUEST_TOKEN"]},
+          )
+          payload = json.load(urllib.request.urlopen(req))["value"].split(".")[1]
+          claims = json.loads(base64.urlsafe_b64decode(payload + "=" * (-len(payload) % 4)))
+          print("claims:", {k: claims.get(k) for k in ("sub", "repository", "environment", "ref")})
+          PY
+          tail -5 /tmp/identity.err | tee -a summary/identity.log
+          if [ "$GITHUB_REF" = refs/heads/main ]; then
             echo "::error::cannot act as the pipeline service account"
             exit 1
           else
