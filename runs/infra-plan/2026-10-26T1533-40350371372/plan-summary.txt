@@ -1,0 +1,3 @@
+  # google_cloudfunctions2_function.kill_switch will be updated in-place
+  # google_storage_bucket_object.kill_switch must be replaced
+Plan: 1 to add, 1 to change, 1 to destroy.
