@@ -13,6 +13,8 @@ import os
 from decimal import Decimal
 from typing import Any
 
+import functions_framework
+
 
 def should_disable(cost: float, budget: float, fraction: float) -> bool:
     """Fire at `fraction` of the budget, below 100 %, because cost data arrives late."""
@@ -37,6 +39,9 @@ def parse_notification(data: bytes) -> tuple[float, float, bool]:
     )
 
 
+# Without the decorator Gen2 Python calls the function as a legacy background function
+# `(data, context)`, every budget message fails with a TypeError and billing is never detached.
+@functions_framework.cloud_event
 def stop_billing(cloud_event: Any) -> None:
     raw = cloud_event.data["message"]["data"]
     cost, budget, drill = parse_notification(base64.b64decode(raw))
