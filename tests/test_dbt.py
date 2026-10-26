@@ -88,7 +88,7 @@ def test_scope1_consistency_flags_ets_above_the_reported_figure(warehouse):
         ('basf-2024', 'scope1', 1000000.0, 3, 'Mio. t', 'Scope 1 1,0 1,1', 3, true, 2024),
         ('basf-2024', 'scope1', 2.0, 9, 't', 'Scope 1 2 3', 1, false, null),
         ('rwe-2024', 'scope1', 60000000.0, 5, 'Mio. t', 'Scope 1 60,0 70,0', 3, true, 2024),
-        ('thyssenkrupp-2024', 'scope3', 5.0, 4, 'Mio. t', 'Scope 3 gesamt 5 6', 3, true, null)"""
+        ('thyssenkrupp-2025', 'scope3', 5.0, 4, 'Mio. t', 'Scope 3 gesamt 5 6', 3, true, null)"""
     )
     con.close()
     dbt("build", "--select", "stg_reported_metrics+")
@@ -102,8 +102,8 @@ def test_scope1_consistency_flags_ets_above_the_reported_figure(warehouse):
     # the fixture holds 1.52 Mt verified for BASF's German installations in 2024
     assert rows["basf-2024"] == ("ets_exceeds_reported", 3, None)
     assert rows["rwe-2024"][0] == "no_ets_group"  # RWE's installations are not in the fixtures
-    assert rows["thyssenkrupp-2024"][0] == "no_reported_figure"
-    assert "09-30" in rows["thyssenkrupp-2024"][2]
+    assert rows["thyssenkrupp-2025"][0] == "no_reported_figure"
+    assert "09-30" in rows["thyssenkrupp-2025"][2]
 
 
 def test_lookml_points_at_real_marts_and_columns(warehouse):
