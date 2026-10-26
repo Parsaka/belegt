@@ -1,0 +1,2 @@
+europe-west1-docker.pkg.dev/belegt-pk-2610/belegt/belegt-reports 174MB
+europe-west1-docker.pkg.dev/belegt-pk-2610/belegt/belegt-api-cloud 2GB
