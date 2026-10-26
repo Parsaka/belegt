@@ -1,0 +1,112 @@
+[0m15:14:44  Running with dbt=1.13.0-b1
+[0m15:14:45  Registered adapter: bigquery=1.12.1
+[0m15:14:45  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m15:14:48  Found 16 models, 1 snapshot, 3 seeds, 38 data tests, 9 sources, 569 macros
+[0m15:14:48  
+[0m15:14:48  Concurrency: 4 threads (target='prod')
+[0m15:14:48  
+[0m15:14:50  1 of 58 START sql view model staging.stg_eea__installations .................... [RUN]
+[0m15:14:50  2 of 58 START sql view model staging.stg_ets__emissions ........................ [RUN]
+[0m15:14:50  3 of 58 START sql view model staging.stg_ets__operators ........................ [RUN]
+[0m15:14:50  4 of 58 START sql view model staging.stg_gleif__entities ....................... [RUN]
+[0m15:14:52  3 of 58 OK created sql view model staging.stg_ets__operators ................... [[32mCREATE VIEW (0 processed)[0m in 1.30s]
+[0m15:14:52  4 of 58 OK created sql view model staging.stg_gleif__entities .................. [[32mCREATE VIEW (0 processed)[0m in 1.29s]
+[0m15:14:52  5 of 58 START sql view model staging.stg_gleif__relationships .................. [RUN]
+[0m15:14:52  6 of 58 START sql view model staging.stg_reported_metrics ...................... [RUN]
+[0m15:14:52  1 of 58 OK created sql view model staging.stg_eea__installations ............... [[32mCREATE VIEW (0 processed)[0m in 1.36s]
+[0m15:14:52  7 of 58 START seed file staging.entity_overrides ............................... [RUN]
+[0m15:14:52  2 of 58 OK created sql view model staging.stg_ets__emissions ................... [[32mCREATE VIEW (0 processed)[0m in 1.43s]
+[0m15:14:52  8 of 58 START seed file staging.reported_overrides ............................. [RUN]
+[0m15:14:52  BigQuery adapter: https://console.cloud.google.com/bigquery?project=belegt-pk-2610&j=bq:EU:276291f8-e356-4476-9c3e-f905f66ad14e&page=queryresults
+[0m15:14:52  7 of 58 ERROR loading seed file staging.entity_overrides ....................... [[31mERROR[0m in 0.75s]
+[0m15:14:52  9 of 58 START seed file staging.reports ........................................ [RUN]
+[0m15:14:52  5 of 58 OK created sql view model staging.stg_gleif__relationships ............. [[32mCREATE VIEW (0 processed)[0m in 0.88s]
+[0m15:14:52  10 of 58 START test not_null_stg_ets__operators_ets_identifier ................. [RUN]
+[0m15:14:52  BigQuery adapter: https://console.cloud.google.com/bigquery?project=belegt-pk-2610&j=bq:EU:126cd720-b01d-4bbd-9b00-78aca2bb104c&page=queryresults
+[0m15:14:53  8 of 58 ERROR loading seed file staging.reported_overrides ..................... [[31mERROR[0m in 0.81s]
+[0m15:14:53  11 of 58 START test not_null_stg_gleif__entities_lei ........................... [RUN]
+[0m15:14:53  9 of 58 ERROR loading seed file staging.reports ................................ [[31mERROR[0m in 0.26s]
+[0m15:14:53  12 of 58 START test unique_stg_ets__operators_ets_identifier ................... [RUN]
+[0m15:14:53  6 of 58 OK created sql view model staging.stg_reported_metrics ................. [[32mCREATE VIEW (0 processed)[0m in 1.10s]
+[0m15:14:53  13 of 58 START test unique_stg_gleif__entities_lei ............................. [RUN]
+[0m15:14:54  10 of 58 PASS not_null_stg_ets__operators_ets_identifier ....................... [[32mPASS[0m in 1.96s]
+[0m15:14:54  14 of 58 START test not_null_stg_eea__installations_ets_identifier ............. [RUN]
+[0m15:14:54  12 of 58 PASS unique_stg_ets__operators_ets_identifier ......................... [[32mPASS[0m in 1.83s]
+[0m15:14:54  15 of 58 START test unique_stg_eea__installations_ets_identifier ............... [RUN]
+[0m15:14:55  13 of 58 PASS unique_stg_gleif__entities_lei ................................... [[32mPASS[0m in 1.93s]
+[0m15:14:55  16 of 58 START sql table model marts.fct_verified_emissions .................... [RUN]
+[0m15:14:55  11 of 58 PASS not_null_stg_gleif__entities_lei ................................. [[32mPASS[0m in 2.22s]
+[0m15:14:55  17 of 58 SKIP test accepted_values_entity_overrides_decision__accepted__rejected  [[33mSKIP[0m]
+[0m15:14:55  18 of 58 SKIP test not_null_entity_overrides_source_name ....................... [[33mSKIP[0m]
+[0m15:14:55  19 of 58 SKIP test unique_entity_overrides_source_name ......................... [[33mSKIP[0m]
+[0m15:14:55  20 of 58 SKIP test unique_combination_reported_overrides_doc_id__metric ........ [[33mSKIP[0m]
+[0m15:14:55  21 of 58 SKIP test not_null_reports_doc_id ..................................... [[33mSKIP[0m]
+[0m15:14:55  22 of 58 SKIP test not_null_reports_lei ........................................ [[33mSKIP[0m]
+[0m15:14:55  23 of 58 SKIP test unique_reports_doc_id ....................................... [[33mSKIP[0m]
+[0m15:14:55  24 of 58 START sql table model marts.bridge_ownership .......................... [RUN]
+[0m15:14:56  14 of 58 PASS not_null_stg_eea__installations_ets_identifier ................... [[32mPASS[0m in 1.77s]
+[0m15:14:56  25 of 58 START snapshot snapshots.snap_gleif_entities .......................... [RUN]
+[0m15:14:57  16 of 58 OK created sql table model marts.fct_verified_emissions ............... [[32mCREATE TABLE (43.3k rows, 1.6 MiB processed)[0m in 2.77s]
+[0m15:14:57  26 of 58 SKIP relation staging.stg_entity_matches .............................. [[33mSKIP[0m]
+[0m15:14:57  27 of 58 SKIP relation marts.fct_reported_metric ............................... [[33mSKIP[0m]
+[0m15:14:57  28 of 58 START test non_negative_fct_verified_emissions_verified_t ............. [RUN]
+[0m15:14:58  15 of 58 PASS unique_stg_eea__installations_ets_identifier ..................... [[32mPASS[0m in 3.06s]
+[0m15:14:58  29 of 58 START test not_null_fct_verified_emissions_ets_identifier ............. [RUN]
+[0m15:14:58  24 of 58 OK created sql table model marts.bridge_ownership ..................... [[32mCREATE TABLE (344.0k rows, 9.4 MiB processed)[0m in 3.27s]
+[0m15:14:58  30 of 58 START test unique_combination_fct_verified_emissions_ets_identifier__reporting_year  [RUN]
+[0m15:14:59  28 of 58 PASS non_negative_fct_verified_emissions_verified_t ................... [[32mPASS[0m in 1.54s]
+[0m15:14:59  31 of 58 SKIP test accepted_values_stg_entity_matches_decision__accepted__review__unmatched__rejected  [[33mSKIP[0m]
+[0m15:14:59  32 of 58 SKIP test not_null_stg_entity_matches_source_name ..................... [[33mSKIP[0m]
+[0m15:14:59  33 of 58 SKIP test unique_stg_entity_matches_source_name ....................... [[33mSKIP[0m]
+[0m15:14:59  34 of 58 SKIP test accepted_values_fct_reported_metric_metric__scope1__scope2_market__scope2_location__scope3  [[33mSKIP[0m]
+[0m15:14:59  35 of 58 SKIP test non_negative_fct_reported_metric_value_t .................... [[33mSKIP[0m]
+[0m15:14:59  36 of 58 SKIP test not_null_fct_reported_metric_page ........................... [[33mSKIP[0m]
+[0m15:14:59  37 of 58 SKIP test unique_combination_fct_reported_metric_doc_id__metric ....... [[33mSKIP[0m]
+[0m15:14:59  38 of 58 START test accepted_values_bridge_ownership_relationship_kind__direct__ultimate__self  [RUN]
+[0m15:14:59  29 of 58 PASS not_null_fct_verified_emissions_ets_identifier ................... [[32mPASS[0m in 1.65s]
+[0m15:14:59  39 of 58 START test no_overlapping_periods_bridge_ownership_ ................... [RUN]
+[0m15:14:59  30 of 58 PASS unique_combination_fct_verified_emissions_ets_identifier__reporting_year  [[32mPASS[0m in 1.46s]
+[0m15:14:59  40 of 58 SKIP relation staging.int_installation_entity ......................... [[33mSKIP[0m]
+[0m15:14:59  41 of 58 SKIP relation marts.review_entity_matches ............................. [[33mSKIP[0m]
+[0m15:14:59  42 of 58 SKIP relation marts.dim_installation .................................. [[33mSKIP[0m]
+[0m15:14:59  43 of 58 SKIP test accepted_values_dim_installation_installation_kind__stationary_installation__aircraft_operator__maritime_operator  [[33mSKIP[0m]
+[0m15:14:59  44 of 58 SKIP test accepted_values_dim_installation_match_decision__accepted__review__unmatched__rejected  [[33mSKIP[0m]
+[0m15:14:59  45 of 58 SKIP test not_null_dim_installation_ets_identifier .................... [[33mSKIP[0m]
+[0m15:14:59  46 of 58 SKIP test relationships_fct_verified_emissions_ets_identifier__ets_identifier__ref_dim_installation_  [[33mSKIP[0m]
+[0m15:14:59  47 of 58 SKIP test unique_dim_installation_ets_identifier ...................... [[33mSKIP[0m]
+[0m15:15:00  38 of 58 PASS accepted_values_bridge_ownership_relationship_kind__direct__ultimate__self  [[32mPASS[0m in 1.56s]
+[0m15:15:01  39 of 58 PASS no_overlapping_periods_bridge_ownership_ ......................... [[32mPASS[0m in 1.49s]
+[0m15:15:01  48 of 58 SKIP relation marts.mart_group_emissions .............................. [[33mSKIP[0m]
+[0m15:15:01  49 of 58 SKIP test group_total_matches_attributed_facts_mart_group_emissions_ .. [[33mSKIP[0m]
+[0m15:15:01  50 of 58 SKIP test unique_combination_mart_group_emissions_group_lei__reporting_year  [[33mSKIP[0m]
+[0m15:15:01  51 of 58 SKIP relation marts.mart_scope1_consistency ........................... [[33mSKIP[0m]
+[0m15:15:01  52 of 58 SKIP test accepted_values_mart_scope1_consistency_status__consistent__ets_exceeds_reported__no_reported_figure__no_ets_group  [[33mSKIP[0m]
+[0m15:15:01  53 of 58 SKIP test not_null_mart_scope1_consistency_doc_id ..................... [[33mSKIP[0m]
+[0m15:15:01  54 of 58 SKIP test unique_mart_scope1_consistency_doc_id ....................... [[33mSKIP[0m]
+[0m15:15:06  25 of 58 OK snapshotted snapshots.snap_gleif_entities .......................... [[32mMERGE (0.0 rows, 49.9 MiB processed)[0m in 9.46s]
+[0m15:15:06  55 of 58 START sql table model marts.dim_legal_entity .......................... [RUN]
+[0m15:15:10  55 of 58 OK created sql table model marts.dim_legal_entity ..................... [[32mCREATE TABLE (310.1k rows, 29.8 MiB processed)[0m in 4.15s]
+[0m15:15:10  56 of 58 START test not_null_dim_legal_entity_legal_entity_key ................. [RUN]
+[0m15:15:10  57 of 58 START test one_current_version_per_lei_dim_legal_entity_ .............. [RUN]
+[0m15:15:10  58 of 58 START test unique_dim_legal_entity_legal_entity_key ................... [RUN]
+[0m15:15:11  57 of 58 PASS one_current_version_per_lei_dim_legal_entity_ .................... [[32mPASS[0m in 1.46s]
+[0m15:15:11  56 of 58 PASS not_null_dim_legal_entity_legal_entity_key ....................... [[32mPASS[0m in 1.58s]
+[0m15:15:12  58 of 58 PASS unique_dim_legal_entity_legal_entity_key ......................... [[32mPASS[0m in 1.69s]
+[0m15:15:12  
+[0m15:15:12  Finished running 3 seeds, 1 snapshot, 8 table models, 38 data tests, 8 view models in 0 hours 0 minutes and 23.97 seconds (23.97s).
+[0m15:15:12  
+[0m15:15:12  [31mCompleted with 3 errors, 0 partial successes, and 0 warnings:[0m
+[0m15:15:12  
+[0m15:15:12  [[31mERROR[0m]: in seed entity_overrides (seeds/entity_overrides.csv)
+[0m15:15:12    Database Error in seed entity_overrides (seeds/entity_overrides.csv)
+  Type not found: varchar at [3:79]
+[0m15:15:12  
+[0m15:15:12  [[31mERROR[0m]: in seed reported_overrides (seeds/reported_overrides.csv)
+[0m15:15:12    Database Error in seed reported_overrides (seeds/reported_overrides.csv)
+  Type not found: varchar at [3:76]
+[0m15:15:12  
+[0m15:15:12  [[31mERROR[0m]: in seed reports (seeds/reports.csv)
+[0m15:15:12    Database Error in seed reports (seeds/reports.csv)
+  Invalid value for type: VARCHAR is not a valid value
+[0m15:15:12  
+[0m15:15:12  Done. PASS=24 WARN=0 ERROR=3 SKIP=31 NO-OP=0 REUSED=0 TOTAL=58
