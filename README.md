@@ -14,8 +14,10 @@ A personal portfolio project (Parsa Kamali). Not investment, audit or legal advi
 billing kill switch, BigQuery daily quota). The full German data loads and passes every dbt test:
 2,195 stationary ETS installations, 77.3 % of them matched to a GLEIF company, and 91.7 % of
 all 2025 verified tonnage attributed to a company ([measured](docs/measurements/full-data.md)).
-What runs where, and what still waits for a merge or a cloud apply, is in
-[docs/roadmap.md](docs/roadmap.md#status-2026-10-25).
+The first full production run on Google Cloud passed end to end: GKE parsed 6 of 6 reports, dbt
+passed 58 of 58 nodes on BigQuery, the tenant-isolation eval found 0 leaks, and the API answered
+on Cloud Run in 3.34 s cold and 1.33 s warm ([measured](docs/measurements/production.md)).
+What runs where is in [docs/roadmap.md](docs/roadmap.md#status-2026-10-26).
 
 ## How it fits together
 

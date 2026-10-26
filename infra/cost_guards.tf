@@ -152,3 +152,12 @@ resource "google_project_iam_member" "kill_switch_invoker" {
   role    = "roles/run.invoker"
   member  = "serviceAccount:${google_service_account.kill_switch.email}"
 }
+
+# getProjectBillingInfo needs resourcemanager.projects.get on the project, which the billing
+# account role does not include. Without it every budget message failed with 403 before the
+# detach. Browser is the smallest predefined role that has it (no access to resource data).
+resource "google_project_iam_member" "kill_switch_project_get" {
+  project = var.project_id
+  role    = "roles/browser"
+  member  = "serviceAccount:${google_service_account.kill_switch.email}"
+}

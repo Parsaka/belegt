@@ -202,3 +202,34 @@ def test_target_tables_yield_no_reporting_year_figure():
     rows = extract_page(Page("enbw-2024", 154, ENBW_P154_TARGETS), True, 2024)
     assert all(m.column_year is None for m in rows)  # no 2024 column: uncertain at best
     assert all(m.value_t != 70_000_000 for m in rows)  # a percentage target is not a total
+
+
+THYSSENKRUPP_P123 = """THYSSENKRUPP ANNUAL REPORT 2024 / 2025
+GROSS SCOPES 1, 2, 3 AND TOTAL GHG EMISSIONS
+Mt CO2e 2017 / 2018 2024 / 2025 2029 / 2030 2049 / 2050
+Scope 1 GHG emissions1)
+Gross Scope 1 GHG emissions 24.2 19.8
+Gross Scope 1 GHG emissions from regulated emission trading schemes 2) 95% 100%
+Scope 2 GHG emissions1)
+Gross location-based Scope 2 GHG emissions 0.9 1.1
+Gross market-based Scope 2 GHG emissions 1.1 1.2
+Subtotal Scope 1 and Scope 2 market-based 3) 25.3 21.0 15.6 2.5 (3.2)%
+Scope 3 GHG emissions1)
+Gross Scope 3 GHG emissions 3) 469.1 186.0 328.4 46.9 (2.5)%
+Total GHG emissions – location-based 494.2 206.8
+"""
+
+
+def test_fiscal_year_columns_and_mt_units():
+    rows = list(extract([Page("thyssenkrupp-2025", 123, THYSSENKRUPP_P123)], False, 2025))
+    assert [(m.metric, m.value_t, m.column_year) for m in rows] == [
+        ("scope1", 19_800_000, 2025),  # the 2024/2025 column, not the 2017/2018 base year
+        ("scope2_location", 1_100_000, 2025),
+        ("scope2_market", 1_200_000, 2025),
+        ("scope3", 186_000_000, 2025),  # "Subtotal Scope 1 and Scope 2" is no row of either
+    ]
+    assert all(m.selected for m in rows)
+
+
+def test_a_scope_3_category_is_not_the_total():
+    assert metric_of("Gross Scope 3 GHG emissions category 1 purchased goods 12.0") is None

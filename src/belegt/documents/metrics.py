@@ -5,19 +5,22 @@ below come from the real statements in `dbt/seeds/reports.csv` (see the Reports 
 probe output); each one is a case that broke a simpler version:
 
 1. **Rows.** A row starts with a scope label (Scope 1; Scope 2 market- or location-based;
-   Scope 3 total) within its first 60 characters. Combined scopes ("Scope 1 und 2") are
-   skipped, and so are the all-scope totals that name their Scope 2 method ("Gesamtemissionen
-   auf Basis der marktbezogenen Scope-2-Methode"). A label line without figures takes the next
-   line as its continuation, because PDF text often wraps "million metric / tons CO2e 53.2".
+   Scope 3 total) within its first 60 characters. Combined scopes ("Scope 1 und 2", "Scope 1
+   and Scope 2") are skipped, and so are the all-scope totals that name their Scope 2 method
+   ("Gesamtemissionen auf Basis der marktbezogenen Scope-2-Methode"). A label line without
+   figures takes the next line as its continuation, because PDF text often wraps "million
+   metric / tons CO2e 53.2".
    Keywords are matched with spaces removed, since PDF text splits words ("mark tbasierter").
-2. **Units.** The row's own unit ("Tsd. t CO2eq", "Mio t", "Tt CO2e", "million metric tons")
-   wins over the first CO2 unit on the page. A page without any unit yields nothing. Rows of
+2. **Units.** The row's own unit ("Tsd. t CO2eq", "Mio t", "Mt", "Tt CO2e", "million metric
+   tons") wins over the first CO2 unit on the page. A page without any unit yields nothing. Rows of
    intensities (per tonne, per MWh, per EUR), percentages and shares are not totals.
 3. **Columns.** The last line above the row that lists years is the column header; two such
    lines in a row are one header ("Base year (2022)" / "2024 2025 2030"), and a footnote digit
    glued to a year ("20303") is dropped. A line with one year is a header only if the year is
    bracketed or the line names the unit column, so a running head ("Geschäftsbericht 2024") is
-   not. The figure is taken from the reporting year's column;
+   not. A fiscal year written as a span ("2024 / 2025") is one column, named by the year it
+   ends in, which is the report year in `dbt/seeds/reports.csv`. The figure is taken from the
+   reporting year's column;
    some reports put the prior year or the base year first. Dashes and "n/a" hold their column,
    but only after the label's last word: a dash inside the label is not a column. Footnote
    digits between the label and the first figure are dropped. Without a header that has the
@@ -51,7 +54,7 @@ _CO2 = r"\s*(?:of\s+)?(?:CO2|CO₂|CO 2)"
 _UNIT_PATTERNS: tuple[tuple[str, str], ...] = (
     (
         "mt",
-        r"Mio\.?\s*t\b|Millionen\s+(?:metrische\s+)?Tonnen|million\s+(?:metric\s+)?(?:tonnes|tons|t)\b",
+        r"Mio\.?\s*t\b|Mt\b|Millionen\s+(?:metrische\s+)?Tonnen|million\s+(?:metric\s+)?(?:tonnes|tons|t)\b",
     ),
     (
         "kt",
@@ -66,11 +69,17 @@ _PAGE_UNIT = re.compile(
     "|".join(f"(?P<{key}>(?<![\\w.])(?:{pattern}){_CO2})" for key, pattern in _UNIT_PATTERNS),
     re.I,
 )
-_SCOPE = re.compile(r"\bScope[\s-]*(?P<n>[123])\b(?!\s*(?:\+|und|and|&|/|,)\s*-?[123]\b)", re.I)
+# "Scope 1 und 2", "Scope 1 and Scope 2": combined scopes are not a row of either
+_SCOPE = re.compile(
+    r"\bScope[\s-]*(?P<n>[123])\b(?!\s*(?:\+|und|and|&|/|,)\s*(?:Scope[\s-]*)?-?[123]\b)", re.I
+)
 # Matched against the line without spaces: PDF text splits words ("mark tbasierter", "T otal")
 _MARKET = re.compile(r"marktbasiert|marktbezogen|market-?based", re.I)
 _LOCATION = re.compile(r"orts?basiert|standortbezogen|location-?based|site-?based", re.I)
-_TOTAL = re.compile(r"gesamt|insgesamt|total", re.I)
+# A Scope 3 row is the total only if it says so ("Total gross Scope 3", "Gross Scope 3 GHG
+# emissions"); the category rows below it are parts
+_TOTAL = re.compile(r"gesamt|insgesamt|total|gross|brutto", re.I)
+_CATEGORY = re.compile(r"categor|kategorie", re.I)
 # All scopes together, labelled by their Scope 2 method ("Gesamtemissionen auf Basis der
 # standortbezogenen Scope-2-Methode"): not a Scope 2 figure
 _ALL_SCOPES = re.compile(r"gesamtemissionen|totalghgemissions|totalemissions", re.I)
@@ -154,8 +163,9 @@ def metric_of(line: str) -> str | None:
     if match is None:
         return None
     compact = re.sub(r"\s+", "", line)
-    if _ALL_SCOPES.search(re.sub(r"\s+", "", line[: match.start()])):
-        return None
+    prefix = line[: match.start()]
+    if _ALL_SCOPES.search(re.sub(r"\s+", "", prefix)) or re.search(r"\bScope", prefix, re.I):
+        return None  # an all-scope total, or the second half of "Scope 1 and Scope 2"
     n = match.group("n")
     if n == "1":
         return "scope1"
@@ -165,7 +175,7 @@ def metric_of(line: str) -> str | None:
         if _LOCATION.search(compact):
             return "scope2_location"
         return None
-    return "scope3" if _TOTAL.search(compact) else None
+    return "scope3" if _TOTAL.search(compact) and not _CATEGORY.search(compact) else None
 
 
 def _values(line: str, decimal_comma: bool) -> list[_Token]:
@@ -198,9 +208,19 @@ def first_figure(line: str, decimal_comma: bool) -> str | None:
     return found[0] if found else None
 
 
+_FISCAL_YEAR = re.compile(r"(?<!\d)((?:19|20)\d{2})\s*/\s*((?:19|20)?\d{2})(?!\d)")
+
+
+def _fiscal_year_end(match: re.Match[str]) -> str:
+    start, end = int(match.group(1)), match.group(2)
+    end_year = int(end) if len(end) == 4 else start // 100 * 100 + int(end)
+    return str(end_year) if end_year == start + 1 else match.group(0)
+
+
 def _years(line: str) -> list[int] | None:
     """The column years of a header line ("Einheit 2024 2023", "Scope 1 ... Unit 2024")."""
     line = re.sub(r"(?<![\d.,])((?:19|20)\d{2})\d(?![\d.,])", r"\1", line)  # footnote: "20303"
+    line = _FISCAL_YEAR.sub(_fiscal_year_end, line)  # "2024 / 2025" is one column, 2025
     years = [int(y) for y in re.findall(r"(?<!\d)(?:19|20)\d{2}(?!\d)", line)]
     if not years:
         return None
