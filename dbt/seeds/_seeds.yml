@@ -3,12 +3,14 @@ version: 2
 seeds:
   - name: entity_overrides
     description: Human decisions on matches from the review queue. One row per EEA parent name.
+    # Column types in each target's own spelling: the seeds load into DuckDB in CI and into
+    # BigQuery in production, which knows no varchar or double
     config:
       column_types:
-        source_name: varchar
-        lei: varchar
-        decision: varchar
-        reviewer: varchar
+        source_name: "{{ 'string' if target.type == 'bigquery' else 'varchar' }}"
+        lei: "{{ 'string' if target.type == 'bigquery' else 'varchar' }}"
+        decision: "{{ 'string' if target.type == 'bigquery' else 'varchar' }}"
+        reviewer: "{{ 'string' if target.type == 'bigquery' else 'varchar' }}"
         reviewed_at: date
     columns:
       - name: source_name
@@ -25,14 +27,14 @@ seeds:
       the PDFs are copyrighted and live in the private reports bucket.
     config:
       column_types:
-        doc_id: varchar
-        company: varchar
-        lei: varchar
-        report_year: integer
-        fiscal_year_end: varchar
-        language: varchar
-        url: varchar
-        host_note: varchar
+        doc_id: "{{ 'string' if target.type == 'bigquery' else 'varchar' }}"
+        company: "{{ 'string' if target.type == 'bigquery' else 'varchar' }}"
+        lei: "{{ 'string' if target.type == 'bigquery' else 'varchar' }}"
+        report_year: "{{ 'int64' if target.type == 'bigquery' else 'integer' }}"
+        fiscal_year_end: "{{ 'string' if target.type == 'bigquery' else 'varchar' }}"
+        language: "{{ 'string' if target.type == 'bigquery' else 'varchar' }}"
+        url: "{{ 'string' if target.type == 'bigquery' else 'varchar' }}"
+        host_note: "{{ 'string' if target.type == 'bigquery' else 'varchar' }}"
     columns:
       - name: doc_id
         tests: [unique, not_null]
@@ -45,14 +47,14 @@ seeds:
       entity_overrides: the extractor stays as it is, the decision is data with a reviewer.
     config:
       column_types:
-        doc_id: varchar
-        metric: varchar
-        value_t: double
-        page: integer
-        quote: varchar
-        reviewer: varchar
+        doc_id: "{{ 'string' if target.type == 'bigquery' else 'varchar' }}"
+        metric: "{{ 'string' if target.type == 'bigquery' else 'varchar' }}"
+        value_t: "{{ 'float64' if target.type == 'bigquery' else 'double' }}"
+        page: "{{ 'int64' if target.type == 'bigquery' else 'integer' }}"
+        quote: "{{ 'string' if target.type == 'bigquery' else 'varchar' }}"
+        reviewer: "{{ 'string' if target.type == 'bigquery' else 'varchar' }}"
         reviewed_at: date
-        note: varchar
+        note: "{{ 'string' if target.type == 'bigquery' else 'varchar' }}"
     tests:
       - unique_combination:
           arguments:
