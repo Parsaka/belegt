@@ -26,6 +26,12 @@ variable "github_repository" {
   default     = "Parsaka/belegt"
 }
 
+variable "github_repository_ids" {
+  description = "owner@id/repo@id as GitHub's OIDC subject spells this repository (measured 2026-10-26: newer repositories carry their immutable ids in `sub`)."
+  type        = string
+  default     = "Parsaka@115464667/belegt@1432727655"
+}
+
 variable "ci_service_account_email" {
   description = "Service account that GitHub Actions impersonates (created by scripts/bootstrap_gcp.sh)."
   type        = string

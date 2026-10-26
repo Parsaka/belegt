@@ -10,9 +10,10 @@ resource "google_service_account" "drill" {
 }
 
 resource "google_service_account_iam_member" "drill_wif" {
+  for_each           = local.github_subject_repos
   service_account_id = google_service_account.drill.name
   role               = "roles/iam.workloadIdentityUser"
-  member             = "principal://iam.googleapis.com/projects/${data.google_project.this.number}/locations/global/workloadIdentityPools/github/subject/repo:${var.github_repository}:environment:drill"
+  member             = "${local.github_subject}${each.value}:environment:drill"
 }
 
 resource "google_pubsub_topic_iam_member" "drill_publish" {

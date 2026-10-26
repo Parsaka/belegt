@@ -1,12 +1,15 @@
 # The data pipeline's identity: least privilege, separate from the Terraform service account.
 #
 # Only jobs of this repository that run in the GitHub environment `pipeline` can impersonate it
-# (the OIDC subject is repo:<owner>/<repo>:environment:pipeline), so a workflow on another branch
-# without that environment gets nothing.
+# (the OIDC subject is repo:<owner>/<repo>:environment:pipeline, or with immutable ids
+# repo:<owner>@<id>/<repo>@<id>:environment:pipeline, which this repository's tokens carry), so a
+# workflow without that environment gets nothing.
 
 locals {
   pipeline_datasets = ["raw", "staging", "snapshots", "marts"]
-  pipeline_subject  = "principal://iam.googleapis.com/projects/${data.google_project.this.number}/locations/global/workloadIdentityPools/github/subject/repo:${var.github_repository}:environment:pipeline"
+  # Both spellings of the repository in the OIDC subject; GitHub decides which one a token has
+  github_subject_repos = toset([var.github_repository, var.github_repository_ids])
+  github_subject       = "principal://iam.googleapis.com/projects/${data.google_project.this.number}/locations/global/workloadIdentityPools/github/subject/repo:"
 }
 
 resource "google_service_account" "pipeline" {
@@ -15,9 +18,10 @@ resource "google_service_account" "pipeline" {
 }
 
 resource "google_service_account_iam_member" "pipeline_wif" {
+  for_each           = local.github_subject_repos
   service_account_id = google_service_account.pipeline.name
   role               = "roles/iam.workloadIdentityUser"
-  member             = local.pipeline_subject
+  member             = "${local.github_subject}${each.value}:environment:pipeline"
 }
 
 # Run load and query jobs; the daily query quota in bigquery.tf caps what they can cost.
