@@ -1,0 +1,6 @@
+apiVersion: v2
+name: belegt-reports
+description: Parallel extraction of Scope 1-3 figures from sustainability statements (Indexed Job)
+type: application
+version: 0.1.0
+appVersion: "0.1.0"

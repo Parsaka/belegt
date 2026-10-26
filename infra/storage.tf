@@ -16,6 +16,17 @@ resource "google_storage_bucket" "raw" {
     }
   }
 
+  # Monthly extracts are kept for a year of lineage, then deleted (EU storage is not free).
+  lifecycle_rule {
+    condition {
+      age            = 365
+      matches_prefix = ["extracts/"]
+    }
+    action {
+      type = "Delete"
+    }
+  }
+
   depends_on = [google_project_service.this]
 }
 
@@ -35,13 +46,14 @@ resource "google_artifact_registry_repository" "images" {
   location      = var.region
   format        = "DOCKER"
 
-  # The free tier is 0.5 GB: keep only the two most recent images.
+  # The free tier is 0.5 GB and the API image (torch and the e5 model) is about 1.3 GB alone:
+  # keep only the most recent version of each image. A rollback is a rebuild of an older commit.
   cleanup_policy_dry_run = false
   cleanup_policies {
-    id     = "keep-two-latest"
+    id     = "keep-latest"
     action = "KEEP"
     most_recent_versions {
-      keep_count = 2
+      keep_count = 1
     }
   }
   cleanup_policies {

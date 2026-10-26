@@ -20,8 +20,6 @@ locals {
   trial_services = [
     "container.googleapis.com",
     "looker.googleapis.com",
-    "servicenetworking.googleapis.com",
-    "sqladmin.googleapis.com",
   ]
 }
 

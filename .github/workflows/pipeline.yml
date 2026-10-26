@@ -1,0 +1,219 @@
+name: Pipeline
+
+# Monthly: extract the full German source files, check them with dbt on DuckDB, then load
+# BigQuery and build the same models there. Every run writes a summary (row counts, test results,
+# bytes processed) to the `ops-results` branch, because the development sandbox cannot read
+# Actions logs.
+on:
+  workflow_dispatch:
+  # After the Reports workflow, which itself follows every Infra apply on main: the
+  # infrastructure is current and the figures of the latest report run are in the bucket.
+  workflow_run:
+    workflows: [Reports]
+    types: [completed]
+    branches: [main]
+  schedule:
+    - cron: "17 5 3 * *" # 05:17 UTC on the 3rd of each month
+  push:
+    branches: [main, "phase*/**"]
+    paths:
+      - src/belegt/extract.py
+      - src/belegt/warehouse.py
+      - src/belegt/loaders/**
+      - src/belegt/rag/**
+      - evals/**
+      - dbt/**
+      - .github/workflows/pipeline.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pipeline
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash # with pipefail, so `| tee` does not hide a failing step
+
+jobs:
+  extract:
+    # A report that failed to download does not stop the load; the summary names it
+    if: github.event_name != 'workflow_run' || contains(fromJSON('["success", "failure"]'), github.event.workflow_run.conclusion)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: sudo apt-get install -y -qq mdbtools
+      - run: pip install -e ".[extract,load,dbt]"
+      - run: mkdir -p summary
+      - run: belegt extract --out data/raw --work /tmp/downloads 2>&1 | tee summary/extract.log
+      - name: Trimmed golden-copy sample for tests/fixtures (CC0)
+        run: |
+          mkdir -p summary/fixtures
+          python scripts/sample_golden_copy.py data/raw/gleif_entities.csv summary/fixtures/golden_copy_entities.csv
+      # The full data on DuckDB first: a broken model fails here, before any cloud resource runs.
+      - run: |
+          { time belegt load --source data/raw --db data/belegt.duckdb ; } 2>&1 | tee -a summary/extract.log
+      - run: dbt build --project-dir dbt --profiles-dir dbt 2>&1 | tee summary/dbt-duckdb.log
+      - name: Measured numbers from the full data
+        if: always()
+        run: python scripts/run_summary.py duckdb data/belegt.duckdb dbt/target > summary/duckdb.md || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: raw
+          path: data/raw
+          retention-days: 7
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: summary-extract
+          path: summary
+
+  cloud:
+    needs: extract
+    # Feature branches load the same datasets (a one-person project; a run on main restores them).
+    if: (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/phase')) && vars.GCP_WIF_PROVIDER != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: pipeline # the pipeline service account trusts only this environment
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+    outputs:
+      ready: ${{ steps.identity.outputs.ready }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e ".[load,cloud]"
+      - uses: actions/download-artifact@v4
+        with:
+          name: raw
+          path: data/raw
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
+          service_account: pipeline@${{ vars.GCP_PROJECT_ID }}.iam.gserviceaccount.com
+      - uses: google-github-actions/setup-gcloud@v2
+      # The pipeline account comes from the Infra apply on main. A phase branch pushed before its
+      # apply has nothing to load into yet: that is a skip, not a failure. On main it fails.
+      - name: The pipeline identity exists
+        id: identity
+        run: |
+          mkdir -p summary
+          if gcloud auth print-access-token > /dev/null 2>&1; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          elif [ "$GITHUB_REF" = refs/heads/main ]; then
+            echo "::error::cannot act as the pipeline service account"
+            exit 1
+          else
+            echo "pipeline identity not applied yet: skipped until the Infra apply on main" \
+              | tee summary/cloud.log
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Keep the extract for lineage
+        if: steps.identity.outputs.ready == 'true'
+        run: |
+          gcloud storage cp --recursive data/raw/* \
+            "gs://${GCP_PROJECT_ID}-raw/extracts/$(date -u +%F)/" 2>&1 | tail -3 | tee summary/cloud.log
+      - name: Figures extracted from the sustainability statements (Reports workflow)
+        if: steps.identity.outputs.ready == 'true'
+        run: |
+          mkdir -p data/raw/reports/metrics
+          gcloud storage cp "gs://${GCP_PROJECT_ID}-reports/extracted/metrics/*.jsonl" \
+            data/raw/reports/metrics/ 2>&1 | tail -1 || echo "no extracted reports yet"
+      - if: steps.identity.outputs.ready == 'true'
+        run: belegt load --source data/raw --bigquery-project "$GCP_PROJECT_ID" 2>&1 | tee -a summary/cloud.log
+      - if: steps.identity.outputs.ready == 'true'
+        run: dbt build --project-dir dbt --profiles-dir dbt --target prod 2>&1 | tee summary/dbt-bigquery.log
+      - if: steps.identity.outputs.ready == 'true'
+        run: dbt docs generate --project-dir dbt --profiles-dir dbt --target prod 2>&1 | tail -3
+      - name: Measured numbers from BigQuery
+        if: always() && steps.identity.outputs.ready == 'true'
+        run: python scripts/run_summary.py bigquery "$GCP_PROJECT_ID" dbt/target > summary/bigquery.md || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: summary-cloud
+          path: summary
+
+  # The document assistant on BigQuery: ESRS as the shared corpus plus the synthetic tenant memos,
+  # E5 embeddings, one row access policy per tenant, then the eval cases as each tenant.
+  rag:
+    needs: [extract, cloud]
+    if: needs.cloud.result == 'success' && needs.cloud.outputs.ready == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: pipeline
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - run: pip install -e ".[docs,api,bigquery,embed]"
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-multilingual-e5-small
+      - uses: actions/download-artifact@v4
+        with:
+          name: raw
+          path: data/raw
+      - name: Chunk the corpus
+        run: |
+          mkdir -p summary/fixtures
+          if [ -f data/raw/esrs_de.pdf ]; then
+            belegt index data/raw/esrs_de.pdf --doc-id esrs-2023-2772 --tenant shared --out data/chunks.jsonl
+            python scripts/sample_esrs.py data/raw/esrs_de.pdf summary/fixtures/esrs_pages.jsonl
+          else
+            echo "ESRS PDF not extracted this run: tenant memos only" | tee summary/rag-corpus.txt
+          fi
+          grep '"tenant_id": "tenant_' deploy/kind/demo-chunks.jsonl >> data/chunks.jsonl
+      - name: Offline evaluation with the same embeddings
+        run: belegt rag-eval --embedder e5 --out summary/rag-eval-memory.md
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
+          service_account: pipeline@${{ vars.GCP_PROJECT_ID }}.iam.gserviceaccount.com
+      - run: belegt rag-load --project "$GCP_PROJECT_ID" --embedder e5 2>&1 | tee summary/rag-load.log
+      - name: Evaluation on BigQuery, each question as the tenant's own identity
+        run: belegt rag-eval --backend bigquery --project "$GCP_PROJECT_ID" --embedder e5 --out summary/rag-eval-bigquery.md
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: summary-rag
+          path: summary
+
+  # Publishes the summaries (never data rows beyond counts) to the ops-results branch.
+  report:
+    needs: [extract, cloud, rag]
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: summary-*
+          path: /tmp/summary
+      - name: Push to ops-results
+        run: |
+          printf 'extract: %s\ncloud: %s\nrag: %s\n' "${{ needs.extract.result }}" "${{ needs.cloud.result }}" "${{ needs.rag.result }}" > /tmp/RESULT.md
+          bash scripts/push_ops_result.sh pipeline /tmp/RESULT.md /tmp/summary/*

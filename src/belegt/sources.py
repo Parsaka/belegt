@@ -75,13 +75,16 @@ SOURCES: tuple[Source, ...] = (
     ),
     Source(
         id="sustainability_statements",
-        name="Sustainability statements of selected DAX/MDAX companies",
-        publisher="The reporting companies (located via srnav.com)",
-        url="https://www.srnav.com/",
-        licence="Copyrighted; stored privately, only links and metadata in Git",
-        attribution="Source: the company's annual report, page cited per answer",
-        verification=Verification.UNVERIFIED,
-        open_question="Read the SRN terms after registration.",
+        name="Sustainability statements in the annual reports of German ETS-heavy groups",
+        publisher="The reporting companies (annual report PDFs on their investor-relations hosts)",
+        url="https://github.com/Parsaka/belegt/blob/main/dbt/seeds/reports.csv",
+        licence="Copyrighted; PDFs only in the private bucket, Git holds links and metadata",
+        attribution="Source: the company's annual report, page cited per figure and answer",
+        verification=Verification.PARTIAL,
+        open_question=(
+            "Each link is checked by the Reports workflow (it must return a PDF); links "
+            "outside the company's own site are used only where it offers none."
+        ),
     ),
 )
 

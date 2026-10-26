@@ -1,9 +1,11 @@
 locals {
   datasets = {
-    raw     = "Raw loads, one table per source file"
-    staging = "dbt staging models"
-    marts   = "dbt marts: facts, dimensions, consistency checks"
-    rag     = "Document chunks and embeddings, one row access policy per tenant"
+    raw       = "Raw loads, one table per source file"
+    staging   = "dbt staging models"
+    snapshots = "dbt snapshots: SCD2 history of GLEIF legal entities"
+    marts     = "dbt marts: facts, dimensions, consistency checks"
+    rag       = "Document chunks and embeddings, one row access policy per tenant"
+    billing   = "Cloud Billing export (enabled once in the console): the measured cost"
   }
 }
 

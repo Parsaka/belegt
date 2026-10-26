@@ -1,0 +1,33 @@
+name: Cost
+
+# Weekly: the measured cost per service from the Cloud Billing export, net of credits, published
+# to ops-results. README and docs/budget.md quote these numbers, never estimates.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "41 6 * * 1" # Mondays 06:41 UTC
+
+permissions:
+  contents: read
+
+jobs:
+  cost:
+    if: vars.GCP_WIF_PROVIDER != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: pipeline
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q google-cloud-bigquery
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
+          service_account: pipeline@${{ vars.GCP_PROJECT_ID }}.iam.gserviceaccount.com
+      - run: python scripts/cost_report.py "${{ vars.GCP_PROJECT_ID }}" | tee /tmp/cost.md
+      - run: bash scripts/push_ops_result.sh cost /tmp/cost.md

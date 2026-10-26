@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from dataclasses import asdict
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, Any
 
 import typer
 
@@ -31,16 +31,38 @@ def sources() -> None:
 
 
 @app.command()
+def extract(
+    out: Annotated[Path, typer.Option(help="Directory for the source files")] = Path("data/raw"),
+    work: Annotated[Path, typer.Option(help="Scratch space for the large downloads")] = Path(
+        "data/downloads"
+    ),
+) -> None:
+    """Download the full German source files (needs network; runs in GitHub Actions)."""
+    from belegt.extract import extract_all
+
+    for f in extract_all(out, work):
+        rows = f"{f.rows} rows, " if f.rows is not None else ""
+        typer.echo(f"{f.file}: {rows}{f.bytes:,} bytes, sha256 {f.sha256[:12]}")
+
+
+@app.command()
 def load(
     source: Annotated[Path, typer.Option(help="Directory with the source files")] = Path(
         "data/raw"
     ),
     db: Annotated[Path, typer.Option(help="DuckDB file")] = Path("data/belegt.duckdb"),
+    bigquery_project: Annotated[
+        str | None, typer.Option(help="Load into BigQuery dataset `raw` of this project instead")
+    ] = None,
 ) -> None:
-    """Parse the source files and replace the raw tables in DuckDB."""
-    from belegt.warehouse import load_directory
+    """Parse the source files and replace the raw tables in DuckDB or BigQuery."""
+    from belegt.warehouse import load_bigquery, load_directory
 
-    for table, n in load_directory(source, db).items():
+    if bigquery_project:
+        counts = load_bigquery(source, bigquery_project)
+    else:
+        counts = load_directory(source, db)
+    for table, n in counts.items():
         typer.echo(f"raw.{table}: {n} rows")
 
 
@@ -66,3 +88,149 @@ def index(
     chunks = [json.dumps(asdict(c), ensure_ascii=False) for c in chunk_pages(pages, tenant)]
     out.write_text("\n".join([*kept, *chunks]) + "\n")
     typer.echo(f"{doc_id}: {len(chunks)} chunks -> {out}")
+
+
+def _embedder(name: str) -> Any:
+    from belegt.rag.embedding import E5Embedder, HashingEmbedder
+
+    return E5Embedder() if name == "e5" else HashingEmbedder()
+
+
+@app.command("rag-load")
+def rag_load(
+    project: Annotated[str, typer.Option(help="GCP project with the `rag` dataset")],
+    chunks: Annotated[Path, typer.Option(help="JSON lines from `belegt index`")] = Path(
+        "data/chunks.jsonl"
+    ),
+    embedder: Annotated[str, typer.Option(help="e5 (semantic) or hashing (tests)")] = "e5",
+) -> None:
+    """Embed the chunks, replace `rag.chunks` and (re)create one row access policy per tenant."""
+    from google.cloud import bigquery
+
+    from belegt.api.app import load_chunks
+    from belegt.documents.model import SHARED_TENANT
+    from belegt.rag.bigquery import (
+        CHUNKS_TABLE,
+        chunk_rows,
+        row_access_policy_sql,
+        tenant_service_account,
+    )
+    from belegt.rag.bigquery import load_chunks as load_table
+
+    items = load_chunks(chunks)
+    table = f"{project}.rag.{CHUNKS_TABLE}"
+    client = bigquery.Client(project=project)
+    n = load_table(client, table, chunk_rows(items, _embedder(embedder)))
+    typer.echo(f"{table}: {n} chunks")
+    for tenant in sorted({c.tenant_id for c in items} - {SHARED_TENANT}):
+        member = f"serviceAccount:{tenant_service_account(tenant, project)}"
+        client.query(row_access_policy_sql(table, tenant, member)).result()
+        typer.echo(f"row access policy tenant_{tenant} -> {member}")
+
+
+@app.command("rag-ask")
+def rag_ask(
+    question: str,
+    tenant: Annotated[str, typer.Option(help="The tenant asking; queries run as its identity")],
+    project: Annotated[str, typer.Option(help="GCP project with the `rag` dataset")],
+    embedder: Annotated[str, typer.Option(help="e5 (semantic) or hashing (tests)")] = "e5",
+) -> None:
+    """Answer from BigQuery with citations, as JSON (used by the cloud evals)."""
+    from belegt.rag.answer import Answerer
+    from belegt.rag.bigquery import BigQueryRetriever, impersonating_client
+    from belegt.rag.extractive import ExtractiveModel
+
+    retriever = BigQueryRetriever(
+        impersonating_client(project), f"{project}.rag", _embedder(embedder)
+    )
+    result = Answerer(retriever, ExtractiveModel(), min_score=0.1).ask(question, tenant)
+    typer.echo(json.dumps(asdict(result), ensure_ascii=False))
+
+
+@app.command("rag-eval")
+def rag_eval(
+    chunks: Annotated[Path, typer.Option(help="The corpus, as JSON lines")] = Path(
+        "data/chunks.jsonl"
+    ),
+    cases: Annotated[Path, typer.Option(help="Evaluation cases")] = Path("evals/rag_cases.jsonl"),
+    backend: Annotated[str, typer.Option(help="memory (offline) or bigquery")] = "memory",
+    project: Annotated[str | None, typer.Option(help="GCP project for --backend bigquery")] = None,
+    embedder: Annotated[str, typer.Option(help="e5 (semantic) or hashing (tests)")] = "hashing",
+    out: Annotated[Path | None, typer.Option(help="Write the Markdown report here")] = None,
+) -> None:
+    """Run the evaluation cases; exits non-zero on any leak."""
+    from belegt.api.app import load_chunks
+    from belegt.rag.answer import Answerer
+    from belegt.rag.evals import read_cases, report, run
+    from belegt.rag.extractive import ExtractiveModel
+    from belegt.rag.retrieval import InMemoryRetriever, Retriever
+
+    corpus = load_chunks(chunks)
+    owners = {c.doc_id: c.tenant_id for c in corpus}
+    retriever: Retriever
+    if backend == "bigquery":
+        if not project:
+            raise typer.BadParameter("--project is required for the bigquery backend")
+        from belegt.rag.bigquery import BigQueryRetriever, impersonating_client
+
+        retriever = BigQueryRetriever(
+            impersonating_client(project), f"{project}.rag", _embedder(embedder)
+        )
+    else:
+        retriever = InMemoryRetriever(_embedder(embedder), corpus)
+    outcomes = run(read_cases(cases), Answerer(retriever, ExtractiveModel(), min_score=0.1), owners)
+    text = report(outcomes, f"Document assistant evaluation ({backend}, {embedder})")
+    if out:
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(text)
+    typer.echo(text)
+    if any(o.leaked for o in outcomes):
+        raise typer.Exit(1)
+
+
+@app.command()
+def reports(
+    seed: Annotated[Path, typer.Option(help="The report list")] = Path("dbt/seeds/reports.csv"),
+    index: Annotated[
+        int | None,
+        typer.Option(help="Process this row only; default: the job's task index, else every row"),
+    ] = None,
+    out: Annotated[
+        str, typer.Option(help="Directory or gs:// prefix for metrics/<doc_id>.jsonl")
+    ] = "data/raw/reports",
+    pdf_out: Annotated[
+        str | None, typer.Option(help="Private directory or gs:// prefix for the PDFs themselves")
+    ] = None,
+    work: Annotated[Path, typer.Option(help="Scratch space for the download")] = Path(
+        "data/downloads/reports"
+    ),
+) -> None:
+    """Download sustainability statements and extract Scope 1-3 totals with page citations.
+
+    Prints one JSON line per report. In a job (one report per task) a failure exits non-zero so
+    the scheduler retries that task; over every row, failures are reported and the rest go on.
+    """
+    import httpx
+
+    from belegt.documents.reports import process, read_seed, sink_for, task_index
+    from belegt.extract import USER_AGENT
+
+    rows = read_seed(seed)
+    position = index if index is not None else task_index()
+    todo = [rows[position]] if position is not None else rows
+    sink = sink_for(out)
+    pdf_sink = sink_for(pdf_out) if pdf_out else None
+    failed = 0
+    with httpx.Client(
+        headers={"User-Agent": USER_AGENT}, timeout=300, follow_redirects=True
+    ) as client:
+        for report in todo:
+            try:
+                result = process(report, client, work, sink, pdf_sink)
+            except Exception as error:  # one bad host must not hide the other reports
+                failed += 1
+                typer.echo(json.dumps({"doc_id": report.doc_id, "error": str(error)[:300]}))
+                continue
+            typer.echo(json.dumps(asdict(result)))
+    if failed and (position is not None or failed == len(todo)):
+        raise typer.Exit(1)

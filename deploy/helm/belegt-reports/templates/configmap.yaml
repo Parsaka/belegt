@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-reports-seed
+  labels: {{- include "belegt-reports.labels" . | nindent 4 }}
+data:
+  reports.csv: |
+    {{- .Values.seed | trim | nindent 4 }}

@@ -20,7 +20,7 @@ from belegt.documents.model import Chunk
 from belegt.rag.answer import Answerer
 from belegt.rag.embedding import HashingEmbedder
 from belegt.rag.extractive import ExtractiveModel
-from belegt.rag.retrieval import InMemoryRetriever
+from belegt.rag.retrieval import InMemoryRetriever, Retriever
 
 
 class AskRequest(BaseModel):
@@ -88,8 +88,25 @@ def create_app(
 
 
 def app_from_env() -> FastAPI:
-    """Entry point for uvicorn --factory. BELEGT_CHUNKS and BELEGT_TOKENS configure it."""
-    chunks = load_chunks(Path(os.environ.get("BELEGT_CHUNKS", "data/chunks.jsonl")))
-    retriever = InMemoryRetriever(HashingEmbedder(), chunks)
+    """Entry point for uvicorn --factory.
+
+    BELEGT_BACKEND=memory (default): chunks from BELEGT_CHUNKS, for kind and local runs.
+    BELEGT_BACKEND=bigquery: `rag.chunks` in BELEGT_PROJECT, each request as its tenant's
+    identity, with the embedder the chunks were loaded with (BELEGT_EMBEDDER, default e5).
+    BELEGT_TOKENS maps bearer tokens to tenants; in the cloud it comes from Secret Manager.
+    """
+    retriever: Retriever
+    if os.environ.get("BELEGT_BACKEND", "memory") == "bigquery":
+        from belegt.rag.bigquery import BigQueryRetriever, impersonating_client
+        from belegt.rag.embedding import E5Embedder
+
+        project = os.environ["BELEGT_PROJECT"]
+        embedder = (
+            E5Embedder() if os.environ.get("BELEGT_EMBEDDER", "e5") == "e5" else HashingEmbedder()
+        )
+        retriever = BigQueryRetriever(impersonating_client(project), f"{project}.rag", embedder)
+    else:
+        chunks = load_chunks(Path(os.environ.get("BELEGT_CHUNKS", "data/chunks.jsonl")))
+        retriever = InMemoryRetriever(HashingEmbedder(), chunks)
     answerer = Answerer(retriever, ExtractiveModel(), min_score=0.1)
     return create_app(answerer, parse_tokens(os.environ.get("BELEGT_TOKENS", "")))

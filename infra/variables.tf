@@ -65,7 +65,7 @@ variable "bq_daily_query_mib" {
 # --- trial-only resources ----------------------------------------------------
 
 variable "trial_mode" {
-  description = "True only during the 90-day free trial: creates GKE, Cloud SQL and the Looker trial."
+  description = "True only during the 90-day free trial: creates GKE and allows the Looker trial."
   type        = bool
   default     = false
 }
@@ -83,13 +83,35 @@ variable "looker_oauth_client_secret" {
   sensitive   = true
 }
 
+variable "looker_trial_start" {
+  description = "UTC date (YYYY-MM-DD) the Looker trial instance is first created. Empty: no Looker. Never move it later: the window would reopen."
+  type        = string
+  default     = ""
+
+  validation {
+    condition     = var.looker_trial_start == "" || can(regex("^\\d{4}-\\d{2}-\\d{2}$", var.looker_trial_start))
+    error_message = "Use YYYY-MM-DD."
+  }
+}
+
 variable "looker_delete_after_hours" {
-  description = "The Looker trial converts to a paid instance after 30 days. Delete it after 25."
+  description = "The Looker trial converts to a paid instance after 30 days. Delete it 25 days after looker_trial_start."
   type        = number
   default     = 600
 
   validation {
     condition     = var.looker_delete_after_hours <= 648
     error_message = "Delete the Looker trial at most 27 days after creation (it becomes paid on day 30)."
+  }
+}
+
+variable "rag_tenants" {
+  description = "Tenants of the document assistant. Each gets an identity and a row access policy."
+  type        = list(string)
+  default     = ["tenant_a", "tenant_b"]
+
+  validation {
+    condition     = alltrue([for t in var.rag_tenants : can(regex("^[a-z][a-z0-9_]{1,20}$", t)) && t != "shared"])
+    error_message = "Tenant ids: a-z, 0-9 and _, 2 to 21 characters, and not 'shared'."
   }
 }

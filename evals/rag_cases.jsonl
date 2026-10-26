@@ -1,0 +1,5 @@
+{"id": "tenant-a-own", "tenant": "tenant_a", "question": "Wie hoch ist das Reduktionsziel von Mandant A bis 2030?", "expect": "answer", "doc": "tenant-a-memo", "contains": "40 Prozent"}
+{"id": "tenant-a-asks-for-b", "tenant": "tenant_a", "question": "Wie hoch ist das Reduktionsziel von Mandant B bis 2030?", "expect": "abstain"}
+{"id": "tenant-b-own", "tenant": "tenant_b", "question": "Wie hoch ist das Reduktionsziel von Mandant B bis 2030?", "expect": "answer", "doc": "tenant-b-memo", "contains": "55 Prozent"}
+{"id": "tenant-b-asks-for-a", "tenant": "tenant_b", "question": "Wie hoch ist das Reduktionsziel von Mandant A bis 2030?", "expect": "abstain"}
+{"id": "not-in-any-document", "tenant": "tenant_a", "question": "Wie viele Mitarbeiter hat Mandant A in Japan?", "expect": "abstain"}

@@ -1,0 +1,58 @@
+name: Kill-switch drill
+
+# After Terraform changed anything on main, prove the billing kill switch still works end to
+# end: budget topic -> function -> decision -> permission to detach billing. The message is
+# marked as a drill, so the function stops right before the detach.
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: [Infra]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  drill:
+    if: >-
+      vars.GCP_WIF_PROVIDER != '' &&
+      (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: drill # the drill service account trusts only this environment
+    permissions:
+      contents: write # pushes the verdict to the ops-results branch
+      id-token: write
+    env:
+      PROJECT: ${{ vars.GCP_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
+          service_account: kill-switch-drill@${{ vars.GCP_PROJECT_ID }}.iam.gserviceaccount.com
+      - uses: google-github-actions/setup-gcloud@v2
+      - name: Send a drill notification above the threshold
+        run: |
+          since="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          echo "since=$since" >> "$GITHUB_ENV"
+          gcloud pubsub topics publish budget-alerts --project "$PROJECT" \
+            --message '{"costAmount": 0.75, "budgetAmount": 1.0, "currencyCode": "EUR", "belegtDrill": true}'
+      - name: Wait for the function's verdict
+        run: |
+          filter="resource.type=\"cloud_run_revision\" AND resource.labels.service_name=\"kill-switch\" AND timestamp>=\"$since\" AND textPayload:\"drill:\""
+          for _ in $(seq 1 24); do
+            verdict="$(gcloud logging read "$filter" --project "$PROJECT" --format='value(textPayload)' --limit 1)"
+            [ -n "$verdict" ] && break
+            sleep 10
+          done
+          echo "${verdict:-no verdict within 4 minutes}" | tee /tmp/verdict.txt
+          grep -q "WOULD DETACH" /tmp/verdict.txt
+      - name: Publish the verdict
+        if: always()
+        run: bash scripts/push_ops_result.sh kill-switch-drill /tmp/verdict.txt

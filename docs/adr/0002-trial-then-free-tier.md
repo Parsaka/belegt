@@ -17,3 +17,6 @@ with screenshots and label them as temporary.
 - The architecture has two runtimes over time: GKE during the trial, Cloud Run afterwards.
   The same container images run on both, and Kubernetes manifests stay tested with kind in CI.
 - The measured cost of both states goes into the README; it is part of the story.
+- Cloud SQL and Dagster were dropped before they were built (2026-10-25): GitHub Actions already
+  orchestrates the monthly runs and BigQuery `VECTOR_SEARCH` holds the vectors, so both would
+  have duplicated an existing tool's role.

@@ -93,7 +93,13 @@ def read_verified_emissions(path: Path, registry: str | None = "DE") -> Iterator
     from openpyxl import load_workbook
 
     wb = load_workbook(path, read_only=True, data_only=True)
-    yield from read_rows(list(wb.worksheets[0].iter_rows(values_only=True)), registry)
+    # The published workbook has explanatory sheets before the data sheet.
+    for ws in wb.worksheets:
+        rows = list(ws.iter_rows(values_only=True))
+        if any(row and row[0] == "REGISTRY_CODE" for row in rows):
+            yield from read_rows(rows, registry)
+            return
+    raise ValueError(f"{path.name}: no sheet with a REGISTRY_CODE header")
 
 
 @dataclass(frozen=True)

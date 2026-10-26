@@ -18,3 +18,42 @@ seeds:
           - accepted_values:
               arguments:
                 values: [accepted, rejected]
+
+  - name: reports
+    description: >
+      Sustainability statements to extract (German edition of the annual report). Links only:
+      the PDFs are copyrighted and live in the private reports bucket.
+    config:
+      column_types:
+        doc_id: varchar
+        company: varchar
+        lei: varchar
+        report_year: integer
+        fiscal_year_end: varchar
+        language: varchar
+        url: varchar
+        host_note: varchar
+    columns:
+      - name: doc_id
+        tests: [unique, not_null]
+      - name: lei
+        tests: [not_null]
+
+  - name: reported_overrides
+    description: >
+      Human corrections of extracted report figures, after checking the page in the PDF. Like
+      entity_overrides: the extractor stays as it is, the decision is data with a reviewer.
+    config:
+      column_types:
+        doc_id: varchar
+        metric: varchar
+        value_t: double
+        page: integer
+        quote: varchar
+        reviewer: varchar
+        reviewed_at: date
+        note: varchar
+    tests:
+      - unique_combination:
+          arguments:
+            columns: [doc_id, metric]
