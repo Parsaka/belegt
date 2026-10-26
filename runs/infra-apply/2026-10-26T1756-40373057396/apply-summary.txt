@@ -1,0 +1,4 @@
+google_storage_bucket_object.kill_switch: Destruction complete after 0s
+google_storage_bucket_object.kill_switch: Creation complete after 1s [id=belegt-pk-2610-functions-kill_switch-98274fe720896ca13a33bc2c87b2991d.zip]
+google_cloudfunctions2_function.kill_switch: Modifications complete after 45s [id=projects/belegt-pk-2610/locations/europe-west1/functions/kill-switch]
+Apply complete! Resources: 1 added, 1 changed, 1 destroyed.
