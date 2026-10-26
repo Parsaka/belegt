@@ -1,0 +1,88 @@
+no verdict within 4 minutes
+log read: 
+		
+INFO		
+		
+INFO		
+		
+INFO		
+	Exception on / [POST]
+Traceback (most recent call last):
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 140, in error_remapped_callable
+    return callable_(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/grpc/_interceptor.py", line 276, in __call__
+    response, ignored_call = self._with_call(
+                             ^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/grpc/_interceptor.py", line 331, in _with_call
+    return call.result(), call
+           ^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/grpc/_channel.py", line 447, in result
+    raise self
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/grpc/_interceptor.py", line 314, in continuation
+    response, call = self._thunk(new_method).with_call(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/grpc/_channel.py", line 1182, in with_call
+    return _end_unary_response_blocking(state, call, True, None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/grpc/_channel.py", line 999, in _end_unary_response_blocking
+    raise _InactiveRpcError(state)  # pytype: disable=not-instantiable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+	status = StatusCode.PERMISSION_DENIED
+	details = "The caller does not have permission"
+	debug_error_string = "PERMISSION_DENIED:The caller does not have permission"
+>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/functions_framework/execution_id.py", line 157, in wrapper
+    result = view_function(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/functions_framework/__init__.py", line 188, in view_func
+    function(event)
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/functions_framework/__init__.py", line 81, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/main.py", line 61, in stop_billing
+    info = client.get_project_billing_info(name=name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/google/cloud/billing_v1/services/cloud_billing/client.py", line 1369, in get_project_billing_info
+    response = rpc(
+               ^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/google/api_core/gapic_v1/method.py", line 415, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 295, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 157, in retry_target
+    next_sleep = _retry_error_helper(
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/google/api_core/retry/retry_base.py", line 215, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 148, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 142, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.PermissionDenied: 403 The caller does not have permission	
+		
+ERROR		
+		
