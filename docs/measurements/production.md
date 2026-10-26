@@ -46,7 +46,9 @@ Scope figures selected by the extractor, with the page they came from, are in th
 `summary-gke/reports.md`. Five of six reports gave Scope 1 and Scope 2 figures. thyssenkrupp's
 2023/2024 report has no emissions table (it predates the company's first CSRD statement), so the
 seed now points at the 2024/2025 annual report. Its E1-6 table uses fiscal-year columns
-("2024 / 2025") and "Mt CO2e", which the extractor now reads.
+("2024 / 2025") and "Mt CO2e", which the extractor now reads. With both changes all six reports
+give Scope 1 and both Scope 2 figures, and thyssenkrupp's come from page 123 in the 2024/2025
+column (discover run `reports/2026-10-26T1932-40387025723`).
 
 ## What the drill found
 
