@@ -1,0 +1,126 @@
+no verdict within 4 minutes
+log read: 
+	Exception on / [POST]
+Traceback (most recent call last):
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/functions_framework/execution_id.py", line 157, in wrapper
+    result = view_function(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/functions_framework/__init__.py", line 216, in view_func
+    function(data, context)
+TypeError: stop_billing() takes 1 positional argument but 2 were given	
+	Exception on / [POST]
+Traceback (most recent call last):
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/functions_framework/execution_id.py", line 157, in wrapper
+    result = view_function(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/functions_framework/__init__.py", line 216, in view_func
+    function(data, context)
+TypeError: stop_billing() takes 1 positional argument but 2 were given	
+ERROR		
+	Exception on / [POST]
+Traceback (most recent call last):
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/functions_framework/execution_id.py", line 157, in wrapper
+    result = view_function(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/functions_framework/__init__.py", line 216, in view_func
+    function(data, context)
+TypeError: stop_billing() takes 1 positional argument but 2 were given	
+ERROR		
+	Exception on / [POST]
+Traceback (most recent call last):
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/functions_framework/execution_id.py", line 157, in wrapper
+    result = view_function(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/functions_framework/__init__.py", line 216, in view_func
+    function(data, context)
+TypeError: stop_billing() takes 1 positional argument but 2 were given	
+ERROR		
+	Exception on / [POST]
+Traceback (most recent call last):
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/functions_framework/execution_id.py", line 157, in wrapper
+    result = view_function(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/functions_framework/__init__.py", line 216, in view_func
+    function(data, context)
+TypeError: stop_billing() takes 1 positional argument but 2 were given	
+ERROR		
+	Exception on / [POST]
+Traceback (most recent call last):
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/functions_framework/execution_id.py", line 157, in wrapper
+    result = view_function(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/layers/google.python.pip/pip/lib/python3.12/site-packages/functions_framework/__init__.py", line 216, in view_func
+    function(data, context)
+TypeError: stop_billing() takes 1 positional argument but 2 were given	
