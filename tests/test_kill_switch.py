@@ -8,12 +8,18 @@ import types
 from pathlib import Path
 
 import pytest
+from functions_framework import _function_registry
 
 PATH = Path(__file__).resolve().parents[1] / "infra" / "functions" / "kill_switch" / "main.py"
 spec = importlib.util.spec_from_file_location("kill_switch", PATH)
 assert spec and spec.loader
 kill_switch = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(kill_switch)
+
+
+def test_registered_as_a_cloud_event_function():
+    # Regression: undecorated, production called it with (data, context) and raised TypeError.
+    assert _function_registry.get_func_signature_type("stop_billing", None) == "cloudevent"
 
 
 @pytest.mark.parametrize(

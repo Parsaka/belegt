@@ -5,8 +5,10 @@ name: Deploy
 # a wrong token. Cold and warm latencies are measured and published to ops-results.
 on:
   workflow_dispatch:
+  # After the Pipeline, which follows Infra and Reports: the smoke test asks a question that
+  # needs the RAG chunks the Pipeline loads.
   workflow_run:
-    workflows: [Infra]
+    workflows: [Pipeline]
     types: [completed]
     branches: [main]
   push:
@@ -78,11 +80,11 @@ jobs:
           }
           # The first request after a deploy is a cold start: model load and the first query.
           read -r code cold < <(ask "$token_a" "Wie hoch ist das Reduktionsziel von Mandant A?")
-          cat /tmp/answer.json; echo
+          { echo "$code"; cat /tmp/answer.json; echo; } | tee -a summary/smoke.txt
           test "$code" = 200
           jq -e '.abstained == false and (.citations[0] | startswith("tenant-a-memo:"))' /tmp/answer.json
           read -r code warm < <(ask "$token_a" "Wie hoch ist das Reduktionsziel von Mandant B?")
-          cat /tmp/answer.json; echo
+          { echo "$code"; cat /tmp/answer.json; echo; } | tee -a summary/smoke.txt
           jq -e '(.answer | contains("55")) | not' /tmp/answer.json
           read -r code _ < <(ask wrong-token "Scope 1?")
           test "$code" = 401

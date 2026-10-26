@@ -47,12 +47,21 @@ jobs:
         run: |
           filter="resource.type=\"cloud_run_revision\" AND resource.labels.service_name=\"kill-switch\" AND timestamp>=\"$since\" AND textPayload:\"drill:\""
           for _ in $(seq 1 24); do
-            verdict="$(gcloud logging read "$filter" --project "$PROJECT" --format='value(textPayload)' --limit 1)"
+            verdict="$(gcloud logging read "$filter" --project "$PROJECT" --format='value(textPayload)' --limit 1 2> /tmp/read.err)"
             [ -n "$verdict" ] && break
             sleep 10
           done
           echo "${verdict:-no verdict within 4 minutes}" | tee /tmp/verdict.txt
-          grep -q "WOULD DETACH" /tmp/verdict.txt
+          if ! grep -q "WOULD DETACH" /tmp/verdict.txt; then
+            # What the function and the log read said instead (short lines, no payload beyond them)
+            {
+              echo "log read: $(tail -2 /tmp/read.err)"
+              gcloud logging read "resource.labels.service_name=\"kill-switch\" AND timestamp>=\"$since\"" \
+                --project "$PROJECT" --limit 10 --format='value(severity,textPayload,jsonPayload.message)' \
+                | cut -c1-200
+            } | tee -a /tmp/verdict.txt
+            exit 1
+          fi
       - name: Publish the verdict
         if: always()
         run: bash scripts/push_ops_result.sh kill-switch-drill /tmp/verdict.txt
