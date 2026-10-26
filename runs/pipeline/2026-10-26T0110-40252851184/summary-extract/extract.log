@@ -1,0 +1,236 @@
+[31m╭─[0m[31m────────────────────[0m[31m [0m[1;31mTraceback [0m[1;2;31m(most recent call last)[0m[31m [0m[31m─────────────────────[0m[31m─╮[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/httpx/_[0m [31m│[0m
+[31m│[0m [2mtransports/[0m[1mdefault.py[0m:101 in map_httpcore_exceptions                         [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m 98 [0m[2m│   [0m[94mif[0m [96mlen[0m(HTTPCORE_EXC_MAP) == [94m0[0m:                                     [31m│[0m
+[31m│[0m   [2m 99 [0m[2m│   │   [0mHTTPCORE_EXC_MAP = _load_httpcore_exceptions()                 [31m│[0m
+[31m│[0m   [2m100 [0m[2m│   [0m[94mtry[0m:                                                               [31m│[0m
+[31m│[0m [31m❱ [0m101 [2m│   │   [0m[94myield[0m                                                          [31m│[0m
+[31m│[0m   [2m102 [0m[2m│   [0m[94mexcept[0m [96mException[0m [94mas[0m exc:                                           [31m│[0m
+[31m│[0m   [2m103 [0m[2m│   │   [0mmapped_exc = [94mNone[0m                                              [31m│[0m
+[31m│[0m   [2m104 [0m                                                                       [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/httpx/_[0m [31m│[0m
+[31m│[0m [2mtransports/[0m[1mdefault.py[0m:127 in __iter__                                        [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m124 [0m[2m│   [0m                                                                   [31m│[0m
+[31m│[0m   [2m125 [0m[2m│   [0m[94mdef[0m[90m [0m[92m__iter__[0m([96mself[0m) -> typing.Iterator[[96mbytes[0m]:                      [31m│[0m
+[31m│[0m   [2m126 [0m[2m│   │   [0m[94mwith[0m [1;4mmap_httpcore_exceptions()[0m:                                [31m│[0m
+[31m│[0m [31m❱ [0m127 [2m│   │   │   [0m[94mfor[0m part [95min[0m [96mself[0m._httpcore_stream:                         [31m│[0m
+[31m│[0m   [2m128 [0m[2m│   │   │   │   [0m[94myield[0m part                                             [31m│[0m
+[31m│[0m   [2m129 [0m[2m│   [0m                                                                   [31m│[0m
+[31m│[0m   [2m130 [0m[2m│   [0m[94mdef[0m[90m [0m[92mclose[0m([96mself[0m) -> [94mNone[0m:                                           [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/httpcor[0m [31m│[0m
+[31m│[0m [2me/_sync/[0m[1mconnection_pool.py[0m:407 in __iter__                                   [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m404 [0m[2m│   │   │   │   [0m[94myield[0m part                                             [31m│[0m
+[31m│[0m   [2m405 [0m[2m│   │   [0m[94mexcept[0m [96mBaseException[0m [94mas[0m exc:                                   [31m│[0m
+[31m│[0m   [2m406 [0m[2m│   │   │   [0m[96mself[0m.close()                                               [31m│[0m
+[31m│[0m [31m❱ [0m407 [2m│   │   │   [0m[1;4;94mraise[0m[1;4m exc [0m[1;4;94mfrom[0m[1;4;90m [0m[1;4;94mNone[0m                                        [31m│[0m
+[31m│[0m   [2m408 [0m[2m│   [0m                                                                   [31m│[0m
+[31m│[0m   [2m409 [0m[2m│   [0m[94mdef[0m[90m [0m[92mclose[0m([96mself[0m) -> [94mNone[0m:                                           [31m│[0m
+[31m│[0m   [2m410 [0m[2m│   │   [0m[94mif[0m [95mnot[0m [96mself[0m._closed:                                           [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/httpcor[0m [31m│[0m
+[31m│[0m [2me/_sync/[0m[1mconnection_pool.py[0m:403 in __iter__                                   [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m400 [0m[2m│   [0m                                                                   [31m│[0m
+[31m│[0m   [2m401 [0m[2m│   [0m[94mdef[0m[90m [0m[92m__iter__[0m([96mself[0m) -> typing.Iterator[[96mbytes[0m]:                      [31m│[0m
+[31m│[0m   [2m402 [0m[2m│   │   [0m[94mtry[0m:                                                           [31m│[0m
+[31m│[0m [31m❱ [0m403 [2m│   │   │   [0m[94mfor[0m part [95min[0m [96mself[0m._stream:                                  [31m│[0m
+[31m│[0m   [2m404 [0m[2m│   │   │   │   [0m[94myield[0m part                                             [31m│[0m
+[31m│[0m   [2m405 [0m[2m│   │   [0m[94mexcept[0m [96mBaseException[0m [94mas[0m exc:                                   [31m│[0m
+[31m│[0m   [2m406 [0m[2m│   │   │   [0m[96mself[0m.close()                                               [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/httpcor[0m [31m│[0m
+[31m│[0m [2me/_sync/[0m[1mhttp11.py[0m:342 in __iter__                                            [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m339 [0m[2m│   │   │   [0m[2m# before raising that exception.[0m                           [31m│[0m
+[31m│[0m   [2m340 [0m[2m│   │   │   [0m[94mwith[0m ShieldCancellation():                                 [31m│[0m
+[31m│[0m   [2m341 [0m[2m│   │   │   │   [0m[96mself[0m.close()                                           [31m│[0m
+[31m│[0m [31m❱ [0m342 [2m│   │   │   [0m[1;4;94mraise[0m[1;4m exc[0m                                                  [31m│[0m
+[31m│[0m   [2m343 [0m[2m│   [0m                                                                   [31m│[0m
+[31m│[0m   [2m344 [0m[2m│   [0m[94mdef[0m[90m [0m[92mclose[0m([96mself[0m) -> [94mNone[0m:                                           [31m│[0m
+[31m│[0m   [2m345 [0m[2m│   │   [0m[94mif[0m [95mnot[0m [96mself[0m._closed:                                           [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/httpcor[0m [31m│[0m
+[31m│[0m [2me/_sync/[0m[1mhttp11.py[0m:334 in __iter__                                            [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m331 [0m[2m│   │   [0mkwargs = {[33m"[0m[33mrequest[0m[33m"[0m: [96mself[0m._request}                            [31m│[0m
+[31m│[0m   [2m332 [0m[2m│   │   [0m[94mtry[0m:                                                           [31m│[0m
+[31m│[0m   [2m333 [0m[2m│   │   │   [0m[94mwith[0m Trace([33m"[0m[33mreceive_response_body[0m[33m"[0m, logger, [96mself[0m._request, [31m│[0m
+[31m│[0m       kwargs):                                                               [31m│[0m
+[31m│[0m [31m❱ [0m334 [2m│   │   │   │   [0m[94mfor[0m chunk [95min[0m                                           [31m│[0m
+[31m│[0m       [96mself[0m._connection._receive_response_body(**kwargs):                     [31m│[0m
+[31m│[0m   [2m335 [0m[2m│   │   │   │   │   [0m[94myield[0m chunk                                        [31m│[0m
+[31m│[0m   [2m336 [0m[2m│   │   [0m[94mexcept[0m [96mBaseException[0m [94mas[0m exc:                                   [31m│[0m
+[31m│[0m   [2m337 [0m[2m│   │   │   [0m[2m# If we get an exception while streaming the response,[0m     [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/httpcor[0m [31m│[0m
+[31m│[0m [2me/_sync/[0m[1mhttp11.py[0m:203 in _receive_response_body                              [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m200 [0m[2m│   │   [0mtimeout = timeouts.get([33m"[0m[33mread[0m[33m"[0m, [94mNone[0m)                           [31m│[0m
+[31m│[0m   [2m201 [0m[2m│   │   [0m                                                               [31m│[0m
+[31m│[0m   [2m202 [0m[2m│   │   [0m[94mwhile[0m [94mTrue[0m:                                                    [31m│[0m
+[31m│[0m [31m❱ [0m203 [2m│   │   │   [0mevent = [1;4;96mself[0m[1;4m._receive_event(timeout=timeout)[0m               [31m│[0m
+[31m│[0m   [2m204 [0m[2m│   │   │   [0m[94mif[0m [96misinstance[0m(event, h11.Data):                            [31m│[0m
+[31m│[0m   [2m205 [0m[2m│   │   │   │   [0m[94myield[0m [96mbytes[0m(event.data)                                [31m│[0m
+[31m│[0m   [2m206 [0m[2m│   │   │   [0m[94melif[0m [96misinstance[0m(event, (h11.EndOfMessage, h11.PAUSED)):    [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/httpcor[0m [31m│[0m
+[31m│[0m [2me/_sync/[0m[1mhttp11.py[0m:213 in _receive_event                                      [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m210 [0m[2m│   │   [0m[96mself[0m, timeout: [96mfloat[0m | [94mNone[0m = [94mNone[0m                             [31m│[0m
+[31m│[0m   [2m211 [0m[2m│   [0m) -> h11.Event | [96mtype[0m[h11.PAUSED]:                                 [31m│[0m
+[31m│[0m   [2m212 [0m[2m│   │   [0m[94mwhile[0m [94mTrue[0m:                                                    [31m│[0m
+[31m│[0m [31m❱ [0m213 [2m│   │   │   [0m[94mwith[0m [1;4mmap_exceptions({h11.RemoteProtocolError: [0m             [31m│[0m
+[31m│[0m       [1;4mRemoteProtocolError})[0m:                                                 [31m│[0m
+[31m│[0m   [2m214 [0m[2m│   │   │   │   [0mevent = [96mself[0m._h11_state.next_event()                   [31m│[0m
+[31m│[0m   [2m215 [0m[2m│   │   │   [0m                                                           [31m│[0m
+[31m│[0m   [2m216 [0m[2m│   │   │   [0m[94mif[0m event [95mis[0m h11.NEED_DATA:                                 [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/[0m[1mcontextlib.py[0m:158 in  [31m│[0m
+[31m│[0m __exit__                                                                     [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m155 [0m[2m│   │   │   │   [0m[2m# tell if we get the same exception back[0m               [31m│[0m
+[31m│[0m   [2m156 [0m[2m│   │   │   │   [0mvalue = typ()                                          [31m│[0m
+[31m│[0m   [2m157 [0m[2m│   │   │   [0m[94mtry[0m:                                                       [31m│[0m
+[31m│[0m [31m❱ [0m158 [2m│   │   │   │   [0m[96mself[0m.gen.throw(value)                                  [31m│[0m
+[31m│[0m   [2m159 [0m[2m│   │   │   [0m[94mexcept[0m [96mStopIteration[0m [94mas[0m exc:                               [31m│[0m
+[31m│[0m   [2m160 [0m[2m│   │   │   │   [0m[2m# Suppress StopIteration *unless* it's the same [0m       [31m│[0m
+[31m│[0m       [2mexception that[0m                                                         [31m│[0m
+[31m│[0m   [2m161 [0m[2m│   │   │   │   [0m[2m# was passed to throw().  This prevents a [0m             [31m│[0m
+[31m│[0m       [2mStopIteration[0m                                                          [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/httpcor[0m [31m│[0m
+[31m│[0m [2me/[0m[1m_exceptions.py[0m:14 in map_exceptions                                        [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m11 [0m[2m│   [0m[94mexcept[0m [96mException[0m [94mas[0m exc:  [2m# noqa: PIE786[0m                            [31m│[0m
+[31m│[0m   [2m12 [0m[2m│   │   [0m[94mfor[0m from_exc, to_exc [95min[0m [96mmap[0m.items():                            [31m│[0m
+[31m│[0m   [2m13 [0m[2m│   │   │   [0m[94mif[0m [96misinstance[0m(exc, from_exc):                               [31m│[0m
+[31m│[0m [31m❱ [0m14 [2m│   │   │   │   [0m[1;4;94mraise[0m[1;4m to_exc(exc) [0m[1;4;94mfrom[0m[1;4;90m [0m[1;4;96mexc[0m                              [31m│[0m
+[31m│[0m   [2m15 [0m[2m│   │   [0m[94mraise[0m  [2m# pragma: nocover[0m                                        [31m│[0m
+[31m│[0m   [2m16 [0m                                                                        [31m│[0m
+[31m│[0m   [2m17 [0m                                                                        [31m│[0m
+[31m╰──────────────────────────────────────────────────────────────────────────────╯[0m
+[1;91mRemoteProtocolError: [0mpeer closed connection without sending complete message 
+body [1m([0mincomplete chunked read[1m)[0m
+
+[3mThe above exception was the direct cause of the following exception:[0m
+
+[31m╭─[0m[31m────────────────────[0m[31m [0m[1;31mTraceback [0m[1;2;31m(most recent call last)[0m[31m [0m[31m─────────────────────[0m[31m─╮[0m
+[31m│[0m [2m/home/runner/work/belegt/belegt/src/belegt/[0m[1mcli.py[0m:43 in extract              [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m 40 [0m[2;90m│   [0m[33m"""Download the full German source files (needs network; runs in [0m  [31m│[0m
+[31m│[0m       [33mGitHub Actions)."""[0m                                                    [31m│[0m
+[31m│[0m   [2m 41 [0m[2m│   [0m[94mfrom[0m[90m [0m[4;96mbelegt[0m[4;96m.[0m[4;96mextract[0m[90m [0m[94mimport[0m extract_all                             [31m│[0m
+[31m│[0m   [2m 42 [0m[2m│   [0m                                                                   [31m│[0m
+[31m│[0m [31m❱ [0m 43 [2m│   [0m[94mfor[0m f [95min[0m [1;4mextract_all(out, work)[0m:                                   [31m│[0m
+[31m│[0m   [2m 44 [0m[2m│   │   [0mrows = [33mf[0m[33m"[0m[33m{[0mf.rows[33m}[0m[33m rows, [0m[33m"[0m [94mif[0m f.rows [95mis[0m [95mnot[0m [94mNone[0m [94melse[0m [33m"[0m[33m"[0m        [31m│[0m
+[31m│[0m   [2m 45 [0m[2m│   │   [0mtyper.echo([33mf[0m[33m"[0m[33m{[0mf.file[33m}[0m[33m: [0m[33m{[0mrows[33m}[0m[33m{[0mf.bytes[33m:[0m[33m,[0m[33m}[0m[33m bytes, sha256 [0m        [31m│[0m
+[31m│[0m       [33m{[0mf.sha256[:[94m12[0m][33m}[0m[33m"[0m)                                                      [31m│[0m
+[31m│[0m   [2m 46 [0m                                                                       [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/home/runner/work/belegt/belegt/src/belegt/[0m[1mextract.py[0m:286 in extract_all     [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m283 [0m[2m│   [0m[94mwith[0m httpx.Client(                                                 [31m│[0m
+[31m│[0m   [2m284 [0m[2m│   │   [0mheaders={[33m"[0m[33mUser-Agent[0m[33m"[0m: USER_AGENT}, timeout=[94m600[0m,               [31m│[0m
+[31m│[0m       follow_redirects=[94mTrue[0m                                                  [31m│[0m
+[31m│[0m   [2m285 [0m[2m│   [0m) [94mas[0m client:                                                       [31m│[0m
+[31m│[0m [31m❱ [0m286 [2m│   │   [0mfound += [1;4mextract_ets(client, out)[0m                              [31m│[0m
+[31m│[0m   [2m287 [0m[2m│   │   [0mfound += extract_eea(client, out, work)                        [31m│[0m
+[31m│[0m   [2m288 [0m[2m│   │   [0mfound += extract_gleif(client, out, work)                      [31m│[0m
+[31m│[0m   [2m289 [0m[2m│   │   [0mfound += extract_esrs(client, out)                             [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/home/runner/work/belegt/belegt/src/belegt/[0m[1mextract.py[0m:190 in extract_ets     [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m187 [0m[2m│   [0mverified = latest_verified_emissions(links)                        [31m│[0m
+[31m│[0m   [2m188 [0m[2m│   [0moperators = [96mnext[0m(x [94mfor[0m x [95min[0m links [94mif[0m x.endswith(OPERATORS_FILE))   [31m│[0m
+[31m│[0m   [2m189 [0m[2m│   [0m[2m# Whole workbooks, unchanged: the loader selects the German rows.[0m  [31m│[0m
+[31m│[0m [31m❱ [0m190 [2m│   [0m[1;4m_download(client, verified, out / [0m                                 [31m│[0m
+[31m│[0m       [1;4;33m"[0m[1;4;33mets_verified_emissions_de.xlsx[0m[1;4;33m"[0m[1;4m)[0m                                      [31m│[0m
+[31m│[0m   [2m191 [0m[2m│   [0m_download(client, operators, out / [33m"[0m[33mets_operators_de.xlsx[0m[33m"[0m)        [31m│[0m
+[31m│[0m   [2m192 [0m[2m│   [0m[94mreturn[0m [                                                           [31m│[0m
+[31m│[0m   [2m193 [0m[2m│   │   [0m_record(out, [33m"[0m[33mets_verified_emissions_de.xlsx[0m[33m"[0m, verified),      [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/home/runner/work/belegt/belegt/src/belegt/[0m[1mextract.py[0m:180 in _download       [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m177 [0m[2m│   [0m[94mwith[0m client.stream([33m"[0m[33mGET[0m[33m"[0m, url, **kwargs) [94mas[0m r:                     [31m│[0m
+[31m│[0m   [2m178 [0m[2m│   │   [0mr.raise_for_status()                                           [31m│[0m
+[31m│[0m   [2m179 [0m[2m│   │   [0m[94mwith[0m path.open([33m"[0m[33mwb[0m[33m"[0m) [94mas[0m fh:                                    [31m│[0m
+[31m│[0m [31m❱ [0m180 [2m│   │   │   [0m[94mfor[0m chunk [95min[0m [1;4mr.iter_bytes([0m[1;4;94m1[0m[1;4m << [0m[1;4;94m20[0m[1;4m)[0m:                        [31m│[0m
+[31m│[0m   [2m181 [0m[2m│   │   │   │   [0mfh.write(chunk)                                        [31m│[0m
+[31m│[0m   [2m182 [0m                                                                       [31m│[0m
+[31m│[0m   [2m183 [0m                                                                       [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/httpx/[0m[1m_[0m [31m│[0m
+[31m│[0m [1mmodels.py[0m:897 in iter_bytes                                                  [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m 894 [0m[2m│   │   │   [0mdecoder = [96mself[0m._get_content_decoder()                     [31m│[0m
+[31m│[0m   [2m 895 [0m[2m│   │   │   [0mchunker = ByteChunker(chunk_size=chunk_size)              [31m│[0m
+[31m│[0m   [2m 896 [0m[2m│   │   │   [0m[94mwith[0m request_context(request=[96mself[0m._request):              [31m│[0m
+[31m│[0m [31m❱ [0m 897 [2m│   │   │   │   [0m[94mfor[0m raw_bytes [95min[0m [1;4;96mself[0m[1;4m.iter_raw()[0m:                     [31m│[0m
+[31m│[0m   [2m 898 [0m[2m│   │   │   │   │   [0mdecoded = decoder.decode(raw_bytes)               [31m│[0m
+[31m│[0m   [2m 899 [0m[2m│   │   │   │   │   [0m[94mfor[0m chunk [95min[0m chunker.decode(decoded):             [31m│[0m
+[31m│[0m   [2m 900 [0m[2m│   │   │   │   │   │   [0m[94myield[0m chunk                                   [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/httpx/[0m[1m_[0m [31m│[0m
+[31m│[0m [1mmodels.py[0m:951 in iter_raw                                                    [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m 948 [0m[2m│   │   [0mchunker = ByteChunker(chunk_size=chunk_size)                  [31m│[0m
+[31m│[0m   [2m 949 [0m[2m│   │   [0m                                                              [31m│[0m
+[31m│[0m   [2m 950 [0m[2m│   │   [0m[94mwith[0m request_context(request=[96mself[0m._request):                  [31m│[0m
+[31m│[0m [31m❱ [0m 951 [2m│   │   │   [0m[94mfor[0m raw_stream_bytes [95min[0m [1;4;96mself[0m[1;4m.stream[0m:                      [31m│[0m
+[31m│[0m   [2m 952 [0m[2m│   │   │   │   [0m[96mself[0m._num_bytes_downloaded += [96mlen[0m(raw_stream_bytes)   [31m│[0m
+[31m│[0m   [2m 953 [0m[2m│   │   │   │   [0m[94mfor[0m chunk [95min[0m chunker.decode(raw_stream_bytes):        [31m│[0m
+[31m│[0m   [2m 954 [0m[2m│   │   │   │   │   [0m[94myield[0m chunk                                       [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/httpx/[0m[1m_[0m [31m│[0m
+[31m│[0m [1mclient.py[0m:153 in __iter__                                                    [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m 150 [0m[2m│   │   [0m[96mself[0m._start = start                                           [31m│[0m
+[31m│[0m   [2m 151 [0m[2m│   [0m                                                                  [31m│[0m
+[31m│[0m   [2m 152 [0m[2m│   [0m[94mdef[0m[90m [0m[92m__iter__[0m([96mself[0m) -> typing.Iterator[[96mbytes[0m]:                     [31m│[0m
+[31m│[0m [31m❱ [0m 153 [2m│   │   [0m[94mfor[0m chunk [95min[0m [1;4;96mself[0m[1;4m._stream[0m:                                    [31m│[0m
+[31m│[0m   [2m 154 [0m[2m│   │   │   [0m[94myield[0m chunk                                               [31m│[0m
+[31m│[0m   [2m 155 [0m[2m│   [0m                                                                  [31m│[0m
+[31m│[0m   [2m 156 [0m[2m│   [0m[94mdef[0m[90m [0m[92mclose[0m([96mself[0m) -> [94mNone[0m:                                          [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/httpx/_[0m [31m│[0m
+[31m│[0m [2mtransports/[0m[1mdefault.py[0m:126 in __iter__                                        [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m123 [0m[2m│   │   [0m[96mself[0m._httpcore_stream = httpcore_stream                        [31m│[0m
+[31m│[0m   [2m124 [0m[2m│   [0m                                                                   [31m│[0m
+[31m│[0m   [2m125 [0m[2m│   [0m[94mdef[0m[90m [0m[92m__iter__[0m([96mself[0m) -> typing.Iterator[[96mbytes[0m]:                      [31m│[0m
+[31m│[0m [31m❱ [0m126 [2m│   │   [0m[94mwith[0m [1;4mmap_httpcore_exceptions()[0m:                                [31m│[0m
+[31m│[0m   [2m127 [0m[2m│   │   │   [0m[94mfor[0m part [95min[0m [96mself[0m._httpcore_stream:                         [31m│[0m
+[31m│[0m   [2m128 [0m[2m│   │   │   │   [0m[94myield[0m part                                             [31m│[0m
+[31m│[0m   [2m129 [0m                                                                       [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/[0m[1mcontextlib.py[0m:158 in  [31m│[0m
+[31m│[0m __exit__                                                                     [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m155 [0m[2m│   │   │   │   [0m[2m# tell if we get the same exception back[0m               [31m│[0m
+[31m│[0m   [2m156 [0m[2m│   │   │   │   [0mvalue = typ()                                          [31m│[0m
+[31m│[0m   [2m157 [0m[2m│   │   │   [0m[94mtry[0m:                                                       [31m│[0m
+[31m│[0m [31m❱ [0m158 [2m│   │   │   │   [0m[96mself[0m.gen.throw(value)                                  [31m│[0m
+[31m│[0m   [2m159 [0m[2m│   │   │   [0m[94mexcept[0m [96mStopIteration[0m [94mas[0m exc:                               [31m│[0m
+[31m│[0m   [2m160 [0m[2m│   │   │   │   [0m[2m# Suppress StopIteration *unless* it's the same [0m       [31m│[0m
+[31m│[0m       [2mexception that[0m                                                         [31m│[0m
+[31m│[0m   [2m161 [0m[2m│   │   │   │   [0m[2m# was passed to throw().  This prevents a [0m             [31m│[0m
+[31m│[0m       [2mStopIteration[0m                                                          [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/httpx/_[0m [31m│[0m
+[31m│[0m [2mtransports/[0m[1mdefault.py[0m:118 in map_httpcore_exceptions                         [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m115 [0m[2m│   │   │   [0m[94mraise[0m                                                      [31m│[0m
+[31m│[0m   [2m116 [0m[2m│   │   [0m                                                               [31m│[0m
+[31m│[0m   [2m117 [0m[2m│   │   [0mmessage = [96mstr[0m(exc)                                             [31m│[0m
+[31m│[0m [31m❱ [0m118 [2m│   │   [0m[1;4;94mraise[0m[1;4m mapped_exc(message) [0m[1;4;94mfrom[0m[1;4;90m [0m[1;4;96mexc[0m                             [31m│[0m
+[31m│[0m   [2m119 [0m                                                                       [31m│[0m
+[31m│[0m   [2m120 [0m                                                                       [31m│[0m
+[31m│[0m   [2m121 [0m[94mclass[0m[90m [0m[4;92mResponseStream[0m(SyncByteStream):                                  [31m│[0m
+[31m╰──────────────────────────────────────────────────────────────────────────────╯[0m
+[1;91mRemoteProtocolError: [0mpeer closed connection without sending complete message 
+body [1m([0mincomplete chunked read[1m)[0m
