@@ -21,6 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
+        shell: bash # job defaults replace the workflow's: repeat it, or `| tee` hides a failure
         working-directory: infra
     steps:
       - uses: actions/checkout@v4
@@ -41,6 +42,7 @@ jobs:
       id-token: write
     defaults:
       run:
+        shell: bash # job defaults replace the workflow's: repeat it, or `| tee` hides a failure
         working-directory: infra
     env:
       TF_VAR_project_id: ${{ vars.GCP_PROJECT_ID }}
@@ -76,6 +78,7 @@ jobs:
       id-token: write
     defaults:
       run:
+        shell: bash # job defaults replace the workflow's: repeat it, or `| tee` hides a failure
         working-directory: infra
     env:
       TF_VAR_project_id: ${{ vars.GCP_PROJECT_ID }}
