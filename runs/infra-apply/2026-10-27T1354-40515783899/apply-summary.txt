@@ -1,0 +1,3 @@
+google_service_account.looker_reaper[0]: Creation complete after 15s [id=projects/belegt-pk-2610/serviceAccounts/looker-reaper@belegt-pk-2610.iam.gserviceaccount.com]
+google_project_iam_member.looker_reaper[0]: Creation complete after 8s [id=belegt-pk-2610/roles/looker.admin/serviceAccount:looker-reaper@belegt-pk-2610.iam.gserviceaccount.com]
+Error: Error creating Instance: googleapi: Error 429: AllocateQuota failed for project number 477686772719 when allocating quota for looker.googleapis.com/trial_instances
