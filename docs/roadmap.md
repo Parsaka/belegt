@@ -23,5 +23,5 @@ Every phase is merged. The first full production run is measured in
 | 1 | dbt on BigQuery: 58 of 58 nodes pass on the full data |
 | 2 | GKE Autopilot Indexed Job: 6 of 6 reports parsed |
 | 3 | RAG eval on BigQuery: 0 cross-tenant leaks |
-| 4 | LookML validated offline; the Looker instance waits for its OAuth client |
+| 4 | LookML validated in CI against the dbt build; Google grants this project no Looker trial (quota 0, [ADR 0004](adr/0004-looker-trial-quota.md)), so Looker Studio is the dashboard |
 | 5 | Cloud Run service live (cold 3.34 s, warm 1.33 s); cost measured once the billing export is on |

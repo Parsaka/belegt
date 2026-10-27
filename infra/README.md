@@ -45,6 +45,9 @@ the Looker instance. Then upgrade the billing account, or the project is shut do
 
 ## Looker trial
 
+Switched off: Google grants this project no trial instance (quota 0, see
+`docs/adr/0004-looker-trial-quota.md`). The steps below apply if quota is granted.
+
 The Looker (Google Cloud core) trial becomes a paid Standard instance after 30 days. It exists
 only inside a window fixed by a date:
 

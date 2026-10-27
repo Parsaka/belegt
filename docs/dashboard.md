@@ -1,12 +1,14 @@
 # Dashboards
 
-Two consumers of the same dbt marts, each with one job:
+Two consumers of the same dbt marts, each with one job. Google grants this project no Looker
+trial instance (quota 0, [ADR 0004](adr/0004-looker-trial-quota.md)), so the LookML is checked
+in CI and Looker Studio is the only running dashboard.
 
 | | Looker (trial, private) | Looker Studio (free, public) |
 |---|---|---|
 | Purpose | Semantic layer in code: LookML in `looker/`, reviewed in pull requests | The public page for the project |
 | Definitions | Measures such as match rate and "consistent" are defined once in LookML | Charts read the marts directly; no metric logic of its own |
-| Lifetime | Deleted on trial day 25 (`infra/README.md`) | Stays; BigQuery free tier and the daily quota cap its queries |
+| Lifetime | No instance: trial quota is 0; the code is ready if quota is granted | Stays; BigQuery free tier and the daily quota cap its queries |
 
 ## LookML
 
@@ -15,7 +17,7 @@ the current GLEIF record of the operator), group emissions, and reported versus 
 Scope 1 with a link from every figure to its page in the report. `tests/test_dbt.py` checks
 offline that every table and column in LookML exists in the dbt build.
 
-Connect it in Looker:
+If a Looker instance becomes available, connect it:
 
 1. Admin → Database → Connections → Add: name `belegt`, BigQuery, project `belegt-pk-2610`,
    dataset `marts`, authentication "Application Default Credentials" (the Looker service agent,
