@@ -10,6 +10,7 @@ copied from the run summaries on the `ops-results` branch; the run ids are the f
 | Pipeline: load, dbt on BigQuery, RAG eval | `pipeline/2026-10-26T1811-40373020804` | dbt 58 of 58 nodes pass; RAG eval 0 leaks |
 | Deploy to Cloud Run and smoke test | `deploy/2026-10-26T1836-40378412139` | Both smoke answers correct |
 | Kill-switch drill | `kill-switch-drill/2026-10-26T1801-40373329212` | Failed, see below |
+| Kill-switch drill after both fixes | `kill-switch-drill/2026-10-26T2035-40396931372` | `WOULD DETACH billing from belegt-pk-2610` |
 
 ## Warehouse (BigQuery)
 
@@ -60,4 +61,8 @@ detached:
    `TypeError` (fixed in #16).
 2. The function's identity could not read the project's billing info: `getProjectBillingInfo`
    needs `resourcemanager.projects.get` on the project, and the billing-account role does not
-   include it (fixed by granting `roles/browser` on the project).
+   include it (fixed by granting `roles/browser` on the project in #17).
+
+After #17 the drill reads the project's billing info and confirms the identity holds
+`billing.resourceAssociations.delete` on the billing account, so a real budget message at
+0.60 EUR would detach billing.

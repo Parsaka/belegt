@@ -19,7 +19,7 @@ Every phase is merged. The first full production run is measured in
 
 | Phase | Running in the cloud |
 |---|---|
-| 0 | Budget, alerts, BigQuery quota and kill switch applied. The drill found two defects in the kill switch; both are fixed and the drill re-runs after every Infra apply. |
+| 0 | Budget, alerts, BigQuery quota and kill switch applied. The drill found two defects in the kill switch; after both fixes it reports `WOULD DETACH`, and it re-runs after every Infra apply. |
 | 1 | dbt on BigQuery: 58 of 58 nodes pass on the full data |
 | 2 | GKE Autopilot Indexed Job: 6 of 6 reports parsed |
 | 3 | RAG eval on BigQuery: 0 cross-tenant leaks |
