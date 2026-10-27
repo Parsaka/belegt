@@ -29,7 +29,7 @@ What runs where is in [docs/roadmap.md](docs/roadmap.md#status-2026-10-26).
 | Models | dbt | Star schema, SCD2 legal entities, time-bounded ownership bridge, entity resolution, consistency checks |
 | Parallel work | Kubernetes Indexed Job (GKE during the trial), Cloud Run job afterwards | One task per sustainability statement; tested on kind in CI |
 | Documents | BigQuery `VECTOR_SEARCH`, row access policies | Cited answers per tenant; evals fail CI on any cross-tenant leak |
-| Semantic layer | LookML (Looker trial), Looker Studio (public) | Business definitions in code; the public dashboard |
+| Semantic layer | LookML (validated in CI), Looker Studio (public) | Business definitions in code; the public dashboard ([no Looker instance](docs/adr/0004-looker-trial-quota.md)) |
 | API | FastAPI on Cloud Run (min 0, max 1) | Bearer token per tenant, rate-limited |
 | Infra and CI/CD | Terraform, GitHub Actions with Workload Identity Federation | No keys anywhere; every apply is approved |
 
