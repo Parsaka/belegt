@@ -1,0 +1,12 @@
+.....................
+
+Average throughput: 17.1MiB/s
+raw.ets_emissions: 43272 rows
+raw.ets_operators: 2874 rows
+raw.eea_ets_links: 573 rows
+raw.eea_installations: 146 rows
+raw.eea_facilities: 43 rows
+raw.gleif_entities: 310257 rows
+raw.gleif_relationships: 33894 rows
+raw.reported_metrics: 44 rows
+raw.entity_matches: 1538 rows
