@@ -1,0 +1,7 @@
+  # google_bigquery_dataset_iam_member.looker_marts[0] will be created
+  # google_cloud_scheduler_job.looker_reaper[0] will be created
+  # google_looker_instance.trial[0] will be created
+  # google_project_iam_member.looker_jobs[0] will be created
+  # google_project_iam_member.looker_reaper[0] will be created
+  # google_service_account.looker_reaper[0] will be created
+Plan: 6 to add, 0 to change, 0 to destroy.
