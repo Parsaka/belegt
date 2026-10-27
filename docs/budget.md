@@ -52,8 +52,9 @@ console) and is published weekly by `.github/workflows/cost.yml`.
 
 ## Known traps
 
-- **Looker trial:** after 30 days it converts automatically to a paid Standard instance.
-  A scheduled job deletes it on day 25, and Terraform refuses to keep or recreate it after that
+- **Looker trial:** the plan assumed it converts to a paid Standard instance after 30 days; the
+  current trial edition (`LOOKER_CORE_TRIAL_STANDARD`) is documented as valid for 90 days, after
+  which it must be deleted or replaced. Either way, a scheduled job deletes it on day 25, and Terraform refuses to keep or recreate it after that
   date (`infra/README.md`, Looker trial).
 - **Cloud SQL (not used):** even when stopped, 10 GB of storage costs about 1.70 USD per month, which is
   above the limit. Vectors move to BigQuery before the trial ends.

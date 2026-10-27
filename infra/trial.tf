@@ -41,9 +41,11 @@ locals {
 resource "google_looker_instance" "trial" {
   count = local.looker_enabled ? 1 : 0
 
-  name             = "belegt"
-  region           = var.region
-  platform_edition = "LOOKER_CORE_TRIAL"
+  name   = "belegt"
+  region = var.region
+  # The docs now list only Standard, Enterprise and Embed trial editions. Creating the older
+  # LOOKER_CORE_TRIAL failed on 2026-10-27 with 429 "AllocateQuota failed ... trial_instances".
+  platform_edition = "LOOKER_CORE_TRIAL_STANDARD"
 
   oauth_config {
     client_id     = var.looker_oauth_client_id
