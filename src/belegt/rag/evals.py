@@ -2,8 +2,8 @@
 
 A case names a tenant, a question and what must happen:
 
-- `expect: answer` with the document (`doc`) that must be cited and, optionally, a phrase the
-  answer must contain;
+- `expect: answer` with the document (`doc`) that must be cited and, optionally, the pages
+  (`pages`) one citation must point to and a phrase the answer must contain;
 - `expect: abstain` when the answer is not in what this tenant may see. Questions about another
   tenant's documents are abstain cases: answering them is a leak.
 
@@ -18,6 +18,7 @@ from collections.abc import Iterable
 from dataclasses import dataclass
 from pathlib import Path
 
+from belegt.documents.chunking import doc_of, page_of
 from belegt.documents.model import SHARED_TENANT
 from belegt.rag.answer import Answerer
 
@@ -30,6 +31,11 @@ class Case:
     expect: str  # "answer" or "abstain"
     doc: str | None = None
     contains: str | None = None
+    pages: tuple[int, ...] | None = None
+
+    def __post_init__(self) -> None:
+        if self.pages is not None:  # JSON gives a list
+            object.__setattr__(self, "pages", tuple(self.pages))
 
 
 @dataclass(frozen=True)
@@ -50,10 +56,6 @@ def read_cases(path: Path) -> list[Case]:
     return cases
 
 
-def doc_of(chunk_id: str) -> str:
-    return chunk_id.split(":", 1)[0]
-
-
 def judge(
     case: Case, text: str, abstained: bool, citations: list[str], owners: dict[str, str]
 ) -> Outcome:
@@ -67,6 +69,10 @@ def judge(
         return Outcome(case, False, True, docs, False, "abstained")
     if case.doc not in docs:
         return Outcome(case, False, False, docs, False, f"did not cite {case.doc}")
+    cited_pages = {page_of(c) for c in citations if doc_of(c) == case.doc}
+    if case.pages and not cited_pages & set(case.pages):
+        cited = ", ".join(f"p.{p}" for p in sorted(p for p in cited_pages if p is not None))
+        return Outcome(case, False, False, docs, False, f"cited {cited}, not p.{case.pages[0]}")
     if case.contains and case.contains.lower() not in text.lower():
         return Outcome(case, False, False, docs, False, f"answer lacks {case.contains!r}")
     return Outcome(case, True, False, docs, False, "")
