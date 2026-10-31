@@ -20,7 +20,7 @@ A personal portfolio project (Parsa Kamali). Not investment, audit or legal advi
 |---|---|
 | **Dashboard** | [Looker Studio report](https://lookerstudio.google.com/reporting/8653329c-9086-4395-9526-c577d32895fb): groups, reported vs verified, installations map ([about it](docs/dashboard.md)) |
 | **Data model** | [ERD and modelling decisions](docs/erd.md) · [dbt docs with lineage](https://parsaka.github.io/belegt/) |
-| **Measured results** | [Production run](docs/measurements/production.md) · [full data](docs/measurements/full-data.md) · [entity resolution](docs/measurements/entity-resolution.md) · [extraction accuracy](docs/measurements/extraction.md) |
+| **Measured results** | [Production run](docs/measurements/production.md) · [full data](docs/measurements/full-data.md) · [entity resolution](docs/measurements/entity-resolution.md) · [extraction accuracy](docs/measurements/extraction.md) · [assistant on reports](docs/measurements/assistant-reports.md) |
 | **Decisions** | [ADRs](docs/adr/) · [budget](docs/budget.md) · [data sources and licences](docs/data-sources.md) |
 
 ![Groups page of the dashboard](docs/img/1-groups-top.jpg)
@@ -34,7 +34,7 @@ A personal portfolio project (Parsa Kamali). Not investment, audit or legal advi
 | dbt on BigQuery | 65 of 65 nodes pass on the full data (models, seeds, SCD2 snapshot, tests) |
 | Sustainability statements | Scope 1-3 extraction on 37 DAX/MDAX reports against 148 hand labels: 82.7 % precision, 70.5 % recall; 80.8 % precision on the 22 held-out reports ([method](docs/measurements/extraction.md)) |
 | Parsing at scale | 6 of 6 reports parsed in parallel by a Kubernetes Indexed Job on GKE Autopilot; Scope 1 checked against the ETS sum per group |
-| Document assistant | 0 cross-tenant leaks in the isolation eval; unanswerable questions are declined |
+| Document assistant | On 37 real reports: 19 of 31 Scope 1 questions answered with the printed figure and a citation on the right page, 31 of 31 cross-tenant questions declined, 0 leaks ([method](docs/measurements/assistant-reports.md)) |
 | API on Cloud Run | 3.34 s cold, 1.33 s warm (min 0, max 1 instances) |
 | Cost | October 2026: 0.00 EUR net (all usage covered by the trial credit); hard cap 1.00 EUR per month |
 | Kill switch | Drill confirms it would detach billing (`WOULD DETACH`) |
