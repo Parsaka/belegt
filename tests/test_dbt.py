@@ -172,3 +172,8 @@ def test_installations_without_an_eea_point_get_their_postcode_centre(warehouse)
         "and not (lat between 47 and 55.1 and lon between 5.8 and 15.1)",
     )
     assert bad == [(0,)]
+
+
+def test_states_use_the_official_german_names(warehouse):
+    states = {s for (s,) in query(warehouse, "select distinct state from marts.dim_installation")}
+    assert "Bayern" in states and not {"Bavaria", "Lower Saxony", "Saxony-Anhalt"} & states

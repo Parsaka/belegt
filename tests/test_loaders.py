@@ -141,7 +141,7 @@ def test_a_postcode_with_several_places_gets_their_mean_point():
     ]
     out = {p.postcode: p for p in geonames.parse_lines(lines)}
     assert (out["99999"].place, out["99999"].lat, out["99999"].lon) == ("A-Dorf", 50.5, 10.5)
-    assert out["01067"].state == "Sachsen"
+    assert (out["01067"].state, out["01067"].state_code) == ("Sachsen", "SN")
 
 
 def test_fixture_postcodes_cover_the_operators():

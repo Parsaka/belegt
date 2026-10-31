@@ -59,3 +59,8 @@ seeds:
       - unique_combination:
           arguments:
             columns: [doc_id, metric]
+  - name: states
+    description: The 16 German Länder by GeoNames admin1 code, with the official German name.
+    columns:
+      - name: state_code
+        tests: [unique, not_null]

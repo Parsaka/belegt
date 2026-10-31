@@ -14,14 +14,15 @@ from pathlib import Path
 
 # country, postal code, place, admin1 name, admin1 code, admin2 name, admin2 code,
 # admin3 name, admin3 code, latitude, longitude, accuracy
-_POSTCODE, _PLACE, _STATE, _LAT, _LON = 1, 2, 3, 9, 10
+_POSTCODE, _PLACE, _STATE, _STATE_CODE, _LAT, _LON = 1, 2, 3, 4, 9, 10
 
 
 @dataclass(frozen=True)
 class Postcode:
     postcode: str
     place: str
-    state: str | None
+    state: str | None  # as GeoNames writes it, English or German ("Bavaria", "Hessen")
+    state_code: str | None  # two letters, e.g. BY; dbt maps it to the official name
     lat: float
     lon: float
 
@@ -37,6 +38,7 @@ def parse_lines(lines: Iterable[str]) -> Iterator[Postcode]:
             postcode=code,
             place=rows[0][_PLACE].strip(),
             state=rows[0][_STATE].strip() or None,
+            state_code=rows[0][_STATE_CODE].strip() or None,
             lat=round(sum(float(r[_LAT]) for r in rows) / len(rows), 5),
             lon=round(sum(float(r[_LON]) for r in rows) / len(rows), 5),
         )

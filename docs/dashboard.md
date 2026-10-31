@@ -38,11 +38,12 @@ emissions vs. company-reported Scope 1, German groups", and a footer with source
 |---|---|---|---|
 | Groups | `mart_group_emissions` | Year (default 2025) and group filters, KPIs, top 15 groups in Mt, table with LEI | 609 groups, 248.8 Mt CO2e, 1,392 installations (2025) |
 | Reported vs verified | `mart_scope1_consistency` | Reported (grey) vs ETS (green) per report, explanation, table with page and quote, red/green status | 6 reports, 0 contradictions, mean ETS share 53 % |
-| Installations | `dim_installation` | Map coloured by `match_decision`, kind and match filters, table | 2,195 stationary installations |
+| Installations | `dim_installation` | Map coloured by `match_decision`; kind, match, state and location-source filters; table | 2,195 stationary installations, 2,149 accounts on the map (49 exact, 2,100 at a postcode centre) |
 
 Known gaps visible in the report:
 
-- Only 49 of 2,398 installations have EEA coordinates, so the map is sparse.
+- Only 49 installations have an exact EEA point; the others sit at the centre of their
+  registry contact postcode (GeoNames), which is approximate and says so under the map.
 - ETS covers German installations only, so a group's ETS share of its global Scope 1 can be
   small (Heidelberg Materials 4.9 %) without being a contradiction.
 - The year control defaults to one year: group installation counts would otherwise add up
