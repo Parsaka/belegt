@@ -1,0 +1,97 @@
+doc_id,metric,value_t,pages,figure,quote,split,note
+basf-2024,scope1,15552000,54,15.552,Gross Scope 1 emissions 15.552 15.216 15.562 – 0% – 18.583 – – – –,dev,
+basf-2024,scope2_location,3564000,54,3.564,Gross location-based Scope 2 emissions 3.564 3.631 3.317 – +7% – 3.747 – – – –,dev,
+basf-2024,scope2_market,2396000,54,2.396,Gross market-based Scope 2 emissions 2.396 2.460 2.340 – +2% – 4.067 – – – –,dev,
+basf-2024,scope3,91640000,54,91.64,Total gross Scope 3 emissions 91.64 94.49 – – – – – – – – –,dev,
+covestro-2024,scope1,1014000,160,1.014,Gross Scope 1 GHG emissions 1.25 0.93 1.014 9%,dev,columns base year 2023 2024
+covestro-2024,scope2_location,4320000,160,4.32,Gross location-based Scope 2 GHG emissions 4.48 4.10 4.32 5%,dev,
+covestro-2024,scope2_market,3840000,160,3.84,Gross market-based Scope 2 GHG emissions 4.33 4.18 3.84 –8%,dev,
+covestro-2024,scope3,17980000,160,17.98,Gross Scope 3 GHG emissions 21.84 15.75 17.98 14%,dev,
+enbw-2024,scope1,8862000,159,8.862,"Scope-1-Emissionen EnBW-Konzern 4 Tsd. t CO2eq 8.862 10.923 -2.061 -18,9 %",dev,
+enbw-2024,scope2_location,1247000,159,1.247,"Standortbezogene Scope-2-THG-Bruttoemissionen Tsd. t CO2eq 1.247 1.438 -191 -13,3 %",dev,
+enbw-2024,scope2_market,691000,159,691,"Marktbezogene Scope-2-THG-Bruttoemissionen Tsd. t CO2eq 691 789 -98 -12,4 %",dev,
+enbw-2024,scope3,30356000,159,30.356,"Scope-3-Emissionen EnBW-Konzern Tsd. t CO2eq 30.356 33.987 -3.613 -10,6 %",dev,the total row says Konzern rather than gesamt
+eon-2024,scope1,1980000,128;46;11,"1,98","Scope-1-Emissionen 1,98 2,01 -2% 3,98",dev,
+eon-2024,scope2_location,3660000,128;46;11,"3,66","Scope 2 Gesamt (standortbasiert) 3,66 3,46 6% 4,82",dev,
+eon-2024,scope2_market,6410000,128;46,"6,41","Scope 2 Gesamt (marktbasiert) 6,41 6,17 4% 5,73",dev,
+eon-2024,scope3,64970000,128;46,"64,97","Scope 3 Gesamt (standortbasiert) 64,97 70,69 -8% 120,27",dev,the E1-6 table gives the location-based total; p.46 also shows 60.06 market-based
+evonik-2024,scope1,3390000,137,"3,39","Summe Scope-1-Emissionen 3,89 3,39",dev,columns 2023 2024
+evonik-2024,scope2_location,1940000,137,"1,94","c Summe Scope-2-Emissionen, standortbezogen (2024): 1,94 Mio. t CO2e.",dev,given in a table footnote
+evonik-2024,scope2_market,1670000,137,"1,67","Summe Scope-2-Emissionen c 1,40 1,67",dev,electricity and steam together; the table's Scope 2 total is market-based
+evonik-2024,scope3,21600000,137,"21,6","Summe Scope-3-Emissionen d, e, f 18,9 21,6",dev,
+lanxess-2024,scope1,854000,136,854,Gross Scope 1 GHG emissions 939 854,dev,columns base year 2024; thousand metric tons
+lanxess-2024,scope2_location,1296000,136,"1,296","Location-based gross Scope 2 GHG emissions 1,514 1,296",dev,
+lanxess-2024,scope2_market,1033000,136,"1,033","Market-based gross Scope 2 GHG emissions 1,264 1,033",dev,
+lanxess-2024,scope3,10372000,136,"10,372","Total indirect gross (Scope 3) GHG emissions 14,745 10,372 11,000",dev,
+lufthansa-2024,scope1,29159000,163,"29,159","Gross Scope 1 GHG emissions in 1,000 tonnes CO2e 33,349 26,822 29,159 9%",dev,columns (2019) 2023 2024
+lufthansa-2024,scope2_location,124000,163,124,"Gross location-based Scope 2 GHG emissions in 1,000 tonnes CO2e 260 161 124 –23%",dev,
+lufthansa-2024,scope2_market,49000,163,49,"Gross market-based Scope 2 GHG emissions in 1,000 tonnes CO2e 200 91 49 –46%",dev,
+lufthansa-2024,scope3,13734000,163,"13,734","Total indirect (Scope 3) gross GHG emissions in 1,000 tonnes CO2e 10,589 10,063 13,734 36%",dev,
+rwe-2024,scope1,53242042,124,"53,242,042","Gross Scope 1 GHG emissions 85,736,423 53,242,042 n. a. n. a. n. a. n. a.",dev,first column is the 2022 base year
+rwe-2024,scope2_location,392956,124,"392,956","Gross location-based Scope2 GHG emissions 195,727 392,956 n. a. n. a. n. a. n. a.",dev,
+rwe-2024,scope2_market,392956,124,"392,956","Gross market-based Scope2 GHG emissions 195,727 392,956 n. a. n. a. n. a. n. a.",dev,
+rwe-2024,scope3,21766996,124,"21,766,996","Total gross indirect (Scope 3) GHG emissions 22,151,605 21,766,996 n. a. 12,848,724 2,215,297 5.3%",dev,
+salzgitter-2024,scope1,10135000,160,10.135,Scope-1-THG-Bruttoemissionen (Tt CO2e) 10.724 0.35 6.900,dev,"text layer: the 2024 column reads ""0.35""; printed figure as in the company's published ESG key figures"
+salzgitter-2024,scope2_location,338000,160,338,Standortbezogene Scope-2-THG-Bruttoemissionen (Tt CO2e) 366 338,dev,
+salzgitter-2024,scope2_market,279000,160,279,Marktbezogene Scope-2-THG-Bruttoemissionen (Tt CO2e) 531 79 0,dev,"text layer: the 2024 column reads ""79""; printed figure as in the company's published ESG key figures"
+salzgitter-2024,scope3,17048000,160,17.048,Gesamte indirekte (Scope-3)THG-Bruttoemissionen (Tt CO2e) 21.460 7.048 17.600,dev,"text layer: the 2024 column reads ""7.048""; printed figure as in the company's published ESG key figures"
+thyssenkrupp-2025,scope1,19800000,123,19.8,Gross Scope 1 GHG emissions 24.2 19.8,dev,first column is the 2017/2018 base year
+thyssenkrupp-2025,scope2_location,1100000,123,1.1,Gross location-based Scope 2 GHG emissions 0.9 1.1,dev,
+thyssenkrupp-2025,scope2_market,1200000,123,1.2,Gross market-based Scope 2 GHG emissions 1.1 1.2,dev,
+thyssenkrupp-2025,scope3,186000000,123,186.0,Gross Scope 3 GHG emissions 3) 469.1 186.0 328.4 46.9 (2.5)%,dev,
+wacker-2024,scope1,1212000,159,"1,212","Scope 1 GHG gross emissions (kt CO2e) 1,285 1,368 1,212 –11 – – – –",dev,columns (2020) 2023 2024
+wacker-2024,scope2_location,1311000,159,"1,311","Location-based Scope 2 GHG gross emissions (kt CO2e) 1,579 1,368 1,311 –4 – – – –",dev,
+wacker-2024,scope2_market,1317000,159,"1,317","Market-based Scope 2 GHG gross emissions (kt CO2e) 2,340 1,387 1,317 –5 – – – –",dev,
+wacker-2024,scope3,6052000,160,"6,052","GHG gross emissions (kt CO2e) 7,713 5,358 6,052 13 – – – –",dev,row label 'Total indirect (Scope 3)' on the line above
+bayer-2024,scope1,1880000,148;150,1.88,Gross Scope 1 GHG emissions 2 2.08 1.89 1.88 –0.5 – – – – –,test,columns 2019 (base year) 2023 2024; million t CO2e
+bayer-2024,scope2_location,1650000,148,1.65,emissions 1.79 1.66 1.65 –0.6 – – – – –,test,row label on the line above
+bayer-2024,scope2_market,1080000,148;150,1.08,Gross market-based Scope 2 GHG emissions 1.71 1.12 1.08 –3.6 – – – – –,test,
+bayer-2024,scope3,8380000,148,8.38,Gross Scope 3 GHG emissions 3 9.99 9.18 8.38 –8.7 – – – – –,test,
+beiersdorf-2024,scope1,73072,75,"73,072","Gross Scope 1 GHG emissions tCO2e 44,537 24,729 62,682 48,107 107,219 73,072",test,"columns Consumer, tesa, Group, each 2018 (base year) and 2024: the group's 2024 figure is last"
+beiersdorf-2024,scope2_location,82059,75,"82,059","Gross location-based Scope 2 GHG emissions tCO2e 60,132 55,659 23,757 26,502 83,889 82,059",test,
+beiersdorf-2024,scope2_market,1745,75,"1,745","Gross market-based Scope 2 GHG emissions tCO2e 16,187 1,464 16,616 281 32,803 1,745",test,
+beiersdorf-2024,scope3,2040295,75,"2,040,295","Total significant Scope 3 GHG emissions tCO2e 1,902,600 1,533,218 506,723 507,077 2,409,323 2,040,295",test,
+brenntag-2024,scope1,185546,111,"185,546","Scope 1 GHG emissions (t CO2e) 185,546 194,390 -4.5% 182,805 127,501 18,699",test,"columns 2024, 2023 (base year), then targets"
+brenntag-2024,scope2_location,48317,111,"48,317","(t CO2e) 48,317 49,017 -1.4%",test,row label on the line above
+brenntag-2024,scope2_market,8127,111,"8,127","(t CO2e) 8,127 12,530 -35.1% 1,933 1,933 1,933",test,row label on the line above
+brenntag-2024,scope3,29841798,111,"29,841,798","(t CO2e) 29,841,798 31,348,987 -4.8% 29,354,052 24,366,713 3,134,899 3.2%",test,row label on the line above
+daimler-truck-2024,scope1,349000,93,349,Scope 1 GHG gross emissions3 349 389,test,"the text layer lists 2024 before the 2021 base year: 349 + 219 = 568, the 2024 total"
+daimler-truck-2024,scope2_location,514000,93,514,"Scope 2, location-based 514 536",test,
+daimler-truck-2024,scope2_market,219000,93,219,"Scope 2, market-based4 219 241",test,
+daimler-truck-2024,scope3,388247000,93,"388,247","Total Gross significant indirect Scope 3 GHG emissions 388,247",test,thousand t CO2e
+dhl-2024,scope1,7660000,78,7.66,Gross Scope 1 GHG emissions (in million metric tons of CO2e) 7.31 8.25 7.66 –7.2,test,columns 2021 base year 2023 2024
+dhl-2024,scope2_location,730000,78,0.73,Gross location-based Scope 2 GHG emissions (in million metric tons of CO2e) 0.87 0.67 0.73 9.0,test,label unit and figures on three lines
+dhl-2024,scope2_market,80000,78,0.08,Gross market-based Scope 2 GHG emissions (in million metric tons of CO2e) 0.22 0.05 0.08 60.0,test,
+dhl-2024,scope3,32030000,78,32.03,Total gross indirect (Scope 3) GHG emissions (in million metric tons of CO2e) 38.49 30.85 32.03 3.8,test,
+hapag-lloyd-2024,scope1,15300306.1,175,"15,300,306.1","Gross Scope 1 GHG emissions 15,300,306.1 15,262,925.1 37,381.0",test,"columns 2024 total, then its two segments"
+hapag-lloyd-2024,scope2_location,20111.7,175,"20,111.7","Gross location-based Scope 2 GHG emissions 20,111.7 10,991.6 9,120.0",test,
+hapag-lloyd-2024,scope2_market,1023.0,175,"1,023.0","Gross market-based Scope 2 GHG emissions 1 1,023.0 1,023.0 -",test,
+hapag-lloyd-2024,scope3,21030667.9,175,"21,030,667.9","Gross Scope 3 greenhouse gas emissions 21,030,667.9 20,841,739.0 188,928.9",test,
+mercedes-benz-2024,scope1,600000,154,0.6,Greenhouse gas emissions – Scope 1 (in million t CO2e) 0.6,test,
+mercedes-benz-2024,scope2_location,1000000,154,1.0,Greenhouse gas emissions – Scope 2 – location-based 1.0,test,
+mercedes-benz-2024,scope2_market,100000,154,0.1,Greenhouse gas emissions – Scope 2 – market-based 0.1,test,
+mercedes-benz-2024,scope3,128900000,154,128.9,Greenhouse gas emissions – Scope 3 128.9,test,
+merck-2024,scope1,858053,178,858.053,"Scope-1-THG-Bruttoemissionen 1.827.123 858.053 913.561 5,0",test,columns 2020 (base year) 2024 2030 (target)
+merck-2024,scope2_location,385483,178,385.483,Standortbezogene Scope -2-THG-Bruttoemissionen 381.640 385.483,test,
+merck-2024,scope2_market,227070,178,227.070,"Marktbezogene Scope-2-THG-Bruttoemissionen 324.698 227.070 162.349 5,0",test,
+merck-2024,scope3,4482938,178,4.482.938,Gesamte indirekte (Scope -3-)THG-Bruttoemissionen 1 5.104.508 4.482.938,test,
+rheinmetall-2024,scope1,139801,127,"139,801","Gross Scope 1 GHG emissions 114,005 129,800 139,801 0.1 - - -",test,"columns 2022 2023 2024 (the header years carry footnote digits: 20221,2 20231,2,3 20244)"
+rheinmetall-2024,scope2_location,152924,127,"152,924","Gross location-based Scope 2 GHG emissions 131,728 133,768 152,924 0.1 - - -",test,
+rheinmetall-2024,scope2_market,69897,127,"69,897","Gross market-based Scope 2 GHG emissions 132,821 68,896 69,897 0.0 - - -",test,
+rheinmetall-2024,scope3,5838481,127,"5,838,481","Total Gross indirect (Scope 3) GHG emissions 5,965,213 5,965,213 5,838,481 (0.0) - - -",test,
+schaeffler-2024,scope1,194982,126,"194,982","Gross Scope 1 GHG emissions 1) t CO2eq 194,982",test,
+schaeffler-2024,scope2_location,897551,126,"897,551","Gross location- based Scope 2 GHG emissions 1) t CO2eq 897,551",test,
+schaeffler-2024,scope2_market,3486,126,"3,486","Gross market- based Scope 2 GHG emissions 1) t CO2eq 3,486",test,
+schaeffler-2024,scope3,13890930,126,"13,890,930","Total gross indirect (Scope 3) GHG emissions t CO2eq 13,890,930",test,
+siemens-energy-2024,scope1,175000,2,175,"Scope 1² Total Fiscal year 1,000 metric tons CO 2e 175 160",test,"a performance-indicator overview, columns 2024 2023; 1,000 t CO2e"
+siemens-energy-2024,scope2_location,,,,,test,only market-based Scope 2 is reported
+siemens-energy-2024,scope2_market,22000,2,22,"Scope 2² Total (market-based) Fiscal year 1,000 metric tons CO 2e 22 20",test,
+siemens-energy-2024,scope3,1342880000,2,"1,342,880","Scope 3 up- and downstream Total Fiscal year 1,000 metric tons CO 2e 1,342,880 1,107,600",test,
+suedzucker-2025,scope1,2722192,37,"2,722,192","Scope 1 gross GHG emissions 3,034,307 2,722,192",test,"columns base year, 2024/25"
+suedzucker-2025,scope2_location,446746,37,"446,746","Gross location-based Scope 2 GHG emissions 826,133 446,746",test,
+suedzucker-2025,scope2_market,344803,37,"344,803","Gross market-based Scope 2 GHG emissions 630,636 344,803",test,
+suedzucker-2025,scope3,7977385,37,"7,977,385","Total Gross indirect (Scope 3) GHG emissions 2 8,201,684 7,977,385 5,741,179 70.0",test,
+telekom-2024,scope1,236355,135,"236,355","of which: t CO2e emissions Scope 1 236,355 239,602",test,
+telekom-2024,scope2_location,4002218,135,"4,002,218","t CO2e emissions Scope 2 (location-based) 4,002,218 3,979,565",test,
+telekom-2024,scope2_market,16212,135,"16,212","of which: t CO2e emissions Scope 2 (market-based) 16,212 17,957",test,
+telekom-2024,scope3,10141734,135,"10,141,734","t CO2e emissions Scope 3 (total) 10,141,734 10,360,124",test,

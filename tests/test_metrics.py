@@ -233,3 +233,90 @@ def test_fiscal_year_columns_and_mt_units():
 
 def test_a_scope_3_category_is_not_the_total():
     assert metric_of("Gross Scope 3 GHG emissions category 1 purchased goods 12.0") is None
+
+
+# Layouts from the dev split of the hand-labelled evaluation (evals/reported_metrics.csv)
+
+COVESTRO_P160 = """Covestro Annual Report 2024
+GHG emissions (million metric tons of CO2equivalents)1, 2
+Base year3 2023 2024 Change 2030 2035 2050
+Scope 1 GHG emissions
+Gross Scope 1 GHG emissions 1.25 0.93 1.014 9%
+Gross location-based Scope 2 GHG emissions 4.48 4.10 4.32 5%
+Gross market-based Scope 2 GHG emissions 4.33 4.18 3.84 –8%
+Gross Scope 3 GHG emissions 21.84 15.75 17.98 14%
+"""
+
+WACKER_P159 = """Wacker Chemie AG Annual Report 2024 159
+(2020) 2023 2024
+2024/2023 2025 2030 2045
+Scope 1 GHG gross emissions (kt CO2e) 1,285 1,368 1,212 –11 – – – –
+Location-based Scope 2
+GHG gross emissions (kt CO2e) 1,579 1,368 1,311 –4 – – – –
+"""
+
+LUFTHANSA_P163 = """T058 ESRS E1-6 | AR48 GHG EMISSIONS IN 2024
+(2019)
+2023 2024 Change in % 2025 2030 Annual % of
+Gross Scope 1 GHG emissions in 1,000 tonnes CO2e 33,349 26,822 29,159 9% n/a n/a
+Gross market-based Scope 2 GHG emissions in 1,000 tonnes CO2e 200 91 49 –46% n/a n/a
+"""
+
+LANXESS_P136 = """We report Scope 1 emissions in metric tons CO2e of the consolidated companies.
+Gross Scopes 1, 2, 3 and Total GHG emissions
+in thousand metric tons CO2e Base year 2024 2030 2040 2050
+Gross Scope 1 GHG emissions 939 854
+Location-based gross Scope 2 GHG emissions 1,514 1,296
+Total indirect gross (Scope 3) GHG emissions 14,745 10,372 11,000
+"""
+
+RHEINMETALL_P127 = """tonnes CO2e Retrospective Actual Milestones and target years5
+20221,2 20231,2,3 20244
+Gross Scope 1 GHG emissions 114,005 129,800 139,801 0.1 - - -
+Gross market-based Scope 2 GHG emissions 132,821 68,896 69,897 0.0 - - -
+"""
+
+
+def selected(doc: str, number: int, text: str, comma: bool = False) -> dict[str, float | None]:
+    rows = extract([Page(doc, number, text)], comma, report_year=2024)
+    return {m.metric: m.value_t for m in rows if m.selected}
+
+
+def test_a_base_year_column_without_a_year_holds_its_place():
+    assert selected("covestro-2024", 160, COVESTRO_P160) == {
+        "scope1": 1_014_000,
+        "scope2_location": 4_320_000,
+        "scope2_market": 3_840_000,
+        "scope3": 17_980_000,
+    }
+    assert selected("lanxess-2024", 136, LANXESS_P136)["scope1"] == 854_000
+
+
+def test_a_change_column_does_not_restart_the_header():
+    assert selected("wacker-2024", 159, WACKER_P159) == {
+        "scope1": 1_212_000,
+        "scope2_location": 1_311_000,
+    }
+
+
+def test_thousand_tonnes_written_as_1000_is_a_unit_not_a_column():
+    assert selected("lufthansa-2024", 163, LUFTHANSA_P163) == {
+        "scope1": 29_159_000,
+        "scope2_market": 49_000,
+    }
+
+
+def test_the_unit_above_the_table_wins_over_one_in_the_prose_before_it():
+    assert selected("lanxess-2024", 136, LANXESS_P136)["scope3"] == 10_372_000
+
+
+def test_footnote_digits_glued_to_header_years():
+    assert selected("rheinmetall-2024", 127, RHEINMETALL_P127) == {
+        "scope1": 139_801,
+        "scope2_market": 69_897,
+    }
+
+
+def test_a_group_or_sum_row_is_the_scope_3_total():
+    assert metric_of("Scope-3-Emissionen EnBW-Konzern Tsd. t CO2eq 30.356 33.987") == "scope3"
+    assert metric_of("Summe Scope-3-Emissionen d, e, f 18,9 21,6") == "scope3"

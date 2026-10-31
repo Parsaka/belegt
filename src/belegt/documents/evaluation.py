@@ -4,7 +4,10 @@
 report's greenhouse-gas table (E1-6 or the pre-CSRD equivalent): the value in tonnes for the
 reporting year, the PDF pages that state it (the E1-6 table first; some reports repeat the
 figure in a summary table), the figure as printed, and the table line. An empty value means
-the report states no such figure, so the extractor must not select one either.
+the report states no such figure, so the extractor must not select one either. A note starting
+with "text layer:" marks a row whose PDF text is garbled: the figure then comes from the
+printed page (as published elsewhere by the company), and the quote is the garbled line the
+extractor reads.
 
 Each report belongs to one split:
 
@@ -42,6 +45,12 @@ class Label:
     figure: str  # as printed, e.g. "1.014" or "8.862"
     quote: str
     split: str
+    note: str = ""
+
+    @property
+    def readable(self) -> bool:
+        """False when the PDF text layer garbles the printed figure."""
+        return not self.note.startswith("text layer:")
 
     @property
     def page(self) -> int | None:
@@ -77,7 +86,9 @@ def read_labels(path: Path) -> list[Label]:
             pages = tuple(int(p) for p in row["pages"].split(";") if p)
             if value is not None and not (pages and row["figure"] and row["quote"]):
                 raise ValueError(f"{row['doc_id']} {row['metric']}: a value needs its page")
-            if value is not None and row["figure"] not in row["quote"]:
+            note = (row.get("note") or "").strip()
+            garbled = note.startswith("text layer:")
+            if value is not None and not garbled and row["figure"] not in row["quote"]:
                 raise ValueError(f"{row['doc_id']} {row['metric']}: figure not in its line")
             labels.append(
                 Label(
@@ -88,6 +99,7 @@ def read_labels(path: Path) -> list[Label]:
                     row["figure"],
                     row["quote"],
                     row["split"],
+                    note,
                 )
             )
     keys = [(label.doc_id, label.metric) for label in labels]

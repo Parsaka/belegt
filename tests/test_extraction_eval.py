@@ -98,7 +98,8 @@ def test_labels_cover_seed_reports_once_each(tmp_path):
     for lab in labels:
         assert len(lab.quote) <= 200  # a table line, never more of the copyrighted report
         if lab.value_t is not None:
-            assert lab.value_t > 0 and lab.page and lab.page > 0 and lab.figure in lab.quote
+            assert lab.value_t > 0 and lab.page and lab.page > 0
+            assert lab.figure in lab.quote or not lab.readable
     # every labelled report has all four metrics, so a missing figure is a decision, not a gap
     by_doc: dict[str, set[str]] = {}
     for lab in labels:
@@ -111,3 +112,17 @@ def test_read_labels_rejects_a_value_without_page(tmp_path):
     path.write_text("doc_id,metric,value_t,pages,figure,quote,split\nacme,scope1,5,,5,x 5,dev\n")
     with pytest.raises(ValueError, match="needs its page"):
         read_labels(path)
+
+
+def test_a_garbled_line_keeps_the_printed_figure_with_a_note(tmp_path):
+    path = tmp_path / "labels.csv"
+    path.write_text(
+        "doc_id,metric,value_t,pages,figure,quote,split,note\n"
+        'acme,scope1,10135000,160,10.135,Scope 1 10.724 0.35,dev,"text layer: 0.35"\n'
+        "acme,scope3,5,160,5,Scope 3 7,dev,\n"
+    )
+    with pytest.raises(ValueError, match="figure not in its line"):
+        read_labels(path)
+    path.write_text("\n".join(path.read_text().splitlines()[:2]) + "\n")
+    (lab,) = read_labels(path)
+    assert not lab.readable and lab.value_t == 10_135_000
