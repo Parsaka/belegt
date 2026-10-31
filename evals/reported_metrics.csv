@@ -47,10 +47,10 @@ rwe-2024,scope1,53242042,124,"53,242,042","Gross Scope 1 GHG emissions 85,736,42
 rwe-2024,scope2_location,392956,124,"392,956","Gross location-based Scope2 GHG emissions 195,727 392,956 n. a. n. a. n. a. n. a.",dev,
 rwe-2024,scope2_market,392956,124,"392,956","Gross market-based Scope2 GHG emissions 195,727 392,956 n. a. n. a. n. a. n. a.",dev,
 rwe-2024,scope3,21766996,124,"21,766,996","Total gross indirect (Scope 3) GHG emissions 22,151,605 21,766,996 n. a. 12,848,724 2,215,297 5.3%",dev,
-salzgitter-2024,scope1,10135000,160,10.135,Scope-1-THG-Bruttoemissionen (Tt CO2e) 10.724 0.35 6.900,dev,"text layer: the 2024 column reads ""0.35""; printed figure as in the company's published ESG key figures"
+salzgitter-2024,scope1,10135000,160,10.135,Scope-1-THG-Bruttoemissionen (Tt CO2e) 10.724 0.35 6.900,dev,"text layer: the 2024 column reads ""0.35""; the printed figure, cross-checked with the company's figures as republished on tracenable.com"
 salzgitter-2024,scope2_location,338000,160,338,Standortbezogene Scope-2-THG-Bruttoemissionen (Tt CO2e) 366 338,dev,
-salzgitter-2024,scope2_market,279000,160,279,Marktbezogene Scope-2-THG-Bruttoemissionen (Tt CO2e) 531 79 0,dev,"text layer: the 2024 column reads ""79""; printed figure as in the company's published ESG key figures"
-salzgitter-2024,scope3,17048000,160,17.048,Gesamte indirekte (Scope-3)THG-Bruttoemissionen (Tt CO2e) 21.460 7.048 17.600,dev,"text layer: the 2024 column reads ""7.048""; printed figure as in the company's published ESG key figures"
+salzgitter-2024,scope2_market,279000,160,279,Marktbezogene Scope-2-THG-Bruttoemissionen (Tt CO2e) 531 79 0,dev,"text layer: the 2024 column reads ""79""; the printed figure, cross-checked with the company's figures as republished on tracenable.com"
+salzgitter-2024,scope3,17048000,160,17.048,Gesamte indirekte (Scope-3)THG-Bruttoemissionen (Tt CO2e) 21.460 7.048 17.600,dev,"text layer: the 2024 column reads ""7.048""; the printed figure, cross-checked with the company's figures as republished on tracenable.com"
 thyssenkrupp-2025,scope1,19800000,123,19.8,Gross Scope 1 GHG emissions 24.2 19.8,dev,first column is the 2017/2018 base year
 thyssenkrupp-2025,scope2_location,1100000,123,1.1,Gross location-based Scope 2 GHG emissions 0.9 1.1,dev,
 thyssenkrupp-2025,scope2_market,1200000,123,1.2,Gross market-based Scope 2 GHG emissions 1.1 1.2,dev,
@@ -58,7 +58,7 @@ thyssenkrupp-2025,scope3,186000000,123,186.0,Gross Scope 3 GHG emissions 3) 469.
 wacker-2024,scope1,1212000,159,"1,212","Scope 1 GHG gross emissions (kt CO2e) 1,285 1,368 1,212 –11 – – – –",dev,columns (2020) 2023 2024
 wacker-2024,scope2_location,1311000,159,"1,311","Location-based Scope 2 GHG gross emissions (kt CO2e) 1,579 1,368 1,311 –4 – – – –",dev,
 wacker-2024,scope2_market,1317000,159,"1,317","Market-based Scope 2 GHG gross emissions (kt CO2e) 2,340 1,387 1,317 –5 – – – –",dev,
-wacker-2024,scope3,6052000,160,"6,052","GHG gross emissions (kt CO2e) 7,713 5,358 6,052 13 – – – –",dev,row label 'Total indirect (Scope 3)' on the line above
+wacker-2024,scope3,6052000,160;155,"6,052","GHG gross emissions (kt CO2e) 7,713 5,358 6,052 13 – – – –",dev,row label 'Total indirect (Scope 3)' on the line above; the target table on p.155 repeats it
 bayer-2024,scope1,1880000,148;150,1.88,Gross Scope 1 GHG emissions 2 2.08 1.89 1.88 –0.5 – – – – –,test,columns 2019 (base year) 2023 2024; million t CO2e
 bayer-2024,scope2_location,1650000,148,1.65,emissions 1.79 1.66 1.65 –0.6 – – – – –,test,row label on the line above
 bayer-2024,scope2_market,1080000,148;150,1.08,Gross market-based Scope 2 GHG emissions 1.71 1.12 1.08 –3.6 – – – – –,test,
