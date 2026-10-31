@@ -1,0 +1,3 @@
+{"doc_id": "bmw-2024", "metric": "scope1", "value_t": 42959.0, "page": 197, "unit_raw": "t", "quote": "Scope 1 42,959", "rows_on_page": 2, "selected": true, "column_year": null}
+{"doc_id": "bmw-2024", "metric": "scope2_market", "value_t": 21942.0, "page": 197, "unit_raw": "t", "quote": "Scope 2 (market-based)2 21,942", "rows_on_page": 2, "selected": true, "column_year": null}
+{"doc_id": "bmw-2024", "metric": "scope1", "value_t": 24000000.0, "page": 263, "unit_raw": "million tonnes", "quote": "CO2e emissions scope 1 and 24 million tonnes 0.810 Slight increase", "rows_on_page": 1, "selected": false, "column_year": null}
