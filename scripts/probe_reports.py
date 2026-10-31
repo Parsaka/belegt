@@ -3,7 +3,7 @@
     python scripts/probe_reports.py <dir with pdf/*.pdf> > probe.md
 
 Runs only on the CI runner, next to PDFs that never leave it. The output holds page numbers
-and, for at most four likely E1-6 table pages per report, up to 60 lines with figures (160
+and, for at most six likely E1-6 table pages per report, up to 80 lines with figures (160
 characters each): enough to label the table by hand (`evals/reported_metrics.csv`).
 """
 
@@ -45,7 +45,8 @@ def main(root: Path) -> None:
         # the pages with the most scope rows first: the E1-6 table is one of them
         dense = sorted((n for n, c in rows.items() if c >= 2), key=lambda n: -rows[n])[:4]
         # E1-6 mentions are mostly index tables; they only fill in when no page has a table
-        likely = sorted(dense) if dense else e16[:2]
+        # tables run over onto the next page (Scope 3 often sits there)
+        likely = sorted(set(dense) | {n + 1 for n in dense[:2]}) if dense else e16[:2]
         for page in (p for p in pages if p.number in likely):
             print(f"    p.{page.number} (lines with figures):")
             numeric = [
@@ -53,7 +54,7 @@ def main(root: Path) -> None:
                 for line in page.text.splitlines()
                 if re.search(r"\d", line)
             ]
-            for line in numeric[:60]:
+            for line in numeric[:80]:
                 print(f"      {line[:160]}")
         print()
 
