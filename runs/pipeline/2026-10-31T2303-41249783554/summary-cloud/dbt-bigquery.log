@@ -1,0 +1,232 @@
+[0m23:03:05  Running with dbt=1.13.0-b1
+[0m23:03:06  Registered adapter: bigquery=1.12.1
+[0m23:03:06  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m23:03:09  Found 17 models, 1 snapshot, 4 seeds, 43 data tests, 10 sources, 569 macros
+[0m23:03:09  
+[0m23:03:09  Concurrency: 4 threads (target='prod')
+[0m23:03:09  
+[0m23:03:10  1 of 65 START sql view model staging.stg_eea__installations .................... [RUN]
+[0m23:03:10  2 of 65 START sql view model staging.stg_ets__emissions ........................ [RUN]
+[0m23:03:10  3 of 65 START sql view model staging.stg_ets__operators ........................ [RUN]
+[0m23:03:10  4 of 65 START sql view model staging.stg_gleif__entities ....................... [RUN]
+[0m23:03:11  2 of 65 OK created sql view model staging.stg_ets__emissions ................... [[32mCREATE VIEW (0 processed)[0m in 0.89s]
+[0m23:03:11  4 of 65 OK created sql view model staging.stg_gleif__entities .................. [[32mCREATE VIEW (0 processed)[0m in 0.90s]
+[0m23:03:11  5 of 65 START sql view model staging.stg_gleif__relationships .................. [RUN]
+[0m23:03:11  6 of 65 START sql view model staging.stg_reported_metrics ...................... [RUN]
+[0m23:03:11  1 of 65 OK created sql view model staging.stg_eea__installations ............... [[32mCREATE VIEW (0 processed)[0m in 0.93s]
+[0m23:03:11  7 of 65 START seed file staging.entity_overrides ............................... [RUN]
+[0m23:03:11  3 of 65 OK created sql view model staging.stg_ets__operators ................... [[32mCREATE VIEW (0 processed)[0m in 0.96s]
+[0m23:03:11  8 of 65 START seed file staging.reported_overrides ............................. [RUN]
+[0m23:03:12  5 of 65 OK created sql view model staging.stg_gleif__relationships ............. [[32mCREATE VIEW (0 processed)[0m in 0.76s]
+[0m23:03:12  9 of 65 START seed file staging.reports ........................................ [RUN]
+[0m23:03:12  6 of 65 OK created sql view model staging.stg_reported_metrics ................. [[32mCREATE VIEW (0 processed)[0m in 0.77s]
+[0m23:03:12  10 of 65 START seed file staging.states ........................................ [RUN]
+[0m23:03:13  8 of 65 OK loaded seed file staging.reported_overrides ......................... [[32mINSERT 0[0m in 1.48s]
+[0m23:03:13  11 of 65 START sql table model marts.fct_verified_emissions .................... [RUN]
+[0m23:03:13  7 of 65 OK loaded seed file staging.entity_overrides ........................... [[32mINSERT 0[0m in 1.57s]
+[0m23:03:13  12 of 65 START test not_null_stg_gleif__entities_lei ........................... [RUN]
+[0m23:03:14  12 of 65 PASS not_null_stg_gleif__entities_lei ................................. [[32mPASS[0m in 1.35s]
+[0m23:03:14  13 of 65 START test unique_stg_gleif__entities_lei ............................. [RUN]
+[0m23:03:15  11 of 65 OK created sql table model marts.fct_verified_emissions ............... [[32mCREATE TABLE (43.3k rows, 1.6 MiB processed)[0m in 2.18s]
+[0m23:03:15  14 of 65 START test not_null_stg_eea__installations_ets_identifier ............. [RUN]
+[0m23:03:16  13 of 65 PASS unique_stg_gleif__entities_lei ................................... [[32mPASS[0m in 1.28s]
+[0m23:03:16  15 of 65 START test unique_stg_eea__installations_ets_identifier ............... [RUN]
+[0m23:03:16  9 of 65 OK loaded seed file staging.reports .................................... [[32mINSERT 37[0m in 3.92s]
+[0m23:03:16  16 of 65 START test not_null_stg_ets__operators_ets_identifier ................. [RUN]
+[0m23:03:16  10 of 65 OK loaded seed file staging.states .................................... [[32mINSERT 16[0m in 4.15s]
+[0m23:03:16  17 of 65 START test unique_stg_ets__operators_ets_identifier ................... [RUN]
+[0m23:03:16  14 of 65 PASS not_null_stg_eea__installations_ets_identifier ................... [[32mPASS[0m in 1.37s]
+[0m23:03:16  18 of 65 START test unique_combination_reported_overrides_doc_id__metric ....... [RUN]
+[0m23:03:17  BigQuery adapter: https://console.cloud.google.com/bigquery?project=belegt-pk-2610&j=bq:EU:2a29e501-42b7-413a-b2fc-6faef5a80a03&page=queryresults
+[0m23:03:17  16 of 65 ERROR not_null_stg_ets__operators_ets_identifier ...................... [[31mERROR[0m in 0.68s]
+[0m23:03:17  19 of 65 START test accepted_values_entity_overrides_decision__accepted__rejected  [RUN]
+[0m23:03:17  BigQuery adapter: https://console.cloud.google.com/bigquery?project=belegt-pk-2610&j=bq:EU:4383d798-4053-454a-a7bc-a78f81598505&page=queryresults
+[0m23:03:17  17 of 65 ERROR unique_stg_ets__operators_ets_identifier ........................ [[31mERROR[0m in 0.63s]
+[0m23:03:17  20 of 65 START test not_null_entity_overrides_source_name ...................... [RUN]
+[0m23:03:17  15 of 65 PASS unique_stg_eea__installations_ets_identifier ..................... [[32mPASS[0m in 1.38s]
+[0m23:03:17  21 of 65 START test unique_entity_overrides_source_name ........................ [RUN]
+[0m23:03:18  18 of 65 PASS unique_combination_reported_overrides_doc_id__metric ............. [[32mPASS[0m in 1.18s]
+[0m23:03:18  22 of 65 START test non_negative_fct_verified_emissions_verified_t ............. [RUN]
+[0m23:03:18  19 of 65 PASS accepted_values_entity_overrides_decision__accepted__rejected .... [[32mPASS[0m in 1.08s]
+[0m23:03:18  23 of 65 START test not_null_fct_verified_emissions_ets_identifier ............. [RUN]
+[0m23:03:18  20 of 65 PASS not_null_entity_overrides_source_name ............................ [[32mPASS[0m in 1.07s]
+[0m23:03:18  24 of 65 START test unique_combination_fct_verified_emissions_ets_identifier__reporting_year  [RUN]
+[0m23:03:18  21 of 65 PASS unique_entity_overrides_source_name .............................. [[32mPASS[0m in 1.09s]
+[0m23:03:18  25 of 65 START sql table model marts.bridge_ownership .......................... [RUN]
+[0m23:03:18  BigQuery adapter: https://console.cloud.google.com/bigquery?project=belegt-pk-2610&j=bq:EU:bead275f-0f62-497c-97ca-1e179a4095fa&page=queryresults
+[0m23:03:18  22 of 65 ERROR non_negative_fct_verified_emissions_verified_t .................. [[31mERROR[0m in 0.44s]
+[0m23:03:18  26 of 65 START snapshot snapshots.snap_gleif_entities .......................... [RUN]
+[0m23:03:18  BigQuery adapter: https://console.cloud.google.com/bigquery?project=belegt-pk-2610&j=bq:EU:7dd0892b-a5a2-40c2-b3ef-6211ea9f2f1d&page=queryresults
+[0m23:03:18  23 of 65 ERROR not_null_fct_verified_emissions_ets_identifier .................. [[31mERROR[0m in 0.34s]
+[0m23:03:18  27 of 65 START test not_null_reports_doc_id .................................... [RUN]
+[0m23:03:18  BigQuery adapter: https://console.cloud.google.com/bigquery?project=belegt-pk-2610&j=bq:EU:386e96cd-0210-470f-b5d0-123717986e45&page=queryresults
+[0m23:03:18  24 of 65 ERROR unique_combination_fct_verified_emissions_ets_identifier__reporting_year  [[31mERROR[0m in 0.41s]
+[0m23:03:18  28 of 65 START test not_null_reports_lei ....................................... [RUN]
+[0m23:03:19  BigQuery adapter: https://console.cloud.google.com/bigquery?project=belegt-pk-2610&j=bq:EU:a9f3b0c1-eca2-4770-8757-035c779b2012&page=queryresults
+[0m23:03:19  27 of 65 ERROR not_null_reports_doc_id ......................................... [[31mERROR[0m in 0.45s]
+[0m23:03:19  29 of 65 START test unique_reports_doc_id ...................................... [RUN]
+[0m23:03:19  BigQuery adapter: https://console.cloud.google.com/bigquery?project=belegt-pk-2610&j=bq:EU:080e48c7-ee62-441a-aebd-9f9af907b8fa&page=queryresults
+[0m23:03:19  28 of 65 ERROR not_null_reports_lei ............................................ [[31mERROR[0m in 0.45s]
+[0m23:03:19  30 of 65 START test not_null_states_state_code ................................. [RUN]
+[0m23:03:19  BigQuery adapter: https://console.cloud.google.com/bigquery?project=belegt-pk-2610&j=bq:EU:967c09d8-b5c5-4088-a847-1b2b28406bcf&page=queryresults
+[0m23:03:19  29 of 65 ERROR unique_reports_doc_id ........................................... [[31mERROR[0m in 0.36s]
+[0m23:03:19  31 of 65 START test unique_states_state_code ................................... [RUN]
+[0m23:03:19  BigQuery adapter: https://console.cloud.google.com/bigquery?project=belegt-pk-2610&j=bq:EU:a0992014-69b9-4186-b617-0f8d5dfa2c87&page=queryresults
+[0m23:03:19  25 of 65 ERROR creating sql table model marts.bridge_ownership ................. [[31mERROR[0m in 1.12s]
+[0m23:03:19  32 of 65 START sql view model staging.stg_entity_matches ....................... [RUN]
+[0m23:03:19  BigQuery adapter: https://console.cloud.google.com/bigquery?project=belegt-pk-2610&j=bq:EU:12e037ea-fe31-4426-a760-76d8f2076d1c&page=queryresults
+[0m23:03:19  30 of 65 ERROR not_null_states_state_code ...................................... [[31mERROR[0m in 0.41s]
+[0m23:03:19  33 of 65 SKIP relation marts.fct_reported_metric ............................... [[33mSKIP[0m]
+[0m23:03:19  34 of 65 SKIP test accepted_values_bridge_ownership_relationship_kind__direct__ultimate__self  [[33mSKIP[0m]
+[0m23:03:19  35 of 65 SKIP test no_overlapping_periods_bridge_ownership_ .................... [[33mSKIP[0m]
+[0m23:03:19  36 of 65 SKIP test accepted_values_fct_reported_metric_metric__scope1__scope2_market__scope2_location__scope3  [[33mSKIP[0m]
+[0m23:03:19  37 of 65 SKIP test non_negative_fct_reported_metric_value_t .................... [[33mSKIP[0m]
+[0m23:03:19  38 of 65 SKIP test not_null_fct_reported_metric_page ........................... [[33mSKIP[0m]
+[0m23:03:19  39 of 65 SKIP test unique_combination_fct_reported_metric_doc_id__metric ....... [[33mSKIP[0m]
+[0m23:03:19  BigQuery adapter: https://console.cloud.google.com/bigquery?project=belegt-pk-2610&j=bq:EU:78ff32a4-c934-4d41-98c6-b93a33894097&page=queryresults
+[0m23:03:19  31 of 65 ERROR unique_states_state_code ........................................ [[31mERROR[0m in 0.39s]
+[0m23:03:19  40 of 65 SKIP relation staging.stg_geonames__postcodes ......................... [[33mSKIP[0m]
+[0m23:03:19  41 of 65 SKIP test not_null_stg_geonames__postcodes_postcode ................... [[33mSKIP[0m]
+[0m23:03:19  42 of 65 SKIP test unique_stg_geonames__postcodes_postcode ..................... [[33mSKIP[0m]
+[0m23:03:19  BigQuery adapter: https://console.cloud.google.com/bigquery?project=belegt-pk-2610&j=bq:EU:cd7d53db-ed12-4a09-97cb-a6e717f0506f&page=queryresults
+[0m23:03:19  26 of 65 ERROR snapshotting snapshots.snap_gleif_entities ...................... [[31mERROR[0m in 1.39s]
+[0m23:03:20  43 of 65 SKIP relation marts.dim_legal_entity .................................. [[33mSKIP[0m]
+[0m23:03:20  44 of 65 SKIP test not_null_dim_legal_entity_legal_entity_key .................. [[33mSKIP[0m]
+[0m23:03:20  45 of 65 SKIP test one_current_version_per_lei_dim_legal_entity_ ............... [[33mSKIP[0m]
+[0m23:03:20  46 of 65 SKIP test unique_dim_legal_entity_legal_entity_key .................... [[33mSKIP[0m]
+[0m23:03:20  32 of 65 OK created sql view model staging.stg_entity_matches .................. [[32mCREATE VIEW (0 processed)[0m in 0.82s]
+[0m23:03:20  47 of 65 START test accepted_values_stg_entity_matches_decision__accepted__review__unmatched__rejected  [RUN]
+[0m23:03:20  48 of 65 START test not_null_stg_entity_matches_source_name .................... [RUN]
+[0m23:03:20  49 of 65 START test unique_stg_entity_matches_source_name ...................... [RUN]
+[0m23:03:21  BigQuery adapter: https://console.cloud.google.com/bigquery?project=belegt-pk-2610&j=bq:EU:b9ce0602-76db-42cf-98f2-3aa10c5bf2e2&page=queryresults
+[0m23:03:21  48 of 65 ERROR not_null_stg_entity_matches_source_name ......................... [[31mERROR[0m in 0.57s]
+[0m23:03:21  BigQuery adapter: https://console.cloud.google.com/bigquery?project=belegt-pk-2610&j=bq:EU:a3f5fe80-c520-4e84-b1da-214115f9b28c&page=queryresults
+[0m23:03:21  49 of 65 ERROR unique_stg_entity_matches_source_name ........................... [[31mERROR[0m in 0.68s]
+[0m23:03:21  BigQuery adapter: https://console.cloud.google.com/bigquery?project=belegt-pk-2610&j=bq:EU:f5fc221f-12cd-4199-9c01-e2fdd90d8e0f&page=queryresults
+[0m23:03:21  47 of 65 ERROR accepted_values_stg_entity_matches_decision__accepted__review__unmatched__rejected  [[31mERROR[0m in 0.70s]
+[0m23:03:21  50 of 65 SKIP relation staging.int_installation_entity ......................... [[33mSKIP[0m]
+[0m23:03:21  51 of 65 SKIP relation marts.review_entity_matches ............................. [[33mSKIP[0m]
+[0m23:03:21  52 of 65 SKIP relation marts.dim_installation .................................. [[33mSKIP[0m]
+[0m23:03:21  53 of 65 SKIP test accepted_values_dim_installation_installation_kind__stationary_installation__aircraft_operator__maritime_operator  [[33mSKIP[0m]
+[0m23:03:21  54 of 65 SKIP test accepted_values_dim_installation_location_source__EEA_facility__contact_postcode  [[33mSKIP[0m]
+[0m23:03:21  55 of 65 SKIP test accepted_values_dim_installation_match_decision__accepted__review__unmatched__rejected  [[33mSKIP[0m]
+[0m23:03:21  56 of 65 SKIP test not_null_dim_installation_ets_identifier .................... [[33mSKIP[0m]
+[0m23:03:21  57 of 65 SKIP test relationships_fct_verified_emissions_ets_identifier__ets_identifier__ref_dim_installation_  [[33mSKIP[0m]
+[0m23:03:21  58 of 65 SKIP test unique_dim_installation_ets_identifier ...................... [[33mSKIP[0m]
+[0m23:03:21  59 of 65 SKIP relation marts.mart_group_emissions .............................. [[33mSKIP[0m]
+[0m23:03:21  60 of 65 SKIP test group_total_matches_attributed_facts_mart_group_emissions_ .. [[33mSKIP[0m]
+[0m23:03:21  61 of 65 SKIP test unique_combination_mart_group_emissions_group_lei__reporting_year  [[33mSKIP[0m]
+[0m23:03:21  62 of 65 SKIP relation marts.mart_scope1_consistency ........................... [[33mSKIP[0m]
+[0m23:03:21  63 of 65 SKIP test accepted_values_mart_scope1_consistency_status__consistent__ets_exceeds_reported__no_reported_figure__no_ets_group  [[33mSKIP[0m]
+[0m23:03:21  64 of 65 SKIP test not_null_mart_scope1_consistency_doc_id ..................... [[33mSKIP[0m]
+[0m23:03:21  65 of 65 SKIP test unique_mart_scope1_consistency_doc_id ....................... [[33mSKIP[0m]
+[0m23:03:21  
+[0m23:03:21  Finished running 4 seeds, 1 snapshot, 8 table models, 43 data tests, 9 view models in 0 hours 0 minutes and 11.68 seconds (11.68s).
+[0m23:03:21  
+[0m23:03:21  [31mCompleted with 15 errors, 0 partial successes, and 0 warnings:[0m
+[0m23:03:21  
+[0m23:03:21  [[31mERROR[0m]: in test not_null_stg_ets__operators_ets_identifier (models/staging/_staging.yml)
+[0m23:03:21    Database Error in test not_null_stg_ets__operators_ets_identifier (models/staging/_staging.yml)
+  Custom quota exceeded: Your usage exceeded the custom quota for QueryUsagePerDay, which is set by your administrator. For more information, see https://docs.cloud.google.com/bigquery/cost-controls. To update the limit, go to https://docs.cloud.google.com/bigquery/redirects/increase-query-cost-quota.
+  compiled code at target/run/belegt/models/staging/_staging.yml/not_null_stg_ets__operators_ets_identifier.sql
+[0m23:03:21  
+[0m23:03:21    compiled code at target/compiled/belegt/models/staging/_staging.yml/not_null_stg_ets__operators_ets_identifier.sql
+[0m23:03:21  
+[0m23:03:21  [[31mERROR[0m]: in test unique_stg_ets__operators_ets_identifier (models/staging/_staging.yml)
+[0m23:03:21    Database Error in test unique_stg_ets__operators_ets_identifier (models/staging/_staging.yml)
+  Custom quota exceeded: Your usage exceeded the custom quota for QueryUsagePerDay, which is set by your administrator. For more information, see https://docs.cloud.google.com/bigquery/cost-controls. To update the limit, go to https://docs.cloud.google.com/bigquery/redirects/increase-query-cost-quota.
+  compiled code at target/run/belegt/models/staging/_staging.yml/unique_stg_ets__operators_ets_identifier.sql
+[0m23:03:21  
+[0m23:03:21    compiled code at target/compiled/belegt/models/staging/_staging.yml/unique_stg_ets__operators_ets_identifier.sql
+[0m23:03:21  
+[0m23:03:21  [[31mERROR[0m]: in test non_negative_fct_verified_emissions_verified_t (models/marts/_marts.yml)
+[0m23:03:21    Database Error in test non_negative_fct_verified_emissions_verified_t (models/marts/_marts.yml)
+  Custom quota exceeded: Your usage exceeded the custom quota for QueryUsagePerDay, which is set by your administrator. For more information, see https://docs.cloud.google.com/bigquery/cost-controls. To update the limit, go to https://docs.cloud.google.com/bigquery/redirects/increase-query-cost-quota.
+  compiled code at target/run/belegt/models/marts/_marts.yml/non_negative_fct_verified_emissions_verified_t.sql
+[0m23:03:21  
+[0m23:03:21    compiled code at target/compiled/belegt/models/marts/_marts.yml/non_negative_fct_verified_emissions_verified_t.sql
+[0m23:03:21  
+[0m23:03:21  [[31mERROR[0m]: in test not_null_fct_verified_emissions_ets_identifier (models/marts/_marts.yml)
+[0m23:03:21    Database Error in test not_null_fct_verified_emissions_ets_identifier (models/marts/_marts.yml)
+  Custom quota exceeded: Your usage exceeded the custom quota for QueryUsagePerDay, which is set by your administrator. For more information, see https://docs.cloud.google.com/bigquery/cost-controls. To update the limit, go to https://docs.cloud.google.com/bigquery/redirects/increase-query-cost-quota.
+  compiled code at target/run/belegt/models/marts/_marts.yml/not_null_fct_verified_emissions_ets_identifier.sql
+[0m23:03:21  
+[0m23:03:21    compiled code at target/compiled/belegt/models/marts/_marts.yml/not_null_fct_verified_emissions_ets_identifier.sql
+[0m23:03:21  
+[0m23:03:21  [[31mERROR[0m]: in test unique_combination_fct_verified_emissions_ets_identifier__reporting_year (models/marts/_marts.yml)
+[0m23:03:21    Database Error in test unique_combination_fct_verified_emissions_ets_identifier__reporting_year (models/marts/_marts.yml)
+  Custom quota exceeded: Your usage exceeded the custom quota for QueryUsagePerDay, which is set by your administrator. For more information, see https://docs.cloud.google.com/bigquery/cost-controls. To update the limit, go to https://docs.cloud.google.com/bigquery/redirects/increase-query-cost-quota.
+  compiled code at target/run/belegt/models/marts/_marts.yml/unique_combination_fct_verifie_0a79db3582e4ccecef7401dd1e71797f.sql
+[0m23:03:21  
+[0m23:03:21    compiled code at target/compiled/belegt/models/marts/_marts.yml/unique_combination_fct_verifie_0a79db3582e4ccecef7401dd1e71797f.sql
+[0m23:03:21  
+[0m23:03:21  [[31mERROR[0m]: in test not_null_reports_doc_id (seeds/_seeds.yml)
+[0m23:03:21    Database Error in test not_null_reports_doc_id (seeds/_seeds.yml)
+  Custom quota exceeded: Your usage exceeded the custom quota for QueryUsagePerDay, which is set by your administrator. For more information, see https://docs.cloud.google.com/bigquery/cost-controls. To update the limit, go to https://docs.cloud.google.com/bigquery/redirects/increase-query-cost-quota.
+  compiled code at target/run/belegt/seeds/_seeds.yml/not_null_reports_doc_id.sql
+[0m23:03:21  
+[0m23:03:21    compiled code at target/compiled/belegt/seeds/_seeds.yml/not_null_reports_doc_id.sql
+[0m23:03:21  
+[0m23:03:21  [[31mERROR[0m]: in test not_null_reports_lei (seeds/_seeds.yml)
+[0m23:03:21    Database Error in test not_null_reports_lei (seeds/_seeds.yml)
+  Custom quota exceeded: Your usage exceeded the custom quota for QueryUsagePerDay, which is set by your administrator. For more information, see https://docs.cloud.google.com/bigquery/cost-controls. To update the limit, go to https://docs.cloud.google.com/bigquery/redirects/increase-query-cost-quota.
+  compiled code at target/run/belegt/seeds/_seeds.yml/not_null_reports_lei.sql
+[0m23:03:21  
+[0m23:03:21    compiled code at target/compiled/belegt/seeds/_seeds.yml/not_null_reports_lei.sql
+[0m23:03:21  
+[0m23:03:21  [[31mERROR[0m]: in test unique_reports_doc_id (seeds/_seeds.yml)
+[0m23:03:21    Database Error in test unique_reports_doc_id (seeds/_seeds.yml)
+  Custom quota exceeded: Your usage exceeded the custom quota for QueryUsagePerDay, which is set by your administrator. For more information, see https://docs.cloud.google.com/bigquery/cost-controls. To update the limit, go to https://docs.cloud.google.com/bigquery/redirects/increase-query-cost-quota.
+  compiled code at target/run/belegt/seeds/_seeds.yml/unique_reports_doc_id.sql
+[0m23:03:21  
+[0m23:03:21    compiled code at target/compiled/belegt/seeds/_seeds.yml/unique_reports_doc_id.sql
+[0m23:03:21  
+[0m23:03:21  [[31mERROR[0m]: in model bridge_ownership (models/marts/bridge_ownership.sql)
+[0m23:03:21    Database Error in model bridge_ownership (models/marts/bridge_ownership.sql)
+  Custom quota exceeded: Your usage exceeded the custom quota for QueryUsagePerDay, which is set by your administrator. For more information, see https://docs.cloud.google.com/bigquery/cost-controls. To update the limit, go to https://docs.cloud.google.com/bigquery/redirects/increase-query-cost-quota.
+  compiled code at target/run/belegt/models/marts/bridge_ownership.sql
+[0m23:03:21  
+[0m23:03:21    compiled code at target/compiled/belegt/models/marts/bridge_ownership.sql
+[0m23:03:21  
+[0m23:03:21  [[31mERROR[0m]: in test not_null_states_state_code (seeds/_seeds.yml)
+[0m23:03:21    Database Error in test not_null_states_state_code (seeds/_seeds.yml)
+  Custom quota exceeded: Your usage exceeded the custom quota for QueryUsagePerDay, which is set by your administrator. For more information, see https://docs.cloud.google.com/bigquery/cost-controls. To update the limit, go to https://docs.cloud.google.com/bigquery/redirects/increase-query-cost-quota.
+  compiled code at target/run/belegt/seeds/_seeds.yml/not_null_states_state_code.sql
+[0m23:03:21  
+[0m23:03:21    compiled code at target/compiled/belegt/seeds/_seeds.yml/not_null_states_state_code.sql
+[0m23:03:21  
+[0m23:03:21  [[31mERROR[0m]: in test unique_states_state_code (seeds/_seeds.yml)
+[0m23:03:21    Database Error in test unique_states_state_code (seeds/_seeds.yml)
+  Custom quota exceeded: Your usage exceeded the custom quota for QueryUsagePerDay, which is set by your administrator. For more information, see https://docs.cloud.google.com/bigquery/cost-controls. To update the limit, go to https://docs.cloud.google.com/bigquery/redirects/increase-query-cost-quota.
+  compiled code at target/run/belegt/seeds/_seeds.yml/unique_states_state_code.sql
+[0m23:03:21  
+[0m23:03:21    compiled code at target/compiled/belegt/seeds/_seeds.yml/unique_states_state_code.sql
+[0m23:03:21  
+[0m23:03:21  [[31mERROR[0m]: in snapshot snap_gleif_entities (snapshots/snap_gleif_entities.sql)
+[0m23:03:21    Database Error in snapshot snap_gleif_entities (snapshots/snap_gleif_entities.sql)
+  Custom quota exceeded: Your usage exceeded the custom quota for QueryUsagePerDay, which is set by your administrator. For more information, see https://docs.cloud.google.com/bigquery/cost-controls. To update the limit, go to https://docs.cloud.google.com/bigquery/redirects/increase-query-cost-quota.
+[0m23:03:21  
+[0m23:03:21    compiled code at target/compiled/belegt/snapshots/snap_gleif_entities.sql/snap_gleif_entities.sql
+[0m23:03:21  
+[0m23:03:21  [[31mERROR[0m]: in test not_null_stg_entity_matches_source_name (models/staging/_staging.yml)
+[0m23:03:21    Database Error in test not_null_stg_entity_matches_source_name (models/staging/_staging.yml)
+  Custom quota exceeded: Your usage exceeded the custom quota for QueryUsagePerDay, which is set by your administrator. For more information, see https://docs.cloud.google.com/bigquery/cost-controls. To update the limit, go to https://docs.cloud.google.com/bigquery/redirects/increase-query-cost-quota.
+  compiled code at target/run/belegt/models/staging/_staging.yml/not_null_stg_entity_matches_source_name.sql
+[0m23:03:21  
+[0m23:03:21    compiled code at target/compiled/belegt/models/staging/_staging.yml/not_null_stg_entity_matches_source_name.sql
+[0m23:03:21  
+[0m23:03:21  [[31mERROR[0m]: in test unique_stg_entity_matches_source_name (models/staging/_staging.yml)
+[0m23:03:21    Database Error in test unique_stg_entity_matches_source_name (models/staging/_staging.yml)
+  Custom quota exceeded: Your usage exceeded the custom quota for QueryUsagePerDay, which is set by your administrator. For more information, see https://docs.cloud.google.com/bigquery/cost-controls. To update the limit, go to https://docs.cloud.google.com/bigquery/redirects/increase-query-cost-quota.
+  compiled code at target/run/belegt/models/staging/_staging.yml/unique_stg_entity_matches_source_name.sql
+[0m23:03:21  
+[0m23:03:21    compiled code at target/compiled/belegt/models/staging/_staging.yml/unique_stg_entity_matches_source_name.sql
+[0m23:03:21  
+[0m23:03:21  [[31mERROR[0m]: in test accepted_values_stg_entity_matches_decision__accepted__review__unmatched__rejected (models/staging/_staging.yml)
+[0m23:03:21    Database Error in test accepted_values_stg_entity_matches_decision__accepted__review__unmatched__rejected (models/staging/_staging.yml)
+  Custom quota exceeded: Your usage exceeded the custom quota for QueryUsagePerDay, which is set by your administrator. For more information, see https://docs.cloud.google.com/bigquery/cost-controls. To update the limit, go to https://docs.cloud.google.com/bigquery/redirects/increase-query-cost-quota.
+  compiled code at target/run/belegt/models/staging/_staging.yml/accepted_values_stg_entity_mat_06f8d90fd15ef376fefed864c48a12fe.sql
+[0m23:03:21  
+[0m23:03:21    compiled code at target/compiled/belegt/models/staging/_staging.yml/accepted_values_stg_entity_mat_06f8d90fd15ef376fefed864c48a12fe.sql
+[0m23:03:21  
+[0m23:03:21  Done. PASS=20 WARN=0 ERROR=15 SKIP=30 NO-OP=0 REUSED=0 TOTAL=65
