@@ -101,7 +101,7 @@ jobs:
         if: inputs.rag_eval
         run: |
           pip install torch --index-url https://download.pytorch.org/whl/cpu
-          pip install -e ".[embed]"
+          pip install -e ".[embed,api]"
           belegt index-reports /tmp/reports/pdf --out /tmp/rag/chunks.jsonl | tee summary/rag-corpus.txt
           set -o pipefail
           belegt rag-eval --chunks /tmp/rag/chunks.jsonl --cases evals/rag_report_cases.jsonl \
