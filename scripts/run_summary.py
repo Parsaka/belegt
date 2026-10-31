@@ -34,6 +34,12 @@ QUERIES = {
                count(*) as installations
         from {m}.dim_installation group by 1, 2 order by 3 desc
     """,
+    "Installations with a map point, by source": """
+        select coalesce(location_source, 'no point') as source, count(*) as installations
+        from {m}.dim_installation
+        where installation_kind = 'stationary installation'
+        group by 1 order by 2 desc
+    """,
     "Verified tonnes attributed to a company, by year (last five)": """
         select f.reporting_year,
                sum(f.verified_t) as verified_t,
@@ -56,6 +62,7 @@ HEADERS = {
     "Rows per mart": ["model", "rows"],
     "Accounts by kind": ["kind", "accounts", "matched to a company"],
     "Installations by match decision and path": ["decision", "path", "installations"],
+    "Installations with a map point, by source": ["source", "stationary installations"],
     "Verified tonnes attributed to a company, by year (last five)": [
         "year",
         "verified t",
