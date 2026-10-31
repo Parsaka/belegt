@@ -1,0 +1,48 @@
+name: Docs
+
+# Publishes the dbt docs (lineage graph and column docs) to GitHub Pages. Built on the trimmed
+# real fixtures with DuckDB, so it needs no cloud credentials; the models are the same ones that
+# run on BigQuery. Pages must be set to "GitHub Actions" in the repository settings.
+on:
+  push:
+    branches: [main]
+    paths: [dbt/**, src/belegt/loaders/**, src/belegt/warehouse.py, tests/fixtures/**, .github/workflows/docs.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e ".[load,dbt]"
+      - run: belegt load --source tests/fixtures --db data/belegt.duckdb
+      - run: dbt build --project-dir dbt --profiles-dir dbt
+      - run: dbt docs generate --static --project-dir dbt --profiles-dir dbt
+      - run: mkdir -p site && cp dbt/target/static_index.html site/index.html
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
