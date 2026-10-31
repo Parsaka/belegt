@@ -20,7 +20,7 @@ A personal portfolio project (Parsa Kamali). Not investment, audit or legal advi
 |---|---|
 | **Dashboard** | [Looker Studio report](https://lookerstudio.google.com/reporting/8653329c-9086-4395-9526-c577d32895fb): groups, reported vs verified, installations map ([about it](docs/dashboard.md)) |
 | **Data model** | [ERD and modelling decisions](docs/erd.md) · [dbt docs with lineage](https://parsaka.github.io/belegt/) |
-| **Measured results** | [Production run](docs/measurements/production.md) · [full data](docs/measurements/full-data.md) · [entity resolution](docs/measurements/entity-resolution.md) |
+| **Measured results** | [Production run](docs/measurements/production.md) · [full data](docs/measurements/full-data.md) · [entity resolution](docs/measurements/entity-resolution.md) · [extraction accuracy](docs/measurements/extraction.md) |
 | **Decisions** | [ADRs](docs/adr/) · [budget](docs/budget.md) · [data sources and licences](docs/data-sources.md) |
 
 ![Groups page of the dashboard](docs/img/1-groups-top.jpg)
@@ -32,13 +32,14 @@ A personal portfolio project (Parsa Kamali). Not investment, audit or legal advi
 | German stationary ETS installations | 2,195; 77.3 % matched to a GLEIF company, 91.7 % of 2025 verified tonnage attributed to a group |
 | Installations on the map | 2,064 of 2,195 (49 exact EEA points, 2,015 at the contact-postcode centre) |
 | dbt on BigQuery | 65 of 65 nodes pass on the full data (models, seeds, SCD2 snapshot, tests) |
-| Sustainability statements | 6 of 6 parsed in parallel by a Kubernetes Indexed Job on GKE Autopilot; Scope 1 checked against the ETS sum per group |
+| Sustainability statements | Scope 1-3 extraction on 37 DAX/MDAX reports against 148 hand labels: 82.7 % precision, 70.5 % recall; 80.8 % precision on the 22 held-out reports ([method](docs/measurements/extraction.md)) |
+| Parsing at scale | 6 of 6 reports parsed in parallel by a Kubernetes Indexed Job on GKE Autopilot; Scope 1 checked against the ETS sum per group |
 | Document assistant | 0 cross-tenant leaks in the isolation eval; unanswerable questions are declined |
 | API on Cloud Run | 3.34 s cold, 1.33 s warm (min 0, max 1 instances) |
 | Cost | October 2026: 0.00 EUR net (all usage covered by the trial credit); hard cap 1.00 EUR per month |
 | Kill switch | Drill confirms it would detach billing (`WOULD DETACH`) |
 
-Sources: [production.md](docs/measurements/production.md), [full-data.md](docs/measurements/full-data.md),
+Sources: [production.md](docs/measurements/production.md), [full-data.md](docs/measurements/full-data.md), [extraction.md](docs/measurements/extraction.md),
 weekly cost report on the `ops-results` branch.
 
 ```mermaid

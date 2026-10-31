@@ -23,6 +23,14 @@ on:
         type: choice
         options: [none, gke, cloud-run]
         default: none
+      probe_pages:
+        description: "Extra pages to show, e.g. bmw-2024:195-196;k-s-2024:100"
+        type: string
+        default: ""
+      lei_search:
+        description: Company names to look up in GLEIF, separated by semicolons
+        type: string
+        default: ""
   push:
     branches: [main, "phase2/**"]
     paths:
@@ -47,7 +55,7 @@ jobs:
   discover:
     if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 50 # 37 reports: about 12 min to extract, as long again to probe
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -56,16 +64,33 @@ jobs:
           cache: pip
       - run: pip install -e ".[docs,extract]"
       - run: mkdir -p summary
+      - name: Check report LEIs against GLEIF
+        id: leis
+        continue-on-error: true
+        run: python scripts/check_report_leis.py dbt/seeds/reports.csv | tee summary/leis.md
+      - name: Look up LEIs for new reports
+        if: inputs.lei_search != ''
+        env:
+          NAMES: ${{ inputs.lei_search }}
+        run: |
+          IFS=';' read -ra names <<< "$NAMES"
+          python scripts/check_report_leis.py --search "${names[@]}" | tee summary/lei-search.md
       - name: Download and extract (PDFs to the runner's scratch space only)
         run: |
           belegt reports --out /tmp/reports --pdf-out /tmp/reports --work /tmp/work \
             | tee /tmp/results.jsonl
       - if: always()
+        env:
+          PROBE_PAGES: ${{ inputs.probe_pages }}
         run: |
           python scripts/report_summary.py /tmp/reports /tmp/results.jsonl > summary/reports.md
           python scripts/probe_reports.py /tmp/reports > summary/probe.md
+          if [ -n "$PROBE_PAGES" ]; then
+            python scripts/probe_reports.py /tmp/reports "$PROBE_PAGES" > summary/pages.md
+          fi
           cp /tmp/results.jsonl summary/results.jsonl
           mkdir -p summary/metrics && cp /tmp/reports/metrics/*.jsonl summary/metrics/ || true
+          belegt reports-eval /tmp/reports/metrics --out summary/extraction-eval.md || true
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -58,7 +58,8 @@ _UNIT_PATTERNS: tuple[tuple[str, str], ...] = (
     ),
     (
         "kt",
-        r"Tsd\.?\s*t\b|Tt\b|kt\b|Tausend\s+(?:metrische\s+)?Tonnen|thousand\s+(?:metric\s+)?(?:tonnes|tons|t)\b",
+        r"Tsd\.?\s*t\b|Tt\b|kt\b|Tausend\s+(?:metrische\s+)?Tonnen|thousand\s+(?:metric\s+)?(?:tonnes|tons|t)\b"
+        r"|1[.,]000\s*(?:metric\s+)?(?:tonnes|tons|t)\b|(?:tonnes|t)\s+000s",
     ),
     ("t", r"(?:metric\s+)?(?:tonnes|tons)\b|Tonnen\b|t(?=" + _CO2 + r")"),
 )
@@ -78,7 +79,7 @@ _MARKET = re.compile(r"marktbasiert|marktbezogen|market-?based", re.I)
 _LOCATION = re.compile(r"orts?basiert|standortbezogen|location-?based|site-?based", re.I)
 # A Scope 3 row is the total only if it says so ("Total gross Scope 3", "Gross Scope 3 GHG
 # emissions"); the category rows below it are parts
-_TOTAL = re.compile(r"gesamt|insgesamt|total|gross|brutto", re.I)
+_TOTAL = re.compile(r"gesamt|insgesamt|total|gross|brutto|summe|konzern|group", re.I)
 _CATEGORY = re.compile(r"categor|kategorie", re.I)
 # All scopes together, labelled by their Scope 2 method ("Gesamtemissionen auf Basis der
 # standortbezogenen Scope-2-Methode"): not a Scope 2 figure
@@ -182,7 +183,8 @@ def _values(line: str, decimal_comma: bool) -> list[_Token]:
     """The row's column values after its label: years and leading footnote digits removed."""
     label = _SCOPE.search(line)
     offset = label.end() if label else 0
-    rest = line[offset:]
+    # a unit inside the row is not a column ("in 1,000 tonnes CO2e 33,349 26,822")
+    rest = _ROW_UNIT.sub(lambda m: " " * len(m.group(0)), line[offset:])
     found = [t for t in _tokens(rest, decimal_comma) if not _YEAR.match(t.text)]
     while found and found[0].is_number and re.fullmatch(r"\d", found[0].text):
         if len(found) > 1 or not _ROW_UNIT.search(rest):
@@ -217,30 +219,49 @@ def _fiscal_year_end(match: re.Match[str]) -> str:
     return str(end_year) if end_year == start + 1 else match.group(0)
 
 
-def _years(line: str) -> list[int] | None:
-    """The column years of a header line ("Einheit 2024 2023", "Scope 1 ... Unit 2024")."""
-    line = re.sub(r"(?<![\d.,])((?:19|20)\d{2})\d(?![\d.,])", r"\1", line)  # footnote: "20303"
+_BASE_YEAR = re.compile(r"\b(?:base\s*year|basisjahr|basis\s*year)", re.I)
+# a change column between two years, newest first: "2024/2023"
+_CHANGE = re.compile(r"(?<!\d)((?:19|20)\d{2})\s*/\s*((?:19|20)\d{2})(?!\d)")
+
+
+def _change_column(match: re.Match[str]) -> str:
+    return " Δ " if int(match.group(2)) < int(match.group(1)) else match.group(0)
+
+
+def _years(line: str) -> list[int | None] | None:
+    """The column years of a header line ("Einheit 2024 2023", "Scope 1 ... Unit 2024").
+
+    A base year column that names no year ("Base year 2023 2024") holds its place as None.
+    """
+    # footnotes glued to a year: "20303", "20221,2", "20231,2,3"
+    line = re.sub(r"(?<![\d.,])((?:19|20)\d{2})\d(?:,\d)*(?![\d.])", r"\1", line)
+    line = _CHANGE.sub(_change_column, line)
     line = _FISCAL_YEAR.sub(_fiscal_year_end, line)  # "2024 / 2025" is one column, 2025
-    years = [int(y) for y in re.findall(r"(?<!\d)(?:19|20)\d{2}(?!\d)", line)]
-    if not years:
+    found = list(re.finditer(r"(?<!\d)(?:19|20)\d{2}(?!\d)", line))
+    if not found:
         return None
+    years: list[int | None] = [int(m.group(0)) for m in found]
     others = [t for t in _tokens(line, False) if t.is_number and not _YEAR.match(t.text)]
     has_unit_column = re.search(r"\b(?:Einheit|Unit)\b", line, re.I) is not None
+    base = _BASE_YEAR.search(line, 0, found[0].start())
     short = len(_WORD.findall(line)) <= 6 and not _SCOPE.search(line)
     # One year alone is a running head ("Geschäftsbericht 2024") unless it is bracketed, as a
     # base year column is ("(2022)"), or the line names the unit column
     single = len(years) == 1 and not has_unit_column and not re.search(r"\(\s*\d{4}\s*\)", line)
-    if single or len(others) > 1:
+    if (single and not base) or len(others) > 1:
         return None
-    return years if short or has_unit_column else None
+    if not (short or has_unit_column or base):
+        return None
+    return [None, *years] if base else years
 
 
 def _continues(line: str, decimal_comma: bool) -> bool:
-    """A wrapped row's second half: at most a few words (the unit) before its figures."""
+    """A wrapped row's second half: the rest of the label and its unit, then the figures
+    ("Location-based Scope 2" / "GHG gross emissions (kt CO2e) 1,579 1,368 1,311")."""
     values = [t for t in _tokens(line, decimal_comma) if t.is_number and not _YEAR.match(t.text)]
     if not values or _SCOPE.search(line):
         return False
-    return len(_WORD.findall(line[: values[0].start])) <= 3
+    return len(_WORD.findall(line[: values[0].start])) <= 6
 
 
 def _is_prose(line: str, values: list[_Token]) -> bool:
@@ -254,26 +275,46 @@ def _is_prose(line: str, values: list[_Token]) -> bool:
     return len(_WORD.findall(re.sub(_CO2, " ", tail, flags=re.I))) > 3
 
 
-def _rows(text: str, decimal_comma: bool) -> Iterator[tuple[str, list[int] | None]]:
-    """(row line, header years above it), joining a label line with its continuation."""
+Header = list[int | None]
+
+
+def _rows(
+    text: str, decimal_comma: bool
+) -> Iterator[tuple[str, Header | None, tuple[str, str] | None]]:
+    """(row line, header years above it, the CO2 unit nearest above it), joining a label line
+    with its continuation."""
     lines = [re.sub(r"\s+", " ", line).strip() for line in text.splitlines()]
-    header: list[int] | None = None
+    header: Header | None = None
     header_line = -2
+    last_numeric = -1  # the last line above with a digit: text lines between do not count
+    unit: tuple[str, str] | None = None
     i = 0
     while i < len(lines):
         line = lines[i]
+        unit = page_unit(line) or unit
         years = _years(line)
         if years is not None:
-            # A header split over lines ("Base year (2022)" / "2024 2025 2030") is one header
-            follows = header and header_line == i - 1 and max(header) < years[0]
+            # A header split over lines ("Base year (2022)" / "2024 2025 2030") is one header,
+            # also with column titles between its parts ("(2020) 2023 2024" / "Change" /
+            # "2024/2023 2025 2030 2045")
+            known = [y for y in header or [] if y is not None]
+            first = next((y for y in years if y is not None), None)
+            follows = (
+                header
+                and header_line == last_numeric
+                and first
+                and (not known or max(known) < first)
+            )
             header = header + years if header and follows else years
             header_line = i
+        if re.search(r"\d", line):
+            last_numeric = i
         if _label(line) is not None:
             nxt = lines[i + 1] if i + 1 < len(lines) else ""
             if not figures(line, decimal_comma) and _continues(nxt, decimal_comma):
                 line = f"{line} {nxt}"
                 i += 1
-            yield line, header
+            yield line, header, unit
         i += 1
 
 
@@ -284,7 +325,7 @@ def extract_page(
     if fallback is None and not _ROW_UNIT.search(page.text):
         return []
     rows: list[tuple[str, str, str, str, str, int | None]] = []
-    for line, header in _rows(page.text, decimal_comma):
+    for line, header, unit_above in _rows(page.text, decimal_comma):
         metric = metric_of(line)
         label = _label(line)
         if metric is None or label is None:
@@ -298,8 +339,8 @@ def extract_page(
         row_unit = _ROW_UNIT.search(line, label.end())
         if row_unit:
             key, raw_unit = _unit_key(row_unit), row_unit.group(0)
-        elif fallback:
-            key, raw_unit = fallback
+        elif unit_above or fallback:
+            key, raw_unit = unit_above or fallback  # type: ignore[misc]
         else:
             continue
         column = header.index(report_year) if header and report_year in header else None

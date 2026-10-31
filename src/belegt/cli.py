@@ -234,3 +234,24 @@ def reports(
             typer.echo(json.dumps(asdict(result)))
     if failed and (position is not None or failed == len(todo)):
         raise typer.Exit(1)
+
+
+@app.command("reports-eval")
+def reports_eval(
+    metrics: Annotated[Path, typer.Argument(help="Directory with metrics/<doc_id>.jsonl")],
+    labels: Annotated[Path, typer.Option(help="Hand-labelled values")] = Path(
+        "evals/reported_metrics.csv"
+    ),
+    out: Annotated[Path | None, typer.Option(help="Write the Markdown report here")] = None,
+) -> None:
+    """Score the extracted Scope 1-3 figures against the hand labels, per metric and split."""
+    from belegt.documents.evaluation import evaluate, read_labels, read_selected, report
+
+    files = sorted(metrics.glob("*.jsonl"))
+    selected = read_selected(line for f in files for line in f.read_text().splitlines())
+    outcomes = evaluate(read_labels(labels), selected, {f.stem for f in files})
+    text = report(outcomes)
+    if out:
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(text)
+    typer.echo(text)

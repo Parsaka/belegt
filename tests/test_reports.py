@@ -46,7 +46,7 @@ def test_seed_rows_are_complete_and_unique():
     assert len({r.doc_id for r in rows}) == len(rows) >= 6
     for r in rows:
         assert len(r.lei) == 20 and r.url.startswith("https://")
-        assert r.fiscal_year_end in {"12-31", "09-30"}
+        assert r.fiscal_year_end in {"12-31", "09-30", "02-28"}  # Südzucker: March to February
         assert r.language in {"de", "en"}  # decides the decimal separator
 
 
