@@ -23,6 +23,10 @@ on:
         type: choice
         options: [none, gke, cloud-run]
         default: none
+      lei_search:
+        description: Company names to look up in GLEIF, separated by semicolons
+        type: string
+        default: ""
   push:
     branches: [main, "phase2/**"]
     paths:
@@ -56,6 +60,17 @@ jobs:
           cache: pip
       - run: pip install -e ".[docs,extract]"
       - run: mkdir -p summary
+      - name: Check report LEIs against GLEIF
+        id: leis
+        continue-on-error: true
+        run: python scripts/check_report_leis.py dbt/seeds/reports.csv | tee summary/leis.md
+      - name: Look up LEIs for new reports
+        if: inputs.lei_search != ''
+        env:
+          NAMES: ${{ inputs.lei_search }}
+        run: |
+          IFS=';' read -ra names <<< "$NAMES"
+          python scripts/check_report_leis.py --search "${names[@]}" | tee summary/lei-search.md
       - name: Download and extract (PDFs to the runner's scratch space only)
         run: |
           belegt reports --out /tmp/reports --pdf-out /tmp/reports --work /tmp/work \
