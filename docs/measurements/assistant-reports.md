@@ -51,7 +51,7 @@ The 12 misses are of three kinds:
 
 - **Citation on another page.** BASF, EnBW, K+S, Merck, MVV and Volkswagen are cited on another
   page that also mentions their Scope 1: a summary, a target table, or a part of the group.
-- **The right page, the wrong row.** Continental, Henkel and Mercedes-Benz were cited on the
+- **The right report, the wrong row.** Continental, Henkel and Mercedes-Benz were cited on the
   right report, but the quoted row lacks the printed figure: it is a sub-row or another table's
   row.
 - **Declined.** Aurubis, BMW and Siemens Energy were declined, because their rows do not say
