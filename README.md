@@ -8,6 +8,8 @@ figures companies publish in their sustainability statements, citing the page, a
 inconsistencies between the two. A multi-tenant assistant answers questions with citations, and
 it declines to answer when the documents do not contain the answer.
 
+**Dashboard:** [Looker Studio report](https://lookerstudio.google.com/reporting/8653329c-9086-4395-9526-c577d32895fb) (groups, reported vs verified, installations; see [docs/dashboard.md](docs/dashboard.md)).
+
 A personal portfolio project (Parsa Kamali). Not investment, audit or legal advice.
 
 **Status:** every phase is built. The cost guards run on Google Cloud (budget with alerts,
@@ -29,7 +31,7 @@ What runs where is in [docs/roadmap.md](docs/roadmap.md#status-2026-10-26).
 | Models | dbt | Star schema, SCD2 legal entities, time-bounded ownership bridge, entity resolution, consistency checks |
 | Parallel work | Kubernetes Indexed Job (GKE during the trial), Cloud Run job afterwards | One task per sustainability statement; tested on kind in CI |
 | Documents | BigQuery `VECTOR_SEARCH`, row access policies | Cited answers per tenant; evals fail CI on any cross-tenant leak |
-| Semantic layer | LookML (validated in CI), Looker Studio (public) | Business definitions in code; the public dashboard ([no Looker instance](docs/adr/0004-looker-trial-quota.md)) |
+| Semantic layer | LookML (validated in CI), Looker Studio (public) | Business definitions in code; the [public dashboard](https://lookerstudio.google.com/reporting/8653329c-9086-4395-9526-c577d32895fb) ([no Looker instance](docs/adr/0004-looker-trial-quota.md)) |
 | API | FastAPI on Cloud Run (min 0, max 1) | Bearer token per tenant, rate-limited |
 | Infra and CI/CD | Terraform, GitHub Actions with Workload Identity Federation | No keys anywhere; every apply is approved |
 
