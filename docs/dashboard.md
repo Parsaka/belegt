@@ -28,18 +28,30 @@ If a Looker instance becomes available, connect it:
 
 ## Looker Studio
 
-Create the report with the BigQuery marts as data source (the link opens a new report; nothing
-is created until you save it):
+**Live report:** https://lookerstudio.google.com/reporting/8653329c-9086-4395-9526-c577d32895fb
+(view only; data from `belegt-pk-2610.marts` with the owner's credentials).
+
+Three pages share one theme (accent `#1b5e20`), a header with the subtitle "EU ETS verified
+emissions vs. company-reported Scope 1, German groups", and a footer with sources and the repo.
+
+| Page | Source | Content | Figures shown on 2026-10-31 |
+|---|---|---|---|
+| Groups | `mart_group_emissions` | Year (default 2025) and group filters, KPIs, top 15 groups in Mt, table with LEI | 609 groups, 248.8 Mt CO2e, 1,392 installations (2025) |
+| Reported vs verified | `mart_scope1_consistency` | Reported (grey) vs ETS (green) per report, explanation, table with page and quote, red/green status | 6 reports, 0 contradictions, mean ETS share 53 % |
+| Installations | `dim_installation` | Map coloured by `match_decision`, kind and match filters, table | 2,195 stationary installations |
+
+Known gaps visible in the report:
+
+- Only 49 of 2,398 installations have EEA coordinates, so the map is sparse.
+- ETS covers German installations only, so a group's ETS share of its global Scope 1 can be
+  small (Heidelberg Materials 4.9 %) without being a contradiction.
+- The year control defaults to one year: group installation counts would otherwise add up
+  across years.
+
+To rebuild it from scratch, open the create link (nothing is saved until you save it):
 
 https://lookerstudio.google.com/reporting/create?c.mode=edit&r.reportName=Belegt%20-%20CO2%20belegt&ds.ds0.connector=bigQuery&ds.ds0.type=TABLE&ds.ds0.projectId=belegt-pk-2610&ds.ds0.datasetId=marts&ds.ds0.tableId=mart_group_emissions&ds.ds0.datasourceName=Group%20emissions
 
-Then add `mart_scope1_consistency` and `dim_installation` as further data sources (Resource →
-Manage added data sources → Add). Pages:
-
-1. **Groups:** bar chart of verified Mt per group (latest year), year filter.
-2. **Reported vs verified:** table of `mart_scope1_consistency` with status, page and the table
-   line; conditional colour on `ets_exceeds_reported`.
-3. **Installations:** map of `dim_installation` (lat, lon) coloured by `match_decision`.
-
-Share: File → Share → Manage access → "Anyone with the link can view". Data source credentials
-stay the owner's; the 20 GiB daily BigQuery quota is the hard stop for public traffic.
+then add `mart_scope1_consistency` and `dim_installation` (Resource → Manage added data
+sources → Add). Share: Share → Link settings → "Unlisted", viewer. Data source credentials stay
+the owner's; the 20 GiB daily BigQuery quota is the hard stop for public traffic.
