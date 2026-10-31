@@ -31,9 +31,10 @@ RUN pip install --no-cache-dir ".[api,bigquery,embed]" \
 
 FROM python:3.12-slim AS api-cloud
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PATH=/opt/venv/bin:$PATH \
-    HF_HOME=/opt/models HF_HUB_OFFLINE=1 BELEGT_BACKEND=bigquery
+    HF_HOME=/opt/models HF_HUB_OFFLINE=1 BELEGT_BACKEND=bigquery BELEGT_SEED=/app/reports.csv
 COPY --from=build-api-cloud /opt/venv /opt/venv
 COPY --from=build-api-cloud /opt/models /opt/models
+COPY dbt/seeds/reports.csv /app/reports.csv
 RUN useradd --uid 10001 --no-create-home app
 USER 10001
 EXPOSE 8080
@@ -46,8 +47,10 @@ COPY src ./src
 RUN pip install --no-cache-dir --prefix=/install ".[api]"
 
 FROM python:3.12-slim AS api
-ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 BELEGT_CHUNKS=/data/chunks.jsonl
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 BELEGT_CHUNKS=/data/chunks.jsonl \
+    BELEGT_SEED=/app/reports.csv
 COPY --from=build-api /install /usr/local
+COPY dbt/seeds/reports.csv /app/reports.csv
 RUN useradd --uid 10001 --no-create-home app
 USER 10001
 EXPOSE 8080

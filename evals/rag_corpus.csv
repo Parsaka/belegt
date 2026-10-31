@@ -1,0 +1,38 @@
+doc_id,tenant,name
+basf-2024,tenant_a,BASF
+rwe-2024,tenant_a,RWE
+heidelberg-materials-2024,tenant_a,Heidelberg Materials
+enbw-2024,tenant_a,EnBW
+salzgitter-2024,tenant_a,Salzgitter
+thyssenkrupp-2025,tenant_a,thyssenkrupp
+eon-2024,tenant_a,E.ON
+covestro-2024,tenant_a,Covestro
+evonik-2024,tenant_a,Evonik
+wacker-2024,tenant_a,Wacker Chemie
+lanxess-2024,tenant_a,LANXESS
+k-s-2024,tenant_a,K+S
+aurubis-2024,tenant_a,Aurubis
+bayer-2024,tenant_a,Bayer
+merck-2024,tenant_a,Merck
+henkel-2024,tenant_a,Henkel
+suedzucker-2025,tenant_a,Südzucker
+symrise-2024,tenant_a,Symrise
+brenntag-2024,tenant_a,Brenntag
+mvv-2024,tenant_a,MVV Energie
+beiersdorf-2024,tenant_a,Beiersdorf
+lufthansa-2024,tenant_b,Lufthansa
+daimler-truck-2024,tenant_b,Daimler Truck
+mercedes-benz-2024,tenant_b,Mercedes-Benz
+bmw-2024,tenant_b,BMW
+volkswagen-2024,tenant_b,Volkswagen
+continental-2024,tenant_b,Continental
+dhl-2024,tenant_b,Deutsche Post DHL
+telekom-2024,tenant_b,Deutsche Telekom
+siemens-energy-2024,tenant_b,Siemens Energy
+fraport-2024,tenant_b,Fraport
+hapag-lloyd-2024,tenant_b,Hapag-Lloyd
+infineon-2024,tenant_b,Infineon
+deutsche-bahn-2024,tenant_b,Deutsche Bahn
+siemens-2024,tenant_b,Siemens
+rheinmetall-2024,tenant_b,Rheinmetall
+schaeffler-2024,tenant_b,Schaeffler

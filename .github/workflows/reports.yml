@@ -27,6 +27,10 @@ on:
         description: "Extra pages to show, e.g. bmw-2024:195-196;k-s-2024:100"
         type: string
         default: ""
+      rag_eval:
+        description: Also run the document assistant's report questions on these PDFs
+        type: boolean
+        default: false
       lei_search:
         description: Company names to look up in GLEIF, separated by semicolons
         type: string
@@ -55,7 +59,7 @@ jobs:
   discover:
     if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
-    timeout-minutes: 50 # 37 reports: about 12 min to extract, as long again to probe
+    timeout-minutes: 70 # 37 reports: about 12 min to extract, as long again to probe (+ RAG)
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -91,6 +95,16 @@ jobs:
           cp /tmp/results.jsonl summary/results.jsonl
           mkdir -p summary/metrics && cp /tmp/reports/metrics/*.jsonl summary/metrics/ || true
           belegt reports-eval /tmp/reports/metrics --out summary/extraction-eval.md || true
+      # The document assistant on the same PDFs, offline (e5 embeddings, in memory): what the
+      # Pipeline's BigQuery evaluation will measure, before the PDFs reach the private bucket
+      - name: Document assistant on the reports
+        if: inputs.rag_eval
+        run: |
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -e ".[embed]"
+          belegt index-reports /tmp/reports/pdf --out /tmp/rag/chunks.jsonl | tee summary/rag-corpus.txt
+          belegt rag-eval --chunks /tmp/rag/chunks.jsonl --cases evals/rag_report_cases.jsonl \
+            --embedder e5 --out summary/rag-eval-reports-runner.md
       - uses: actions/upload-artifact@v4
         if: always()
         with:

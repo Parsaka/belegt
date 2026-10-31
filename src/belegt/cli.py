@@ -76,8 +76,17 @@ def index(
     out: Annotated[Path, typer.Option(help="JSON lines file to update")] = Path(
         "data/chunks.jsonl"
     ),
+    title: Annotated[
+        str | None, typer.Option(help="Document title, embedded with every chunk")
+    ] = None,
+    pages_matching: Annotated[
+        str | None,
+        typer.Option(help="Index only pages whose text matches this regular expression"),
+    ] = None,
 ) -> None:
     """Chunk a PDF page by page into JSON lines for retrieval. The PDF itself stays local."""
+    import re
+
     from belegt.documents.chunking import chunk_pages
     from belegt.documents.pdf import read_pages
 
@@ -85,9 +94,17 @@ def index(
     existing = out.read_text().splitlines() if out.exists() else []
     kept = [line for line in existing if json.loads(line)["doc_id"] != doc_id]  # re-runs replace
     pages = read_pages(pdf, doc_id)
-    chunks = [json.dumps(asdict(c), ensure_ascii=False) for c in chunk_pages(pages, tenant)]
+    if pages_matching:
+        wanted = re.compile(pages_matching, re.I)
+        pages = (p for p in pages if wanted.search(p.text))
+    chunks = [
+        json.dumps(asdict(c), ensure_ascii=False) for c in chunk_pages(pages, tenant, title=title)
+    ]
     out.write_text("\n".join([*kept, *chunks]) + "\n")
     typer.echo(f"{doc_id}: {len(chunks)} chunks -> {out}")
+
+
+REPORT_SEED = Path("dbt/seeds/reports.csv")
 
 
 def _embedder(name: str) -> Any:
@@ -139,11 +156,14 @@ def rag_ask(
     from belegt.rag.answer import Answerer
     from belegt.rag.bigquery import BigQueryRetriever, impersonating_client
     from belegt.rag.extractive import ExtractiveModel
+    from belegt.rag.names import ReportNames
 
     retriever = BigQueryRetriever(
         impersonating_client(project), f"{project}.rag", _embedder(embedder)
     )
-    result = Answerer(retriever, ExtractiveModel(), min_score=0.1).ask(question, tenant)
+    names = ReportNames.from_seed(REPORT_SEED)
+    model = ExtractiveModel(names.words)
+    result = Answerer(retriever, model, min_score=0.1, names=names).ask(question, tenant)
     typer.echo(json.dumps(asdict(result), ensure_ascii=False))
 
 
@@ -163,6 +183,7 @@ def rag_eval(
     from belegt.rag.answer import Answerer
     from belegt.rag.evals import read_cases, report, run
     from belegt.rag.extractive import ExtractiveModel
+    from belegt.rag.names import ReportNames
     from belegt.rag.retrieval import InMemoryRetriever, Retriever
 
     corpus = load_chunks(chunks)
@@ -178,7 +199,9 @@ def rag_eval(
         )
     else:
         retriever = InMemoryRetriever(_embedder(embedder), corpus)
-    outcomes = run(read_cases(cases), Answerer(retriever, ExtractiveModel(), min_score=0.1), owners)
+    names = ReportNames.from_seed(REPORT_SEED)
+    answerer = Answerer(retriever, ExtractiveModel(names.words), min_score=0.1, names=names)
+    outcomes = run(read_cases(cases), answerer, owners)
     text = report(outcomes, f"Document assistant evaluation ({backend}, {embedder})")
     if out:
         out.parent.mkdir(parents=True, exist_ok=True)
@@ -255,3 +278,57 @@ def reports_eval(
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(text)
     typer.echo(text)
+
+
+# Pages of a report that the document assistant indexes: the climate disclosures, not the
+# whole annual report
+CLIMATE_PAGES = (
+    r"\bScope[\s-]*[123]\b|greenhouse gas|Treibhausgas|\bGHG\b|\bTHG\b|E1-\d|"
+    r"climate|Klima|CO2|CO₂"
+)
+
+
+@app.command("index-reports")
+def index_reports(
+    pdf_dir: Annotated[Path, typer.Argument(help="Directory with <doc_id>.pdf")],
+    corpus: Annotated[Path, typer.Option(help="doc_id,tenant: who may read which report")] = Path(
+        "evals/rag_corpus.csv"
+    ),
+    seed: Annotated[Path, typer.Option(help="The report list, for titles")] = Path(
+        "dbt/seeds/reports.csv"
+    ),
+    out: Annotated[Path, typer.Option(help="JSON lines file to update")] = Path(
+        "data/chunks.jsonl"
+    ),
+) -> None:
+    """Chunk the climate pages of every report in the corpus, each owned by one tenant."""
+    import csv
+    import re
+
+    from belegt.documents.chunking import chunk_pages
+    from belegt.documents.pdf import read_pages
+    from belegt.documents.reports import read_seed
+
+    reports = {r.doc_id: r for r in read_seed(seed)}
+    with corpus.open(newline="", encoding="utf-8") as fh:
+        owners = {row["doc_id"]: row["tenant"] for row in csv.DictReader(fh)}
+    unknown = set(owners) - set(reports)
+    if unknown:
+        raise typer.BadParameter(f"not in the report seed: {sorted(unknown)}")
+    wanted = re.compile(CLIMATE_PAGES, re.I)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    existing = out.read_text().splitlines() if out.exists() else []
+    kept = [line for line in existing if json.loads(line)["doc_id"] not in owners]
+    lines: list[str] = []
+    for doc_id, tenant in owners.items():
+        pdf = pdf_dir / f"{doc_id}.pdf"
+        if not pdf.exists():
+            typer.echo(f"{doc_id}: no PDF, skipped")
+            continue
+        report = reports[doc_id]
+        title = f"{report.company}, report {report.report_year}"
+        pages = (p for p in read_pages(pdf, doc_id) if wanted.search(p.text))
+        chunks = list(chunk_pages(pages, tenant, title=title))
+        lines += [json.dumps(asdict(c), ensure_ascii=False) for c in chunks]
+        typer.echo(f"{doc_id}: {len(chunks)} chunks for {tenant}")
+    out.write_text("\n".join([*kept, *lines]) + "\n")

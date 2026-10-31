@@ -21,7 +21,11 @@ class Hit:
 
 
 class Retriever(Protocol):
-    def search(self, question: str, tenant_id: str, k: int) -> list[Hit]: ...
+    def search(
+        self, question: str, tenant_id: str, k: int, docs: frozenset[str] | None = None
+    ) -> list[Hit]:
+        """The k closest chunks the tenant may read; only of `docs` when given."""
+        ...
 
 
 def visible_tenants(tenant_id: str) -> tuple[str, ...]:
@@ -34,30 +38,36 @@ class InMemoryRetriever:
     def __init__(self, embedder: Embedder, chunks: list[Chunk]) -> None:
         self._embedder = embedder
         self._chunks = chunks
-        self._vectors = embedder.embed([c.text for c in chunks], query=False)
+        self._vectors = embedder.embed([c.passage for c in chunks], query=False)
 
-    def search(self, question: str, tenant_id: str, k: int) -> list[Hit]:
+    def search(
+        self, question: str, tenant_id: str, k: int, docs: frozenset[str] | None = None
+    ) -> list[Hit]:
         allowed = visible_tenants(tenant_id)
         (q,) = self._embedder.embed([question], query=True)
         hits = [
             Hit(chunk, sum(a * b for a, b in zip(q, vec, strict=True)))
             for chunk, vec in zip(self._chunks, self._vectors, strict=True)
-            if chunk.tenant_id in allowed
+            if chunk.tenant_id in allowed and (docs is None or chunk.doc_id in docs)
         ]
         return sorted(hits, key=lambda h: h.score, reverse=True)[:k]
 
 
 def bigquery_search_sql(dataset: str, k: int) -> str:
-    """VECTOR_SEARCH over the chunks a tenant may see. Parameters: @tenant, @embedding.
+    """VECTOR_SEARCH over the chunks a tenant may see. Parameters: @tenant, @embedding, @docs.
 
-    The base table is filtered before the search, so other tenants' rows are never candidates.
+    The base table is filtered before the search, so other tenants' rows are never candidates;
+    a non-empty @docs also restricts it to the reports the question names.
     Distance is cosine distance; score = 1 - distance.
     """
     return f"""
-SELECT base.chunk_id, base.doc_id, base.tenant_id, base.page, base.heading, base.text,
+SELECT base.chunk_id, base.doc_id, base.tenant_id, base.page, base.heading, base.title,
+       base.text,
        1 - distance AS score
 FROM VECTOR_SEARCH(
-  (SELECT * FROM `{dataset}.chunks` WHERE tenant_id IN (@tenant, '{SHARED_TENANT}')),
+  (SELECT * FROM `{dataset}.chunks`
+   WHERE tenant_id IN (@tenant, '{SHARED_TENANT}')
+     AND (ARRAY_LENGTH(@docs) = 0 OR doc_id IN UNNEST(@docs))),
   'embedding',
   (SELECT @embedding AS embedding),
   top_k => {int(k)},

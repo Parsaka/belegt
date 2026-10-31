@@ -28,6 +28,7 @@ CHUNK_SCHEMA: list[dict[str, str]] = [
     {"name": "tenant_id", "type": "STRING", "mode": "REQUIRED"},
     {"name": "page", "type": "INT64", "mode": "REQUIRED"},
     {"name": "heading", "type": "STRING", "mode": "NULLABLE"},
+    {"name": "title", "type": "STRING", "mode": "NULLABLE"},
     {"name": "text", "type": "STRING", "mode": "REQUIRED"},
     {"name": "embedding", "type": "FLOAT64", "mode": "REPEATED"},
 ]
@@ -68,7 +69,7 @@ def chunk_rows(
     rows: list[dict[str, Any]] = []
     for start in range(0, len(ordered), batch):
         part = ordered[start : start + batch]
-        vectors = embedder.embed([c.text for c in part], query=False)
+        vectors = embedder.embed([c.passage for c in part], query=False)
         for c, vec in zip(part, vectors, strict=True):
             rows.append(
                 {
@@ -77,6 +78,7 @@ def chunk_rows(
                     "tenant_id": check_tenant(c.tenant_id),
                     "page": c.page,
                     "heading": c.heading,
+                    "title": c.title,
                     "text": c.text,
                     "embedding": vec,
                 }
@@ -110,7 +112,9 @@ class BigQueryRetriever:
         self._dataset = dataset
         self._embedder = embedder
 
-    def search(self, question: str, tenant_id: str, k: int) -> list[Hit]:
+    def search(
+        self, question: str, tenant_id: str, k: int, docs: frozenset[str] | None = None
+    ) -> list[Hit]:
         from google.cloud import bigquery
 
         visible_tenants(tenant_id)  # rejects the shared pseudo-tenant and empty ids
@@ -119,6 +123,7 @@ class BigQueryRetriever:
             query_parameters=[
                 bigquery.ScalarQueryParameter("tenant", "STRING", tenant_id),
                 bigquery.ArrayQueryParameter("embedding", "FLOAT64", vector),
+                bigquery.ArrayQueryParameter("docs", "STRING", sorted(docs or ())),
             ],
             maximum_bytes_billed=100 * 1024 * 1024,
         )
@@ -134,6 +139,7 @@ class BigQueryRetriever:
                     page=r["page"],
                     text=r["text"],
                     heading=r["heading"],
+                    title=r.get("title"),
                 ),
                 float(r["score"]),
             )
