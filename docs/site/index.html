@@ -1,0 +1,969 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Belegt: climate figures, checked</title>
+<meta name="description" content="Belegt links the verified CO2 emissions of 2,195 German EU ETS installations to the groups that own them, extracts Scope 1-3 figures from 37 annual reports with page citations, and answers questions per tenant without leaks. Built on Google Cloud for under 1 EUR a month.">
+<meta name="author" content="Parsa Kamali">
+<meta property="og:title" content="Belegt: climate figures of German companies, checked against independent data">
+<meta property="og:description" content="Entity resolution, SCD2 ownership, PDF extraction with hand-labelled evaluation, and a multi-tenant RAG assistant with citations. BigQuery, dbt, GKE, Cloud Run, Terraform. Every number measured.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://parsaka.github.io/belegt/">
+<meta property="og:image" content="https://parsaka.github.io/belegt/img/1-groups-top.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#1b5e20">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231b5e20'/%3E%3Cpath d='M9 16.5l4.5 4.5L23 11' stroke='white' stroke-width='3.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<style>
+:root {
+  --bg: #fbfcfa;
+  --bg-alt: #f2f5f1;
+  --card: #ffffff;
+  --ink: #142019;
+  --ink-2: #3c4a41;
+  --muted: #66746b;
+  --line: #dde4dd;
+  --line-strong: #c3cec4;
+  --accent: #1b5e20;
+  --accent-2: #2e7d32;
+  --accent-soft: #e5f1e5;
+  --accent-ink: #ffffff;
+  --before: #b9c3bb;
+  --warn: #9a5b00;
+  --warn-soft: #fbf0dc;
+  --bad: #a3271f;
+  --code-bg: #eef2ee;
+  --shadow: 0 1px 2px rgba(20, 32, 25, .05), 0 6px 24px rgba(20, 32, 25, .06);
+  --radius: 14px;
+  --mono: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, Consolas, monospace;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1310; --bg-alt: #111a15; --card: #15201a; --ink: #e6efe8; --ink-2: #c2d0c6;
+    --muted: #8fa096; --line: #24332a; --line-strong: #34473b; --accent: #6fcf7a;
+    --accent-2: #8ddc96; --accent-soft: #183224; --accent-ink: #0b130e; --before: #46564c;
+    --warn: #f0b45a; --warn-soft: #2e2413; --bad: #f08a80; --code-bg: #1b2820;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 28px rgba(0,0,0,.25); color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1310; --bg-alt: #111a15; --card: #15201a; --ink: #e6efe8; --ink-2: #c2d0c6;
+  --muted: #8fa096; --line: #24332a; --line-strong: #34473b; --accent: #6fcf7a;
+  --accent-2: #8ddc96; --accent-soft: #183224; --accent-ink: #0b130e; --before: #46564c;
+  --warn: #f0b45a; --warn-soft: #2e2413; --bad: #f08a80; --code-bg: #1b2820;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 28px rgba(0,0,0,.25); color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0; background: var(--bg); color: var(--ink); font: 16.5px/1.65 var(--sans);
+  text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+code, .mono { font-family: var(--mono); font-size: .88em; }
+code { background: var(--code-bg); padding: .1em .38em; border-radius: 5px; overflow-wrap: anywhere; }
+strong { font-weight: 650; }
+h1, h2, h3, h4 { line-height: 1.2; letter-spacing: -.015em; margin: 0; }
+h2 { font-size: clamp(1.6rem, 3.2vw, 2.15rem); font-weight: 720; }
+h3 { font-size: 1.2rem; font-weight: 680; }
+h4 { font-size: 1rem; font-weight: 680; }
+p { margin: 0 0 1em; }
+ul { margin: 0 0 1em; padding-left: 1.2em; }
+li { margin: .3em 0; }
+li::marker { color: var(--muted); }
+
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+@media (max-width: 600px) { .wrap { padding: 0 16px; } body { font-size: 16px; } }
+
+/* top bar */
+.top {
+  position: sticky; top: 0; z-index: 20; backdrop-filter: saturate(1.4) blur(10px);
+  -webkit-backdrop-filter: saturate(1.4) blur(10px);
+  background: color-mix(in srgb, var(--bg) 82%, transparent); border-bottom: 1px solid var(--line);
+}
+.top .wrap { display: flex; align-items: center; gap: 20px; height: 58px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 750; color: var(--ink); text-decoration: none; letter-spacing: -.01em; }
+.brand svg { flex: none; }
+.nav { display: flex; gap: 4px; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
+.nav::-webkit-scrollbar { display: none; }
+.nav a { color: var(--ink-2); text-decoration: none; font-size: .9rem; padding: 6px 10px; border-radius: 8px; white-space: nowrap; }
+.nav a:hover { background: var(--bg-alt); color: var(--ink); }
+.theme-btn {
+  flex: none; border: 1px solid var(--line); background: var(--card); color: var(--ink-2);
+  width: 36px; height: 36px; border-radius: 9px; display: grid; place-items: center; cursor: pointer;
+}
+.theme-btn:hover { color: var(--ink); border-color: var(--line-strong); }
+@media (max-width: 860px) { .nav { display: none; } .theme-btn { margin-left: auto; } }
+
+/* hero */
+.hero { padding: 72px 0 40px; position: relative; overflow: hidden; }
+.hero::before {
+  content: ""; position: absolute; inset: -40% -10% auto auto; width: 720px; height: 720px;
+  background: radial-gradient(closest-side, var(--accent-soft), transparent 70%); opacity: .9; z-index: -1;
+}
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: .82rem; font-weight: 600; color: var(--accent);
+  background: var(--accent-soft); padding: 5px 12px; border-radius: 999px; letter-spacing: .01em; }
+.hero h1 { font-size: clamp(2.3rem, 6vw, 3.9rem); font-weight: 780; letter-spacing: -.035em; margin: 20px 0 18px; max-width: 16ch; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.lede { font-size: clamp(1.08rem, 2vw, 1.27rem); color: var(--ink-2); max-width: 64ch; margin-bottom: 28px; }
+.word { font-size: .95rem; color: var(--muted); margin: -12px 0 28px; }
+.word b { color: var(--ink-2); font-weight: 650; }
+.cta { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 10px; font-weight: 620;
+  font-size: .95rem; text-decoration: none; border: 1px solid var(--line-strong); color: var(--ink); background: var(--card); }
+.btn:hover { border-color: var(--accent); text-decoration: none; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn.primary:hover { filter: brightness(1.08); }
+
+/* KPI strip */
+.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line);
+  border-radius: var(--radius); overflow: hidden; margin-top: 48px; box-shadow: var(--shadow); }
+.kpi { background: var(--card); padding: 20px 20px 18px; }
+.kpi .v { font-size: clamp(1.6rem, 3.4vw, 2.1rem); font-weight: 760; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.kpi .v small { font-size: .55em; font-weight: 650; color: var(--muted); letter-spacing: 0; }
+.kpi .l { color: var(--ink-2); font-size: .9rem; line-height: 1.45; margin-top: 4px; }
+@media (max-width: 860px) { .kpis { grid-template-columns: repeat(2, 1fr); } }
+.kpi-note { font-size: .82rem; color: var(--muted); margin-top: 10px; }
+
+/* sections */
+section { padding: 72px 0; border-top: 1px solid var(--line); scroll-margin-top: 58px; }
+section.alt { background: var(--bg-alt); }
+.sec-head { max-width: 760px; margin-bottom: 36px; }
+.sec-head .kicker { font-size: .8rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.sec-head p { color: var(--ink-2); font-size: 1.07rem; margin: 14px 0 0; }
+.prose { max-width: 760px; }
+.prose p, .prose li { color: var(--ink-2); }
+
+.grid { display: grid; gap: 18px; }
+.g2 { grid-template-columns: repeat(2, 1fr); }
+.g3 { grid-template-columns: repeat(3, 1fr); }
+.g4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 900px) { .g3, .g4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .g2, .g3, .g4 { grid-template-columns: 1fr; } }
+
+.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); min-width: 0; }
+.card h3 { margin-bottom: 8px; }
+.card p, .card li { color: var(--ink-2); font-size: .97rem; }
+.card p:last-child, .card ul:last-child { margin-bottom: 0; }
+.card .num { font-family: var(--mono); font-size: .78rem; color: var(--accent); font-weight: 700; letter-spacing: .04em; margin-bottom: 10px; display: block; }
+.q { font-size: 1.05rem; font-weight: 680; color: var(--ink); margin-bottom: 6px; }
+
+.callout { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 16px 20px; border-radius: 0 10px 10px 0; color: var(--ink); margin: 24px 0; }
+.callout.warn { border-color: var(--warn); background: var(--warn-soft); }
+.callout p:last-child { margin: 0; }
+
+/* tables */
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); box-shadow: var(--shadow); }
+table { width: 100%; border-collapse: collapse; font-size: .94rem; }
+th, td { text-align: left; padding: 11px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 700; background: var(--bg-alt); }
+tr:last-child td { border-bottom: 0; }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+td .src { font-size: .82rem; color: var(--muted); }
+@media (max-width: 640px) {
+  table.stacked thead { display: none; }
+  table.stacked tr { display: block; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+  table.stacked tr:last-child { border-bottom: 0; }
+  table.stacked td { display: block; padding: 2px 0; border: 0; }
+  table.stacked td:first-child { font-size: 1rem; margin-bottom: 2px; }
+  table.stacked td:nth-child(2) { color: var(--muted); font-size: .88rem; }
+}
+.scroll-hint { display: none; font-size: .8rem; color: var(--muted); margin: 0 0 8px; }
+@media (max-width: 860px) { .scroll-hint { display: block; } }
+td strong { color: var(--ink); }
+
+/* architecture */
+.arch { overflow-x: auto; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px; }
+.arch svg { display: block; min-width: 820px; width: 100%; height: auto; }
+.arch .box { fill: var(--card); stroke: var(--line-strong); stroke-width: 1.2; }
+.arch .box.src { fill: var(--bg-alt); }
+.arch .box.hot { fill: var(--accent-soft); stroke: var(--accent); }
+.arch .box.zone { fill: none; stroke: var(--line-strong); stroke-dasharray: 4 4; }
+.arch .t { fill: var(--ink); font: 600 13px var(--sans); }
+.arch .s { fill: var(--muted); font: 11.5px var(--sans); }
+.arch .h { fill: var(--accent); font: 700 11px var(--sans); letter-spacing: .08em; text-transform: uppercase; }
+.arch .e { stroke: var(--muted); stroke-width: 1.4; fill: none; }
+.arch .e.g { stroke: var(--accent); }
+.arch .ah { fill: var(--muted); }
+.arch .ahg { fill: var(--accent); }
+.legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: .85rem; color: var(--muted); margin-top: 12px; }
+.legend span::before { content: ""; display: inline-block; width: 18px; height: 2px; vertical-align: middle; margin-right: 6px; background: var(--muted); }
+.legend span.g::before { background: var(--accent); }
+
+/* bar charts */
+.bars { display: grid; gap: 14px; }
+.bar-row { display: grid; grid-template-columns: 110px 1fr; gap: 12px; align-items: center; }
+.bar-row .lab { font-size: .9rem; color: var(--ink-2); font-weight: 600; }
+.bar-row .lab small { display: block; font-weight: 400; color: var(--muted); font-size: .78rem; }
+.track { display: grid; gap: 4px; }
+.bar { height: 20px; border-radius: 5px; position: relative; min-width: 2px; }
+.bar.b { background: var(--before); }
+.bar.a { background: var(--accent); }
+.bar span { position: absolute; left: calc(100% + 8px); top: 50%; transform: translateY(-50%); font-size: .8rem; font-weight: 650; white-space: nowrap; font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.bar.a span { color: var(--ink); }
+.chart-legend { display: flex; gap: 16px; font-size: .82rem; color: var(--muted); margin: 0 0 14px; }
+.chart-legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 6px; }
+.chart-axis { display: grid; grid-template-columns: 110px 1fr; gap: 12px; font-size: .74rem; color: var(--muted); margin-top: 4px; }
+.chart-axis div { display: flex; justify-content: space-between; padding-right: 40px; }
+
+.stack { display: flex; height: 30px; border-radius: 7px; overflow: hidden; margin: 10px 0 10px; }
+.stack div { height: 100%; }
+.stack-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: .86rem; color: var(--ink-2); }
+.stack-legend i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+
+.big { font-size: clamp(2rem, 4.4vw, 2.8rem); font-weight: 780; letter-spacing: -.035em; line-height: 1.05; font-variant-numeric: tabular-nums; }
+.big small { font-size: .45em; color: var(--muted); font-weight: 650; letter-spacing: 0; }
+.big.ok { color: var(--accent); }
+
+/* trace */
+.trace { counter-reset: step; display: grid; gap: 0; min-width: 0; }
+.step > div { min-width: 0; }
+.step { display: grid; grid-template-columns: 44px 1fr; gap: 16px; position: relative; padding-bottom: 22px; }
+.step:not(:last-child)::before { content: ""; position: absolute; left: 21px; top: 44px; bottom: 0; width: 2px; background: var(--line-strong); }
+.step .dot { counter-increment: step; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); font-weight: 760; border: 1px solid var(--accent); }
+.step .dot::before { content: counter(step); }
+.step h4 { margin: 10px 0 6px; }
+.step p { color: var(--ink-2); margin: 0 0 8px; font-size: .97rem; }
+.sample { font-family: var(--mono); font-size: .8rem; background: var(--code-bg); border-radius: 8px; padding: 10px 12px; color: var(--ink); overflow-x: auto; white-space: pre; line-height: 1.55; }
+
+/* shots */
+.shots { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.shots figure:first-child { grid-column: 1 / -1; }
+@media (max-width: 760px) { .shots { grid-template-columns: 1fr; } }
+figure { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+figure img { display: block; width: 100%; height: auto; border-bottom: 1px solid var(--line); }
+figcaption { padding: 12px 16px; font-size: .88rem; color: var(--ink-2); }
+figcaption b { color: var(--ink); }
+
+/* decisions */
+.dec { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 760px) { .dec { grid-template-columns: 1fr; } }
+.dec .card .choice { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.pill { font-size: .76rem; font-weight: 650; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--line-strong); color: var(--ink-2); white-space: nowrap; }
+.pill.yes { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+.pill.no { text-decoration: line-through; color: var(--muted); }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-size: .86rem; padding: 6px 12px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); color: var(--ink-2); }
+
+.limits li { margin: .5em 0; }
+.limits li strong { color: var(--ink); }
+
+pre.cmd { font-family: var(--mono); font-size: .84rem; background: var(--code-bg); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; overflow-x: auto; line-height: 1.7; color: var(--ink); margin: 0; }
+pre.cmd .c { color: var(--muted); }
+
+footer { border-top: 1px solid var(--line); padding: 44px 0 56px; color: var(--muted); font-size: .9rem; }
+footer .cols { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 28px; }
+@media (max-width: 760px) { footer .cols { grid-template-columns: 1fr; } }
+footer h4 { color: var(--ink); margin-bottom: 8px; font-size: .9rem; }
+footer ul { list-style: none; padding: 0; margin: 0; }
+footer li { margin: .25em 0; }
+.de { border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px; background: var(--card); margin-top: 28px; }
+.de h3 { font-size: 1.02rem; margin-bottom: 8px; }
+.de p { color: var(--ink-2); margin: 0; font-size: .96rem; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Belegt, back to top">
+      <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#1b5e20"/><path d="M9 16.5l4.5 4.5L23 11" stroke="#fff" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Belegt
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#why">Why</a>
+      <a href="#how">How it works</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#deep-dives">Deep dives</a>
+      <a href="#results">Results</a>
+      <a href="#decisions">Decisions</a>
+      <a href="#run">Run it</a>
+    </nav>
+    <button class="theme-btn" id="theme" type="button" aria-label="Switch light or dark theme" title="Light or dark theme">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+<div class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Data platform portfolio project · Google Cloud · 2026</span>
+    <h1>Climate figures of German companies, <em>checked</em>.</h1>
+    <p class="lede">
+      Belegt links the verified CO₂ emissions of every German installation in the EU Emissions
+      Trading System to the corporate group that owns it, reads the Scope 1–3 figures that 37
+      DAX and MDAX groups publish in their annual reports, and compares the two. A multi-tenant
+      assistant answers questions about the reports with a page citation for every claim, and
+      it never shows one tenant another tenant's documents.
+    </p>
+    <p class="word"><b>belegt</b> (German): <i>backed by evidence, documented</i>. Every number on this page links to the run that measured it.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/Parsaka/belegt">
+        <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        Code on GitHub
+      </a>
+      <a class="btn" href="https://lookerstudio.google.com/reporting/8653329c-9086-4395-9526-c577d32895fb">Live dashboard</a>
+      <a class="btn" href="dbt/">Data model and lineage</a>
+      <a class="btn" href="#results">Measured results</a>
+    </div>
+
+    <div class="kpis" role="list">
+      <div class="kpi" role="listitem"><div class="v">91.7<small> %</small></div><div class="l">of 2025 verified ETS tonnage in Germany attributed to a corporate group</div></div>
+      <div class="kpi" role="listitem"><div class="v">82.7<small> %</small></div><div class="l">precision of Scope 1–3 extraction on 37 reports, against 148 hand labels</div></div>
+      <div class="kpi" role="listitem"><div class="v">0<small> leaks</small></div><div class="l">in 31 of 31 cross-tenant questions on the real reports, all declined</div></div>
+      <div class="kpi" role="listitem"><div class="v">0.00<small> EUR</small></div><div class="l">net cost in October 2026, under a hard cap of 1.00 EUR a month</div></div>
+    </div>
+    <p class="kpi-note">Measured on Google Cloud (europe-west1) and GitHub Actions in October 2026. The run ids are in <a href="#results">Results</a>.</p>
+  </div>
+</div>
+
+<!-- WHY -->
+<section id="why">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">Why</div>
+      <h2>A company's climate figure is a claim. Is there anything independent to check it against?</h2>
+      <p>Since the CSRD, large German groups publish their greenhouse-gas emissions in an audited
+      sustainability statement. Those figures sit in PDFs of 300 to 500 pages, in tables whose
+      layout differs from company to company. And there is little that a reader can easily compare them with.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card">
+        <span class="num">THE INDEPENDENT DATA EXISTS</span>
+        <h3>EU ETS verified emissions</h3>
+        <p>Every power plant, steelworks and chemical site in the EU Emissions Trading System
+        reports its CO₂ each year, and an accredited verifier checks it. Germany has 2,195
+        stationary installations in the 2025 registry file.</p>
+      </div>
+      <div class="card">
+        <span class="num">BUT IT IS PER SITE</span>
+        <h3>No link to the group</h3>
+        <p>The registry names the <em>operator</em> of a site, often a small subsidiary, such as
+        a <code>Kraftwerk GmbH</code>. Only 76 of the 2,874 German operators give an LEI. To learn which
+        group a site belonged to <em>in a given year</em>, you need ownership data and entity resolution.</p>
+      </div>
+      <div class="card">
+        <span class="num">AND THE CLAIMS ARE IN PDFS</span>
+        <h3>Scope figures in free-form tables</h3>
+        <p>"Gross Scope 1 emissions 15.552 15.216 …" means 15.552 million tonnes, but only if you
+        know the header is in Mt, which column is 2024, and that the row is the group total and
+        not a segment.</p>
+      </div>
+    </div>
+    <div class="callout">
+      <p><strong>The goal.</strong> I wanted a pipeline that joins these three things: who emits
+      (verified, per site), who owns them (per year), and what the owner says (per page). It should be
+      honest about what it cannot match, cite its source for every figure, and run on a student budget.
+      I also built it to close specific gaps that German data-engineering job ads ask for: GCP and
+      BigQuery, Kubernetes, a semantic layer, dimensional modelling beyond the basics (SCD2,
+      bridge tables, entity resolution), and RAG that can be trusted.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section id="how" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">How it works</div>
+      <h2>Four questions, one warehouse</h2>
+      <p>Each question is a layer of the platform, and each layer has its own measurement.</p>
+    </div>
+    <div class="grid g4">
+      <div class="card">
+        <span class="num">01 · WHO EMITS?</span>
+        <p class="q">Verified emissions per installation</p>
+        <p>The EU Union Registry xlsx files, 2008 to 2025, loaded idempotently and checksummed in a manifest. The result is 43,272 German account-years.</p>
+      </div>
+      <div class="card">
+        <span class="num">02 · WHO OWNS THEM?</span>
+        <p class="q">Operator → legal entity → group</p>
+        <p>Entity resolution against 310,087 GLEIF entities uses the LEI, then the register number, then the name. A time-bounded ownership bridge then rolls each entity up to its ultimate parent <em>in that year</em>.</p>
+      </div>
+      <div class="card">
+        <span class="num">03 · WHAT DO THEY SAY?</span>
+        <p class="q">Scope 1–3 from 37 reports</p>
+        <p>A Kubernetes Indexed Job parses one PDF per pod. A rule-based extractor finds the E1-6 table, reads its header years and units, and stores the figure with its page and table line.</p>
+      </div>
+      <div class="card">
+        <span class="num">04 · DO THEY AGREE?</span>
+        <p class="q">Reported vs verified, and questions</p>
+        <p>A consistency mart compares the reported Scope 1 with the group's ETS sum. A tenant-isolated assistant answers questions from the reports, with page citations, or declines.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">Architecture</div>
+      <h2>Open data in, cited answers out</h2>
+      <p>GitHub Actions orchestrates everything through Workload Identity Federation, so no service-account key exists anywhere.
+      Terraform owns every resource, and the cost guards were the first thing it built.</p>
+    </div>
+
+    <p class="scroll-hint">Swipe sideways to see the whole diagram.</p>
+    <div class="arch" role="img" aria-label="Architecture: five public sources flow through GitHub Actions and a GKE Indexed Job into Cloud Storage and BigQuery, where dbt builds the marts and the vector store; Looker Studio, LookML, the dbt docs and a FastAPI service on Cloud Run consume them. Terraform, cost guards and an audit branch sit underneath.">
+      <svg viewBox="0 0 1060 560" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="ah"/></marker>
+          <marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="ahg"/></marker>
+        </defs>
+
+        <!-- column headers -->
+        <text class="h" x="20" y="22">Public sources</text>
+        <text class="h" x="262" y="22">Ingest and compute</text>
+        <text class="h" x="532" y="22">Warehouse (BigQuery)</text>
+        <text class="h" x="842" y="22">Consumers</text>
+
+        <!-- sources -->
+        <rect class="box src" x="20" y="38" width="200" height="54" rx="9"/>
+        <text class="t" x="34" y="61">EU ETS Union Registry</text>
+        <text class="s" x="34" y="79">verified t CO₂e, operators</text>
+
+        <rect class="box src" x="20" y="102" width="200" height="54" rx="9"/>
+        <text class="t" x="34" y="125">GLEIF Golden Copy</text>
+        <text class="s" x="34" y="143">LEI Level 1 + parents (L2)</text>
+
+        <rect class="box src" x="20" y="166" width="200" height="54" rx="9"/>
+        <text class="t" x="34" y="189">EEA Industrial Reporting</text>
+        <text class="s" x="34" y="207">ETS ids, facility points</text>
+
+        <rect class="box src" x="20" y="230" width="200" height="54" rx="9"/>
+        <text class="t" x="34" y="253">GeoNames postcodes</text>
+        <text class="s" x="34" y="271">map points, Bundesland</text>
+
+        <rect class="box src" x="20" y="320" width="200" height="66" rx="9"/>
+        <text class="t" x="34" y="344">37 annual reports (PDF)</text>
+        <text class="s" x="34" y="362">copyrighted: private bucket,</text>
+        <text class="s" x="34" y="377">never in Git</text>
+
+        <!-- ingest -->
+        <rect class="box" x="262" y="70" width="220" height="118" rx="9"/>
+        <text class="t" x="276" y="94">GitHub Actions</text>
+        <text class="s" x="276" y="113">belegt extract → belegt load</text>
+        <text class="s" x="276" y="130">entity resolution in Python</text>
+        <text class="s" x="276" y="147">WIF: no keys · monthly and on merge</text>
+        <text class="s" x="276" y="164">manifest with checksums</text>
+
+        <rect class="box hot" x="262" y="306" width="220" height="94" rx="9"/>
+        <text class="t" x="276" y="330">GKE Autopilot Indexed Job</text>
+        <text class="s" x="276" y="349">one pod per report (37 tasks)</text>
+        <text class="s" x="276" y="366">parse → extract scope figures</text>
+        <text class="s" x="276" y="383">kind in CI · Cloud Run job later</text>
+
+        <rect class="box" x="262" y="214" width="220" height="62" rx="9"/>
+        <text class="t" x="276" y="238">Cloud Storage</text>
+        <text class="s" x="276" y="257">raw files · private reports bucket</text>
+
+        <!-- warehouse zone -->
+        <rect class="box zone" x="522" y="34" width="290" height="440" rx="12"/>
+        <rect class="box" x="538" y="50" width="258" height="56" rx="9"/>
+        <text class="t" x="552" y="73">raw + staging</text>
+        <text class="s" x="552" y="91">loaded idempotently · dbt sources</text>
+
+        <rect class="box hot" x="538" y="122" width="258" height="122" rx="9"/>
+        <text class="t" x="552" y="146">dbt Core: 65 nodes</text>
+        <text class="s" x="552" y="165">SCD2 snapshot of GLEIF entities</text>
+        <text class="s" x="552" y="182">time-bounded ownership bridge</text>
+        <text class="s" x="552" y="199">review queue + override seeds</text>
+        <text class="s" x="552" y="216">tests: unique, no overlaps,</text>
+        <text class="s" x="552" y="233">group total = attributed facts</text>
+
+        <rect class="box" x="538" y="260" width="258" height="92" rx="9"/>
+        <text class="t" x="552" y="284">marts (star schema)</text>
+        <text class="s" x="552" y="303">dim_installation · dim_legal_entity</text>
+        <text class="s" x="552" y="320">fct_verified · fct_reported_metric</text>
+        <text class="s" x="552" y="337">mart_group · mart_scope1_consistency</text>
+
+        <rect class="box hot" x="538" y="368" width="258" height="92" rx="9"/>
+        <text class="t" x="552" y="392">chunks + e5 embeddings</text>
+        <text class="s" x="552" y="411">VECTOR_SEARCH, filtered first</text>
+        <text class="s" x="552" y="428">row access policy per tenant</text>
+        <text class="s" x="552" y="445">service account per tenant</text>
+
+        <!-- consumers -->
+        <rect class="box" x="842" y="70" width="198" height="62" rx="9"/>
+        <text class="t" x="856" y="94">Looker Studio</text>
+        <text class="s" x="856" y="113">public dashboard, 3 pages</text>
+
+        <rect class="box" x="842" y="148" width="198" height="62" rx="9"/>
+        <text class="t" x="856" y="172">LookML semantic layer</text>
+        <text class="s" x="856" y="191">validated against dbt in CI</text>
+
+        <rect class="box" x="842" y="226" width="198" height="62" rx="9"/>
+        <text class="t" x="856" y="250">dbt docs (this site)</text>
+        <text class="s" x="856" y="269">lineage, column docs</text>
+
+        <rect class="box hot" x="842" y="368" width="198" height="92" rx="9"/>
+        <text class="t" x="856" y="392">FastAPI on Cloud Run</text>
+        <text class="s" x="856" y="411">bearer token → tenant</text>
+        <text class="s" x="856" y="428">citation check or decline</text>
+        <text class="s" x="856" y="445">min 0, max 1 instance</text>
+
+        <!-- edges: sources -> actions -->
+        <path class="e" d="M220 65 H240 V110 H260" marker-end="url(#ar)"/>
+        <path class="e" d="M220 129 H260" marker-end="url(#ar)"/>
+        <path class="e" d="M220 193 H240 V150 H260" marker-end="url(#ar)"/>
+        <path class="e" d="M220 257 H240 V168 H260" marker-end="url(#ar)"/>
+        <!-- pdf -> gke -->
+        <path class="e g" d="M220 353 H260" marker-end="url(#arg)"/>
+        <!-- actions -> gcs, gke -> gcs -->
+        <path class="e" d="M372 188 V212" marker-end="url(#ar)"/>
+        <path class="e g" d="M372 306 V278" marker-end="url(#arg)"/>
+        <!-- gcs -> raw -->
+        <path class="e" d="M482 245 H505 V78 H536" marker-end="url(#ar)"/>
+        <!-- raw -> dbt -> marts -->
+        <path class="e" d="M667 106 V120" marker-end="url(#ar)"/>
+        <path class="e" d="M667 244 V258" marker-end="url(#ar)"/>
+        <!-- gke -> chunks -->
+        <path class="e g" d="M482 380 H510 V414 H536" marker-end="url(#arg)"/>
+        <!-- marts -> consumers -->
+        <path class="e" d="M796 290 H818 V101 H840" marker-end="url(#ar)"/>
+        <path class="e" d="M818 179 H840" marker-end="url(#ar)"/>
+        <path class="e" d="M818 257 H840" marker-end="url(#ar)"/>
+        <!-- chunks -> api -->
+        <path class="e g" d="M796 414 H840" marker-end="url(#arg)"/>
+
+        <!-- foundation band -->
+        <rect class="box src" x="20" y="494" width="1020" height="52" rx="10"/>
+        <text class="t" x="36" y="516">Terraform</text>
+        <text class="s" x="36" y="534">every resource, state in GCS</text>
+        <text class="t" x="256" y="516">Cost guards (built first)</text>
+        <text class="s" x="256" y="534">budget alerts 0.25 / 0.50 / 1.00 EUR · 20 GiB/day BigQuery quota · billing kill switch at 0.60 EUR</text>
+        <text class="t" x="842" y="516">ops-results branch</text>
+        <text class="s" x="842" y="534">every run's summary, as audit log</text>
+      </svg>
+    </div>
+    <div class="legend"><span>registry and ownership data</span><span class="g">report documents</span></div>
+
+    <div class="table-wrap" style="margin-top:28px">
+      <table class="stacked">
+        <thead><tr><th>Layer</th><th>Tool</th><th>Its one job</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Ingest</strong></td><td>Python, <code>belegt extract</code> / <code>load</code> / <code>reports</code></td><td>Download, parse and resolve entities. Writes are idempotent, and re-runs overwrite.</td></tr>
+          <tr><td><strong>Orchestration</strong></td><td>GitHub Actions, 11 workflows</td><td>CI, the monthly pipeline, deploy, Kubernetes, reports, the cost report and the kill-switch drill. No separate scheduler.</td></tr>
+          <tr><td><strong>Warehouse</strong></td><td>BigQuery (DuckDB locally and in CI)</td><td>Raw tables, marts and the vector store in one engine. The same dbt models run on both.</td></tr>
+          <tr><td><strong>Modelling</strong></td><td>dbt Core</td><td>The star schema, the SCD2 snapshot, the ownership bridge, data tests and the consistency mart.</td></tr>
+          <tr><td><strong>Parallel work</strong></td><td>Kubernetes Indexed Job (GKE Autopilot), Helm, kind</td><td>One pod per report. The charts are installed on throw-away kind clusters in CI.</td></tr>
+          <tr><td><strong>Retrieval</strong></td><td>BigQuery <code>VECTOR_SEARCH</code>, row access policies, multilingual-e5</td><td>A tenant-filtered search over the report pages, with open-source embeddings in the container.</td></tr>
+          <tr><td><strong>Serving</strong></td><td>FastAPI on Cloud Run</td><td>Cited answers per tenant, with a token per tenant and rate limits.</td></tr>
+          <tr><td><strong>Semantic layer and BI</strong></td><td>LookML (CI-validated), Looker Studio</td><td>Metric definitions in code, and the public dashboard.</td></tr>
+          <tr><td><strong>Infrastructure</strong></td><td>Terraform, Workload Identity Federation</td><td>Everything as code, with keyless deploys from GitHub.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- TRACE -->
+<section class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">Follow one number</div>
+      <h2>From a table row on page 54 to a checked figure</h2>
+      <p>BASF's 2024 report, with the real row as the PDF text layer gives it.</p>
+    </div>
+    <div class="grid g2" style="align-items:start">
+      <div class="trace">
+        <div class="step"><div class="dot"></div><div>
+          <h4>Find the climate pages</h4>
+          <p>The report has hundreds of pages. Only pages that mention a scope, GHG/THG or the ESRS datapoint E1-6 are read further.</p>
+        </div></div>
+        <div class="step"><div class="dot"></div><div>
+          <h4>Read the table, not the line</h4>
+          <p>The extractor reconstructs the header (years, base year, change columns, footnote digits glued to years) and the unit (t, kt, "1,000 tonnes", Mt CO₂e). Then it reads the value in the reporting-year column.</p>
+          <div class="sample">Gross Scope 1 emissions 15.552 15.216 15.562 – 0% …
+→ scope1 = 15,552,000 t · page 54</div>
+        </div></div>
+        <div class="step"><div class="dot"></div><div>
+          <h4>Store it with its evidence</h4>
+          <p><code>fct_reported_metric</code> keeps the value, the page and the table line (at most 200 characters, so it stays a quote). A reviewed value can override it through a seed, and the source is recorded.</p>
+        </div></div>
+        <div class="step"><div class="dot"></div><div>
+          <h4>Compare with what was verified</h4>
+          <p><code>mart_scope1_consistency</code> joins the figure with the ETS sum of every installation that the group owned in that year. ETS covers only EU sites, so a reported figure above the ETS sum is normal. Only an ETS sum above the reported figure (beyond 5 %) is flagged as a contradiction.</p>
+        </div></div>
+        <div class="step"><div class="dot"></div><div>
+          <h4>Answer questions about it</h4>
+          <p>"What were BASF's gross Scope 1 GHG emissions in 2024?" searches only BASF's report pages that the asking tenant may read. The answer quotes one row and cites its chunk, or the assistant declines.</p>
+        </div></div>
+      </div>
+      <div class="card">
+        <h3>Why the group, and why "in that year"</h3>
+        <p>An installation's operator is often a subsidiary that changed hands. GLEIF publishes who the direct and ultimate parents are, with dates. Belegt keeps them as a time-bounded bridge:</p>
+        <div class="sample">bridge_ownership
+child_lei      parent_lei     kind       valid_from  valid_to
+&lt;operator&gt;     &lt;operator&gt;     self       …           …
+&lt;operator&gt;     &lt;group&gt;        ultimate   2019-…      2023-…</div>
+        <p style="margin-top:14px">"Which group owned this plant in 2022?" is then a join on the year end, not on today's parent. A dbt test makes sure the periods never overlap, and another checks that each group's total equals the sum of the facts attributed to it.</p>
+        <p>Every entity also gets a <code>self</code> edge, so an operator without a parent in GLEIF is its own group and its tonnage is not lost.</p>
+        <div class="callout warn" style="margin-bottom:0">
+          <p><strong>A known limit, shown rather than hidden.</strong> Hüttenwerke Krupp Mannesmann has three shareholders and no consolidating parent in GLEIF, so it stays its own group (6.5 Mt in 2025). Splitting it pro rata would need ownership shares, which GLEIF Level 2 does not carry.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEEP DIVES -->
+<section id="deep-dives">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">Deep dives</div>
+      <h2>The hard parts, and how each was measured</h2>
+    </div>
+
+    <!-- ER -->
+    <h3 style="font-size:1.45rem;margin-bottom:8px">1 · Entity resolution with a review queue</h3>
+    <p class="prose" style="color:var(--ink-2)">The registry gives a name and usually a German commercial register number, such as <code>HRB 6000 Amtsgericht Ludwigshafen</code>. GLEIF stores the same number in <code>registeredAs</code>. The matcher tries the most reliable evidence first, and it never decides silently when the evidence is weak.</p>
+    <div class="grid g2" style="margin:22px 0 48px">
+      <div class="card">
+        <h4 style="margin-bottom:12px">Evidence, in order</h4>
+        <ol style="padding-left:1.2em;margin:0;color:var(--ink-2)">
+          <li><strong>The LEI in the registry</strong> is accepted directly, but only 76 German operators give one.</li>
+          <li><strong>A register number equal to GLEIF <code>registeredAs</code></strong> with a plausible name is accepted. The same number with another name goes to review, because numbers repeat across courts: <code>HRB 6000</code> belongs to five GLEIF entities.</li>
+          <li><strong>A normalised name</strong> (umlauts and legal forms removed): an exact match is accepted, and a partial match goes to review.</li>
+          <li><strong>The EEA parent company</strong> is used only where nothing else matched.</li>
+        </ol>
+        <p style="margin-top:12px">Human decisions are a seed (<code>entity_overrides.csv</code>), so a re-run can never undo them.</p>
+      </div>
+      <div class="card">
+        <h4>All 2,404 German ETS accounts</h4>
+        <div class="stack" role="img" aria-label="1,754 accepted, 126 in review, 425 unmatched, 99 without a candidate">
+          <div style="width:72.97%;background:var(--accent)"></div>
+          <div style="width:5.24%;background:var(--warn)"></div>
+          <div style="width:17.68%;background:var(--before)"></div>
+          <div style="width:4.12%;background:var(--line-strong)"></div>
+        </div>
+        <div class="stack-legend">
+          <span><i style="background:var(--accent)"></i>1,754 accepted</span>
+          <span><i style="background:var(--warn)"></i>126 review</span>
+          <span><i style="background:var(--before)"></i>425 unmatched</span>
+          <span><i style="background:var(--line-strong)"></i>99 no candidate</span>
+        </div>
+        <div class="grid g2" style="margin-top:22px;gap:14px">
+          <div><div class="big ok">77.3<small> %</small></div><p style="font-size:.9rem;margin:4px 0 0">of 2,195 stationary installations matched to a GLEIF company</p></div>
+          <div><div class="big ok">91.7<small> %</small></div><p style="font-size:.9rem;margin:4px 0 0">of 271.5 Mt verified in 2025 attributed to a group (91.8 % in 2024)</p></div>
+        </div>
+        <p style="font-size:.86rem;color:var(--muted);margin:16px 0 0">Matched sites are larger on average, so the share of tonnage is well above the share of sites. Aircraft operators match far less often: 57 of 209 (27.3 %).</p>
+      </div>
+    </div>
+
+    <!-- Extraction -->
+    <h3 style="font-size:1.45rem;margin-bottom:8px">2 · Extraction from 37 real reports, with a held-out test split</h3>
+    <p class="prose" style="color:var(--ink-2)">I labelled 148 figures by hand: 37 reports × Scope 1, Scope 2 location-based, Scope 2 market-based and Scope 3. Each label has the value, the pages and the printed table line. A pick counts as correct only within 0.5 % of the label <em>and</em> on a labelled page. An empty label means the report states no such figure, so any pick there counts as an error.</p>
+    <div class="grid g2" style="margin:22px 0 18px">
+      <div class="card">
+        <h4 style="margin-bottom:10px">Precision, before and after the rule fixes</h4>
+        <div class="chart-legend"><span><i style="background:var(--before)"></i>before</span><span><i style="background:var(--accent)"></i>after</span></div>
+        <div class="bars">
+          <div class="bar-row"><div class="lab">dev<small>15 reports</small></div><div class="track"><div class="bar b" style="width:45.7%"><span>45.7 %</span></div><div class="bar a" style="width:84.6%"><span>84.6 %</span></div></div></div>
+          <div class="bar-row"><div class="lab">test<small>22 held out</small></div><div class="track"><div class="bar b" style="width:61.2%"><span>61.2 %</span></div><div class="bar a" style="width:80.8%"><span>80.8 %</span></div></div></div>
+          <div class="bar-row"><div class="lab">all<small>37 reports</small></div><div class="track"><div class="bar b" style="width:53.7%"><span>53.7 %</span></div><div class="bar a" style="width:82.7%"><span>82.7 %</span></div></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <h4 style="margin-bottom:10px">Recall, before and after</h4>
+        <div class="chart-legend"><span><i style="background:var(--before)"></i>before</span><span><i style="background:var(--accent)"></i>after</span></div>
+        <div class="bars">
+          <div class="bar-row"><div class="lab">dev<small>15 reports</small></div><div class="track"><div class="bar b" style="width:38.2%"><span>38.2 %</span></div><div class="bar a" style="width:80.0%"><span>80.0 %</span></div></div></div>
+          <div class="bar-row"><div class="lab">test<small>22 held out</small></div><div class="track"><div class="bar b" style="width:44.8%"><span>44.8 %</span></div><div class="bar a" style="width:62.7%"><span>62.7 %</span></div></div></div>
+          <div class="bar-row"><div class="lab">all<small>37 reports</small></div><div class="track"><div class="bar b" style="width:41.8%"><span>41.8 %</span></div><div class="bar a" style="width:70.5%"><span>70.5 %</span></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="grid g2" style="margin-bottom:48px">
+      <div class="card">
+        <h4 style="margin-bottom:8px">How the rules were changed</h4>
+        <p>Rules changed only for failures in the dev split, and each change came with a unit test built from the real row: a base-year column without a year, a change column (<code>2024/2023</code>), "1,000 tonnes" in a row label, footnote digits glued to header years, column titles between header lines, wrapped rows, and <code>Konzern</code>/<code>Summe</code> total rows.</p>
+        <p>None of the 22 test reports changed a rule. Their precision still rose from 61.2 % to 80.8 %, so the fixes generalise rather than memorise. One report whose header shaped a rule was moved from test to dev, and the method page says so.</p>
+      </div>
+      <div class="card">
+        <h4 style="margin-bottom:8px">Per metric, all 37 reports</h4>
+        <div class="table-wrap" style="box-shadow:none">
+          <table>
+            <thead><tr><th>metric</th><th class="n">precision</th><th class="n">recall</th></tr></thead>
+            <tbody>
+              <tr><td>Scope 1</td><td class="n">76.7 %</td><td class="n">71.9 %</td></tr>
+              <tr><td>Scope 2 location</td><td class="n">88.0 %</td><td class="n">81.5 %</td></tr>
+              <tr><td>Scope 2 market</td><td class="n">77.8 %</td><td class="n">67.7 %</td></tr>
+              <tr><td>Scope 3</td><td class="n">90.9 %</td><td class="n">62.5 %</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:.88rem;margin-top:12px">What still fails, by cause: several entities side by side in one table, a summary page that outranks the E1-6 table, figures two lines below their label, fiscal-year headers (<code>2024/25</code>), and one report whose PDF text layer is garbled. <a href="https://github.com/Parsaka/belegt/blob/main/docs/measurements/extraction.md">The full list</a> is on the method page.</p>
+      </div>
+    </div>
+
+    <!-- RAG -->
+    <h3 style="font-size:1.45rem;margin-bottom:8px">3 · A multi-tenant assistant that cites or declines</h3>
+    <p class="prose" style="color:var(--ink-2)">The reports are split between two tenants: energy and materials, and mobility, logistics and technology. An answer is worth something only if a reader can check it, and only if a tenant can never see a document that it does not own. Both are enforced outside the model.</p>
+    <div class="grid g3" style="margin:22px 0 18px">
+      <div class="card"><div class="big ok">19<small> of 31</small></div><p style="margin-top:6px">questions about a company's Scope 1 figure answered with the printed figure <strong>and</strong> a citation on a labelled page</p></div>
+      <div class="card"><div class="big ok">31<small> of 31</small></div><p style="margin-top:6px">questions declined when the other tenant asks about the same report</p></div>
+      <div class="card"><div class="big ok">0<small> leaks</small></div><p style="margin-top:6px">citations of a report that the asking tenant may not read, over 4,915 chunks from 37 reports</p></div>
+    </div>
+    <div class="grid g2" style="margin-bottom:12px">
+      <div class="card">
+        <h4 style="margin-bottom:8px">Isolation is a filter, not a prompt</h4>
+        <ul>
+          <li>The tenant comes from the bearer token and never from the request body.</li>
+          <li>The <code>VECTOR_SEARCH</code> base table is filtered on the tenant <em>before</em> the nearest-neighbour search, and BigQuery row access policies enforce the same rule for each tenant's service account.</li>
+          <li>All GHG tables look alike, so a company named in the question narrows the search to that company's reports. This filter runs in the same query and is never a way around the tenant filter.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4 style="margin-bottom:8px">Every sentence needs a citation</h4>
+        <ul>
+          <li>Chunks never cross a page and keep table rows whole, so a citation names one page.</li>
+          <li>After generation, the assistant declines with a fixed sentence when a sentence has no citation, or when it cites a chunk that was not retrieved.</li>
+          <li>Text inside the sources is data. A test plants an instruction in a document and checks that the citation check catches it.</li>
+          <li>A model-free extractive reader runs in CI and when the LLM spend cap is hit, so the evaluation needs no paid API.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="prose" style="color:var(--muted);font-size:.93rem;margin-bottom:48px">The test cases are generated from the extraction labels, and a test keeps the two in sync. All 12 misses come from the model-free reader: a citation on another page that also mentions Scope 1, the right report but the wrong row, or a decline. The 0 leaks hold whatever the reader is, because they come from the filters and the citation check. <a href="https://github.com/Parsaka/belegt/blob/main/docs/measurements/assistant-reports.md">The method and every miss</a> are on the method page.</p>
+
+    <!-- Platform + cost -->
+    <h3 style="font-size:1.45rem;margin-bottom:8px">4 · A platform with a hard 1 EUR ceiling</h3>
+    <p class="prose" style="color:var(--ink-2)">The budget was a design input, not an afterthought. The cost guards were the first Terraform that was applied, and each one is tested.</p>
+    <div class="grid g3" style="margin-top:22px">
+      <div class="card">
+        <span class="num">LAYERED GUARDS</span>
+        <ul>
+          <li>Budget alerts at 0.25, 0.50 and 1.00 EUR.</li>
+          <li>A custom BigQuery quota of 20 GiB a day, a hard stop that also protects the public dashboard.</li>
+          <li>Cloud Run with min 0 and max 1 instance, a rate limit and a demo token.</li>
+          <li>A billing kill switch at 0.60 EUR: budget → Pub/Sub → function → detach billing.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="num">A DRILL, NOT A HOPE</span>
+        <p>After every Terraform apply, a workflow sends a marked budget message and checks the function's verdict. It stops just before the detach.</p>
+        <p>The drill found two real bugs. The function was not registered as a CloudEvent function, and its identity lacked <code>resourcemanager.projects.get</code>. Either bug would have left billing attached. Both are fixed, and the drill now reports <code>WOULD DETACH</code>.</p>
+      </div>
+      <div class="card">
+        <span class="num">TWO RUNTIMES, ONE IMAGE</span>
+        <p>GKE Autopilot runs the report job during the 90-day trial, and a Cloud Run job runs it afterwards. The same container image runs on both. The Helm charts are tested on kind in CI, so the Kubernetes path stays valid after the cluster is gone.</p>
+        <p>The measured result is 37 of 37 reports parsed in parallel on GKE, with no failed task.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DASHBOARD -->
+<section class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">Dashboard</div>
+      <h2>The marts, as a public report</h2>
+      <p>Looker Studio reads the dbt marts directly and has no metric logic of its own. The definitions live in LookML, which is checked in CI against the columns that dbt actually builds.</p>
+    </div>
+    <div class="shots">
+      <figure>
+        <a href="img/1-groups-top.jpg"><img src="img/1-groups-top.jpg" width="1400" height="800" alt="Groups page: KPIs and the top groups by verified emissions in 2025"></a>
+        <figcaption><b>Groups.</b> 2025: 609 groups and 248.8 Mt CO₂e attributed, from LEAG and RWE down. Each group has its LEI.</figcaption>
+      </figure>
+      <figure>
+        <a href="img/2-reported-vs-verified-top.jpg"><img src="img/2-reported-vs-verified-top.jpg" width="1400" height="800" alt="Reported versus verified Scope 1 per report"></a>
+        <figcaption><b>Reported vs verified.</b> The reported Scope 1 next to the ETS sum, with page and quote, and a red or green status.</figcaption>
+      </figure>
+      <figure>
+        <a href="img/3-installations-top.jpg"><img src="img/3-installations-top.jpg" width="1400" height="800" alt="Map of installations coloured by match decision"></a>
+        <figcaption><b>Installations.</b> A map coloured by match decision. Postcode-centre points are labelled as approximate.</figcaption>
+      </figure>
+    </div>
+    <p style="margin-top:20px"><a class="btn" href="https://lookerstudio.google.com/reporting/8653329c-9086-4395-9526-c577d32895fb">Open the live dashboard</a></p>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">Results</div>
+      <h2>Every number, with the run that measured it</h2>
+      <p>Nothing on this page is estimated. Each run writes its summary to the <code>ops-results</code> branch, which serves as the audit log. The measurement pages give the method, the splits and every failure.</p>
+    </div>
+    <div class="table-wrap">
+      <table class="stacked">
+        <thead><tr><th>What</th><th>Result</th><th>Source</th></tr></thead>
+        <tbody>
+          <tr><td><strong>German ETS installations</strong></td><td>2,195 stationary installations. 77.3 % matched to a GLEIF company, and 91.7 % of 2025 verified tonnage (271.5 Mt) attributed to a group.</td><td><a href="https://github.com/Parsaka/belegt/blob/main/docs/measurements/full-data.md">full data</a></td></tr>
+          <tr><td><strong>Warehouse</strong></td><td>dbt on BigQuery, 65 of 65 nodes passing on the full data: 43,272 emission facts, 310,590 legal-entity versions and 344,064 ownership edges.</td><td><a href="https://github.com/Parsaka/belegt/blob/main/docs/measurements/production.md">production</a></td></tr>
+          <tr><td><strong>Map</strong></td><td>2,064 of 2,195 installations placed: 49 at the exact EEA point and 2,015 at the centre of the contact postcode.</td><td><a href="https://github.com/Parsaka/belegt/actions/runs/41218873049">run 41218873049</a></td></tr>
+          <tr><td><strong>Extraction</strong></td><td>82.7 % precision and 70.5 % recall on 37 reports and 148 labels, up from 53.7 % and 41.8 %. 80.8 % precision on the 22 held-out reports.</td><td><a href="https://github.com/Parsaka/belegt/blob/main/docs/measurements/extraction.md">extraction</a></td></tr>
+          <tr><td><strong>Parsing at scale</strong></td><td>37 of 37 reports parsed by a Kubernetes Indexed Job on GKE Autopilot, one pod per report.</td><td><a href="https://github.com/Parsaka/belegt/actions/runs/41249255988">run 41249255988</a></td></tr>
+          <tr><td><strong>Document assistant</strong></td><td>19 of 31 answered with the printed figure on a labelled page. 31 of 31 cross-tenant questions declined, with 0 leaks.</td><td><a href="https://github.com/Parsaka/belegt/blob/main/docs/measurements/assistant-reports.md">assistant</a></td></tr>
+          <tr><td><strong>API on Cloud Run</strong></td><td>3.34 s cold start and 1.33 s warm, with min 0 and max 1 instance.</td><td><a href="https://github.com/Parsaka/belegt/blob/main/docs/measurements/production.md">production</a></td></tr>
+          <tr><td><strong>Cost</strong></td><td>0.00 EUR net in October 2026, with all usage covered by the trial credit. The hard cap is 1.00 EUR a month.</td><td><a href="https://github.com/Parsaka/belegt/actions/workflows/cost.yml">weekly cost report</a></td></tr>
+          <tr><td><strong>Kill switch</strong></td><td>The drill confirms that it would detach billing (<code>WOULD DETACH</code>).</td><td><a href="https://github.com/Parsaka/belegt/blob/main/docs/measurements/production.md#what-the-drill-found">drill</a></td></tr>
+          <tr><td><strong>Tests</strong></td><td>185 offline tests (pytest), plus dbt data tests, a LookML-to-dbt column check and a Kubernetes run on kind. The tests never touch the network.</td><td><a href="https://github.com/Parsaka/belegt/actions/workflows/ci.yml">CI</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- DECISIONS -->
+<section id="decisions" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">Decisions</div>
+      <h2>One tool per job, and what I chose not to build</h2>
+      <p>Each technology here has a role that no other tool in the stack already plays. The trade-offs are written down as architecture decision records.</p>
+    </div>
+    <div class="dec">
+      <div class="card">
+        <div class="choice"><span class="pill yes">BigQuery</span><span class="pill no">Snowflake</span><span class="pill no">a vector DB</span></div>
+        <h3>One warehouse, also the vector store</h3>
+        <p>Two warehouses would only duplicate models. The BigQuery free tier fits the budget, and <code>VECTOR_SEARCH</code> together with row access policies removes a separate vector database. The engine-specific SQL lives in dbt macros, so the models remain portable. <a href="https://github.com/Parsaka/belegt/blob/main/docs/adr/0001-bigquery-not-snowflake.md">ADR 0001</a></p>
+      </div>
+      <div class="card">
+        <div class="choice"><span class="pill yes">GKE in the trial</span><span class="pill yes">Cloud Run after</span><span class="pill no">Cloud SQL</span><span class="pill no">Dagster</span></div>
+        <h3>Build in the trial, run on the free tier</h3>
+        <p>Run continuously, GKE, Looker, Cloud SQL and Dagster would cost about 80 USD a month. GKE runs only during the trial, on the same image as the later Cloud Run job. Cloud SQL and Dagster were dropped before they were built: they would have duplicated BigQuery and GitHub Actions. <a href="https://github.com/Parsaka/belegt/blob/main/docs/adr/0002-trial-then-free-tier.md">ADR 0002</a></p>
+      </div>
+      <div class="card">
+        <div class="choice"><span class="pill yes">filter first</span><span class="pill yes">citation check</span><span class="pill yes">abstain</span></div>
+        <h3>Cite or decline, isolate before retrieval</h3>
+        <p>An answer that is fluent but unsupported is worse than none. The pipeline rejects some correct but uncited answers on purpose. Tenant isolation is enforced by the query and by row access policies, never by the prompt. <a href="https://github.com/Parsaka/belegt/blob/main/docs/adr/0003-rag-citations-and-isolation.md">ADR 0003</a></p>
+      </div>
+      <div class="card">
+        <div class="choice"><span class="pill yes">LookML in CI</span><span class="pill yes">Looker Studio</span><span class="pill no">Looker instance</span></div>
+        <h3>A semantic layer without a paid instance</h3>
+        <p>Google granted this project a Looker trial quota of 0. The LookML stays in the repo, and a CI test checks it against the dbt build, so it is ready if an instance becomes available. Looker Studio is the public dashboard. <a href="https://github.com/Parsaka/belegt/blob/main/docs/adr/0004-looker-trial-quota.md">ADR 0004</a></p>
+      </div>
+      <div class="card">
+        <div class="choice"><span class="pill yes">rules + labels</span><span class="pill no">LLM extraction first</span></div>
+        <h3>Measure a transparent baseline first</h3>
+        <p>The extractor is deterministic, and every pick carries its page and line, so a wrong figure is visible and can be overridden. With 148 labels and a held-out split, any later model can be compared with the same numbers rather than judged on impressions.</p>
+      </div>
+      <div class="card">
+        <div class="choice"><span class="pill yes">links + quotes</span><span class="pill no">PDFs in Git</span></div>
+        <h3>Respect the copyright of the reports</h3>
+        <p>The PDFs live only in a private bucket and on the CI runner. Git holds the links, the page numbers and table lines of at most 200 characters. Every dataset has its licence in <a href="https://github.com/Parsaka/belegt/blob/main/docs/data-sources.md">data-sources.md</a>, and a test checks that each one is also registered in code.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIMITS -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">Honest limits</div>
+      <h2>What it does not do yet</h2>
+    </div>
+    <div class="grid g2">
+      <ul class="limits prose" style="margin:0">
+        <li><strong>Extraction recall on unseen reports is 62.7 %.</strong> Multi-entity tables and figures that sit two lines below their label still fail. A layout-aware parser or an LLM reader would be measured against the same labels.</li>
+        <li><strong>The assistant's reader is model-free.</strong> Its 12 misses come from which page or row it quotes. No LLM reader was part of the measured run, so no LLM numbers are claimed.</li>
+        <li><strong>ETS covers only installations in Germany here.</strong> A group's ETS share of its global Scope 1 can be small (Heidelberg Materials: 4.9 %) without any contradiction, which is why only ETS above reported is flagged.</li>
+      </ul>
+      <ul class="limits prose" style="margin:0">
+        <li><strong>Most map points are approximate.</strong> Only 49 installations have an exact EEA point. The rest sit at their contact postcode, and the map says so.</li>
+        <li><strong>Joint ventures are not split.</strong> GLEIF Level 2 has no ownership shares, so a site with several shareholders stays its own group.</li>
+        <li><strong>GKE and the trial are temporary.</strong> After the trial, the report job moves to Cloud Run and everything else stays on the free tier.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- RUN -->
+<section id="run" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">Run it</div>
+      <h2>Runs locally in minutes, with no cloud account</h2>
+      <p>The same dbt models run on DuckDB over trimmed real fixtures. That is also how this site's dbt docs are built.</p>
+    </div>
+    <div class="grid g2" style="align-items:start">
+<pre class="cmd"><span class="c"># Python 3.11+</span>
+pip install -e ".[dev,load,dbt]"
+pytest                      <span class="c"># 185 tests, no network</span>
+belegt sources              <span class="c"># every dataset with its licence</span>
+
+<span class="c"># warehouse on DuckDB from the fixtures</span>
+belegt load --source tests/fixtures --db data/belegt.duckdb
+dbt build --project-dir dbt --profiles-dir dbt</pre>
+      <div class="card">
+        <h3>Engineering practice</h3>
+        <ul>
+          <li>The <code>src/</code> layout, with ruff, mypy and pytest in CI. The fixtures are trimmed real files.</li>
+          <li>Idempotent writes: re-runs overwrite, and a manifest keeps the checksums.</li>
+          <li>Keyless CI/CD with Workload Identity Federation, and no secrets in Git.</li>
+          <li>Small pull requests per phase, each with its measured result.</li>
+          <li>An informative User-Agent on every download.</li>
+        </ul>
+        <div class="chips" style="margin-top:14px">
+          <span class="chip">Python</span><span class="chip">BigQuery</span><span class="chip">dbt Core</span><span class="chip">DuckDB</span><span class="chip">GCS</span><span class="chip">GKE Autopilot</span><span class="chip">Helm · kind</span><span class="chip">Cloud Run</span><span class="chip">FastAPI</span><span class="chip">Terraform</span><span class="chip">GitHub Actions · WIF</span><span class="chip">LookML</span><span class="chip">Looker Studio</span><span class="chip">multilingual-e5</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h4>Belegt</h4>
+        <p>A personal portfolio project by Parsa Kamali, 2026. Not investment, audit or legal advice. The code is under the MIT licence.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="https://github.com/Parsaka/belegt">Repository and README</a></li>
+          <li><a href="https://lookerstudio.google.com/reporting/8653329c-9086-4395-9526-c577d32895fb">Dashboard</a></li>
+          <li><a href="dbt/">dbt docs and lineage</a></li>
+          <li><a href="https://github.com/Parsaka/belegt/blob/main/docs/erd.md">Data model (ERD)</a></li>
+          <li><a href="https://github.com/Parsaka/belegt/tree/main/docs/adr">Decision records</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Data and licences</h4>
+        <ul>
+          <li>EU ETS Union Registry, © European Union, reuse under Decision 2011/833/EU</li>
+          <li>GLEIF Golden Copy, CC0</li>
+          <li>EEA Industrial Reporting, CC BY 4.0, © EEA</li>
+          <li>GeoNames, CC BY 4.0</li>
+          <li>Company reports © their publishers, linked and quoted only</li>
+        </ul>
+      </div>
+    </div>
+    <div class="de" lang="de">
+      <h3>Kurz auf Deutsch</h3>
+      <p>Belegt prüft die Klimazahlen deutscher Konzerne gegen unabhängige Daten. Es ordnet die verifizierten CO₂-Emissionen von 2.195 EU-ETS-Anlagen über GLEIF-Eigentümerdaten und Entity Resolution ihren Konzernen zu (91,7 % der Tonnage 2025). Außerdem liest es die Scope-1-3-Werte aus 37 DAX/MDAX-Berichten mit Seitenangabe aus (82,7 % Präzision gegen 148 Handlabels). Ein mandantenfähiger Assistent beantwortet Fragen mit Seitenzitaten, ohne einem Mandanten je fremde Dokumente zu zeigen. Gebaut auf Google Cloud für unter 1 EUR im Monat.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement, key = "belegt-theme";
+  try { var saved = localStorage.getItem(key); if (saved === "light" || saved === "dark") root.setAttribute("data-theme", saved); } catch (e) {}
+  document.getElementById("theme").addEventListener("click", function () {
+    var cur = root.getAttribute("data-theme") ||
+      (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    var next = cur === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem(key, next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>
