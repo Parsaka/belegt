@@ -14,6 +14,14 @@ view: installations {
   }
   dimension: activity_code { type: number sql: ${TABLE}.activity_code ;; }
   dimension: city { sql: ${TABLE}.city ;; }
+  dimension: state {
+    description: "Bundesland of the postcode (GeoNames)."
+    sql: ${TABLE}.state ;;
+  }
+  dimension: location_source {
+    description: "EEA facility point, or the centre of the registry contact postcode."
+    sql: ${TABLE}.location_source ;;
+  }
   dimension: location {
     type: location
     sql_latitude: ${TABLE}.lat ;;

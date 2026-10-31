@@ -30,9 +30,7 @@ def postcodes(rows: list[tuple[object, ...]], registry: str | None = None) -> se
     return {
         str(r[col["Contact PCode"]]).strip().zfill(5)
         for r in rows[1:]
-        if r
-        and r[col["Contact PCode"]]
-        and (registry is None or r[col["MS Registry"]] == registry)
+        if r and r[col["Contact PCode"]] and (registry is None or r[col["MS Registry"]] == registry)
     }
 
 

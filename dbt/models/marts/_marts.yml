@@ -17,6 +17,13 @@ models:
               arguments:
                 values: [accepted, review, unmatched, rejected]
               config: {where: "match_decision is not null"}
+      - name: location_source
+        description: Where lat/lon come from; null when neither source has a point.
+        tests:
+          - accepted_values:
+              arguments:
+                values: [EEA facility, contact postcode]
+              config: {where: "location_source is not null"}
 
   - name: dim_legal_entity
     description: SCD2 history of GLEIF legal entities.

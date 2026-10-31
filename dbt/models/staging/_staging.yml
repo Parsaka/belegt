@@ -22,3 +22,7 @@ models:
     columns:
       - name: ets_identifier
         tests: [unique, not_null]
+  - name: stg_geonames__postcodes
+    columns:
+      - name: postcode
+        tests: [unique, not_null]

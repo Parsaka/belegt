@@ -9,5 +9,10 @@ select
     permit_id,
     permit_status,
     city,
-    postcode
+    contact_country,
+    -- Excel may store a German postcode as a number and drop its leading zero (01067 -> 1067).
+    case
+        when contact_country = 'DE' then lpad(trim(postcode), 5, '0')
+        else postcode
+    end as postcode
 from {{ source('raw', 'ets_operators') }}

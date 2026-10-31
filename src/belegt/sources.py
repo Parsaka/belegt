@@ -65,6 +65,15 @@ SOURCES: tuple[Source, ...] = (
         verification=Verification.VERIFIED,
     ),
     Source(
+        id="geonames_postcodes",
+        name="GeoNames postal codes, Germany (DE.zip)",
+        publisher="GeoNames",
+        url="https://download.geonames.org/export/zip/",
+        licence="CC BY 4.0",
+        attribution="Source: GeoNames (geonames.org), CC BY 4.0",
+        verification=Verification.VERIFIED,
+    ),
+    Source(
         id="esrs_eurlex",
         name="ESRS, Commission Delegated Regulation (EU) 2023/2772",
         publisher="Publications Office of the European Union (EUR-Lex)",

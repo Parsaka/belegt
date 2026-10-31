@@ -36,6 +36,7 @@ _VERIFIED = re.compile(r"verified_emissions_(\d{4})_en\.xlsx$")
 EEA_SHARE = "https://sdi.eea.europa.eu/datashare/public.php/webdav/"
 EEA_SHARE_TOKEN = "sptXqwkQr5g7Bp5"  # the public share id, not a secret
 EEA_ACCDB = "eea_t_ied-eprtr_p_2007-2024_v16_r00/Industrial_dataset_v_16_2026_02_16.accdb"
+GEONAMES_DE = "https://download.geonames.org/export/zip/DE.zip"
 GLEIF_LATEST = "https://goldencopy.gleif.org/api/v2/golden-copies/publishes/latest"
 # ESRS, Delegated Regulation (EU) 2023/2772, German Official Journal PDF. EU legal text may be
 # reused with attribution. Two addresses for the same file: EUR-Lex sometimes answers automated
@@ -250,6 +251,16 @@ def extract_gleif(client: Any, out: Path, work: Path) -> list[Extracted]:
     ]
 
 
+def extract_postcodes(client: Any, out: Path, work: Path) -> list[Extracted]:
+    """GeoNames' German postal codes, `DE.txt` unchanged (the readme in the zip is dropped)."""
+    _download(client, GEONAMES_DE, work / "geonames_de.zip")
+    with zipfile.ZipFile(work / "geonames_de.zip") as z:
+        data = z.read("DE.txt")
+    path = out / "geonames_postcodes_de.txt"
+    path.write_bytes(data)
+    return [_record(out, path.name, GEONAMES_DE, data.count(b"\n"))]
+
+
 def is_pdf(head: bytes) -> bool:
     return head.startswith(b"%PDF-")
 
@@ -286,6 +297,7 @@ def extract_all(out: Path, work: Path) -> list[Extracted]:
         found += extract_ets(client, out)
         found += extract_eea(client, out, work)
         found += extract_gleif(client, out, work)
+        found += extract_postcodes(client, out, work)
         found += extract_esrs(client, out)
     manifest = {
         "extracted_at": datetime.now(UTC).isoformat(timespec="seconds"),

@@ -20,5 +20,7 @@ sources:
         description: Scored matches from EEA parent names to LEIs (belegt.resolution).
       - name: ets_operators
         description: Commission list of installation operators (account holder, register number, LEI).
+      - name: postcodes
+        description: GeoNames German postal codes, one mean point per postcode (CC BY 4.0).
       - name: reported_metrics
         description: Scope 1-3 figures extracted from sustainability statements (`belegt reports`), every candidate with page and table line.

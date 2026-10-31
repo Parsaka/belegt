@@ -11,6 +11,7 @@ in `tests/fixtures/`.
 | `eu_ets_operators` | List of installation operators: account holder name, company register number, LEI, installation id, permit, contact city (`policy_ets_registry_operators_ets_en.xlsx`) | Same Union Registry page | Same as above | Verified: 16,394 rows, 2,874 German. Of the German rows 2,865 have a register number (2,135 HRB, 466 HRA) and only 76 an LEI. The LEI is written with dashes (`5299-00…-82`). |
 | `eea_industrial_reporting` | Industrial Reporting under the IED and E-PRTR, v16 (16 Feb 2026), reporting years 2007–2024. The Access database has `3f2_ETSIdentifiers` (installation ↔ EU ETS id, e.g. `DE000000000001231` = registry id 1231) and `2_ProductionFacility.parentCompanyName`. Files are on a public Nextcloud share (WebDAV). | [EEA SDI catalogue](https://sdi.eea.europa.eu/catalogue/srv/api/records/ff47e25d-5d4c-491d-b9ce-de17ca61fe6d) | CC BY 4.0, © EEA | Verified |
 | `gleif_golden_copy` | LEI records (Level 1), direct and ultimate parents (Level 2 RR), reporting exceptions. Published three times a day, with deltas. | [GLEIF Golden Copy](https://www.gleif.org/en/lei-data/gleif-golden-copy/download-the-golden-copy), [terms](https://www.gleif.org/en/meta/lei-data-terms-of-use) | CC0. Do not claim rights in the data or imply GLEIF endorsement. | Verified |
+| `geonames_postcodes` | GeoNames postal codes for Germany (`DE.zip` → `DE.txt`): place, Bundesland and a point per postcode | [download.geonames.org/export/zip](https://download.geonames.org/export/zip/) | CC BY 4.0, attribution "GeoNames" | Verified: 23,296 lines, 10,815 distinct postcodes (run of 2026-10-31). Used only to place installations on the map where the EEA has no point; the point is the mean of the postcode's places, so it is approximate. |
 | `esrs_eurlex` | ESRS, Commission Delegated Regulation (EU) 2023/2772 | [EUR-Lex](https://eur-lex.europa.eu/eli/reg_del/2023/2772/oj) | EU legal text, reuse with attribution | Verified |
 | `sustainability_statements` | Sustainability statements (ESRS) in the annual reports of German groups with large ETS emissions: BASF, RWE, Heidelberg Materials, EnBW, Salzgitter (2024) and thyssenkrupp (fiscal 2024/2025; its 2023/2024 report has no emissions table). (Uniper was dropped: its report host answers automated downloads with 403). The list with LEI, fiscal year end and link is `dbt/seeds/reports.csv`. | The report PDF (German or English edition) from the company's own report site or CDN, its EQS IR pages, the AGM portal hauptversammlung.de, or the Bundestag lobby register where the company filed it; `host_note` in the seed says which | Copyrighted. The PDFs live only in the private bucket `<project>-reports` (and on the CI runner during a run). Git and `ops-results` hold links, metadata, extracted figures with page numbers and table lines of at most 200 characters. | Partial: the Reports workflow checks that every link returns a PDF; links are taken from each company's own reports page where it offers one |
 
@@ -38,6 +39,14 @@ in `tests/fixtures/`.
 Measured on the v16 database: the EEA links only **51 German ETS ids**, and 49 of the 2,195
 German installations in the 2025 registry file. All are in Brandenburg. The EEA path is
 therefore a supplement, not the main route.
+
+## How an installation reaches the map
+
+`dim_installation.lat/lon` take the EEA facility point where the EEA links the installation
+(49 in Germany), and otherwise the centre of the postcode of the registry contact address
+(GeoNames), when that address is in Germany. `location_source` says which. The contact address
+is usually the site, but it can be the operator's office, so a postcode point is an
+approximation and the map says so.
 
 ## Known gaps
 
