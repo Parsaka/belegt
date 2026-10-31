@@ -1,0 +1,23 @@
+[31m╭─[0m[31m────────────────────[0m[31m [0m[1;31mTraceback [0m[1;2;31m(most recent call last)[0m[31m [0m[31m─────────────────────[0m[31m─╮[0m
+[31m│[0m [2m/home/runner/work/belegt/belegt/src/belegt/[0m[1mcli.py[0m:182 in rag_eval            [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m179 [0m[2m│   [0mout: Annotated[Path | [94mNone[0m, typer.Option(help=[33m"[0m[33mWrite the Markdown [0m [31m│[0m
+[31m│[0m       [33mreport here[0m[33m"[0m)] = [94mNone[0m,                                                 [31m│[0m
+[31m│[0m   [2m180 [0m) -> [94mNone[0m:                                                             [31m│[0m
+[31m│[0m   [2m181 [0m[2;90m│   [0m[33m"""Run the evaluation cases; exits non-zero on any leak."""[0m        [31m│[0m
+[31m│[0m [31m❱ [0m182 [2m│   [0m[1;4;94mfrom[0m[1;4;90m [0m[1;4;96mbelegt[0m[1;4;96m.[0m[1;4;96mapi[0m[1;4;96m.[0m[1;4;96mapp[0m[1;4;90m [0m[1;4;94mimport[0m[1;4m load_chunks[0m                             [31m│[0m
+[31m│[0m   [2m183 [0m[2m│   [0m[94mfrom[0m[90m [0m[4;96mbelegt[0m[4;96m.[0m[4;96mrag[0m[4;96m.[0m[4;96manswer[0m[90m [0m[94mimport[0m Answerer                             [31m│[0m
+[31m│[0m   [2m184 [0m[2m│   [0m[94mfrom[0m[90m [0m[4;96mbelegt[0m[4;96m.[0m[4;96mrag[0m[4;96m.[0m[4;96mevals[0m[90m [0m[94mimport[0m read_cases, report, run               [31m│[0m
+[31m│[0m   [2m185 [0m[2m│   [0m[94mfrom[0m[90m [0m[4;96mbelegt[0m[4;96m.[0m[4;96mrag[0m[4;96m.[0m[4;96mextractive[0m[90m [0m[94mimport[0m ExtractiveModel                  [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/home/runner/work/belegt/belegt/src/belegt/api/[0m[1mapp.py[0m:16 in <module>         [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m 13 [0m[94mfrom[0m[90m [0m[4;96mcollections[0m[4;96m.[0m[4;96mabc[0m[90m [0m[94mimport[0m Callable                                   [31m│[0m
+[31m│[0m   [2m 14 [0m[94mfrom[0m[90m [0m[4;96mpathlib[0m[90m [0m[94mimport[0m Path                                               [31m│[0m
+[31m│[0m   [2m 15 [0m                                                                       [31m│[0m
+[31m│[0m [31m❱ [0m 16 [1;4;94mfrom[0m[1;4;90m [0m[1;4;96mfastapi[0m[1;4;90m [0m[1;4;94mimport[0m[1;4m Depends, FastAPI, Header, HTTPException[0m            [31m│[0m
+[31m│[0m   [2m 17 [0m[94mfrom[0m[90m [0m[4;96mpydantic[0m[90m [0m[94mimport[0m BaseModel, Field                                  [31m│[0m
+[31m│[0m   [2m 18 [0m                                                                       [31m│[0m
+[31m│[0m   [2m 19 [0m[94mfrom[0m[90m [0m[4;96mbelegt[0m[4;96m.[0m[4;96mdocuments[0m[4;96m.[0m[4;96mmodel[0m[90m [0m[94mimport[0m Chunk                               [31m│[0m
+[31m╰──────────────────────────────────────────────────────────────────────────────╯[0m
+[1;91mModuleNotFoundError: [0mNo module named [32m'fastapi'[0m

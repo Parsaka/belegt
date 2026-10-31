@@ -1,0 +1,3 @@
+{"doc_id": "mercedes-benz-2024", "metric": "scope1", "value_t": 600000.0, "page": 154, "unit_raw": "million t", "quote": "Greenhouse gas emissions – Scope 1 (in million t CO2e) 0.6", "rows_on_page": 3, "selected": true, "column_year": null}
+{"doc_id": "mercedes-benz-2024", "metric": "scope2_location", "value_t": 1000000.0, "page": 154, "unit_raw": "million t", "quote": "Greenhouse gas emissions – Scope 2 – location-based 1.0", "rows_on_page": 3, "selected": true, "column_year": null}
+{"doc_id": "mercedes-benz-2024", "metric": "scope2_market", "value_t": 100000.0, "page": 154, "unit_raw": "million t", "quote": "Greenhouse gas emissions – Scope 2 – market-based 0.1", "rows_on_page": 3, "selected": true, "column_year": null}
