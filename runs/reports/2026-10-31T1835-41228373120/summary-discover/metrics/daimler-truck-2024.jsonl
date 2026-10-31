@@ -1,0 +1,4 @@
+{"doc_id": "daimler-truck-2024", "metric": "scope1", "value_t": 349.0, "page": 93, "unit_raw": "t", "quote": "Scope 1 GHG gross emissions3 349 389", "rows_on_page": 4, "selected": true, "column_year": null}
+{"doc_id": "daimler-truck-2024", "metric": "scope2_location", "value_t": 514.0, "page": 93, "unit_raw": "t", "quote": "Scope 2, location-based 514 536", "rows_on_page": 4, "selected": true, "column_year": null}
+{"doc_id": "daimler-truck-2024", "metric": "scope2_market", "value_t": 219.0, "page": 93, "unit_raw": "t", "quote": "Scope 2, market-based4 219 241", "rows_on_page": 4, "selected": true, "column_year": null}
+{"doc_id": "daimler-truck-2024", "metric": "scope3", "value_t": 388247.0, "page": 93, "unit_raw": "t", "quote": "Total Gross significant indirect Scope 3 GHG emissions 388,247", "rows_on_page": 4, "selected": true, "column_year": null}
