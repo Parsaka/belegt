@@ -103,8 +103,10 @@ jobs:
           pip install torch --index-url https://download.pytorch.org/whl/cpu
           pip install -e ".[embed]"
           belegt index-reports /tmp/reports/pdf --out /tmp/rag/chunks.jsonl | tee summary/rag-corpus.txt
+          set -o pipefail
           belegt rag-eval --chunks /tmp/rag/chunks.jsonl --cases evals/rag_report_cases.jsonl \
-            --embedder e5 --out summary/rag-eval-reports-runner.md
+            --embedder e5 --out summary/rag-eval-reports-runner.md 2>&1 \
+            | tail -80 > summary/rag-eval-log.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:

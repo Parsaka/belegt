@@ -280,12 +280,9 @@ def reports_eval(
     typer.echo(text)
 
 
-# Pages of a report that the document assistant indexes: the climate disclosures, not the
-# whole annual report
-CLIMATE_PAGES = (
-    r"\bScope[\s-]*[123]\b|greenhouse gas|Treibhausgas|\bGHG\b|\bTHG\b|E1-\d|"
-    r"climate|Klima|CO2|CO₂"
-)
+# Pages of a report that the document assistant indexes: the greenhouse-gas disclosures, not
+# the whole annual report ("climate" or "CO2" alone would take in most pages of it)
+CLIMATE_PAGES = r"\bScope[\s-]*[123]\b|greenhouse gas|Treibhausgas|\bGHG\b|\bTHG\b|E1-6"
 
 
 @app.command("index-reports")

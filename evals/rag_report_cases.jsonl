@@ -1,3 +1,5 @@
+{"id": "aurubis-2024-scope1", "tenant": "tenant_a", "question": "What were Aurubis's gross Scope 1 GHG emissions in 2024?", "expect": "answer", "doc": "aurubis-2024", "contains": "561", "pages": [26]}
+{"id": "aurubis-2024-scope1-other-tenant", "tenant": "tenant_b", "question": "What were Aurubis's gross Scope 1 GHG emissions in 2024?", "expect": "abstain"}
 {"id": "basf-2024-scope1", "tenant": "tenant_a", "question": "What were BASF's gross Scope 1 GHG emissions in 2024?", "expect": "answer", "doc": "basf-2024", "contains": "15.552", "pages": [54]}
 {"id": "basf-2024-scope1-other-tenant", "tenant": "tenant_b", "question": "What were BASF's gross Scope 1 GHG emissions in 2024?", "expect": "abstain"}
 {"id": "covestro-2024-scope1", "tenant": "tenant_a", "question": "What were Covestro's gross Scope 1 GHG emissions in 2024?", "expect": "answer", "doc": "covestro-2024", "contains": "1.014", "pages": [160]}
@@ -8,10 +10,14 @@
 {"id": "eon-2024-scope1-other-tenant", "tenant": "tenant_b", "question": "Wie hoch waren die Scope-1-Emissionen von E.ON im Jahr 2024?", "expect": "abstain"}
 {"id": "evonik-2024-scope1", "tenant": "tenant_a", "question": "Wie hoch waren die Scope-1-Emissionen von Evonik im Jahr 2024?", "expect": "answer", "doc": "evonik-2024", "contains": "3,39", "pages": [137]}
 {"id": "evonik-2024-scope1-other-tenant", "tenant": "tenant_b", "question": "Wie hoch waren die Scope-1-Emissionen von Evonik im Jahr 2024?", "expect": "abstain"}
+{"id": "k-s-2024-scope1", "tenant": "tenant_a", "question": "Wie hoch waren die Scope-1-Emissionen von K+S im Jahr 2024?", "expect": "answer", "doc": "k-s-2024", "contains": "1,9", "pages": [100]}
+{"id": "k-s-2024-scope1-other-tenant", "tenant": "tenant_b", "question": "Wie hoch waren die Scope-1-Emissionen von K+S im Jahr 2024?", "expect": "abstain"}
 {"id": "lanxess-2024-scope1", "tenant": "tenant_a", "question": "What were LANXESS's gross Scope 1 GHG emissions in 2024?", "expect": "answer", "doc": "lanxess-2024", "contains": "854", "pages": [136]}
 {"id": "lanxess-2024-scope1-other-tenant", "tenant": "tenant_b", "question": "What were LANXESS's gross Scope 1 GHG emissions in 2024?", "expect": "abstain"}
 {"id": "lufthansa-2024-scope1", "tenant": "tenant_b", "question": "What were Lufthansa's gross Scope 1 GHG emissions in 2024?", "expect": "answer", "doc": "lufthansa-2024", "contains": "29,159", "pages": [163]}
 {"id": "lufthansa-2024-scope1-other-tenant", "tenant": "tenant_a", "question": "What were Lufthansa's gross Scope 1 GHG emissions in 2024?", "expect": "abstain"}
+{"id": "rheinmetall-2024-scope1", "tenant": "tenant_b", "question": "What were Rheinmetall's gross Scope 1 GHG emissions in 2024?", "expect": "answer", "doc": "rheinmetall-2024", "contains": "139,801", "pages": [127]}
+{"id": "rheinmetall-2024-scope1-other-tenant", "tenant": "tenant_a", "question": "What were Rheinmetall's gross Scope 1 GHG emissions in 2024?", "expect": "abstain"}
 {"id": "rwe-2024-scope1", "tenant": "tenant_a", "question": "What were RWE's gross Scope 1 GHG emissions in 2024?", "expect": "answer", "doc": "rwe-2024", "contains": "53,242,042", "pages": [124]}
 {"id": "rwe-2024-scope1-other-tenant", "tenant": "tenant_b", "question": "What were RWE's gross Scope 1 GHG emissions in 2024?", "expect": "abstain"}
 {"id": "thyssenkrupp-2025-scope1", "tenant": "tenant_a", "question": "What were thyssenkrupp's gross Scope 1 GHG emissions in 2025?", "expect": "answer", "doc": "thyssenkrupp-2025", "contains": "19.8", "pages": [123]}
@@ -22,25 +28,35 @@
 {"id": "bayer-2024-scope1-other-tenant", "tenant": "tenant_b", "question": "What were Bayer's gross Scope 1 GHG emissions in 2024?", "expect": "abstain"}
 {"id": "beiersdorf-2024-scope1", "tenant": "tenant_a", "question": "What were Beiersdorf's gross Scope 1 GHG emissions in 2024?", "expect": "answer", "doc": "beiersdorf-2024", "contains": "73,072", "pages": [75]}
 {"id": "beiersdorf-2024-scope1-other-tenant", "tenant": "tenant_b", "question": "What were Beiersdorf's gross Scope 1 GHG emissions in 2024?", "expect": "abstain"}
+{"id": "bmw-2024-scope1", "tenant": "tenant_b", "question": "What were BMW's gross Scope 1 GHG emissions in 2024?", "expect": "answer", "doc": "bmw-2024", "contains": "672,542", "pages": [195]}
+{"id": "bmw-2024-scope1-other-tenant", "tenant": "tenant_a", "question": "What were BMW's gross Scope 1 GHG emissions in 2024?", "expect": "abstain"}
 {"id": "brenntag-2024-scope1", "tenant": "tenant_a", "question": "What were Brenntag's gross Scope 1 GHG emissions in 2024?", "expect": "answer", "doc": "brenntag-2024", "contains": "185,546", "pages": [111]}
 {"id": "brenntag-2024-scope1-other-tenant", "tenant": "tenant_b", "question": "What were Brenntag's gross Scope 1 GHG emissions in 2024?", "expect": "abstain"}
+{"id": "continental-2024-scope1", "tenant": "tenant_b", "question": "What were Continental's gross Scope 1 GHG emissions in 2024?", "expect": "answer", "doc": "continental-2024", "contains": "671,731", "pages": [142]}
+{"id": "continental-2024-scope1-other-tenant", "tenant": "tenant_a", "question": "What were Continental's gross Scope 1 GHG emissions in 2024?", "expect": "abstain"}
 {"id": "daimler-truck-2024-scope1", "tenant": "tenant_b", "question": "What were Daimler Truck's gross Scope 1 GHG emissions in 2024?", "expect": "answer", "doc": "daimler-truck-2024", "contains": "349", "pages": [93]}
 {"id": "daimler-truck-2024-scope1-other-tenant", "tenant": "tenant_a", "question": "What were Daimler Truck's gross Scope 1 GHG emissions in 2024?", "expect": "abstain"}
+{"id": "deutsche-bahn-2024-scope1", "tenant": "tenant_b", "question": "What were Deutsche Bahn's gross Scope 1 GHG emissions in 2024?", "expect": "answer", "doc": "deutsche-bahn-2024", "contains": "1.07", "pages": [79]}
+{"id": "deutsche-bahn-2024-scope1-other-tenant", "tenant": "tenant_a", "question": "What were Deutsche Bahn's gross Scope 1 GHG emissions in 2024?", "expect": "abstain"}
 {"id": "dhl-2024-scope1", "tenant": "tenant_b", "question": "What were Deutsche Post DHL's gross Scope 1 GHG emissions in 2024?", "expect": "answer", "doc": "dhl-2024", "contains": "7.66", "pages": [78]}
 {"id": "dhl-2024-scope1-other-tenant", "tenant": "tenant_a", "question": "What were Deutsche Post DHL's gross Scope 1 GHG emissions in 2024?", "expect": "abstain"}
 {"id": "hapag-lloyd-2024-scope1", "tenant": "tenant_b", "question": "What were Hapag-Lloyd's gross Scope 1 GHG emissions in 2024?", "expect": "answer", "doc": "hapag-lloyd-2024", "contains": "15,300,306.1", "pages": [175]}
 {"id": "hapag-lloyd-2024-scope1-other-tenant", "tenant": "tenant_a", "question": "What were Hapag-Lloyd's gross Scope 1 GHG emissions in 2024?", "expect": "abstain"}
+{"id": "henkel-2024-scope1", "tenant": "tenant_a", "question": "What were Henkel's gross Scope 1 GHG emissions in 2024?", "expect": "answer", "doc": "henkel-2024", "contains": "405,621", "pages": [167, 163]}
+{"id": "henkel-2024-scope1-other-tenant", "tenant": "tenant_b", "question": "What were Henkel's gross Scope 1 GHG emissions in 2024?", "expect": "abstain"}
 {"id": "mercedes-benz-2024-scope1", "tenant": "tenant_b", "question": "What were Mercedes-Benz's gross Scope 1 GHG emissions in 2024?", "expect": "answer", "doc": "mercedes-benz-2024", "contains": "0.6", "pages": [154]}
 {"id": "mercedes-benz-2024-scope1-other-tenant", "tenant": "tenant_a", "question": "What were Mercedes-Benz's gross Scope 1 GHG emissions in 2024?", "expect": "abstain"}
 {"id": "merck-2024-scope1", "tenant": "tenant_a", "question": "Wie hoch waren die Scope-1-Emissionen von Merck im Jahr 2024?", "expect": "answer", "doc": "merck-2024", "contains": "858.053", "pages": [178]}
 {"id": "merck-2024-scope1-other-tenant", "tenant": "tenant_b", "question": "Wie hoch waren die Scope-1-Emissionen von Merck im Jahr 2024?", "expect": "abstain"}
-{"id": "rheinmetall-2024-scope1", "tenant": "tenant_b", "question": "What were Rheinmetall's gross Scope 1 GHG emissions in 2024?", "expect": "answer", "doc": "rheinmetall-2024", "contains": "139,801", "pages": [127]}
-{"id": "rheinmetall-2024-scope1-other-tenant", "tenant": "tenant_a", "question": "What were Rheinmetall's gross Scope 1 GHG emissions in 2024?", "expect": "abstain"}
+{"id": "mvv-2024-scope1", "tenant": "tenant_a", "question": "What were MVV Energie's gross Scope 1 GHG emissions in 2024?", "expect": "answer", "doc": "mvv-2024", "contains": "2,588", "pages": [68, 3, 263]}
+{"id": "mvv-2024-scope1-other-tenant", "tenant": "tenant_b", "question": "What were MVV Energie's gross Scope 1 GHG emissions in 2024?", "expect": "abstain"}
 {"id": "schaeffler-2024-scope1", "tenant": "tenant_b", "question": "What were Schaeffler's gross Scope 1 GHG emissions in 2024?", "expect": "answer", "doc": "schaeffler-2024", "contains": "194,982", "pages": [126]}
 {"id": "schaeffler-2024-scope1-other-tenant", "tenant": "tenant_a", "question": "What were Schaeffler's gross Scope 1 GHG emissions in 2024?", "expect": "abstain"}
 {"id": "siemens-energy-2024-scope1", "tenant": "tenant_b", "question": "What were Siemens Energy's gross Scope 1 GHG emissions in 2024?", "expect": "answer", "doc": "siemens-energy-2024", "contains": "175", "pages": [2]}
 {"id": "siemens-energy-2024-scope1-other-tenant", "tenant": "tenant_a", "question": "What were Siemens Energy's gross Scope 1 GHG emissions in 2024?", "expect": "abstain"}
 {"id": "suedzucker-2025-scope1", "tenant": "tenant_a", "question": "What were Südzucker's gross Scope 1 GHG emissions in 2025?", "expect": "answer", "doc": "suedzucker-2025", "contains": "2,722,192", "pages": [37]}
 {"id": "suedzucker-2025-scope1-other-tenant", "tenant": "tenant_b", "question": "What were Südzucker's gross Scope 1 GHG emissions in 2025?", "expect": "abstain"}
-{"id": "telekom-2024-scope1", "tenant": "tenant_b", "question": "What were Deutsche Telekom's gross Scope 1 GHG emissions in 2024?", "expect": "answer", "doc": "telekom-2024", "contains": "236,355", "pages": [135]}
+{"id": "telekom-2024-scope1", "tenant": "tenant_b", "question": "What were Deutsche Telekom's gross Scope 1 GHG emissions in 2024?", "expect": "answer", "doc": "telekom-2024", "contains": "236,355", "pages": [138, 135]}
 {"id": "telekom-2024-scope1-other-tenant", "tenant": "tenant_a", "question": "What were Deutsche Telekom's gross Scope 1 GHG emissions in 2024?", "expect": "abstain"}
+{"id": "volkswagen-2024-scope1", "tenant": "tenant_b", "question": "What were Volkswagen's gross Scope 1 GHG emissions in 2024?", "expect": "answer", "doc": "volkswagen-2024", "contains": "3.3", "pages": [291]}
+{"id": "volkswagen-2024-scope1-other-tenant", "tenant": "tenant_a", "question": "What were Volkswagen's gross Scope 1 GHG emissions in 2024?", "expect": "abstain"}
