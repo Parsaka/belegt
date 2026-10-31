@@ -26,6 +26,10 @@ copied from the run summaries on the `ops-results` branch; the run ids are the f
 Stationary installations matched to a company: 1,697 of 2,195, the same as the DuckDB run in
 [full-data.md](full-data.md).
 
+Stationary installations with a map point (2026-10-31, [pipeline run 41218873049](https://github.com/Parsaka/belegt/actions/runs/41218873049)): 2,064 of 2,195
+(94.0 %): 49 at the EEA facility point, 2,015 at the centre of the registry contact postcode
+(GeoNames), 131 without a point (no German contact postcode, or one GeoNames does not list).
+
 ## Document assistant on BigQuery `VECTOR_SEARCH`
 
 | Metric | Result |

@@ -46,7 +46,9 @@ therefore a supplement, not the main route.
 (49 in Germany), and otherwise the centre of the postcode of the registry contact address
 (GeoNames), when that address is in Germany. `location_source` says which. The contact address
 is usually the site, but it can be the operator's office, so a postcode point is an
-approximation and the map says so.
+approximation and the map says so. Measured on 2026-10-31: 2,064 of 2,195 German stationary
+installations have a point (49 EEA, 2,015 postcode); GeoNames' state names mix English and
+German, so the seed `states.csv` maps its two-letter code to the official name.
 
 ## Known gaps
 
