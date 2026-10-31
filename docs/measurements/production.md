@@ -9,6 +9,7 @@ copied from the run summaries on the `ops-results` branch; the run ids are the f
 | Reports on GKE Autopilot (Indexed Job, one task per report) | `reports/2026-10-26T1802-40373329211` | 6 of 6 tasks complete, none failed |
 | Pipeline: load, dbt on BigQuery, RAG eval | `pipeline/2026-10-26T1811-40373020804` | dbt 58 of 58 nodes pass; RAG eval 0 leaks |
 | Deploy to Cloud Run and smoke test | `deploy/2026-10-26T1836-40378412139` | Both smoke answers correct |
+| Pipeline after the postcode and state changes (2026-10-31, `52fa988`) | `pipeline/2026-10-31T1714-41220503503` | dbt 65 of 65 nodes pass; RAG eval 0 leaks |
 | Kill-switch drill | `kill-switch-drill/2026-10-26T1801-40373329212` | Failed, see below |
 | Kill-switch drill after both fixes | `kill-switch-drill/2026-10-26T2035-40396931372` | `WOULD DETACH billing from belegt-pk-2610` |
 
