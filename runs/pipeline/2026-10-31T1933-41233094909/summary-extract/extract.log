@@ -1,0 +1,23 @@
+ets_verified_emissions_de.xlsx: 8,228,376 bytes, sha256 8f4e628d9d8d
+ets_operators_de.xlsx: 1,790,735 bytes, sha256 fb28c0603e74
+eea_ets_identifiers.csv: 573 rows, 57,667 bytes, sha256 edbb079f657d
+eea_installations.csv: 146 rows, 47,460 bytes, sha256 e5f874a7f7d8
+eea_facilities.csv: 43 rows, 20,960 bytes, sha256 d4a7be63b59f
+gleif_entities.csv: 310624 rows, 40,428,072 bytes, sha256 4db789e4b72c
+gleif_rr.csv: 33893 rows, 13,619,123 bytes, sha256 1fdb7b8af5a2
+geonames_postcodes_de.txt: 23296 rows, 2,326,595 bytes, sha256 3908e6ba34cf
+esrs_de.pdf: 6,479,298 bytes, sha256 92ae1e9bc358
+raw.ets_emissions: 43272 rows
+raw.ets_operators: 2874 rows
+raw.eea_ets_links: 573 rows
+raw.eea_installations: 146 rows
+raw.eea_facilities: 43 rows
+raw.gleif_entities: 310624 rows
+raw.gleif_relationships: 33893 rows
+raw.postcodes: 10815 rows
+raw.reported_metrics: 0 rows
+raw.entity_matches: 1538 rows
+
+real	6m32.970s
+user	5m24.968s
+sys	0m57.415s
