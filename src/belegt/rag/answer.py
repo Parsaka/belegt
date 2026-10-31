@@ -3,6 +3,9 @@
 The model is asked to cite chunk ids in square brackets. The answer is then checked: every
 sentence needs at least one citation, and every cited id must be one of the retrieved chunks.
 If the check fails, or retrieval found nothing close enough, the system abstains.
+
+A question that names a company of the report list searches only that company's reports
+(`ReportNames`); if the tenant may not read them, nothing is found and the system abstains.
 """
 
 from __future__ import annotations
@@ -11,6 +14,7 @@ import re
 from dataclasses import dataclass, field
 from typing import Protocol
 
+from belegt.rag.names import ReportNames
 from belegt.rag.retrieval import Hit, Retriever
 
 ABSTAIN_DE = "Dazu enthalten die vorliegenden Dokumente keine belastbare Angabe."
@@ -32,7 +36,11 @@ class Answer:
 
 
 def build_prompt(question: str, hits: list[Hit]) -> str:
-    sources = "\n\n".join(f"[{h.chunk.chunk_id}] (S. {h.chunk.page})\n{h.chunk.text}" for h in hits)
+    sources = "\n\n".join(
+        f"[{h.chunk.chunk_id}] (S. {h.chunk.page}){' ' + h.chunk.title if h.chunk.title else ''}"
+        f"\n{h.chunk.text}"
+        for h in hits
+    )
     return (
         "Beantworte die Frage ausschließlich mit den Quellen unten.\n"
         "Setze hinter jeden Satz die verwendeten Quellen-IDs in eckigen Klammern, z. B. [id].\n"
@@ -62,11 +70,17 @@ class Answerer:
     model: LanguageModel
     min_score: float = 0.35
     k: int = 6
+    names: ReportNames | None = None
+    # A named report's climate pages are all alike: more of them reach the model, whose
+    # extractive or LLM reading then picks the row
+    k_named: int = 12
 
     def ask(self, question: str, tenant_id: str) -> Answer:
+        docs = self.names.named(question) if self.names else None
+        k = self.k if docs is None else self.k_named
         hits = [
             h
-            for h in self.retriever.search(question, tenant_id, self.k)
+            for h in self.retriever.search(question, tenant_id, k, docs)
             if h.score >= self.min_score
         ]
         if not hits:

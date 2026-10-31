@@ -20,6 +20,7 @@ from belegt.documents.model import Chunk
 from belegt.rag.answer import Answerer
 from belegt.rag.embedding import HashingEmbedder
 from belegt.rag.extractive import ExtractiveModel
+from belegt.rag.names import ReportNames
 from belegt.rag.retrieval import InMemoryRetriever, Retriever
 
 
@@ -108,5 +109,8 @@ def app_from_env() -> FastAPI:
     else:
         chunks = load_chunks(Path(os.environ.get("BELEGT_CHUNKS", "data/chunks.jsonl")))
         retriever = InMemoryRetriever(HashingEmbedder(), chunks)
-    answerer = Answerer(retriever, ExtractiveModel(), min_score=0.1)
+    # company names from the report list are identifiers (see belegt.rag.extractive)
+    seed = Path(os.environ.get("BELEGT_SEED", "dbt/seeds/reports.csv"))
+    names = ReportNames.from_seed(seed)
+    answerer = Answerer(retriever, ExtractiveModel(names.words), min_score=0.1, names=names)
     return create_app(answerer, parse_tokens(os.environ.get("BELEGT_TOKENS", "")))
