@@ -1,0 +1,53 @@
+name: Trial reminder
+
+# The GCP free trial ends on 2027-01-23. GKE runs only while TRIAL_MODE is true, so before that
+# date TRIAL_MODE must be set to false and Infra applied (docs/adr/0002). While it is still true,
+# this opens (or comments on) an issue assigned to the owner, and GitHub emails it.
+on:
+  schedule:
+    - cron: "0 8 5,12,16,19,21 1 *" # 08:00 UTC on these January days
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Only print what would be posted
+        type: boolean
+        default: true
+
+permissions:
+  issues: write
+
+jobs:
+  remind:
+    if: vars.TRIAL_MODE == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      DRY_RUN: ${{ inputs.dry_run || 'false' }}
+    steps:
+      - name: Open or update the reminder issue
+        shell: bash
+        run: |
+          title="Switch TRIAL_MODE off before the GCP trial ends (2027-01-23)"
+          days=$(( ($(date -d 2027-01-23 +%s) - $(date +%s)) / 86400 ))
+          body=$(cat <<TEXT
+          TRIAL_MODE is still \`true\`, and the GCP free trial ends on **2027-01-23** (in ${days} days).
+
+          1. [Repository variables](https://github.com/${GH_REPO}/settings/variables/actions): set \`TRIAL_MODE\` to \`false\`.
+          2. Actions → **Infra** → Run workflow on \`main\`, then approve the \`gcp\` deployment. This destroys the GKE cluster.
+          3. Actions → **Cost** → Run workflow, and check \`runs/cost\` on the \`ops-results\` branch.
+          4. Decide whether to upgrade the billing account (the 1 EUR budget and the kill switch stay on) or let the project close. See \`docs/adr/0002-trial-then-free-tier.md\`.
+
+          This issue is opened by \`.github/workflows/trial-reminder.yml\` while TRIAL_MODE is true.
+          TEXT
+          )
+          number=$(gh issue list --state open --search "in:title \"$title\"" --json number --jq '.[0].number // empty')
+          if [ "$DRY_RUN" = true ]; then
+            echo "dry run; existing issue: ${number:-none}"; echo "$title"; echo "$body"; exit 0
+          fi
+          if [ -n "$number" ]; then
+            gh issue comment "$number" --body "Reminder: ${days} days left. TRIAL_MODE is still true. @${{ github.repository_owner }}"
+          else
+            gh issue create --title "$title" --body "$body" --assignee "${{ github.repository_owner }}"
+          fi
