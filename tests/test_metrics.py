@@ -299,6 +299,11 @@ def test_a_change_column_does_not_restart_the_header():
     }
 
 
+def test_column_titles_between_the_header_lines_do_not_split_the_header():
+    text = WACKER_P159.replace("2024/2023 2025", "Change in %\nTargets\n2024/2023 2025")
+    assert selected("wacker-2024", 159, text)["scope1"] == 1_212_000
+
+
 def test_thousand_tonnes_written_as_1000_is_a_unit_not_a_column():
     assert selected("lufthansa-2024", 163, LUFTHANSA_P163) == {
         "scope1": 29_159_000,

@@ -15,8 +15,9 @@ import re
 import sys
 from pathlib import Path
 
-from belegt.documents.metrics import metric_of, page_unit
+from belegt.documents.metrics import _rows, metric_of, page_unit
 from belegt.documents.pdf import read_pages
+from belegt.documents.reports import read_seed
 
 _HINT = re.compile(r"\bScope[\s-]*[123]\b|E1-6", re.I)
 _FIGURE = re.compile(r"(?<![\d.,])\d{1,3}(?:[.,]\d{3})+(?:[.,]\d+)?|\b\d+[.,]\d+\b|\b\d{3,}\b")
@@ -81,7 +82,9 @@ def main(root: Path) -> None:
 
 
 def show(root: Path, wanted: dict[str, set[int]]) -> None:
+    seed = {r.doc_id: r for r in read_seed(Path("dbt/seeds/reports.csv"))}
     for doc, numbers in sorted(wanted.items()):
+        comma = seed[doc].decimal_comma if doc in seed else False
         pdf = root / "pdf" / f"{doc}.pdf"
         if not pdf.exists():
             print(f"## {doc}\n\n- not downloaded\n")
@@ -99,9 +102,15 @@ def show(root: Path, wanted: dict[str, set[int]]) -> None:
             print("\n".join(f"      {hit}" for hit in hits[:40]))
         for page in pages:
             if page.number in few:
-                print(f"    p.{page.number} (lines with figures):")
-                for line in numeric_lines(page.text, 100):
-                    print(f"      {line}")
+                print(f"    p.{page.number} (all lines):")
+                lines = (re.sub(r"\s+", " ", raw).strip() for raw in page.text.splitlines())
+                for line in [line for line in lines if line][:100]:
+                    print(f"      {line[:160]}")
+                # how the extractor reads the page: each scope row with the header years above it
+                print(f"    p.{page.number} (scope rows as the extractor reads them):")
+                for row, header, _ in _rows(page.text, comma):
+                    if metric_of(row):
+                        print(f"      {header} | {row[:120]}")
         print()
 
 

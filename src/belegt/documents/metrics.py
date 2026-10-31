@@ -286,6 +286,7 @@ def _rows(
     lines = [re.sub(r"\s+", " ", line).strip() for line in text.splitlines()]
     header: Header | None = None
     header_line = -2
+    last_numeric = -1  # the last line above with a digit: text lines between do not count
     unit: tuple[str, str] | None = None
     i = 0
     while i < len(lines):
@@ -293,14 +294,21 @@ def _rows(
         unit = page_unit(line) or unit
         years = _years(line)
         if years is not None:
-            # A header split over lines ("Base year (2022)" / "2024 2025 2030") is one header
+            # A header split over lines ("Base year (2022)" / "2024 2025 2030") is one header,
+            # also with column titles between its parts ("(2020) 2023 2024" / "Change" /
+            # "2024/2023 2025 2030 2045")
             known = [y for y in header or [] if y is not None]
             first = next((y for y in years if y is not None), None)
             follows = (
-                header and header_line == i - 1 and first and (not known or max(known) < first)
+                header
+                and header_line == last_numeric
+                and first
+                and (not known or max(known) < first)
             )
             header = header + years if header and follows else years
             header_line = i
+        if re.search(r"\d", line):
+            last_numeric = i
         if _label(line) is not None:
             nxt = lines[i + 1] if i + 1 < len(lines) else ""
             if not figures(line, decimal_comma) and _continues(nxt, decimal_comma):
