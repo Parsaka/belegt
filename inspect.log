@@ -1,0 +1,515 @@
+{
+ "geonames_lines": 23296,
+ "geonames_distinct_postcodes": 10815,
+ "fixture_postcodes": 42,
+ "fixture_lines_kept": 143,
+ "operators_de_distinct_postcodes": 1149,
+ "operators_de_postcodes_in_geonames": 1008,
+ "operators_de_postcodes_missing": [
+  "(no post code)",
+  "000OH",
+  "00202",
+  "01032",
+  "01627",
+  "02026",
+  "02110",
+  "03000",
+  "03062",
+  "03123",
+  "050039",
+  "06086",
+  "06331",
+  "06340",
+  "06711",
+  "06971",
+  "07112",
+  "07230",
+  "08053",
+  "09490",
+  "0HM12",
+  "10019, NY",
+  "101312",
+  "1013128",
+  "10577",
+  "10900",
+  "110001",
+  "11070",
+  "11571",
+  "11799"
+ ],
+ "first_lines": [
+  "DE\t01945\tGrünewald\tBrandenburg\tBB\t\t00\tLandkreis Oberspreewald-Lausitz\t12066\t51.4\t14\t4",
+  "DE\t01945\tGuteborn\tBrandenburg\tBB\t\t00\tLandkreis Oberspreewald-Lausitz\t12066\t51.4167\t13.9333\t4",
+  "DE\t01945\tTettau\tBrandenburg\tBB\t\t00\tLandkreis Oberspreewald-Lausitz\t12066\t51.4333\t13.7333\t4"
+ ]
+}
+
+==================== GLEIF ====================
+lei search 200
+{
+ "meta": {
+  "goldenCopy": {
+   "publishDate": "2026-10-31T08:00:00Z"
+  },
+  "pagination": {
+   "currentPage": 1,
+   "perPage": 1,
+   "from": 1,
+   "to": 1,
+   "total": 2,
+   "lastPage": 2
+  }
+ },
+ "links": {
+  "first": "https://api.gleif.org/api/v1/lei-records?filter%5Bentity.legalName%5D=BASF+SE&page%5Bnumber%5D=1&page%5Bsize%5D=1",
+  "next": "https://api.gleif.org/api/v1/lei-records?filter%5Bentity.legalName%5D=BASF+SE&page%5Bnumber%5D=2&page%5Bsize%5D=1",
+  "last": "https://api.gleif.org/api/v1/lei-records?filter%5Bentity.legalName%5D=BASF+SE&page%5Bnumber%5D=2&page%5Bsize%5D=1"
+ },
+ "data": [
+  {
+   "type": "lei-records",
+   "id": "529900PM64WH8AF1E917",
+   "attributes": {
+    "lei": "529900PM64WH8AF1E917",
+    "entity": {
+     "legalName": {
+      "name": "BASF SE",
+      "language": "de"
+     },
+     "otherNames": [],
+     "transliteratedOtherNames": [],
+     "legalAddress": {
+      "language": "de",
+      "addressLines": [
+       "Carl-Bosch-Stra\u00dfe 38"
+      ],
+      "addressNumber": null,
+      "addressNumberWithinBuilding": null,
+      "mailRouting": null,
+      "city": "Ludwigshafen am Rhein",
+      "region": "DE-RP",
+      "country": "DE",
+      "postalCode": "67056"
+     },
+     "headquartersAddress": {
+      "language": "de",
+      "addressLines": [
+       "Carl-Bosch-Stra\u00dfe 38"
+      ],
+      "addressNumber": null,
+      "addressNumberWithinBuilding": null,
+      "mailRouting": null,
+      "city": "Ludwigshafen am Rhein",
+      "region": "DE-RP",
+      "country": "DE",
+      "postalCode": "67056"
+     },
+     "registeredAt": {
+      "id": "RA000291",
+      "other": null
+     },
+     "registeredAs": "HRB 6000",
+     "jurisdiction": "DE",
+     "category": "GENERAL",
+     "legalForm": {
+      "id": "SGST",
+      "other": null
+     },
+     "associatedEntity": {
+      "lei": null,
+      "name": null
+     },
+     "status": "ACTIVE",
+     "expiration": {
+      "date": null,
+      "reason": null
+     },
+     "successorEntity": {
+      "lei": null,
+      "name": null
+     },
+     "successorEntities": [],
+     "creationDate": "2008-01-13T23:00:00Z",
+     "subCategory": null,
+     "otherAddresses": [],
+     "eventGroups": [
+      {
+       "groupType": "STANDALONE",
+       "events": [
+        {
+         "validationDocuments": "SUPPORTING_DOCUMENTS",
+         "effectiveDate": "2023-12-26T23:00:00Z",
+         "recordedDate": "2023-12-27T13:11:50Z",
+         "type": "CHANGE_HQ_ADDRESS",
+         "status": "COMPLETED"
+        }
+       ]
+      },
+      {
+       "groupType": "STANDALONE",
+       "events": [
+        {
+         "validationDocuments": "SUPPORTING_DOCUMENTS",
+         "effectiveDate": "2023-12-26T23:00:00Z",
+         "recordedDate": "2023-12-27T13:11:50Z",
+         "type": "CHANGE_LEGAL_ADDRESS",
+         "status": "COMPLETED"
+        }
+       ]
+      }
+     ]
+    },
+    "registration": {
+     "initialRegistrationDate": "2014-01-31T08:51:52Z",
+     "lastUpdateDate": "2026-01-05T15:53:12Z",
+     "status": "ISSUED",
+     "next
+direct-parent 404 {"errors":[{"status":"404","title":"Resource not found","detail":"Related resource not found"}]}
+ultimate-parent 404 {"errors":[{"status":"404","title":"Resource not found","detail":"Related resource not found"}]}
+direct-children 200 {"meta":{"goldenCopy":{"publishDate":"2026-10-31T08:00:00Z"},"pagination":{"currentPage":1,"perPage":3,"from":1,"to":3,"total":127,"lastPage":43}},"links":{"first":"https:\/\/api.gleif.org\/api\/v1\/lei-records\/529900PM64WH8AF1E917\/direct-children?page%5Bnumber%5D=1&page%5Bsize%5D=3","next":"https:\/\/api.gleif.org\/api\/v1\/lei-records\/529900PM64WH8AF1E917\/direct-children?page%5Bnumber%5D=2&page%5Bsize%5D=3","last":"https:\/\/api.gleif.org\/api\/v1\/lei-records\/529900PM64WH8AF1E917\/direct-children?page%5Bnumber%5D=43&page%5Bsize%5D=3"},"data":[{"type":"lei-records","id":"529900WVDFP3LKXU6C57","attributes":{"lei":"529900WVDFP3LKXU6C57","entity":{"legalName":{"name":"Bioseeds S.A","language":"es"},"otherNames":[],"transliteratedOtherNames":[],"legalAddress":{"language":"es","addressLi
+golden copy latest 200
+   lei2: 3480688 records, 483.68 MB, https://goldencopy.gleif.org/storage/golden-copy-files/2026/10/31/1295255/20261031-0800-gleif-goldencopy-lei2-golden-copy.csv.zip
+   rr: 492389 records, 23.33 MB, https://goldencopy.gleif.org/storage/golden-copy-files/2026/10/31/1295300/20261031-0800-gleif-goldencopy-rr-golden-copy.csv.zip
+   repex: 6454331 records, 59.65 MB, https://goldencopy.gleif.org/storage/golden-copy-files/2026/10/31/1295345/20261031-0800-gleif-goldencopy-repex-golden-copy.csv.zip
+   RR: "Relationship.StartNode.NodeID","Relationship.StartNode.NodeIDType","Relationship.EndNode.NodeID","Relationship.EndNode.NodeIDType","Relationship.RelationshipType","Relationship.RelationshipStatus","Relationship.Period.1.startDate","Relationship.Period.1.endDate","Relationship.Period.1.periodType","Relationship.Period.2.startDate","Relationship.Period.2.endDate","Relationship.Period.2.periodType","Relationship.Period.3.startDate","Relationship.Period.3.endDate","Relationship.Period.3.periodType","Relationship.Period.4.startDate","Relationship.Period.4.endDate","Relationship.Period.4.periodType
+   RR: "001GPB6A9XPE8XJICC14","LEI","5493001Z012YSB2A0K51","LEI","IS_FUND-MANAGED_BY","ACTIVE","2012-11-29T00:00:00.000Z","","RELATIONSHIP_PERIOD","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","2022-11-14T09:59:48.000Z","2025-04-19T13:30:05.472Z","LAPSED","2025-04-18T15:48:53.604Z","5493001KJTIIGC8Y1R12","FULLY_CORROBORATED","SUPPORTING_DOCUMENTS","https://www.sec.gov/Archives/edgar/data/722574/000072257422000127/filing4699.htm"
+   RR: "001GPB6A9XPE8XJICC14","LEI","C7J4FOV6ELAVE39B7M82","LEI","IS_SUBFUND_OF","ACTIVE","2012-11-29T00:00:00.000Z","","RELATIONSHIP_PERIOD","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","2022-11-14T09:59:48.000Z","2025-04-19T13:30:05.472Z","LAPSED","2025-04-18T15:48:53.604Z","5493001KJTIIGC8Y1R12","FULLY_CORROBORATED","SUPPORTING_DOCUMENTS","https://www.sec.gov/cgi-bin/browse-edgar?scd=series&CIK=0000722574&action=getcompany"
+   RR: "00EHHQ2ZHDCFXJCPCL46","LEI","5493002IC8N66XNR2841","LEI","IS_FUND-MANAGED_BY","ACTIVE","2011-10-01T00:00:00+02:00","","RELATIONSHIP_PERIOD","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","2024-06-24T11:39:46+02:00","2026-05-29T14:21:14+02:00","PUBLISHED","2027-06-24T11:39:46+02:00","5299000J2N45DDNE4Y28","ENTITY_SUPPLIED_ONLY","OTHER_OFFICIAL_DOCUMENTS",""
+   RR: "00KLB2PFTM3060S2N216","LEI","YVC19L6NOWRA51XIKW06","LEI","IS_FUND-MANAGED_BY","ACTIVE","2023-05-18T00:00:00.000Z","","RELATIONSHIP_PERIOD","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","2012-11-05T18:17:00.000Z","2025-05-02T05:37:52.647Z","PUBLISHED","2027-05-13T10:48:47.966Z","5493001KJTIIGC8Y1R12","FULLY_CORROBORATED","SUPPORTING_DOCUMENTS",""
+   RR: "00KLB2PFTM3060S2N216","LEI","54930037R1JTV3ZYFY28","LEI","IS_SUBFUND_OF","ACTIVE","2024-05-13T00:00:00.000Z","","RELATIONSHIP_PERIOD","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","2012-11-05T18:17:00.000Z","2025-05-02T05:37:52.647Z","PUBLISHED","2027-05-13T10:48:47.966Z","5493001KJTIIGC8Y1R12","FULLY_CORROBORATED","SUPPORTING_DOCUMENTS",""
+   BASF SE: 529900PM64WH8AF1E917, direct children total 127
+   Heidelberg Materials AG: LZ2C6E0W5W7LQMX5ZI37, direct children total 53
+   RWE Aktiengesellschaft: 529900GB7KCA94ACC940, direct children total 161
+ETS sheet 'data' of ['Read Me', 'data', 'activity codes', 'CH adm. Aviation Operators']
+operators workbook: https://climate.ec.europa.eu/document/download/ab2c1214-decb-40bc-bb0d-d37f080bdebd_en?filename=policy_ets_registry_operators_ets_en.xlsx ['data']
+operators header: ('Account Holder Name', 'Company Registration Nr of Account Holder', 'LEI', 'MS Registry', 'Installation ID', 'Installation Name', 'Activity Type', 'Permit ID', 'PERMIT_REVOCATION_DATE', 'Permit Expiry/Revocation Date ', 'Contact Country', 'Contact City', 'Contact PCode', 'Contact Address L1', 'Contact Address L2')
+{
+ "operators_rows_total": 16394,
+ "operators_de": 2874,
+ "operators_de_with_lei": 76,
+ "operators_de_with_registration_nr": 2865,
+ "operators_de_registration_prefixes": [
+  [
+   "HRB",
+   2135
+  ],
+  [
+   "HRA",
+   466
+  ],
+  [
+   "",
+   89
+  ],
+  [
+   "n.a. Körperschaft des öffentl. Rechts",
+   27
+  ],
+  [
+   "Körperschaft des öffentl. Rechts",
+   9
+  ],
+  [
+   "VR",
+   8
+  ],
+  [
+   "Amtsgericht Düsseldorf HRB",
+   8
+  ],
+  [
+   "Amtsgericht Essen, HRB",
+   6
+  ],
+  [
+   "Amtsgericht Kleve HRB",
+   4
+  ],
+  [
+   "HRB-",
+   4
+  ]
+ ],
+ "operators_de_distinct_holders": 1527
+}
+    ('Gunvor Raffinerie Ingolstadt GmbH', 'HRB 6375 Amtsgericht Ingolstadt', None, 'DE', 1, 'Raffinerie Ingolstadt', 'Refining of mineral oil', '14210-0001', None, 'ACTIVE', 'DE', 'Kösching', '85092', 'ESSO Straße 1', '-')
+    ('Haltermann Carless Deutschland GmbH', 'HRB 118570 Amtsgericht Hamburg', None, 'DE', 2, 'Haltermann Carless Deutschland GmbH - Werk Speyer', 'Refining of mineral oil', '14210-0002', None, 'ACTIVE', 'DE', 'Speyer', '67346', 'Joachim-Becher-Str. 1', 'Werk Speyer')
+    ('Ruhr Oel GmbH', 'HRB 7527 Amtsgricht Gelsenkirchen', None, 'DE', 3, 'RUHR OEL GmbH - Werk Horst - CO2-Glocke', 'Refining of mineral oil', '14210-0003', None, 'ACTIVE', 'DE', 'Gelsenkirchen', '45896', 'Ruhr Oel GmbH', 'Alexander-von-Humboldt-Straße 1')
+    ('Ruhr Oel GmbH', 'HRB 7527 Amtsgricht Gelsenkirchen', None, 'DE', 4, 'RUHR OEL GmbH - Werk Scholven - CO2-Glocke', 'Refining of mineral oil', '14210-0004', None, 'ACTIVE', 'DE', 'Gelsenkirchen', '45896', 'Ruhr Oel GmbH', 'Alexander-von-Humboldt-Straße 1')
+    ('OMV Deutschland Operations GmbH & Co. KG', 'HRB 11665 Amtsgericht Traunstein', None, 'DE', 5, 'Mineralölverarbeitung Burghausen', 'Refining of mineral oil', '14210-0005', None, 'ACTIVE', 'DE', 'Burghausen', '84489', 'Haiminger Straße 1', None)
+ETS: header at row 2, 2195 German stationary rows, 74 picked
+{
+ "ets_de_stationary_installations": 2195,
+ "eea_de_ets_identifiers": 51,
+ "ets_installations_found_in_eea": 49,
+ "with_parent_company_name": 49,
+ "distinct_parent_company_names": 35,
+ "eea_reporting_years": [
+  "2017",
+  "2018",
+  "2019",
+  "2020",
+  "2021",
+  "2022",
+  "2023",
+  "2024"
+ ],
+ "top_parents": [
+  [
+   "ArcelorMittal Eisenhüttenstadt GmbH ",
+   4
+  ],
+  [
+   "LEAG Lausitz Energie Kraftwerke AG",
+   3
+  ],
+  [
+   "Ardagh Glass GmbH ",
+   2
+  ],
+  [
+   "Wienerberger GmbH",
+   2
+  ],
+  [
+   "Stadtwerke Frankfurt (Oder) GmbH ",
+   2
+  ],
+  [
+   "BASF Schwarzheide GmbH",
+   2
+  ],
+  [
+   "B.E.S. Brandenburger Elektrostahlwerke GmbH",
+   2
+  ],
+  [
+   "H.E.S. Hennigsdorfer Elektrostahlwerke GmbH ",
+   2
+  ],
+  [
+   "GASCADE Gastransport GmbH ",
+   2
+  ],
+  [
+   "LEIPA Georg Leinfelder Werk Schwedt Nord",
+   2
+  ],
+  [
+   "Hamburger Rieger GmbH",
+   2
+  ],
+  [
+   "Porcelaingres GmbH",
+   1
+  ],
+  [
+   "Fiberboard GmbH ",
+   1
+  ],
+  [
+   "Pfleiderer Baruth GmbH ",
+   1
+  ],
+  [
+   "VEO Vulkan-Energiewirtschaft - Oderbrücke GmbH ",
+   1
+  ],
+  [
+   "EWP Energie und Wasser Potsdam GmbH  ",
+   1
+  ],
+  [
+   "Südzucker AG, Werk Brottewitz",
+   1
+  ],
+  [
+   "Progroup Paper PM2 GmbH ",
+   1
+  ],
+  [
+   "envia THERM GmbH ",
+   1
+  ],
+  [
+   "BMI Steildach GmbH ",
+   1
+  ],
+  [
+   "CEMEX Zement GmbH ",
+   1
+  ],
+  [
+   "StWB Stadtwerke Brandenburg an der Havel GmbH & Co. KG",
+   1
+  ],
+  [
+   "Lausitz Energie Kraftwerke AG",
+   1
+  ],
+  [
+   "Uniper Kraftwerke GmbH",
+   1
+  ],
+  [
+   "Sonae Arauco Beeskow GmbH",
+   1
+  ]
+ ]
+}
+fixtures: 565 ETS ids, 145 installations, 42 facilities
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/45026985 | LEAG Lausitz Energie Kraftwerke AG  Gasturbinenkraftwerk Thyrow | LEAG Lausitz Energie Kraftwerke AG | Trebbin
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/45026199 | Ardagh Glass GmbH | Ardagh Glass GmbH  | Drebkau
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/45026224 | BASF Schwarzheide GmbH | BASF Schwarzheide GmbH | Schwarzheide
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/45028227 | e.distherm Energielösungen GmbH | e.distherm Energielösungen GmbH | Ludwigsfelde
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/45035149 | Faserplattenwerk Fiberboard GmbH  | Fiberboard GmbH  | Baruth/Mark
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/45043366 | GASCADE Gastransport GmbH  | GASCADE Gastransport GmbH  | Baruth/Mark
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/45025923 | GMB Glasmanufaktur Brandenburg GmbH | GMB Glasmanufaktur Brandenburg GmbH | Tschernitz
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/45039245 | Hamburger Rieger GmbH Geschäftsfeld Kraftwerk | Hamburger Rieger GmbH | Spremberg
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/45024782 | Hamburger Rieger GmbH Papierfabrik Spremberg | Hamburger Rieger GmbH | Spremberg
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/45025575 | Heizkraftwerk Cottbus | Stadtwerke Cottbus GmbH | Cottbus
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/45025113 | Heizkraftwerk Guben II | envia THERM GmbH  | Guben
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/45025856 | Klinkerwerk Muhr GmbH & Co KG | Klinkerwerk Muhr GmbH & Co KG  | Lichterfeld-Schacksdorf
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/45025564 | LEAG, Kraftwerk Jänschwalde | LEAG Lausitz Energie Kraftwerke AG | Teichland
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/45025611 | LEAG, Kraftwerk Schwarze Pumpe  | LEAG Lausitz Energie Kraftwerke AG | Spremberg
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/45027005 | Pfleiderer Baruth GmbH  | Pfleiderer Baruth GmbH  | Baruth/Mark
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/45024947 | Porcelaingres GmbH | Porcelaingres GmbH | Vetschau/Spreewald
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/45025729 | Südzucker AG, Werk Brottewitz  | Südzucker AG, Werk Brottewitz | Mühlberg/Elbe
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/45026129 | Wienerberger GmbH, Werk Buchwäldchen | Wienerberger GmbH | Calau
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/16014148 | BMI Steildach GmbH  | BMI Steildach GmbH  | Karstädt
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/16011292 | H.E.S. Hennigsdorfer Elektrostahlwerke GmbH  | H.E.S. Hennigsdorfer Elektrostahlwerke GmbH  | Hennigsdorf
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/16012651 | SWISS KRONO TEX GmbH & Co. KG | SWISS KRONO TEX GmbH & co.KG | Heiligengrabe
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/16018546 | B.E.S. Brandenburger Elektrostahlwerke GmbH | B.E.S. Brandenburger Elektrostahlwerke GmbH | Brandenburg an der Havel
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/16018680 | EWP Energie und Wasser Potsdam GmbH  Heizkraftwerk Potsdam - Süd | EWP Energie und Wasser Potsdam GmbH   | Potsdam
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/16018095 | Wienerberger GmbH  Werk Reetz | Wienerberger GmbH | Wiesenburg/Mark
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/16019119 | StWB Stadtwerke Brandenburg an der Havel GmbH & Co. KG | StWB Stadtwerke Brandenburg an der Havel GmbH & Co. KG | Brandenburg an der Havel
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/16018798 | Uniper Kraftwerke GmbH | Uniper Kraftwerke GmbH | Brandenburg an der Havel
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/23024102 | ArcelorMittal Eisenhüttenstadt GmbH  | ArcelorMittal Eisenhüttenstadt GmbH  | Eisenhüttenstadt
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/23021380 | Ardagh Glass GmbH | Ardagh Glass GmbH  | Neuenhagen b. Berlin
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/23020947 | CEMEX Zement GmbH | CEMEX Zement GmbH  | Rüdersdorf bei Berlin
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/23024015 | FELS-WERKE GmbH | FELS-WERKE GmbH | Rüdersdorf bei Berlin
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/23023936 | GASCADE Gastransport GmbH  | GASCADE Gastransport GmbH  | Lebus
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/23020573 | Lausitz Energie Kraftwerke AG | Lausitz Energie Kraftwerke AG | Ahrensfelde
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/23020136 | LEIPA Georg Leinfelder Werk Schwedt Nord | LEIPA Georg Leinfelder Werk Schwedt Nord | Schwedt/Oder
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/23020389 | LEIPA Georg Leinfelder Werk Schwedt Süd | LEIPA Georg Leinfelder Werk Schwedt Süd | Schwedt/Oder
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/23020490 | PCK Raffinerie GmbH | PCK Raffinerie GmbH | Schwedt/Oder
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/23024012 | Sonae Arauco Beeskow GmbH | Sonae Arauco Beeskow GmbH | Beeskow
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/23022811 | Stadtwerke Frankfurt (Oder) GmbH  | Stadtwerke Frankfurt (Oder) GmbH  | Frankfurt (Oder)
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/23023072 | Stadtwerke Frankfurt (Oder) GmbH  | Stadtwerke Frankfurt (Oder) GmbH  | Frankfurt (Oder)
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/23023923 | Stadtwerke Strausberg GmbH | Stadtwerke Strausberg GmbH | Strausberg
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/23023645 | VEO Vulkan-Energiewirtschaft - Oderbrücke GmbH  | VEO Vulkan-Energiewirtschaft - Oderbrücke GmbH  | Eisenhüttenstadt
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/45025855 | SWARCO SCHÖNBORN GmbH | SWARCO SCHÖNBORN GmbH | Schönborn
+    https://registry.gdi-de.org/id/de.bb.inspire.pf.eureg/23037086 | Progroup Paper PM2 GmbH  | Progroup Paper PM2 GmbH  | Eisenhüttenstadt
+operators fixture: 73 rows
+   GLEIF records by operator LEI: 1 of 1
+   GLEIF by register number 'HRA 1190': ['SWISS KRONO TEX GmbH & Co. KG']
+   GLEIF by register number 'HRA 307': ['TGA Heinemann GmbH & Co. KG']
+   GLEIF by register number 'HRA 6275': ['HQT Genstar XI GmbH & Co. geschlossene Investment KG', 'Franken Guss GmbH & Co. KG']
+   GLEIF by register number 'HRA 7236': ['Michael Peter Müller e.K.', 'Deutsche Edelstahlwerke Siegen/Hagen GmbH & Co. KG']
+   GLEIF by register number 'HRB 0687': []
+   GLEIF by register number 'HRB 10018': ['Shuangma Industry Engineering & Consulting UG (haftungsbeschränkt)', 'Absmeier CES GmbH', 'EUROKAI GmbH & Co. KGaA', 'PCK Raffinerie GmbH']
+   GLEIF by register number 'HRB 10110': ['Delphisoft Deutschland GmbH']
+   GLEIF by register number 'HRB 1037': ['Stadtwerke Cottbus GmbH']
+   GLEIF by register number 'HRB 1059': ['HEAG Holding AG - Beteiligungsmanagement der Wissenschaftsstadt Darmstadt (HEAG)', 'Stadtwerke Strausberg GmbH', 'Enno Roggemann GmbH']
+   GLEIF by register number 'HRB 10892': ['SILICON-ITS GmbH', 'LEIPA Georg Leinfelder GmbH']
+   GLEIF by register number 'HRB 111240': ['Fels-Werke GmbH']
+   GLEIF by register number 'HRB 11741': ['T B Tas Bauunternehmen GmbH', 'WIGGEN Holding GmbH', 'Succeed Unternehmensberatung GmbH', 'Kleemann Management GmbH', 'Propapier PM2 GmbH']
+   GLEIF by register number 'HRB 126674': ['SWM Services GmbH']
+   GLEIF by register number 'HRB 1352': ['Lindermeir Bau GmbH', 'Zimmermann GmbH Tankschutz - Behälterbau', 'Energie und Wasser Potsdam GmbH']
+   GLEIF by register number 'HRB 13752': ['Butz Consult GmbH', 'GASCADE Gastransport GmbH', 'Medtron Aktiengesellschaft']
+   GLEIF by register number 'HRB 1619': ['GKWG - Kreis-Wohnbau-Gesellschaft mit beschränkter Haftung Lindau (Bodensee)']
+   GLEIF by register number 'HRB 16523': ['envia THERM GmbH', 'Mister Measurement GmbH']
+   GLEIF by register number 'HRB 19220P': []
+   GLEIF by register number 'HRB 203579': ['SONAE ARAUCO BEESKOW GMBH']
+   GLEIF by register number 'HRB 2299': ['BRILLEN BECKER Haus der Optik GmbH', 'Brandolini + Seitz Ingenieurgesellschaft mbH für Wasserbau und Brückenbau.', 'Autohaus Helmut Wrage GmbH', 'Stadtwerke Frankfurt (Oder) GmbH', 'Happy - Rain Würflingsdobler GmbH', 'Stadtwerke Frankfurt (Oder) GmbH']
+   GLEIF by register number 'HRB 23241': ['Hamburger Rieger GmbH']
+   GLEIF by register number 'HRB 240': ['Heiblmühle GmbH', 'MSK - Verpackungs-Systeme GmbH', 'HUK-COBURG-Rechtsschutzversicherung AG']
+   GLEIF by register number 'HRB 30704': ['Erhardt + Leimer Beteiligungsgesellschaft mbH', 'ARDAGH GLASS GMBH', 'Two Elephants Investment GmbH']
+   GLEIF by register number 'HRB 34857': ['Lelonek VKR UG (haftungsbeschränkt)']
+   GLEIF by register number 'HRB 3883': ['Rosenberg GmbH', 'ISZ Insektenschutzzentrum GmbH', 'Schwandorfer Rohstoff- und Recycling-GmbH', 'PeCon GmbH', 'ArcelorMittal Eisenhüttenstadt GmbH', 'EnviroChemie GmbH']
+   GLEIF by register number 'HRB 42': ['Gebäudereinigung Brandenburg GmbH', 'Vereinigung der Vinzentinerinnen GmbH', 'DLB - Anlageservice Aktiengesellschaft', 'Südzucker AG']
+   GLEIF by register number 'HRB 42343': ['MayRiesen GmbH', 'ITC Information Technology Consulting GmbH', 'BASF Personal Care and Nutrition GmbH']
+   GLEIF by register number 'HRB 4239': ['NOVELIS KOBLENZ GMBH']
+   GLEIF by register number 'HRB 45129': ['DW Beteiligungsgesellschaft mbH', 'Basell Polyolefine GmbH']
+   GLEIF by register number 'HRB 469': ['Taleco-Handels-GmbH']
+   GLEIF by register number 'HRB 4706': ['ZTR Rossmanek GmbH', 'EFAFLEX Tor- und Sicherheitssysteme Verwaltungs-GmbH', 'Vulkan Energiewirtschaft Oderbrücke GmbH', 'DEICO Gesellschaft mit beschränkter Haftung Import, Export, Großhandel']
+   GLEIF by register number 'HRB 51947': ['Wienerberger GmbH']
+   GLEIF by register number 'HRB 5490': ['Semmler Immobilien Management GmbH', 'Stern Grundstücks-Entwicklungs GmbH I', 'BAZ Steuerberatungsgesellschaft mbH', 'BMI Deutschland GmbH']
+   GLEIF by register number 'HRB 57104': ['UNIPER KRAFTWERKE GMBH']
+   GLEIF by register number 'HRB 58646': ['SOLVAY CHEMICALS GMBH']
+   GLEIF by register number 'HRB 6000': ['Druckluft-Anlagen Heckhoff GmbH', 'DELTA Vermögensmanagement GmbH', 'UHM Umschlaghafen Magdeburg GmbH', 'BASF SE', 'Lagento GmbH']
+   GLEIF by register number 'HRB 613': ['Leonhard Feuerer Busreisen GmbH', 'Evangelisches Siedlungswerk in Bayern GmbH', 'Stadtwerke Greifswald Gesellschaft mit beschränkter Haftung', 'Severin Touristik GmbH', 'AIR LIQUIDE Deutschland GmbH']
+   GLEIF by register number 'HRB 6236': ['ReSys Aktiengesellschaft', 'SWARCO SCHÖNBORN GmbH', 'Ondal Medical Systems GmbH', 'Rief Schornsteintechnik GmbH']
+   GLEIF by register number 'HRB 6253': ['GL Immobilien GmbH', 'porcelaingres GmbH', 'Steuerberatungsgesellschaft WAGRIA GmbH']
+   GLEIF by register number 'HRB 6290P': []
+   GLEIF by register number 'HRB 762884': ['Daimler Truck AG']
+   GLEIF by register number 'HRB 7908': ['nuova moda-Moden Handelsgesellschaft mbH', 'GMB Glasmanufaktur Brandenburg GmbH']
+   GLEIF by register number 'HRB 8327': ["Alles für's Auto Kai Erik Arndt GmbH", 'Lausitz Energie Kraftwerke AG']
+   GLEIF by register number 'HRB 96152': ['ADM MAINZ GMBH']
+   GLEIF candidates for 'ADM Mainz GmbH': ['ADM MAINZ GMBH']
+   GLEIF candidates for 'AIR LIQUIDE Deutschland GmbH': ['AIR LIQUIDE Deutschland GmbH']
+   GLEIF candidates for 'ArcelorMittal Eisenhüttenstadt GmbH': ['ArcelorMittal Eisenhüttenstadt GmbH']
+   GLEIF candidates for 'ArcelorMittal Eisenhüttenstadt GmbH ': ['ArcelorMittal Eisenhüttenstadt GmbH']
+   GLEIF candidates for 'Ardagh Glass GmbH': ['ARDAGH GLASS GMBH']
+   GLEIF candidates for 'Ardagh Glass GmbH ': ['ARDAGH GLASS GMBH']
+   GLEIF candidates for 'B.E.S. Brandenburger Elektrostahlwerke GmbH': ['B.E.S. Brandenburger Elektrostahlwerke GmbH']
+   GLEIF candidates for 'BASF Personal Care and Nutrition GmbH': ['BASF Personal Care and Nutrition GmbH']
+   GLEIF candidates for 'BASF SE': ['BASF Polyurethanes Nordic AB', 'BASF Metals Sweden AB', 'BASF AB', 'BASF Coatings Services Aktiebolag', 'BASF AGRICULTURAL SOLUTIONS CANADA INC.']
+   GLEIF candidates for 'BASF Schwarzheide GmbH': ['Dehmel-Stiftung', 'BASF Agricultural Solutions Schwarzheide GmbH', 'BASF InfraService & Solutions Lausitz GmbH', 'BASF Battery Materials and Recycling Schwarzheide GmbH', 'BASF Schwarzheide GmbH']
+   GLEIF candidates for 'BMI Deutschland GmbH': ['BMI Deutschland GmbH']
+   GLEIF candidates for 'BMI Steildach GmbH ': []
+   GLEIF candidates for 'Basell Polyolefine GmbH': ['LUCOBIT Aktiengesellschaft', 'Basell Polyolefine GmbH']
+   GLEIF candidates for 'CEMEX Zement GmbH': []
+   GLEIF candidates for 'CEMEX Zement GmbH ': []
+   GLEIF candidates for 'DHW Deutsche Hydrierwerke GmbH Rodleben': []
+   GLEIF candidates for 'Daimler Truck AG': ['Daimler Truck Holding AG', 'Daimler Truck AG']
+   GLEIF candidates for 'Deutsche Edelstahlwerke Specialty Steel GmbH & Co.': ['Deutsche Edelstahlwerke Siegen/Hagen GmbH & Co. KG']
+   GLEIF candidates for 'EWP Energie und Wasser Potsdam GmbH  ': []
+   GLEIF candidates for 'Energie und Wasser Potsdam GmbH': ['Energie und Wasser Potsdam GmbH']
+   GLEIF candidates for 'FELS-WERKE GmbH': ['Fels-Werke GmbH']
+   GLEIF candidates for 'Fels-Werke GmbH': ['Fels-Werke GmbH']
+   GLEIF candidates for 'Fiberboard GmbH': ['Fiberboard GmbH']
+   GLEIF candidates for 'Fiberboard GmbH ': ['Fiberboard GmbH']
+   GLEIF candidates for 'GASCADE Gastransport GmbH': ['GASCADE Gastransport GmbH']
+   GLEIF candidates for 'GASCADE Gastransport GmbH ': ['GASCADE Gastransport GmbH']
+   GLEIF candidates for 'GMB Glasmanufaktur Brandenburg GmbH': ['GMB Glasmanufaktur Brandenburg GmbH']
+   GLEIF candidates for 'H.E.S. Hennigsdorfer Elektrostahlwerke GmbH': ['H.E.S. Hennigsdorfer Elektrostahlwerke GmbH']
+   GLEIF candidates for 'H.E.S. Hennigsdorfer Elektrostahlwerke GmbH ': ['H.E.S. Hennigsdorfer Elektrostahlwerke GmbH']
+   GLEIF candidates for 'Hamburger Rieger GmbH': ['Hamburger Rieger GmbH']
+   GLEIF candidates for 'Klinkerwerk Muhr GmbH & Co KG ': []
+   GLEIF candidates for 'Klinkerwerk Muhr GmbH & Co. KG': []
+   GLEIF candidates for 'LEAG Lausitz Energie Kraftwerke AG': []
+   GLEIF candidates for 'LEIPA Georg Leinfelder GmbH': ['LEIPA Georg Leinfelder GmbH']
+   GLEIF candidates for 'LEIPA Georg Leinfelder Werk Schwedt Nord': []
+   GLEIF candidates for 'LEIPA Georg Leinfelder Werk Schwedt Süd': []
+   GLEIF candidates for 'Lausitz Energie Kraftwerke AG': ['Lausitz Energie Kraftwerke AG']
+   GLEIF candidates for 'PCK Raffinerie GmbH': ['PCK Raffinerie GmbH']
+   GLEIF candidates for 'Pfleiderer Baruth GmbH': []
+   GLEIF candidates for 'Pfleiderer Baruth GmbH ': []
+   GLEIF candidates for 'Porcelaingres GmbH': ['porcelaingres GmbH']
+   GLEIF candidates for 'Progroup Paper PM2 GmbH': []
+   GLEIF candidates for 'Progroup Paper PM2 GmbH ': []
+   GLEIF candidates for 'SWARCO SCHÖNBORN GmbH': ['SWARCO SCHÖNBORN GmbH']
+   GLEIF candidates for 'SWISS KRONO TEX GmbH & Co. KG': ['SWISS KRONO TEX GmbH & Co. KG']
+   GLEIF candidates for 'SWISS KRONO TEX GmbH & co.KG': []
+   GLEIF candidates for 'SWM Services GmbH': ['SWM Services GmbH']
+   GLEIF candidates for 'Solvay Chemicals GmbH': ['SOLVAY CHEMICALS GMBH']
+   GLEIF candidates for 'Sonae Arauco Beeskow GmbH': ['SONAE ARAUCO BEESKOW GMBH']
+   GLEIF candidates for 'StWB Stadtwerke Brandenburg an der Havel GmbH & Co. KG': ['StWB Stadtwerke Brandenburg an der Havel GmbH & Co. KG']
+   GLEIF candidates for 'Stadtwerke Cottbus GmbH': ['Stadtwerke Cottbus GmbH']
+   GLEIF candidates for 'Stadtwerke Frankfurt (Oder) GmbH': ['Stadtwerke Frankfurt (Oder) GmbH', 'Stadtwerke Frankfurt (Oder) GmbH']
+   GLEIF candidates for 'Stadtwerke Frankfurt (Oder) GmbH ': ['Stadtwerke Frankfurt (Oder) GmbH', 'Stadtwerke Frankfurt (Oder) GmbH']
+   GLEIF candidates for 'Stadtwerke Strausberg GmbH': ['Stadtwerke Strausberg GmbH']
+   GLEIF candidates for 'Südzucker AG': ['Südzucker AG', 'sudzucker AG']
+   GLEIF candidates for 'Südzucker AG, Werk Brottewitz': ['Südzucker AG', 'sudzucker AG']
+   GLEIF candidates for 'Uniper Kraftwerke GmbH': ['UNIPER HOLDING GMBH', 'UNIPER KRAFTWERKE GMBH']
+   GLEIF candidates for 'Universität Münster': ['Universität Münster', 'Schleiermachersche Stiftung', 'Stiftung zur Förderung des wissenschaftlichen Nachwuchses der Rechtswissenschaftlichen Fakultät der Universität Münster', 'Förderergesellschaft des Finance Centers der Universität Münster e.V.']
+   GLEIF candidates for 'VEO Vulkan-Energiewirtschaft - Oderbrücke GmbH ': []
+   GLEIF candidates for 'Vulkan Energiewirtschaft Oderbrücke GmbH': ['Vulkan Energiewirtschaft Oderbrücke GmbH']
+   GLEIF candidates for 'Wienerberger GmbH': ['Wienerberger Österreich GmbH', 'Wienerberger Infra GmbH', 'Wienerberger Deutschland Grundstücksverwaltungs GmbH', 'Wienerberger Industriebeteiligungsverwaltung GmbH', 'Wienerberger ZZ Holding GmbH']
+   GLEIF candidates for 'e.distherm Energielösungen GmbH': []
+   GLEIF candidates for 'envia THERM GmbH': ['envia THERM GmbH']
+   GLEIF candidates for 'envia THERM GmbH ': ['envia THERM GmbH']
+   groups: {'529900PM64WH8AF1E917': 'BASF SE', 'LZ2C6E0W5W7LQMX5ZI37': 'Heidelberg Materials AG', '529900GB7KCA94ACC940': 'RWE Aktiengesellschaft'}
+   RR rows touching the groups: 704; types Counter({'IS_ULTIMATELY_CONSOLIDATED_BY': 361, 'IS_DIRECTLY_CONSOLIDATED_BY': 341, 'IS_INTERNATIONAL_BRANCH_OF': 2})
+   GLEIF entity records saved: 366

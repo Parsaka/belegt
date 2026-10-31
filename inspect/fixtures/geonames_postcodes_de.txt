@@ -1,0 +1,143 @@
+DE	01987	Schwarzheide	Brandenburg	BB		00	Landkreis Oberspreewald-Lausitz	12066	51.4767	13.8556	4
+DE	03046	Cottbus	Brandenburg	BB		00	Kreisfreie Stadt Cottbus	12052	51.756	14.3197	4
+DE	03050	Cottbus	Brandenburg	BB		00	Kreisfreie Stadt Cottbus	12052	51.7324	14.3347	4
+DE	03130	Lieskau	Brandenburg	BB		00	Landkreis Spree-Neiße	12071	51.5683	14.5271	4
+DE	03130	Haidemühl	Brandenburg	BB		00	Landkreis Spree-Neiße	12071	51.5518	14.2219	4
+DE	03130	Bagenz	Brandenburg	BB		00	Landkreis Spree-Neiße	12071	51.6448	14.4332	4
+DE	03130	Groß Luja	Brandenburg	BB		00	Landkreis Spree-Neiße	12071	51.5978	14.4467	4
+DE	03130	Wolfshain	Brandenburg	BB		00	Landkreis Spree-Neiße	12071	51.5799	14.589	4
+DE	03130	Jämlitz-Klein Düben	Brandenburg	BB		00	Landkreis Spree-Neiße	12071	51.5667	14.6417	
+DE	03130	Drieschnitz-Kahsel	Brandenburg	BB		00	Landkreis Spree-Neiße	12071	51.6667	14.475	
+DE	03130	Hornow-Wadelsdorf	Brandenburg	BB		00	Landkreis Spree-Neiße	12071	51.625	14.4917	
+DE	03130	Felixsee	Brandenburg	BB		00	Landkreis Spree-Neiße	12071	51.6083	14.5208	
+DE	03130	Proschim	Brandenburg	BB		00	Landkreis Spree-Neiße	12071	51.5514	14.1884	4
+DE	03130	Spremberg	Brandenburg	BB		00	Landkreis Spree-Neiße	12071	51.5696	14.3739	4
+DE	03130	Tschernitz	Brandenburg	BB		00	Landkreis Spree-Neiße	12071	51.5833	14.6167	4
+DE	03130	Reuthen	Brandenburg	BB		00	Landkreis Spree-Neiße	12071	51.5906	14.5266	4
+DE	03130	Türkendorf	Brandenburg	BB		00	Landkreis Spree-Neiße	12071	51.591	14.4581	4
+DE	03130	Graustein	Brandenburg	BB		00	Landkreis Spree-Neiße	12071	51.5729	14.4732	4
+DE	03226	Suschow	Brandenburg	BB		00	Landkreis Oberspreewald-Lausitz	12066	51.7994	14.0923	4
+DE	03226	Raddusch	Brandenburg	BB		00	Landkreis Oberspreewald-Lausitz	12066	51.8181	14.0403	4
+DE	03226	Koßwig	Brandenburg	BB		00	Landkreis Oberspreewald-Lausitz	12066	51.7769	14.0287	4
+DE	03226	Leipe	Brandenburg	BB		00	Landkreis Oberspreewald-Lausitz	12066	51.8554	14.0441	4
+DE	03226	Vetschau	Brandenburg	BB		00	Landkreis Oberspreewald-Lausitz	12066	51.7864	14.0794	4
+DE	03238	Gruhno	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.5678	13.5185	4
+DE	03238	Lichterfeld	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.5976	13.7781	4
+DE	03238	Lieskau	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.6173	13.8086	4
+DE	03238	Massen	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.6428	13.733	4
+DE	03238	Dollenchen	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.6082	13.8595	4
+DE	03238	Lindthal	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.6581	13.7804	4
+DE	03238	Münchhausen	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.6673	13.6447	4
+DE	03238	Fischwasser	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.596	13.6121	4
+DE	03238	Gorden	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.5332	13.6269	4
+DE	03238	Staupitz	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.5337	13.6703	4
+DE	03238	Oppelhain	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.5549	13.5944	4
+DE	03238	Gröbitz	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.6582	13.7138	4
+DE	03238	Schacksdorf	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.6151	13.7618	4
+DE	03238	Ponnsdorf	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.6667	13.6833	4
+DE	03238	Betten	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.6273	13.7674	4
+DE	03238	Finsterwalde	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.6339	13.7066	4
+DE	03238	Rückersdorf	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.5695	13.5723	4
+DE	03238	Eichholz-Drößig	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.6083	13.6583	
+DE	03238	Sallgast	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.5887	13.8486	4
+DE	03238	Lindena	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.5928	13.5434	4
+DE	03238	Lugau	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.6109	13.5979	4
+DE	03238	Göllnitz	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.64	13.8575	4
+DE	03238	Schadewitz	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.5607	13.4821	4
+DE	03253	Schönborn	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.6002	13.4897	4
+DE	03253	Dübrichen	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.6686	13.4724	4
+DE	03253	Arenzhain	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.6735	13.5092	4
+DE	03253	Friedersdorf	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.6985	13.5726	4
+DE	03253	Tröbitz	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.6	13.4333	4
+DE	03253	Trebbus	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.6924	13.5211	4
+DE	03253	Schönewalde	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.679	13.6025	4
+DE	03253	Doberlug-Kirchhain	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.6258	13.5623	4
+DE	03253	Frankena	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.658	13.5932	4
+DE	03253	Brenitz	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.7023	13.6007	4
+DE	03253	Nexdorf	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.6368	13.3715	4
+DE	03253	Prießen	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.6613	13.4301	4
+DE	03253	Hennersdorf	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.6369	13.6069	4
+DE	03253	Buchhain	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.6453	13.3898	4
+DE	03253	Schilda	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.6	13.3833	4
+DE	03253	Werenzhain	Brandenburg	BB		00	Landkreis Elbe-Elster	12062	51.6546	13.5322	4
+DE	06749	Friedersdorf	Saxony-Anhalt	ST		00	Anhalt-Bitterfeld	15082	51.6481	12.3655	4
+DE	06749	Bitterfeld	Saxony-Anhalt	ST		00	Anhalt-Bitterfeld	15082	51.6178	12.3069	
+DE	06861	Dessau-Roßlau	Saxony-Anhalt	ST		00	Dessau-Roßlau	15001	51.8333	12.25	4
+DE	12529	Schönefeld	Brandenburg	BB		00	Landkreis Dahme-Spreewald	12061	52.389	13.5037	4
+DE	14480	Potsdam	Brandenburg	BB		00	Kreisfreie Stadt Potsdam	12054	52.3689	13.1273	4
+DE	14770	Brandenburg an der Havel	Brandenburg	BB		00	Kreisfreie Stadt Brandenburg an der Havel	12051	52.4189	12.5228	4
+DE	14776	Brandenburg an der Havel	Brandenburg	BB		00	Kreisfreie Stadt Brandenburg an der Havel	12051	52.4043	12.568	4
+DE	15230	Frankfurt (Oder)	Brandenburg	BB		00	Frankfurt (Oder)	12053	52.3475	14.5539	4
+DE	15344	Strausberg	Brandenburg	BB		00	Landkreis Märkisch-Oderland	12064	52.5786	13.8874	4
+DE	15562	Rüdersdorf bei Berlin	Brandenburg	BB		00	Landkreis Märkisch-Oderland	12064	52.4707	13.7736	4
+DE	15890	Eisenhüttenstadt	Brandenburg	BB		00	Landkreis Oder-Spree	12067	52.1601	14.555	
+DE	15890	Schlaubetal Bremsdorf	Brandenburg	BB		00	Landkreis Oder-Spree	12067	52.15	14.5	
+DE	15890	Eisenhüttenstadt Diehlo	Brandenburg	BB		00	Landkreis Oder-Spree	12067	52.1333	14.6	
+DE	15890	Eisenhüttenstadt Fürstenberg	Brandenburg	BB		00	Landkreis Oder-Spree	12067	52.15	14.6667	
+DE	15890	Siehdichum Rießen	Brandenburg	BB		00	Landkreis Oder-Spree	12067	52.2	14.5333	4
+DE	15890	Eisenhüttenstadt Schönfließ	Brandenburg	BB		00	Landkreis Oder-Spree	12067	52.15	14.6167	
+DE	15890	Schlaubetal	Brandenburg	BB		00	Landkreis Oder-Spree	12067	52.1289	14.5111	
+DE	15890	Schlaubetal Kieselwitz	Brandenburg	BB		00	Landkreis Oder-Spree	12067	52.1167	14.5	
+DE	15890	Schlaubetal Fünfeichen	Brandenburg	BB		00	Landkreis Oder-Spree	12067	52.15	14.5333	
+DE	15890	Vogelsang	Brandenburg	BB		00	Landkreis Oder-Spree	12067	52.1824	14.6637	4
+DE	15890	Siehdichum	Brandenburg	BB		00	Landkreis Oder-Spree	12067	52.1944	14.5333	4
+DE	15890	Siehdichum Pohlitz	Brandenburg	BB		00	Landkreis Oder-Spree	12067	52.1833	14.5833	4
+DE	15890	Siehdichum Schernsdorf	Brandenburg	BB		00	Landkreis Oder-Spree	12067	52.2	14.4833	4
+DE	16303	Schwedt/Oder	Brandenburg	BB		00	Landkreis Uckermark	12073	53.066	14.2711	4
+DE	16761	Hennigsdorf	Brandenburg	BB		00	Landkreis Oberhavel	12065	52.636	13.2042	4
+DE	16909	Wittstock/Dosse Dossow	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.1167	12.5333	
+DE	16909	Wittstock/Dosse Groß Haßlow	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.1833	12.55	
+DE	16909	Heiligengrabe Liebenthal	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.15	12.4	4
+DE	16909	Heiligengrabe Wernikow	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.2167	12.4333	4
+DE	16909	Heiligengrabe	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.1446	12.3625	4
+DE	16909	Heiligengrabe Jabel	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.1667	12.4333	4
+DE	16909	Heiligengrabe Maulbeerwalde	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.1833	12.35	4
+DE	16909	Heiligengrabe Zaatzke	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.1833	12.4	4
+DE	16909	Wittstock/Dosse Sewekow	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.25	12.65	
+DE	16909	Wittstock/Dosse Königsberg	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.0667	12.4333	
+DE	16909	Heiligengrabe Blesendorf	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.2	12.3333	4
+DE	16909	Wittstock/Dosse	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.1549	12.487	
+DE	16909	Wittstock/Dosse Herzsprung	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.0667	12.4667	
+DE	16909	Wittstock/Dosse Zootzen	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.1333	12.5833	
+DE	16909	Wittstock/Dosse Wulfersdorf	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.25	12.4333	
+DE	16909	Wittstock/Dosse Dranse	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.2	12.6167	
+DE	16909	Wittstock/Dosse Gadow	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.1167	12.6167	
+DE	16909	Wittstock/Dosse Goldbeck	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.1333	12.5167	
+DE	16909	Wittstock/Dosse Fretzdorf	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.0667	12.55	
+DE	16909	Heiligengrabe Blandikow	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.1167	12.3833	4
+DE	16909	Heiligengrabe Papenbruch	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.1333	12.4333	4
+DE	16909	Wittstock/Dosse Niemerlang	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.25	12.35	
+DE	16909	Wittstock/Dosse Christdorf	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.0833	12.4667	
+DE	16909	Heiligengrabe Grabow bei Blumenthal	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.0833	12.4	
+DE	16909	Wittstock/Dosse Rossow	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.05	12.5667	
+DE	16909	Wittstock/Dosse Berlinchen	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.2167	12.5833	
+DE	16909	Wittstock/Dosse Schweinrich	Brandenburg	BB		00	Landkreis Ostprignitz-Ruppin	12068	53.1833	12.6333	
+DE	21107	Hamburg	Hamburg	HH		00	Hamburg, Freie und Hansestadt	02000	53.51	9.9784	6
+DE	21107	Hamburg Wilhelmsburg	Hamburg	HH		00	Hamburg, Freie und Hansestadt	02000	53.4978	10.0189	4
+DE	21107	Hamburg Steinwerder	Hamburg	HH		00	Hamburg, Freie und Hansestadt	02000	53.5392	9.9614	4
+DE	30659	Hannover	Lower Saxony	NI		00	Region Hannover	03241	52.4097	9.808	4
+DE	31582	Nienburg (Weser) Nienburg (Weser)	Lower Saxony	NI		00	Landkreis Nienburg/Weser	03256	52.6537	9.2221	
+DE	31582	Nienburg (Weser)	Lower Saxony	NI		00	Landkreis Nienburg/Weser	03256	52.6493	9.2365	
+DE	31582	Nienburg (Weser) Holtorf	Lower Saxony	NI		00	Landkreis Nienburg/Weser	03256	52.6757	9.2271	
+DE	31582	Nienburg (Weser) Langendamm	Lower Saxony	NI		00	Landkreis Nienburg/Weser	03256	52.6173	9.2604	
+DE	31582	Nienburg (Weser) Erichshagen	Lower Saxony	NI		00	Landkreis Nienburg/Weser	03256	52.6645	9.2449	
+DE	34119	Kassel	Hessen	HE	Regierungsbezirk Kassel	066	Kreisfreie Stadt Kassel	06611	51.3152	9.4647	4
+DE	38640	Goslar Goslar	Lower Saxony	NI		00	Landkreis Goslar	03153	51.9115	10.4319	4
+DE	38640	Goslar	Lower Saxony	NI		00	Landkreis Goslar	03153	51.9191	10.4167	4
+DE	40221	Düsseldorf	Nordrhein-Westfalen	NW	Düsseldorf District	051	Kreisfreie Stadt Düsseldorf	05111	51.2002	6.7564	4
+DE	40476	Düsseldorf	Nordrhein-Westfalen	NW	Düsseldorf District	051	Kreisfreie Stadt Düsseldorf	05111	51.2465	6.7855	4
+DE	40589	Düsseldorf	Nordrhein-Westfalen	NW	Düsseldorf District	051	Kreisfreie Stadt Düsseldorf	05111	51.1668	6.8253	4
+DE	47495	Rheinberg	Nordrhein-Westfalen	NW	Düsseldorf District	051	Kreis Wesel	05170	51.5465	6.5952	4
+DE	48149	Münster	Nordrhein-Westfalen	NW	Regierungsbezirk Münster	055	Kreisfreie Stadt Münster	05515	51.9716	7.6068	4
+DE	49716	Meppen	Lower Saxony	NI		00	Landkreis Emsland	03454	52.6906	7.291	4
+DE	50389	Wesseling	Nordrhein-Westfalen	NW	Regierungsbezirk Köln	053	Rhein-Erft-Kreis	05362	50.8271	6.9747	4
+DE	58452	Witten	Nordrhein-Westfalen	NW	Regierungsbezirk Arnsberg	059	Ennepe-Ruhr-Kreis	05954	51.4315	7.334	4
+DE	61440	Oberursel	Hessen	HE	Regierungsbezirk Darmstadt	064	Hochtaunuskreis	06434	50.2073	8.5775	4
+DE	67056	BASF SE	Rheinland-Pfalz	RP			Kreisfreie Stadt Ludwigshafen am Rhein	07314	49.4949	8.434	
+DE	68165	Mannheim	Baden-Württemberg	BW	Karlsruhe Region	082	Stadtkreis Mannheim	08222	49.4772	8.4818	4
+DE	70771	Leinfelden-Echterdingen	Baden-Württemberg	BW	Regierungsbezirk Stuttgart	081	Landkreis Esslingen	08116	48.6941	9.1681	4
+DE	80992	München	Bavaria	BY	Upper Bavaria	091	Kreisfreie Stadt München	09162	48.1776	11.5169	4
+DE	83308	Trostberg	Bavaria	BY	Upper Bavaria	091	Landkreis Traunstein	09189	48.0175	12.5346	4
+DE	92318	Neumarkt in der Oberpfalz	Bavaria	BY	Upper Palatinate	093	Landkreis Neumarkt in der Oberpfalz	09373	49.2803	11.4628	4
+DE	97318	Biebelried	Bavaria	BY	Regierungsbezirk Unterfranken	096	Landkreis Kitzingen	09675	49.7667	10.0833	4
+DE	97318	Kitzingen	Bavaria	BY	Regierungsbezirk Unterfranken	096	Landkreis Kitzingen	09675	49.7397	10.1507	4

@@ -1,0 +1,119 @@
+{
+ "ets_de_stationary_installations": 2195,
+ "eea_de_ets_identifiers": 51,
+ "ets_installations_found_in_eea": 49,
+ "with_parent_company_name": 49,
+ "distinct_parent_company_names": 35,
+ "eea_reporting_years": [
+  "2017",
+  "2018",
+  "2019",
+  "2020",
+  "2021",
+  "2022",
+  "2023",
+  "2024"
+ ],
+ "top_parents": [
+  [
+   "ArcelorMittal Eisenhüttenstadt GmbH ",
+   4
+  ],
+  [
+   "LEAG Lausitz Energie Kraftwerke AG",
+   3
+  ],
+  [
+   "Ardagh Glass GmbH ",
+   2
+  ],
+  [
+   "Wienerberger GmbH",
+   2
+  ],
+  [
+   "Stadtwerke Frankfurt (Oder) GmbH ",
+   2
+  ],
+  [
+   "BASF Schwarzheide GmbH",
+   2
+  ],
+  [
+   "B.E.S. Brandenburger Elektrostahlwerke GmbH",
+   2
+  ],
+  [
+   "H.E.S. Hennigsdorfer Elektrostahlwerke GmbH ",
+   2
+  ],
+  [
+   "GASCADE Gastransport GmbH ",
+   2
+  ],
+  [
+   "LEIPA Georg Leinfelder Werk Schwedt Nord",
+   2
+  ],
+  [
+   "Hamburger Rieger GmbH",
+   2
+  ],
+  [
+   "Porcelaingres GmbH",
+   1
+  ],
+  [
+   "Fiberboard GmbH ",
+   1
+  ],
+  [
+   "Pfleiderer Baruth GmbH ",
+   1
+  ],
+  [
+   "VEO Vulkan-Energiewirtschaft - Oderbrücke GmbH ",
+   1
+  ],
+  [
+   "EWP Energie und Wasser Potsdam GmbH  ",
+   1
+  ],
+  [
+   "Südzucker AG, Werk Brottewitz",
+   1
+  ],
+  [
+   "Progroup Paper PM2 GmbH ",
+   1
+  ],
+  [
+   "envia THERM GmbH ",
+   1
+  ],
+  [
+   "BMI Steildach GmbH ",
+   1
+  ],
+  [
+   "CEMEX Zement GmbH ",
+   1
+  ],
+  [
+   "StWB Stadtwerke Brandenburg an der Havel GmbH & Co. KG",
+   1
+  ],
+  [
+   "Lausitz Energie Kraftwerke AG",
+   1
+  ],
+  [
+   "Uniper Kraftwerke GmbH",
+   1
+  ],
+  [
+   "Sonae Arauco Beeskow GmbH",
+   1
+  ]
+ ]
+}
