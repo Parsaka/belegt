@@ -1,12 +1,13 @@
 name: Docs
 
-# Publishes the dbt docs (lineage graph and column docs) to GitHub Pages. Built on the trimmed
-# real fixtures with DuckDB, so it needs no cloud credentials; the models are the same ones that
-# run on BigQuery. Pages must be set to "GitHub Actions" in the repository settings.
+# Publishes the project page (docs/site) at the root of GitHub Pages and the dbt docs (lineage
+# graph and column docs) under /dbt/. The dbt docs are built on the trimmed real fixtures with
+# DuckDB, so they need no cloud credentials; the models are the same ones that run on BigQuery.
+# Pages must be set to "GitHub Actions" in the repository settings.
 on:
   push:
     branches: [main]
-    paths: [dbt/**, src/belegt/loaders/**, src/belegt/warehouse.py, tests/fixtures/**, .github/workflows/docs.yml]
+    paths: [docs/site/**, docs/img/**, dbt/**, src/belegt/loaders/**, src/belegt/warehouse.py, tests/fixtures/**, .github/workflows/docs.yml]
   workflow_dispatch:
 
 permissions:
@@ -32,7 +33,13 @@ jobs:
       - run: belegt load --source tests/fixtures --db data/belegt.duckdb
       - run: dbt build --project-dir dbt --profiles-dir dbt
       - run: dbt docs generate --static --project-dir dbt --profiles-dir dbt
-      - run: mkdir -p site && cp dbt/target/static_index.html site/index.html
+      - name: Assemble the site
+        run: |
+          mkdir -p site/dbt site/img
+          cp docs/site/index.html site/index.html
+          cp docs/img/*.jpg site/img/
+          cp dbt/target/static_index.html site/dbt/index.html
+          touch site/.nojekyll
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site

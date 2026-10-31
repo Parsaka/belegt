@@ -2,7 +2,7 @@
 
 The marts in BigQuery (`marts` dataset), as built by dbt. Column lists show the keys and the
 columns the dashboard and the consistency check use; the full column docs are in the
-[dbt docs](https://parsaka.github.io/belegt/).
+[dbt docs](https://parsaka.github.io/belegt/dbt/).
 
 ```mermaid
 erDiagram
