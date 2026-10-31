@@ -117,6 +117,7 @@ class Operator:
     permit_status: str | None
     city: str | None
     postcode: str | None
+    contact_country: str | None  # the contact address can be abroad (a foreign parent)
 
 
 def read_operators(path: Path, registry: str | None = "DE") -> Iterator[Operator]:
@@ -140,4 +141,5 @@ def read_operators(path: Path, registry: str | None = "DE") -> Iterator[Operator
             permit_status=_text(row[col["Permit Expiry/Revocation Date"]]),
             city=_text(row[col["Contact City"]]),
             postcode=_text(row[col["Contact PCode"]]),
+            contact_country=_text(row[col["Contact Country"]]),
         )

@@ -129,3 +129,28 @@ def test_golden_copy_rows_equal_the_api_records_of_the_same_entities():
             other.last_update
         )
         assert {**entity.__dict__, "last_update": None} == {**other.__dict__, "last_update": None}
+
+
+def test_a_postcode_with_several_places_gets_their_mean_point():
+    from belegt.loaders import geonames
+
+    lines = [
+        "DE\t99999\tA-Dorf\tThüringen\tTH\t\t\t\t\t50.0\t10.0\t4",
+        "DE\t99999\tB-Dorf\tThüringen\tTH\t\t\t\t\t51.0\t11.0\t4",
+        "DE\t01067\tDresden\tSachsen\tSN\t\t\t\t\t51.0587\t13.7174\t4",
+    ]
+    out = {p.postcode: p for p in geonames.parse_lines(lines)}
+    assert (out["99999"].place, out["99999"].lat, out["99999"].lon) == ("A-Dorf", 50.5, 10.5)
+    assert out["01067"].state == "Sachsen"
+
+
+def test_fixture_postcodes_cover_the_operators():
+    from belegt.loaders import geonames
+
+    codes = {p.postcode for p in geonames.read_postcodes(FIX / "geonames_postcodes_de.txt")}
+    ops = {
+        o.postcode.zfill(5)
+        for o in ets.read_operators(FIX / "ets_operators_de.xlsx")
+        if o.postcode and o.contact_country == "DE"
+    }
+    assert ops and len(ops & codes) >= 0.9 * len(ops)

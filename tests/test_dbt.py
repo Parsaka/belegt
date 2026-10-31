@@ -154,3 +154,21 @@ def test_lookml_points_at_real_marts_and_columns(warehouse):
                 view = views[aliases[alias]]
                 names = {f["name"] for f in view.get("dimensions", [])}
                 assert field in names, f"{explore['name']}: {alias}.{field}"
+
+
+def test_installations_without_an_eea_point_get_their_postcode_centre(warehouse):
+    rows = dict(
+        query(
+            warehouse,
+            "select coalesce(location_source, 'none'), count(*) from marts.dim_installation "
+            "where installation_kind = 'stationary installation' group by 1",
+        )
+    )
+    assert rows.get("EEA facility", 0) > 0
+    assert rows.get("contact postcode", 0) > rows.get("none", 0)
+    bad = query(
+        warehouse,
+        "select count(*) from marts.dim_installation where lat is not null "
+        "and not (lat between 47 and 55.1 and lon between 5.8 and 15.1)",
+    )
+    assert bad == [(0,)]

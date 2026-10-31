@@ -149,3 +149,36 @@ def test_esrs_falls_back_through_its_sources_and_is_optional(tmp_path):
     assert extract.extract_esrs(client, empty) == []  # the run goes on without the ESRS
     assert not (empty / "esrs_de.pdf").exists()
     assert client.headers[0]["Accept"] == "application/pdf"  # content negotiation on the ELI
+
+
+def test_postcodes_are_written_unchanged_from_the_zip(tmp_path):
+    import io
+    import zipfile
+    from contextlib import contextmanager
+
+    from belegt import extract
+
+    text = "\t".join(["DE", "01067", "Dresden", "Sachsen", "SN", "", "00", "Dresden", "14612"])
+    line = (text + "\t51.0587\t13.7174\t4\n").encode()
+    blob = io.BytesIO()
+    with zipfile.ZipFile(blob, "w") as z:
+        z.writestr("DE.txt", line)
+        z.writestr("readme.txt", "GeoNames readme")
+
+    class Response:
+        def raise_for_status(self):
+            pass
+
+        def iter_bytes(self, size):
+            yield blob.getvalue()
+
+    class Client:
+        @contextmanager
+        def stream(self, method, url, **kwargs):
+            yield Response()
+
+    work = tmp_path / "work"
+    work.mkdir()
+    (found,) = extract.extract_postcodes(Client(), tmp_path, work)
+    assert (found.file, found.rows) == ("geonames_postcodes_de.txt", 1)
+    assert (tmp_path / "geonames_postcodes_de.txt").read_bytes() == line

@@ -17,7 +17,7 @@ from typing import Any
 
 from belegt.documents.metrics import ReportedMetric
 from belegt.documents.reports import read_metrics
-from belegt.loaders import eea, ets, gleif
+from belegt.loaders import eea, ets, geonames, gleif
 from belegt.resolution import CandidateIndex, Match, resolve, resolve_operator
 
 _SQL_TYPES = {str: "VARCHAR", int: "BIGINT", float: "DOUBLE", bool: "BOOLEAN", date: "DATE"}
@@ -84,6 +84,10 @@ def parse_directory(source: Path) -> dict[str, Table]:
         "gleif_relationships": (
             gleif.Relationship,
             gleif.read_relationships(source / "gleif_rr.csv"),
+        ),
+        "postcodes": (
+            geonames.Postcode,
+            geonames.read_postcodes(source / "geonames_postcodes_de.txt"),
         ),
         # Written by `belegt reports`; an empty table until the first report run.
         "reported_metrics": (
