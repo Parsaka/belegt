@@ -1,0 +1,38 @@
+ESRS PDF not extracted this run: tenant memos only
+basf-2024: 333 chunks for tenant_a
+rwe-2024: 313 chunks for tenant_a
+heidelberg-materials-2024: 631 chunks for tenant_a
+enbw-2024: 579 chunks for tenant_a
+salzgitter-2024: 375 chunks for tenant_a
+thyssenkrupp-2025: 288 chunks for tenant_a
+eon-2024: no PDF, skipped
+covestro-2024: no PDF, skipped
+evonik-2024: no PDF, skipped
+wacker-2024: no PDF, skipped
+lanxess-2024: no PDF, skipped
+k-s-2024: no PDF, skipped
+aurubis-2024: no PDF, skipped
+bayer-2024: no PDF, skipped
+merck-2024: no PDF, skipped
+henkel-2024: no PDF, skipped
+suedzucker-2025: no PDF, skipped
+symrise-2024: no PDF, skipped
+brenntag-2024: no PDF, skipped
+mvv-2024: no PDF, skipped
+beiersdorf-2024: no PDF, skipped
+lufthansa-2024: no PDF, skipped
+daimler-truck-2024: no PDF, skipped
+mercedes-benz-2024: no PDF, skipped
+bmw-2024: no PDF, skipped
+volkswagen-2024: no PDF, skipped
+continental-2024: no PDF, skipped
+dhl-2024: no PDF, skipped
+telekom-2024: no PDF, skipped
+siemens-energy-2024: no PDF, skipped
+fraport-2024: no PDF, skipped
+hapag-lloyd-2024: no PDF, skipped
+infineon-2024: no PDF, skipped
+deutsche-bahn-2024: no PDF, skipped
+siemens-2024: no PDF, skipped
+rheinmetall-2024: no PDF, skipped
+schaeffler-2024: no PDF, skipped
