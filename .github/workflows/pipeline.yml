@@ -166,7 +166,7 @@ jobs:
     needs: [extract, cloud]
     if: needs.cloud.result == 'success' && needs.cloud.outputs.ready == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     environment: pipeline
     permissions:
       contents: read
@@ -212,10 +212,15 @@ jobs:
           rm -rf /tmp/reports
       - name: Offline evaluation with the same embeddings
         run: |
-          belegt rag-eval --embedder e5 --out summary/rag-eval-memory.md
-          belegt rag-eval --embedder e5 --cases evals/rag_report_cases.jsonl \
-            --out summary/rag-eval-reports-memory.md
-      - run: belegt rag-load --project "$GCP_PROJECT_ID" --embedder e5 2>&1 | tee summary/rag-load.log
+          belegt rag-eval --embedder e5 --cache data/embeddings.jsonl --out summary/rag-eval-memory.md
+          belegt rag-eval --embedder e5 --cache data/embeddings.jsonl \
+            --cases evals/rag_report_cases.jsonl --out summary/rag-eval-reports-memory.md
+      # The passage vectors from the offline eval are reused (--cache), so the corpus is
+      # embedded once per run instead of three times.
+      - run: |
+          set -o pipefail
+          belegt rag-load --project "$GCP_PROJECT_ID" --embedder e5 --cache data/embeddings.jsonl \
+            2>&1 | tee summary/rag-load.log
       - name: Evaluation on BigQuery, each question as the tenant's own identity
         run: |
           belegt rag-eval --backend bigquery --project "$GCP_PROJECT_ID" --embedder e5 --out summary/rag-eval-bigquery.md

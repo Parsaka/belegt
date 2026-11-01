@@ -123,6 +123,7 @@ class BigQueryRetriever:
             query_parameters=[
                 bigquery.ScalarQueryParameter("tenant", "STRING", tenant_id),
                 bigquery.ArrayQueryParameter("embedding", "FLOAT64", vector),
+                bigquery.ScalarQueryParameter("all_docs", "BOOL", not docs),
                 bigquery.ArrayQueryParameter("docs", "STRING", sorted(docs or ())),
             ],
             maximum_bytes_billed=100 * 1024 * 1024,
