@@ -17,9 +17,14 @@ multilingual-e5-small embeddings and in-memory retrieval with the same filters a
 | cross-tenant leaks (a citation of a report the tenant may not read) | **0** |
 
 The report with every case is `runs/reports/<run>/summary-discover/rag-eval-reports-runner.md`
-on the `ops-results` branch. After a merge to `main`, the Pipeline workflow runs the same cases
-on BigQuery `VECTOR_SEARCH`, with each question run under the tenant's own service account
-(`rag-eval-reports-bigquery.md`).
+on the `ops-results` branch.
+
+**On BigQuery.** The Pipeline workflow loads the same chunks (4,917, with the two tenant memos) into
+`rag.chunks` and runs the same cases on BigQuery `VECTOR_SEARCH`. Each question runs under the
+tenant's own service account, so the row access policies apply. Measured 2026-11-01 in Pipeline run
+[41287672974](https://github.com/Parsaka/belegt/actions/runs/41287672974)
+(`runs/pipeline/2026-11-01T0852-41287672974/summary-rag/rag-eval-reports-bigquery.md`), the result is
+the same as in memory: **19 of 31** answered on a labelled page, **31 of 31** declined, and **0** leaks.
 
 ## Method
 

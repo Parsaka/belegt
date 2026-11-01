@@ -35,7 +35,7 @@ A personal portfolio project (Parsa Kamali). Not investment, audit or legal advi
 | dbt on BigQuery | 65 of 65 nodes pass on the full data (models, seeds, SCD2 snapshot, tests) |
 | Sustainability statements | Scope 1-3 extraction on 37 DAX/MDAX reports against 148 hand labels: 82.7 % precision, 70.5 % recall; 80.8 % precision on the 22 held-out reports ([method](docs/measurements/extraction.md)) |
 | Parsing at scale | 37 of 37 reports parsed in parallel by a Kubernetes Indexed Job on GKE Autopilot ([run 41249255988](https://github.com/Parsaka/belegt/actions/runs/41249255988)); Scope 1 checked against the ETS sum per group |
-| Document assistant | On 37 real reports: 19 of 31 Scope 1 questions answered with the printed figure and a citation on the right page, 31 of 31 cross-tenant questions declined, 0 leaks ([method](docs/measurements/assistant-reports.md)) |
+| Document assistant | On 37 real reports, the same in memory and on BigQuery `VECTOR_SEARCH` with row access policies: 19 of 31 Scope 1 questions answered with the printed figure and a citation on the right page, 31 of 31 cross-tenant questions declined, 0 leaks ([method](docs/measurements/assistant-reports.md)) |
 | API on Cloud Run | 3.34 s cold, 1.33 s warm (min 0, max 1 instances) |
 | Cost | October 2026: 0.00 EUR net (all usage covered by the trial credit); hard cap 1.00 EUR per month |
 | Kill switch | Drill confirms it would detach billing (`WOULD DETACH`) |
