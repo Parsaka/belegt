@@ -107,10 +107,17 @@ def index(
 REPORT_SEED = Path("dbt/seeds/reports.csv")
 
 
-def _embedder(name: str) -> Any:
-    from belegt.rag.embedding import E5Embedder, HashingEmbedder
+def _embedder(name: str, cache: Path | None = None) -> Any:
+    from belegt.rag.embedding import CachingEmbedder, E5Embedder, HashingEmbedder
 
-    return E5Embedder() if name == "e5" else HashingEmbedder()
+    inner = E5Embedder() if name == "e5" else HashingEmbedder()
+    return CachingEmbedder(inner, cache, name) if cache else inner
+
+
+CacheOption = Annotated[
+    Path | None,
+    typer.Option(help="Keep passage embeddings in this JSON-lines file and reuse them"),
+]
 
 
 @app.command("rag-load")
@@ -120,6 +127,7 @@ def rag_load(
         "data/chunks.jsonl"
     ),
     embedder: Annotated[str, typer.Option(help="e5 (semantic) or hashing (tests)")] = "e5",
+    cache: CacheOption = None,
 ) -> None:
     """Embed the chunks, replace `rag.chunks` and (re)create one row access policy per tenant."""
     from google.cloud import bigquery
@@ -137,7 +145,7 @@ def rag_load(
     items = load_chunks(chunks)
     table = f"{project}.rag.{CHUNKS_TABLE}"
     client = bigquery.Client(project=project)
-    n = load_table(client, table, chunk_rows(items, _embedder(embedder)))
+    n = load_table(client, table, chunk_rows(items, _embedder(embedder, cache)))
     typer.echo(f"{table}: {n} chunks")
     for tenant in sorted({c.tenant_id for c in items} - {SHARED_TENANT}):
         member = f"serviceAccount:{tenant_service_account(tenant, project)}"
@@ -177,6 +185,7 @@ def rag_eval(
     project: Annotated[str | None, typer.Option(help="GCP project for --backend bigquery")] = None,
     embedder: Annotated[str, typer.Option(help="e5 (semantic) or hashing (tests)")] = "hashing",
     out: Annotated[Path | None, typer.Option(help="Write the Markdown report here")] = None,
+    cache: CacheOption = None,
 ) -> None:
     """Run the evaluation cases; exits non-zero on any leak."""
     from belegt.api.app import load_chunks
@@ -198,7 +207,7 @@ def rag_eval(
             impersonating_client(project), f"{project}.rag", _embedder(embedder)
         )
     else:
-        retriever = InMemoryRetriever(_embedder(embedder), corpus)
+        retriever = InMemoryRetriever(_embedder(embedder, cache), corpus)
     names = ReportNames.from_seed(REPORT_SEED)
     answerer = Answerer(retriever, ExtractiveModel(names.words), min_score=0.1, names=names)
     outcomes = run(read_cases(cases), answerer, owners)

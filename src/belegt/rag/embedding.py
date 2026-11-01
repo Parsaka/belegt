@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import math
+from pathlib import Path
 from typing import Protocol
 
 # Function words carry no topic; without this the hashing embedder matches on "der" and "die".
@@ -93,3 +95,44 @@ class E5Embedder:
         prefix = "query: " if query else "passage: "  # e5 is trained with these prefixes
         vectors = self._model.encode([prefix + t for t in texts], normalize_embeddings=True)
         return [list(map(float, v)) for v in vectors]
+
+
+class CachingEmbedder:
+    """Wraps an embedder and keeps passage vectors in a JSON-lines file.
+
+    The pipeline embeds the same chunks for the offline eval, the BigQuery load and the
+    BigQuery eval; on a CPU runner each pass over the report corpus takes minutes. The key is
+    the model name and the passage text, so a changed chunk or model is embedded again. Query
+    vectors are never cached: questions are few and change with the cases.
+    """
+
+    def __init__(self, inner: Embedder, path: Path, model: str) -> None:
+        self._inner = inner
+        self._path = path
+        self._model = model
+        self.dim = inner.dim
+        self._vectors: dict[str, list[float]] = {}
+        if path.exists():
+            for line in path.read_text().splitlines():
+                if line.strip():
+                    row = json.loads(line)
+                    self._vectors[row["key"]] = row["vector"]
+
+    def _key(self, text: str) -> str:
+        return hashlib.sha256(f"{self._model}\n{text}".encode()).hexdigest()
+
+    def embed(self, texts: list[str], *, query: bool) -> list[list[float]]:
+        if query:
+            return self._inner.embed(texts, query=True)
+        keys = [self._key(t) for t in texts]
+        missing = sorted(
+            {k: t for k, t in zip(keys, texts, strict=True) if k not in self._vectors}.items()
+        )
+        if missing:
+            vectors = self._inner.embed([t for _, t in missing], query=False)
+            self._path.parent.mkdir(parents=True, exist_ok=True)
+            with self._path.open("a") as f:
+                for (key, _), vec in zip(missing, vectors, strict=True):
+                    self._vectors[key] = vec
+                    f.write(json.dumps({"key": key, "vector": vec}) + "\n")
+        return [self._vectors[k] for k in keys]
