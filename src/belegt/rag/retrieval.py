@@ -54,10 +54,13 @@ class InMemoryRetriever:
 
 
 def bigquery_search_sql(dataset: str, k: int) -> str:
-    """VECTOR_SEARCH over the chunks a tenant may see. Parameters: @tenant, @embedding, @docs.
+    """VECTOR_SEARCH over the chunks a tenant may see.
 
-    The base table is filtered before the search, so other tenants' rows are never candidates;
-    a non-empty @docs also restricts it to the reports the question names.
+    Parameters: @tenant, @embedding, @all_docs and @docs. The base table is filtered before
+    the search, so other tenants' rows are never candidates; when @all_docs is false, @docs
+    also restricts it to the reports the question names. The flag is a separate BOOL because
+    BigQuery receives an empty ARRAY parameter as NULL, and `ARRAY_LENGTH(NULL) = 0` is not
+    true, which silently removed every row for questions that name no company.
     Distance is cosine distance; score = 1 - distance.
     """
     return f"""
@@ -67,7 +70,7 @@ SELECT base.chunk_id, base.doc_id, base.tenant_id, base.page, base.heading, base
 FROM VECTOR_SEARCH(
   (SELECT * FROM `{dataset}.chunks`
    WHERE tenant_id IN (@tenant, '{SHARED_TENANT}')
-     AND (ARRAY_LENGTH(@docs) = 0 OR doc_id IN UNNEST(@docs))),
+     AND (@all_docs OR doc_id IN UNNEST(@docs))),
   'embedding',
   (SELECT @embedding AS embedding),
   top_k => {int(k)},

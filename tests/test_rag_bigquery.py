@@ -108,3 +108,28 @@ def test_retriever_refuses_the_shared_pseudo_tenant():
         BigQueryRetriever(lambda t: _Client([]), "p.rag", HashingEmbedder()).search(
             "x", "shared", k=3
         )
+
+
+def test_a_question_without_a_company_searches_all_documents_without_an_empty_array_check():
+    """BigQuery receives an empty ARRAY parameter as NULL, so the SQL must not rely on
+    `ARRAY_LENGTH(@docs) = 0`: that filter removed every row in the first BigQuery run with
+    the report corpus, and both memo questions abstained (Pipeline run 41287672974)."""
+    client = _Client([])
+    BigQueryRetriever(lambda t: client, "p.rag", HashingEmbedder(dim=16)).search(
+        "Reduktionsziel?", "tenant_a", k=3
+    )
+    sql, config = client.calls[0]
+    params = {p.name: p for p in config.query_parameters}
+    assert params["all_docs"].value is True
+    assert "ARRAY_LENGTH" not in sql
+    assert "@all_docs OR doc_id IN UNNEST(@docs)" in sql
+
+
+def test_a_named_company_restricts_the_search_to_its_reports():
+    client = _Client([])
+    BigQueryRetriever(lambda t: client, "p.rag", HashingEmbedder(dim=16)).search(
+        "BASF Scope 1?", "tenant_a", k=12, docs=frozenset({"basf-2024"})
+    )
+    params = {p.name: p for p in client.calls[0][1].query_parameters}
+    assert params["all_docs"].value is False
+    assert params["docs"].values == ["basf-2024"]
