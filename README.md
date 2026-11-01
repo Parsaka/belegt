@@ -23,6 +23,7 @@ A personal portfolio project (Parsa Kamali). Not investment, audit or legal advi
 | **Data model** | [ERD and modelling decisions](docs/erd.md) · [dbt docs with lineage](https://parsaka.github.io/belegt/dbt/) |
 | **Measured results** | [Production run](docs/measurements/production.md) · [full data](docs/measurements/full-data.md) · [entity resolution](docs/measurements/entity-resolution.md) · [extraction accuracy](docs/measurements/extraction.md) · [assistant on reports](docs/measurements/assistant-reports.md) |
 | **Decisions** | [ADRs](docs/adr/) · [budget](docs/budget.md) · [data sources and licences](docs/data-sources.md) |
+| **Portfolio brief** | [Pitch in English and German, key numbers, images and links](docs/portfolio.md), for presenting the project elsewhere |
 
 ![Groups page of the dashboard](docs/img/1-groups-top.jpg)
 
