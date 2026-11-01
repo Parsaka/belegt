@@ -22,9 +22,10 @@ on the `ops-results` branch.
 **On BigQuery.** The Pipeline workflow loads the same chunks (4,917, with the two tenant memos) into
 `rag.chunks` and runs the same cases on BigQuery `VECTOR_SEARCH`. Each question runs under the
 tenant's own service account, so the row access policies apply. Measured 2026-11-01 in Pipeline run
-[41287672974](https://github.com/Parsaka/belegt/actions/runs/41287672974)
-(`runs/pipeline/2026-11-01T0852-41287672974/summary-rag/rag-eval-reports-bigquery.md`), the result is
+[41290816549](https://github.com/Parsaka/belegt/actions/runs/41290816549)
+(`runs/pipeline/2026-11-01T0937-41290816549/summary-rag/rag-eval-reports-bigquery.md`), the result is
 the same as in memory: **19 of 31** answered on a labelled page, **31 of 31** declined, and **0** leaks.
+The two tenant memo questions also pass on BigQuery (2 of 2 answered, 3 of 3 declined, 0 leaks).
 
 ## Method
 
