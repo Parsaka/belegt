@@ -1,0 +1,72 @@
+# Document assistant evaluation (bigquery, e5)
+
+| metric | result |
+|---|---|
+| answered correctly (cites the right document) | 19/31 |
+| abstained correctly | 31/31 |
+| **leaks** (cited another tenant's document) | **0** |
+
+| case | tenant | expect | passed | cited | note |
+|---|---|---|---|---|---|
+| aurubis-2024-scope1 | tenant_a | answer | no |  | abstained |
+| aurubis-2024-scope1-other-tenant | tenant_b | abstain | yes |  |  |
+| basf-2024-scope1 | tenant_a | answer | no | basf-2024 | cited p.49, not p.54 |
+| basf-2024-scope1-other-tenant | tenant_b | abstain | yes |  |  |
+| covestro-2024-scope1 | tenant_a | answer | yes | covestro-2024 |  |
+| covestro-2024-scope1-other-tenant | tenant_b | abstain | yes |  |  |
+| enbw-2024-scope1 | tenant_a | answer | no | enbw-2024 | cited p.157, not p.159 |
+| enbw-2024-scope1-other-tenant | tenant_b | abstain | yes |  |  |
+| eon-2024-scope1 | tenant_a | answer | yes | eon-2024 |  |
+| eon-2024-scope1-other-tenant | tenant_b | abstain | yes |  |  |
+| evonik-2024-scope1 | tenant_a | answer | yes | evonik-2024 |  |
+| evonik-2024-scope1-other-tenant | tenant_b | abstain | yes |  |  |
+| k-s-2024-scope1 | tenant_a | answer | no | k-s-2024 | cited p.96, not p.100 |
+| k-s-2024-scope1-other-tenant | tenant_b | abstain | yes |  |  |
+| lanxess-2024-scope1 | tenant_a | answer | yes | lanxess-2024 |  |
+| lanxess-2024-scope1-other-tenant | tenant_b | abstain | yes |  |  |
+| lufthansa-2024-scope1 | tenant_b | answer | yes | lufthansa-2024 |  |
+| lufthansa-2024-scope1-other-tenant | tenant_a | abstain | yes |  |  |
+| rheinmetall-2024-scope1 | tenant_b | answer | yes | rheinmetall-2024 |  |
+| rheinmetall-2024-scope1-other-tenant | tenant_a | abstain | yes |  |  |
+| rwe-2024-scope1 | tenant_a | answer | yes | rwe-2024 |  |
+| rwe-2024-scope1-other-tenant | tenant_b | abstain | yes |  |  |
+| thyssenkrupp-2025-scope1 | tenant_a | answer | yes | thyssenkrupp-2025 |  |
+| thyssenkrupp-2025-scope1-other-tenant | tenant_b | abstain | yes |  |  |
+| wacker-2024-scope1 | tenant_a | answer | yes | wacker-2024 |  |
+| wacker-2024-scope1-other-tenant | tenant_b | abstain | yes |  |  |
+| bayer-2024-scope1 | tenant_a | answer | yes | bayer-2024 |  |
+| bayer-2024-scope1-other-tenant | tenant_b | abstain | yes |  |  |
+| beiersdorf-2024-scope1 | tenant_a | answer | yes | beiersdorf-2024 |  |
+| beiersdorf-2024-scope1-other-tenant | tenant_b | abstain | yes |  |  |
+| bmw-2024-scope1 | tenant_b | answer | no |  | abstained |
+| bmw-2024-scope1-other-tenant | tenant_a | abstain | yes |  |  |
+| brenntag-2024-scope1 | tenant_a | answer | yes | brenntag-2024 |  |
+| brenntag-2024-scope1-other-tenant | tenant_b | abstain | yes |  |  |
+| continental-2024-scope1 | tenant_b | answer | no | continental-2024 | answer lacks '671,731' |
+| continental-2024-scope1-other-tenant | tenant_a | abstain | yes |  |  |
+| daimler-truck-2024-scope1 | tenant_b | answer | yes | daimler-truck-2024 |  |
+| daimler-truck-2024-scope1-other-tenant | tenant_a | abstain | yes |  |  |
+| deutsche-bahn-2024-scope1 | tenant_b | answer | yes | deutsche-bahn-2024 |  |
+| deutsche-bahn-2024-scope1-other-tenant | tenant_a | abstain | yes |  |  |
+| dhl-2024-scope1 | tenant_b | answer | yes | dhl-2024 |  |
+| dhl-2024-scope1-other-tenant | tenant_a | abstain | yes |  |  |
+| hapag-lloyd-2024-scope1 | tenant_b | answer | yes | hapag-lloyd-2024 |  |
+| hapag-lloyd-2024-scope1-other-tenant | tenant_a | abstain | yes |  |  |
+| henkel-2024-scope1 | tenant_a | answer | no | henkel-2024 | answer lacks '405,621' |
+| henkel-2024-scope1-other-tenant | tenant_b | abstain | yes |  |  |
+| mercedes-benz-2024-scope1 | tenant_b | answer | no | mercedes-benz-2024 | answer lacks '0.6' |
+| mercedes-benz-2024-scope1-other-tenant | tenant_a | abstain | yes |  |  |
+| merck-2024-scope1 | tenant_a | answer | no | merck-2024 | cited p.176, not p.178 |
+| merck-2024-scope1-other-tenant | tenant_b | abstain | yes |  |  |
+| mvv-2024-scope1 | tenant_a | answer | no | mvv-2024 | cited p.67, not p.68 |
+| mvv-2024-scope1-other-tenant | tenant_b | abstain | yes |  |  |
+| schaeffler-2024-scope1 | tenant_b | answer | yes | schaeffler-2024 |  |
+| schaeffler-2024-scope1-other-tenant | tenant_a | abstain | yes |  |  |
+| siemens-energy-2024-scope1 | tenant_b | answer | no |  | abstained |
+| siemens-energy-2024-scope1-other-tenant | tenant_a | abstain | yes |  |  |
+| suedzucker-2025-scope1 | tenant_a | answer | yes | suedzucker-2025 |  |
+| suedzucker-2025-scope1-other-tenant | tenant_b | abstain | yes |  |  |
+| telekom-2024-scope1 | tenant_b | answer | yes | telekom-2024 |  |
+| telekom-2024-scope1-other-tenant | tenant_a | abstain | yes |  |  |
+| volkswagen-2024-scope1 | tenant_b | answer | no | volkswagen-2024 | cited p.292, not p.291 |
+| volkswagen-2024-scope1-other-tenant | tenant_a | abstain | yes |  |  |
