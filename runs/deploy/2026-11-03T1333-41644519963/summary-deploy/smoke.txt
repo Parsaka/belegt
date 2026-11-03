@@ -1,0 +1,4 @@
+200
+{"answer":"Synthetic demo text: Das Reduktionsziel von Mandant A liegt bei 40 Prozent bis 2030 [tenant-a-memo:1:0000000000000002].","abstained":false,"citations":["tenant-a-memo:1:0000000000000002"]}
+200
+{"answer":"Dazu enthalten die vorliegenden Dokumente keine belastbare Angabe.","abstained":true,"citations":[]}
