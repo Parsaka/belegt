@@ -1,0 +1,64 @@
+[31m╭─[0m[31m────────────────────[0m[31m [0m[1;31mTraceback [0m[1;2;31m(most recent call last)[0m[31m [0m[31m─────────────────────[0m[31m─╮[0m
+[31m│[0m [2m/home/runner/work/belegt/belegt/src/belegt/[0m[1mcli.py[0m:43 in extract              [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m 40 [0m[2;90m│   [0m[33m"""Download the full German source files (needs network; runs in [0m  [31m│[0m
+[31m│[0m       [33mGitHub Actions)."""[0m                                                    [31m│[0m
+[31m│[0m   [2m 41 [0m[2m│   [0m[94mfrom[0m[90m [0m[4;96mbelegt[0m[4;96m.[0m[4;96mextract[0m[90m [0m[94mimport[0m extract_all                             [31m│[0m
+[31m│[0m   [2m 42 [0m[2m│   [0m                                                                   [31m│[0m
+[31m│[0m [31m❱ [0m 43 [2m│   [0m[94mfor[0m f [95min[0m [1;4mextract_all(out, work)[0m:                                   [31m│[0m
+[31m│[0m   [2m 44 [0m[2m│   │   [0mrows = [33mf[0m[33m"[0m[33m{[0mf.rows[33m}[0m[33m rows, [0m[33m"[0m [94mif[0m f.rows [95mis[0m [95mnot[0m [94mNone[0m [94melse[0m [33m"[0m[33m"[0m        [31m│[0m
+[31m│[0m   [2m 45 [0m[2m│   │   [0mtyper.echo([33mf[0m[33m"[0m[33m{[0mf.file[33m}[0m[33m: [0m[33m{[0mrows[33m}[0m[33m{[0mf.bytes[33m:[0m[33m,[0m[33m}[0m[33m bytes, sha256 [0m        [31m│[0m
+[31m│[0m       [33m{[0mf.sha256[:[94m12[0m][33m}[0m[33m"[0m)                                                      [31m│[0m
+[31m│[0m   [2m 46 [0m                                                                       [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/home/runner/work/belegt/belegt/src/belegt/[0m[1mextract.py[0m:297 in extract_all     [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m294 [0m[2m│   [0m[94mwith[0m httpx.Client(                                                 [31m│[0m
+[31m│[0m   [2m295 [0m[2m│   │   [0mheaders={[33m"[0m[33mUser-Agent[0m[33m"[0m: USER_AGENT}, timeout=[94m600[0m,               [31m│[0m
+[31m│[0m       follow_redirects=[94mTrue[0m                                                  [31m│[0m
+[31m│[0m   [2m296 [0m[2m│   [0m) [94mas[0m client:                                                       [31m│[0m
+[31m│[0m [31m❱ [0m297 [2m│   │   [0mfound += [1;4mextract_ets(client, out)[0m                              [31m│[0m
+[31m│[0m   [2m298 [0m[2m│   │   [0mfound += extract_eea(client, out, work)                        [31m│[0m
+[31m│[0m   [2m299 [0m[2m│   │   [0mfound += extract_gleif(client, out, work)                      [31m│[0m
+[31m│[0m   [2m300 [0m[2m│   │   [0mfound += extract_postcodes(client, out, work)                  [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/home/runner/work/belegt/belegt/src/belegt/[0m[1mextract.py[0m:191 in extract_ets     [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m188 [0m[2m│   [0mverified = latest_verified_emissions(links)                        [31m│[0m
+[31m│[0m   [2m189 [0m[2m│   [0moperators = [96mnext[0m(x [94mfor[0m x [95min[0m links [94mif[0m x.endswith(OPERATORS_FILE))   [31m│[0m
+[31m│[0m   [2m190 [0m[2m│   [0m[2m# Whole workbooks, unchanged: the loader selects the German rows.[0m  [31m│[0m
+[31m│[0m [31m❱ [0m191 [2m│   [0m[1;4m_download(client, verified, out / [0m                                 [31m│[0m
+[31m│[0m       [1;4;33m"[0m[1;4;33mets_verified_emissions_de.xlsx[0m[1;4;33m"[0m[1;4m)[0m                                      [31m│[0m
+[31m│[0m   [2m192 [0m[2m│   [0m_download(client, operators, out / [33m"[0m[33mets_operators_de.xlsx[0m[33m"[0m)        [31m│[0m
+[31m│[0m   [2m193 [0m[2m│   [0m[94mreturn[0m [                                                           [31m│[0m
+[31m│[0m   [2m194 [0m[2m│   │   [0m_record(out, [33m"[0m[33mets_verified_emissions_de.xlsx[0m[33m"[0m, verified),      [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/home/runner/work/belegt/belegt/src/belegt/[0m[1mextract.py[0m:179 in _download       [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m176 [0m                                                                       [31m│[0m
+[31m│[0m   [2m177 [0m[94mdef[0m[90m [0m[92m_download[0m(client: Any, url: [96mstr[0m, path: Path, **kwargs: Any) ->     [31m│[0m
+[31m│[0m       [94mNone[0m:                                                                  [31m│[0m
+[31m│[0m   [2m178 [0m[2m│   [0m[94mwith[0m client.stream([33m"[0m[33mGET[0m[33m"[0m, url, **kwargs) [94mas[0m r:                     [31m│[0m
+[31m│[0m [31m❱ [0m179 [2m│   │   [0m[1;4mr.raise_for_status()[0m                                           [31m│[0m
+[31m│[0m   [2m180 [0m[2m│   │   [0m[94mwith[0m path.open([33m"[0m[33mwb[0m[33m"[0m) [94mas[0m fh:                                    [31m│[0m
+[31m│[0m   [2m181 [0m[2m│   │   │   [0m[94mfor[0m chunk [95min[0m r.iter_bytes([94m1[0m << [94m20[0m):                        [31m│[0m
+[31m│[0m   [2m182 [0m[2m│   │   │   │   [0mfh.write(chunk)                                        [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/httpx/[0m[1m_[0m [31m│[0m
+[31m│[0m [1mmodels.py[0m:829 in raise_for_status                                            [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m 826 [0m[2m│   │   [0m}                                                             [31m│[0m
+[31m│[0m   [2m 827 [0m[2m│   │   [0merror_type = error_types.get(status_class, [33m"[0m[33mInvalid status [0m   [31m│[0m
+[31m│[0m        [33mcode[0m[33m"[0m)                                                                [31m│[0m
+[31m│[0m   [2m 828 [0m[2m│   │   [0mmessage = message.format([96mself[0m, error_type=error_type)         [31m│[0m
+[31m│[0m [31m❱ [0m 829 [2m│   │   [0m[1;4;94mraise[0m[1;4m HTTPStatusError(message, request=request, [0m              [31m│[0m
+[31m│[0m        [1;4mresponse=[0m[1;4;96mself[0m[1;4m)[0m                                                        [31m│[0m
+[31m│[0m   [2m 830 [0m[2m│   [0m                                                                  [31m│[0m
+[31m│[0m   [2m 831 [0m[2m│   [0m[94mdef[0m[90m [0m[92mjson[0m([96mself[0m, **kwargs: typing.Any) -> typing.Any:               [31m│[0m
+[31m│[0m   [2m 832 [0m[2m│   │   [0m[94mreturn[0m jsonlib.loads([96mself[0m.content, **kwargs)                  [31m│[0m
+[31m╰──────────────────────────────────────────────────────────────────────────────╯[0m
+[1;91mHTTPStatusError: [0mClient error [32m'429 Too Many Requests'[0m for url 
+[32m'https://climate.ec.europa.eu/document/download/53018483-62b3-499e-9ab9-b4a831cc[0m
+[32m44f4_en?[0m[32mfilename[0m[32m=[0m[32mverified_emissions_2025_en[0m[32m.xlsx'[0m
+For more information check: 
+[4;94mhttps://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429[0m
