@@ -1,0 +1,269 @@
+[31m╭─[0m[31m────────────────────[0m[31m [0m[1;31mTraceback [0m[1;2;31m(most recent call last)[0m[31m [0m[31m─────────────────────[0m[31m─╮[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/httpx/_[0m [31m│[0m
+[31m│[0m [2mtransports/[0m[1mdefault.py[0m:101 in map_httpcore_exceptions                         [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m 98 [0m[2m│   [0m[94mif[0m [96mlen[0m(HTTPCORE_EXC_MAP) == [94m0[0m:                                     [31m│[0m
+[31m│[0m   [2m 99 [0m[2m│   │   [0mHTTPCORE_EXC_MAP = _load_httpcore_exceptions()                 [31m│[0m
+[31m│[0m   [2m100 [0m[2m│   [0m[94mtry[0m:                                                               [31m│[0m
+[31m│[0m [31m❱ [0m101 [2m│   │   [0m[94myield[0m                                                          [31m│[0m
+[31m│[0m   [2m102 [0m[2m│   [0m[94mexcept[0m [96mException[0m [94mas[0m exc:                                           [31m│[0m
+[31m│[0m   [2m103 [0m[2m│   │   [0mmapped_exc = [94mNone[0m                                              [31m│[0m
+[31m│[0m   [2m104 [0m                                                                       [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/httpx/_[0m [31m│[0m
+[31m│[0m [2mtransports/[0m[1mdefault.py[0m:250 in handle_request                                  [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m247 [0m[2m│   │   │   [0mextensions=request.extensions,                             [31m│[0m
+[31m│[0m   [2m248 [0m[2m│   │   [0m)                                                              [31m│[0m
+[31m│[0m   [2m249 [0m[2m│   │   [0m[94mwith[0m [1;4mmap_httpcore_exceptions()[0m:                                [31m│[0m
+[31m│[0m [31m❱ [0m250 [2m│   │   │   [0mresp = [96mself[0m._pool.handle_request(req)                      [31m│[0m
+[31m│[0m   [2m251 [0m[2m│   │   [0m                                                               [31m│[0m
+[31m│[0m   [2m252 [0m[2m│   │   [0m[94massert[0m [96misinstance[0m(resp.stream, typing.Iterable)                [31m│[0m
+[31m│[0m   [2m253 [0m                                                                       [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/httpcor[0m [31m│[0m
+[31m│[0m [2me/_sync/[0m[1mconnection_pool.py[0m:256 in handle_request                             [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m253 [0m[2m│   │   │   │   [0mclosing = [96mself[0m._assign_requests_to_connections()       [31m│[0m
+[31m│[0m   [2m254 [0m[2m│   │   │   [0m                                                           [31m│[0m
+[31m│[0m   [2m255 [0m[2m│   │   │   [0m[96mself[0m._close_connections(closing)                           [31m│[0m
+[31m│[0m [31m❱ [0m256 [2m│   │   │   [0m[1;4;94mraise[0m[1;4m exc [0m[1;4;94mfrom[0m[1;4;90m [0m[1;4;94mNone[0m                                        [31m│[0m
+[31m│[0m   [2m257 [0m[2m│   │   [0m                                                               [31m│[0m
+[31m│[0m   [2m258 [0m[2m│   │   [0m[2m# Return the response. Note that in this case we still have to[0m [31m│[0m
+[31m│[0m       [2mmanage[0m                                                                 [31m│[0m
+[31m│[0m   [2m259 [0m[2m│   │   [0m[2m# the point at which the response is closed.[0m                   [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/httpcor[0m [31m│[0m
+[31m│[0m [2me/_sync/[0m[1mconnection_pool.py[0m:236 in handle_request                             [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m233 [0m[2m│   │   │   │   [0m                                                       [31m│[0m
+[31m│[0m   [2m234 [0m[2m│   │   │   │   [0m[94mtry[0m:                                                   [31m│[0m
+[31m│[0m   [2m235 [0m[2m│   │   │   │   │   [0m[2m# Send the request on the assigned connection.[0m     [31m│[0m
+[31m│[0m [31m❱ [0m236 [2m│   │   │   │   │   [0mresponse = connection.handle_request(              [31m│[0m
+[31m│[0m   [2m237 [0m[2m│   │   │   │   │   │   [0mpool_request.request                           [31m│[0m
+[31m│[0m   [2m238 [0m[2m│   │   │   │   │   [0m)                                                  [31m│[0m
+[31m│[0m   [2m239 [0m[2m│   │   │   │   [0m[94mexcept[0m ConnectionNotAvailable:                         [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/httpcor[0m [31m│[0m
+[31m│[0m [2me/_sync/[0m[1mconnection.py[0m:101 in handle_request                                  [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m 98 [0m[2m│   │   │   │   │   │   [0m)                                              [31m│[0m
+[31m│[0m   [2m 99 [0m[2m│   │   [0m[94mexcept[0m [96mBaseException[0m [94mas[0m exc:                                   [31m│[0m
+[31m│[0m   [2m100 [0m[2m│   │   │   [0m[96mself[0m._connect_failed = [94mTrue[0m                                [31m│[0m
+[31m│[0m [31m❱ [0m101 [2m│   │   │   [0m[1;4;94mraise[0m[1;4m exc[0m                                                  [31m│[0m
+[31m│[0m   [2m102 [0m[2m│   │   [0m                                                               [31m│[0m
+[31m│[0m   [2m103 [0m[2m│   │   [0m[94mreturn[0m [96mself[0m._connection.handle_request(request)                [31m│[0m
+[31m│[0m   [2m104 [0m                                                                       [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/httpcor[0m [31m│[0m
+[31m│[0m [2me/_sync/[0m[1mconnection.py[0m:78 in handle_request                                   [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m 75 [0m[2m│   │   [0m[94mtry[0m:                                                           [31m│[0m
+[31m│[0m   [2m 76 [0m[2m│   │   │   [0m[94mwith[0m [96mself[0m._request_lock:                                   [31m│[0m
+[31m│[0m   [2m 77 [0m[2m│   │   │   │   [0m[94mif[0m [96mself[0m._connection [95mis[0m [94mNone[0m:                           [31m│[0m
+[31m│[0m [31m❱ [0m 78 [2m│   │   │   │   │   [0mstream = [96mself[0m._connect(request)                    [31m│[0m
+[31m│[0m   [2m 79 [0m[2m│   │   │   │   │   [0m                                                   [31m│[0m
+[31m│[0m   [2m 80 [0m[2m│   │   │   │   │   [0mssl_object = stream.get_extra_info([33m"[0m[33mssl_object[0m[33m"[0m)   [31m│[0m
+[31m│[0m   [2m 81 [0m[2m│   │   │   │   │   [0mhttp2_negotiated = (                               [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/httpcor[0m [31m│[0m
+[31m│[0m [2me/_sync/[0m[1mconnection.py[0m:124 in _connect                                        [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m121 [0m[2m│   │   │   │   │   │   [0m[33m"[0m[33msocket_options[0m[33m"[0m: [96mself[0m._socket_options,        [31m│[0m
+[31m│[0m   [2m122 [0m[2m│   │   │   │   │   [0m}                                                  [31m│[0m
+[31m│[0m   [2m123 [0m[2m│   │   │   │   │   [0m[94mwith[0m Trace([33m"[0m[33mconnect_tcp[0m[33m"[0m, logger, request, kwargs) [31m│[0m
+[31m│[0m       [94mas[0m trace:                                                              [31m│[0m
+[31m│[0m [31m❱ [0m124 [2m│   │   │   │   │   │   [0mstream =                                       [31m│[0m
+[31m│[0m       [96mself[0m._network_backend.connect_tcp(**kwargs)                            [31m│[0m
+[31m│[0m   [2m125 [0m[2m│   │   │   │   │   │   [0mtrace.return_value = stream                    [31m│[0m
+[31m│[0m   [2m126 [0m[2m│   │   │   │   [0m[94melse[0m:                                                  [31m│[0m
+[31m│[0m   [2m127 [0m[2m│   │   │   │   │   [0mkwargs = {                                         [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/httpcor[0m [31m│[0m
+[31m│[0m [2me/_backends/[0m[1msync.py[0m:207 in connect_tcp                                       [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m204 [0m[2m│   │   │   [0m[96mOSError[0m: ConnectError,                                     [31m│[0m
+[31m│[0m   [2m205 [0m[2m│   │   [0m}                                                              [31m│[0m
+[31m│[0m   [2m206 [0m[2m│   │   [0m                                                               [31m│[0m
+[31m│[0m [31m❱ [0m207 [2m│   │   [0m[94mwith[0m [1;4mmap_exceptions(exc_map)[0m:                                  [31m│[0m
+[31m│[0m   [2m208 [0m[2m│   │   │   [0msock = socket.create_connection(                           [31m│[0m
+[31m│[0m   [2m209 [0m[2m│   │   │   │   [0maddress,                                               [31m│[0m
+[31m│[0m   [2m210 [0m[2m│   │   │   │   [0mtimeout,                                               [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/[0m[1mcontextlib.py[0m:158 in  [31m│[0m
+[31m│[0m __exit__                                                                     [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m155 [0m[2m│   │   │   │   [0m[2m# tell if we get the same exception back[0m               [31m│[0m
+[31m│[0m   [2m156 [0m[2m│   │   │   │   [0mvalue = typ()                                          [31m│[0m
+[31m│[0m   [2m157 [0m[2m│   │   │   [0m[94mtry[0m:                                                       [31m│[0m
+[31m│[0m [31m❱ [0m158 [2m│   │   │   │   [0m[96mself[0m.gen.throw(value)                                  [31m│[0m
+[31m│[0m   [2m159 [0m[2m│   │   │   [0m[94mexcept[0m [96mStopIteration[0m [94mas[0m exc:                               [31m│[0m
+[31m│[0m   [2m160 [0m[2m│   │   │   │   [0m[2m# Suppress StopIteration *unless* it's the same [0m       [31m│[0m
+[31m│[0m       [2mexception that[0m                                                         [31m│[0m
+[31m│[0m   [2m161 [0m[2m│   │   │   │   [0m[2m# was passed to throw().  This prevents a [0m             [31m│[0m
+[31m│[0m       [2mStopIteration[0m                                                          [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/httpcor[0m [31m│[0m
+[31m│[0m [2me/[0m[1m_exceptions.py[0m:14 in map_exceptions                                        [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m11 [0m[2m│   [0m[94mexcept[0m [96mException[0m [94mas[0m exc:  [2m# noqa: PIE786[0m                            [31m│[0m
+[31m│[0m   [2m12 [0m[2m│   │   [0m[94mfor[0m from_exc, to_exc [95min[0m [96mmap[0m.items():                            [31m│[0m
+[31m│[0m   [2m13 [0m[2m│   │   │   [0m[94mif[0m [96misinstance[0m(exc, from_exc):                               [31m│[0m
+[31m│[0m [31m❱ [0m14 [2m│   │   │   │   [0m[1;4;94mraise[0m[1;4m to_exc(exc) [0m[1;4;94mfrom[0m[1;4;90m [0m[1;4;96mexc[0m                              [31m│[0m
+[31m│[0m   [2m15 [0m[2m│   │   [0m[94mraise[0m  [2m# pragma: nocover[0m                                        [31m│[0m
+[31m│[0m   [2m16 [0m                                                                        [31m│[0m
+[31m│[0m   [2m17 [0m                                                                        [31m│[0m
+[31m╰──────────────────────────────────────────────────────────────────────────────╯[0m
+[1;91mConnectTimeout: [0m[1m[[0mErrno [1;36m110[0m[1m][0m Connection timed out
+
+[3mThe above exception was the direct cause of the following exception:[0m
+
+[31m╭─[0m[31m────────────────────[0m[31m [0m[1;31mTraceback [0m[1;2;31m(most recent call last)[0m[31m [0m[31m─────────────────────[0m[31m─╮[0m
+[31m│[0m [2m/home/runner/work/belegt/belegt/src/belegt/[0m[1mcli.py[0m:43 in extract              [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m 40 [0m[2;90m│   [0m[33m"""Download the full German source files (needs network; runs in [0m  [31m│[0m
+[31m│[0m       [33mGitHub Actions)."""[0m                                                    [31m│[0m
+[31m│[0m   [2m 41 [0m[2m│   [0m[94mfrom[0m[90m [0m[4;96mbelegt[0m[4;96m.[0m[4;96mextract[0m[90m [0m[94mimport[0m extract_all                             [31m│[0m
+[31m│[0m   [2m 42 [0m[2m│   [0m                                                                   [31m│[0m
+[31m│[0m [31m❱ [0m 43 [2m│   [0m[94mfor[0m f [95min[0m [1;4mextract_all(out, work)[0m:                                   [31m│[0m
+[31m│[0m   [2m 44 [0m[2m│   │   [0mrows = [33mf[0m[33m"[0m[33m{[0mf.rows[33m}[0m[33m rows, [0m[33m"[0m [94mif[0m f.rows [95mis[0m [95mnot[0m [94mNone[0m [94melse[0m [33m"[0m[33m"[0m        [31m│[0m
+[31m│[0m   [2m 45 [0m[2m│   │   [0mtyper.echo([33mf[0m[33m"[0m[33m{[0mf.file[33m}[0m[33m: [0m[33m{[0mrows[33m}[0m[33m{[0mf.bytes[33m:[0m[33m,[0m[33m}[0m[33m bytes, sha256 [0m        [31m│[0m
+[31m│[0m       [33m{[0mf.sha256[:[94m12[0m][33m}[0m[33m"[0m)                                                      [31m│[0m
+[31m│[0m   [2m 46 [0m                                                                       [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/home/runner/work/belegt/belegt/src/belegt/[0m[1mextract.py[0m:298 in extract_all     [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m295 [0m[2m│   │   [0mheaders={[33m"[0m[33mUser-Agent[0m[33m"[0m: USER_AGENT}, timeout=[94m600[0m,               [31m│[0m
+[31m│[0m       follow_redirects=[94mTrue[0m                                                  [31m│[0m
+[31m│[0m   [2m296 [0m[2m│   [0m) [94mas[0m client:                                                       [31m│[0m
+[31m│[0m   [2m297 [0m[2m│   │   [0mfound += extract_ets(client, out)                              [31m│[0m
+[31m│[0m [31m❱ [0m298 [2m│   │   [0mfound += [1;4mextract_eea(client, out, work)[0m                        [31m│[0m
+[31m│[0m   [2m299 [0m[2m│   │   [0mfound += extract_gleif(client, out, work)                      [31m│[0m
+[31m│[0m   [2m300 [0m[2m│   │   [0mfound += extract_postcodes(client, out, work)                  [31m│[0m
+[31m│[0m   [2m301 [0m[2m│   │   [0mfound += extract_esrs(client, out)                             [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/home/runner/work/belegt/belegt/src/belegt/[0m[1mextract.py[0m:209 in extract_eea     [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m206 [0m[2m│   │   [0m[94mraise[0m [96mRuntimeError[0m([33m"[0m[33mmdb-export is missing (apt-get install [0m    [31m│[0m
+[31m│[0m       [33mmdbtools)[0m[33m"[0m)                                                            [31m│[0m
+[31m│[0m   [2m207 [0m[2m│   [0murl = EEA_SHARE + EEA_ACCDB                                        [31m│[0m
+[31m│[0m   [2m208 [0m[2m│   [0maccdb = work / [33m"[0m[33meea.accdb[0m[33m"[0m                                         [31m│[0m
+[31m│[0m [31m❱ [0m209 [2m│   [0m[1;4m_download(client, url, accdb, auth=(EEA_SHARE_TOKEN, [0m[1;4;33m"[0m[1;4;33m"[0m[1;4m))[0m          [31m│[0m
+[31m│[0m   [2m210 [0m[2m│   [0mlinks, inst, fac = select_eea(                                     [31m│[0m
+[31m│[0m   [2m211 [0m[2m│   │   [0m_mdb_export(accdb, [33m"[0m[33m3f2_ETSIdentifiers[0m[33m"[0m),                      [31m│[0m
+[31m│[0m   [2m212 [0m[2m│   │   [0m_mdb_export(accdb, [33m"[0m[33m3_ProductionInstallation[0m[33m"[0m),                [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/home/runner/work/belegt/belegt/src/belegt/[0m[1mextract.py[0m:178 in _download       [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m175 [0m                                                                       [31m│[0m
+[31m│[0m   [2m176 [0m                                                                       [31m│[0m
+[31m│[0m   [2m177 [0m[94mdef[0m[90m [0m[92m_download[0m(client: Any, url: [96mstr[0m, path: Path, **kwargs: Any) ->     [31m│[0m
+[31m│[0m       [94mNone[0m:                                                                  [31m│[0m
+[31m│[0m [31m❱ [0m178 [2m│   [0m[94mwith[0m [1;4mclient.stream([0m[1;4;33m"[0m[1;4;33mGET[0m[1;4;33m"[0m[1;4m, url, **kwargs)[0m [94mas[0m r:                     [31m│[0m
+[31m│[0m   [2m179 [0m[2m│   │   [0mr.raise_for_status()                                           [31m│[0m
+[31m│[0m   [2m180 [0m[2m│   │   [0m[94mwith[0m path.open([33m"[0m[33mwb[0m[33m"[0m) [94mas[0m fh:                                    [31m│[0m
+[31m│[0m   [2m181 [0m[2m│   │   │   [0m[94mfor[0m chunk [95min[0m r.iter_bytes([94m1[0m << [94m20[0m):                        [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/[0m[1mcontextlib.py[0m:137 in  [31m│[0m
+[31m│[0m __enter__                                                                    [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m134 [0m[2m│   │   [0m[2m# they are only needed for recreation, which is not possible [0m  [31m│[0m
+[31m│[0m       [2manymore[0m                                                                [31m│[0m
+[31m│[0m   [2m135 [0m[2m│   │   [0m[94mdel[0m [96mself[0m.args, [96mself[0m.kwds, [96mself[0m.func                            [31m│[0m
+[31m│[0m   [2m136 [0m[2m│   │   [0m[94mtry[0m:                                                           [31m│[0m
+[31m│[0m [31m❱ [0m137 [2m│   │   │   [0m[94mreturn[0m [96mnext[0m([96mself[0m.gen)                                      [31m│[0m
+[31m│[0m   [2m138 [0m[2m│   │   [0m[1;4;94mexcept[0m[1;4m [0m[1;4;96mStopIteration[0m[1;4m:[0m                                          [31m│[0m
+[31m│[0m   [2m139 [0m[2m│   │   │   [0m[1;4;94mraise[0m[1;4m [0m[1;4;96mRuntimeError[0m[1;4m([0m[1;4;33m"[0m[1;4;33mgenerator didn[0m[1;4;33m'[0m[1;4;33mt yield[0m[1;4;33m"[0m[1;4m) [0m[1;4;94mfrom[0m[1;4;90m [0m[1;4;94mNone[0m     [31m│[0m
+[31m│[0m   [2m140 [0m                                                                       [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/httpx/[0m[1m_[0m [31m│[0m
+[31m│[0m [1mclient.py[0m:868 in stream                                                      [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m 865 [0m[2m│   │   │   [0mtimeout=timeout,                                          [31m│[0m
+[31m│[0m   [2m 866 [0m[2m│   │   │   [0mextensions=extensions,                                    [31m│[0m
+[31m│[0m   [2m 867 [0m[2m│   │   [0m)                                                             [31m│[0m
+[31m│[0m [31m❱ [0m 868 [2m│   │   [0mresponse = [1;4;96mself[0m[1;4m.send([0m                                         [31m│[0m
+[31m│[0m   [2m 869 [0m[2m│   │   │   [0m[1;4mrequest=request,[0m                                          [31m│[0m
+[31m│[0m   [2m 870 [0m[2m│   │   │   [0m[1;4mauth=auth,[0m                                                [31m│[0m
+[31m│[0m   [2m 871 [0m[2m│   │   │   [0m[1;4mfollow_redirects=follow_redirects,[0m                        [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/httpx/[0m[1m_[0m [31m│[0m
+[31m│[0m [1mclient.py[0m:914 in send                                                        [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m 911 [0m[2m│   │   [0m                                                              [31m│[0m
+[31m│[0m   [2m 912 [0m[2m│   │   [0mauth = [96mself[0m._build_request_auth(request, auth)                [31m│[0m
+[31m│[0m   [2m 913 [0m[2m│   │   [0m                                                              [31m│[0m
+[31m│[0m [31m❱ [0m 914 [2m│   │   [0mresponse = [1;4;96mself[0m[1;4m._send_handling_auth([0m                          [31m│[0m
+[31m│[0m   [2m 915 [0m[2m│   │   │   [0m[1;4mrequest,[0m                                                  [31m│[0m
+[31m│[0m   [2m 916 [0m[2m│   │   │   [0m[1;4mauth=auth,[0m                                                [31m│[0m
+[31m│[0m   [2m 917 [0m[2m│   │   │   [0m[1;4mfollow_redirects=follow_redirects,[0m                        [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/httpx/[0m[1m_[0m [31m│[0m
+[31m│[0m [1mclient.py[0m:942 in _send_handling_auth                                         [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m 939 [0m[2m│   │   │   [0mrequest = [96mnext[0m(auth_flow)                                 [31m│[0m
+[31m│[0m   [2m 940 [0m[2m│   │   │   [0m                                                          [31m│[0m
+[31m│[0m   [2m 941 [0m[2m│   │   │   [0m[94mwhile[0m [94mTrue[0m:                                               [31m│[0m
+[31m│[0m [31m❱ [0m 942 [2m│   │   │   │   [0mresponse = [96mself[0m._send_handling_redirects(             [31m│[0m
+[31m│[0m   [2m 943 [0m[2m│   │   │   │   │   [0mrequest,                                          [31m│[0m
+[31m│[0m   [2m 944 [0m[2m│   │   │   │   │   [0mfollow_redirects=follow_redirects,                [31m│[0m
+[31m│[0m   [2m 945 [0m[2m│   │   │   │   │   [0mhistory=history,                                  [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/httpx/[0m[1m_[0m [31m│[0m
+[31m│[0m [1mclient.py[0m:979 in _send_handling_redirects                                    [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m 976 [0m[2m│   │   │   [0m[94mfor[0m hook [95min[0m [96mself[0m._event_hooks[[33m"[0m[33mrequest[0m[33m"[0m]:                 [31m│[0m
+[31m│[0m   [2m 977 [0m[2m│   │   │   │   [0mhook(request)                                         [31m│[0m
+[31m│[0m   [2m 978 [0m[2m│   │   │   [0m                                                          [31m│[0m
+[31m│[0m [31m❱ [0m 979 [2m│   │   │   [0mresponse = [1;4;96mself[0m[1;4m._send_single_request(request)[0m             [31m│[0m
+[31m│[0m   [2m 980 [0m[2m│   │   │   [0m[94mtry[0m:                                                      [31m│[0m
+[31m│[0m   [2m 981 [0m[2m│   │   │   │   [0m[94mfor[0m hook [95min[0m [96mself[0m._event_hooks[[33m"[0m[33mresponse[0m[33m"[0m]:            [31m│[0m
+[31m│[0m   [2m 982 [0m[2m│   │   │   │   │   [0mhook(response)                                    [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/httpx/[0m[1m_[0m [31m│[0m
+[31m│[0m [1mclient.py[0m:1014 in _send_single_request                                       [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m1011 [0m[2m│   │   │   [0m)                                                         [31m│[0m
+[31m│[0m   [2m1012 [0m[2m│   │   [0m                                                              [31m│[0m
+[31m│[0m   [2m1013 [0m[2m│   │   [0m[94mwith[0m request_context(request=request):                        [31m│[0m
+[31m│[0m [31m❱ [0m1014 [2m│   │   │   [0mresponse = [1;4mtransport.handle_request(request)[0m              [31m│[0m
+[31m│[0m   [2m1015 [0m[2m│   │   [0m                                                              [31m│[0m
+[31m│[0m   [2m1016 [0m[2m│   │   [0m[94massert[0m [96misinstance[0m(response.stream, SyncByteStream)            [31m│[0m
+[31m│[0m   [2m1017 [0m                                                                      [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/httpx/_[0m [31m│[0m
+[31m│[0m [2mtransports/[0m[1mdefault.py[0m:249 in handle_request                                  [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m246 [0m[2m│   │   │   [0mcontent=request.stream,                                    [31m│[0m
+[31m│[0m   [2m247 [0m[2m│   │   │   [0mextensions=request.extensions,                             [31m│[0m
+[31m│[0m   [2m248 [0m[2m│   │   [0m)                                                              [31m│[0m
+[31m│[0m [31m❱ [0m249 [2m│   │   [0m[94mwith[0m [1;4mmap_httpcore_exceptions()[0m:                                [31m│[0m
+[31m│[0m   [2m250 [0m[2m│   │   │   [0mresp = [96mself[0m._pool.handle_request(req)                      [31m│[0m
+[31m│[0m   [2m251 [0m[2m│   │   [0m                                                               [31m│[0m
+[31m│[0m   [2m252 [0m[2m│   │   [0m[94massert[0m [96misinstance[0m(resp.stream, typing.Iterable)                [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/[0m[1mcontextlib.py[0m:158 in  [31m│[0m
+[31m│[0m __exit__                                                                     [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m155 [0m[2m│   │   │   │   [0m[2m# tell if we get the same exception back[0m               [31m│[0m
+[31m│[0m   [2m156 [0m[2m│   │   │   │   [0mvalue = typ()                                          [31m│[0m
+[31m│[0m   [2m157 [0m[2m│   │   │   [0m[94mtry[0m:                                                       [31m│[0m
+[31m│[0m [31m❱ [0m158 [2m│   │   │   │   [0m[96mself[0m.gen.throw(value)                                  [31m│[0m
+[31m│[0m   [2m159 [0m[2m│   │   │   [0m[94mexcept[0m [96mStopIteration[0m [94mas[0m exc:                               [31m│[0m
+[31m│[0m   [2m160 [0m[2m│   │   │   │   [0m[2m# Suppress StopIteration *unless* it's the same [0m       [31m│[0m
+[31m│[0m       [2mexception that[0m                                                         [31m│[0m
+[31m│[0m   [2m161 [0m[2m│   │   │   │   [0m[2m# was passed to throw().  This prevents a [0m             [31m│[0m
+[31m│[0m       [2mStopIteration[0m                                                          [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/httpx/_[0m [31m│[0m
+[31m│[0m [2mtransports/[0m[1mdefault.py[0m:118 in map_httpcore_exceptions                         [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m115 [0m[2m│   │   │   [0m[94mraise[0m                                                      [31m│[0m
+[31m│[0m   [2m116 [0m[2m│   │   [0m                                                               [31m│[0m
+[31m│[0m   [2m117 [0m[2m│   │   [0mmessage = [96mstr[0m(exc)                                             [31m│[0m
+[31m│[0m [31m❱ [0m118 [2m│   │   [0m[1;4;94mraise[0m[1;4m mapped_exc(message) [0m[1;4;94mfrom[0m[1;4;90m [0m[1;4;96mexc[0m                             [31m│[0m
+[31m│[0m   [2m119 [0m                                                                       [31m│[0m
+[31m│[0m   [2m120 [0m                                                                       [31m│[0m
+[31m│[0m   [2m121 [0m[94mclass[0m[90m [0m[4;92mResponseStream[0m(SyncByteStream):                                  [31m│[0m
+[31m╰──────────────────────────────────────────────────────────────────────────────╯[0m
+[1;91mConnectTimeout: [0m[1m[[0mErrno [1;36m110[0m[1m][0m Connection timed out
